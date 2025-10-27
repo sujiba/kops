@@ -1,4 +1,4 @@
-# Bootstrap k8s <!-- omit in toc -->
+# Bootstrap k8s<!-- omit in toc -->
 
 - [Required packages](#required-packages)
 - [Prerequisites](#prerequisites)
@@ -52,7 +52,7 @@ helmfile apply
 
 ## flux reconcile
 > [!TIP]
-> Keep in Mind that flux needs a cluster referenc with --kubeconfig ~/.kube/hcloud
+> flux needs a cluster reference. Set it with `--kubeconfig ~/.kube/hcloud`
 
 `flux reconcile` checks, if there are any changes that should be deployed into the cluster.
 
