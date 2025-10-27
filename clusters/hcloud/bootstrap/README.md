@@ -60,13 +60,5 @@ If you want to host your k8s repo that is owned by a forgejo organization, FluxC
 
 ## Bootstrap k8s cluster with flux
 ```bash
-export GITEA_TOKEN=<PAT-token>
 
-flux bootstrap gitea \
-     --hostname=code.your.domain \
-     --token-auth \
-     --owner=homelab \
-     --repository=kops \
-     --branch=main \
-     --path=clusters/hcloud
 ```
