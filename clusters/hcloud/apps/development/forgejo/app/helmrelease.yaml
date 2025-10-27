@@ -1,0 +1,205 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo
+spec:
+  interval: 2h
+  chartRef:
+    kind: OCIRepository
+    name: forgejo
+  values:
+    strategy:
+      type: 'Recreate'
+
+    image:
+      registry: code.forgejo.org
+      repository: forgejo/forgejo
+      rootless: true
+
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        cert-manager.io/private-key-rotation-policy: Always
+        cert-manager.io/private-key-algorithm: ECDSA
+        cert-manager.io/private-key-size: 384
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
+        kubernetes.io/ingress.class: traefik
+      hosts:
+        - host: code42.next.offene.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              port: anubis
+      tls:
+        - hosts:
+            - cc
+          secretName: forgejo-tls
+
+    service:
+      ssh:
+        ipFamilyPolicy: SingleStack # todo: remove after apply
+      http:
+        extraPorts:
+          - name: anubis
+            port: 8080
+            targetPort: anubis
+
+    persistence:
+      enabled: true
+      create: true
+      claimName: forgejo-code-local
+
+    extraVolumes:
+      - name: anubis-bot-policy
+        configMap:
+          name: anubis-bot-policy
+          defaultMode: 0555
+
+    # https://code.forgejo.org/forgejo-helm/forgejo-helm/issues/1343
+    #  no ssh signing at the moment
+    #  - name: forgejo-ssh-signing
+    #    secret:
+    #      secretName: forgejo-ssh-signing
+
+    #extraVolumeMounts:
+    #  - name: forgejo-ssh-signing
+    #    mountPath: /ssh-key/id_ed25519_forgejo.pub
+    #    subPath: id_ed25519_forgejo.pub
+    #    readOnly: true
+    #  - name: forgejo-ssh-signing
+    #    mountPath: /ssh-key/id_ed25519_forgejo
+    #    subPath: id_ed25519_forgejo
+    #    readOnly: true
+
+    gitea:
+      admin:
+        existingSecret: forgejo-admin-secret
+        passwordMode: initialOnlyRequireReset
+      ssh:
+        logLevel: INFO
+      config:
+        admin:
+          SEND_NOTIFICATION_EMAIL_ON_NEW_USER: true
+        APP_NAME: 'Git Invaders'
+        cache:
+          ADAPTER: memory
+        cron:
+          ENABLED: true
+        cron.archive_cleanup:
+          SCHEDULE: '@hourly'
+          OLDER_THAN: '2h'
+        database:
+          PATH: /data/gitea.db
+          DB_TYPE: sqlite3
+          SQLITE_JOURNAL_MODE: wal
+        lfs:
+          PATH: /data/git/lfs
+        log:
+          MODE: console, file
+          LEVEL: 'info'
+          ACCESS: file # deprecated, but works https://codeberg.org/forgejo/forgejo/src/commit/012a1e0497bce557658a3f00485bf67d01cb9252/modules/setting/log.go#L63-L70
+          # logger.access.MODE: file # doesn't work because of lowercase chars
+        log.file:
+          LEVEL: Debug
+        mailer:
+          ENABLED: false
+          #FROM: no-reply@next.offene.cloud
+          #PROTOCOL: smtps
+          #SMTP_ADDR: mx.next.offene.cloud
+          #SMTP_PORT: 465
+        oauth2_client:
+          UPDATE_AVATAR: true
+        packages:
+          LIMIT_SIZE_CONTAINER: '2 GiB'
+        queue:
+          TYPE: level
+        repository:
+          ROOT: /data/git/repositories
+          ENABLE_PUSH_CREATE_USER: true
+          DEFAULT_PUSH_CREATE_PRIVATE: false
+          DEFAULT_REPO_UNITS: 'repo.code,repo.releases,repo.issues,repo.pulls,repo.actions'
+        repository.pull-request:
+          WORK_IN_PROGRESS_PREFIXES: 'WIP:,[WIP]:'
+        security:
+          REVERSE_PROXY_TRUSTED_PROXIES: 127.0.0.0/8,::1/128,10.42.0.0/16,fd01::/48
+          INSTALL_LOCK: true
+        service:
+          DISABLE_REGISTRATION: true
+          SHOW_REGISTRATION_BUTTON: false
+          DEFAULT_KEEP_EMAIL_PRIVATE: true
+          ENABLE_NOTIFY_MAIL: false
+          ALLOW_ONLY_EXTERNAL_REGISTRATION: false
+          #DEFAULT_ALLOW_CREATE_ORGANIZATION: false
+          MAX_CREATION_LIMIT: 100
+        server:
+          ROOT_URL: https://code42.next.offene.cloud
+          DOMAIN: code42.next.offene.cloud
+          SSH_DOMAIN: code42.next.offene.cloud
+          LFS_START_SERVER: true
+          OFFLINE_MODE: true
+          LANDING_PAGE: login
+          MINIMUM_KEY_SIZE_CHECK: true
+        session:
+          PROVIDER: db
+        #signing:
+        #  FORMAT: ssh
+        #  SIGNING_KEY: /ssh-key/id_ed25519_forgejo.pub
+        #  SIGNING_NAME: next.offene.cloud
+        #  SIGNING_EMAIL: noreply@next.offene.cloud
+        #  INITIAL_COMMIT: pubkey
+        #  DEFAULT_TRUST_MODEL: pubkey
+        #  CRUD_ACTIONS: pubkey
+        #  MERGES: pubkey
+      livenessProbe:
+        tcpSocket: ~
+        httpGet:
+          path: /api/healthz
+          port: http
+        initialDelaySeconds: 30 # default is 200
+        periodSeconds: 30
+        successThreshold: 1
+        failureThreshold: 10
+
+    extraContainers:
+      - name: anubis
+        image: ghcr.io/techarohq/anubis:v1.22.0@sha256:90eb7eab65b28e63bf11f9dedf4b34d599bcaab9d84e8f3d537f027f9ac96c62
+        imagePullPolicy: Always
+        # https://anubis.techaro.lol/docs/admin/installation
+        env:
+          - name: 'BIND'
+            value: ':8080'
+          - name: 'DIFFICULTY'
+            value: '4'
+          # The hex-encoded ed25519 private key used to sign Anubis responses.
+          # If this is not set, Anubis will generate one for you.
+          #- name: ED25519_PRIVATE_KEY_HEX
+          #  valueFrom:
+          #    secretKeyRef:
+          #      name: anubis-key-forgejo
+          #      key: ED25519_PRIVATE_KEY_HEX
+          - name: 'TARGET'
+            value: 'http://localhost:3000'
+          - name: 'POLICY_FNAME'
+            value: '/etc/anubisBotPolicy.json'
+        volumeMounts:
+          - name: anubis-bot-policy
+            mountPath: /etc/anubisBotPolicy.json
+            subPath: anubisBotPolicy.json
+            readOnly: true
+        ports:
+          - name: anubis
+            containerPort: 8080
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          seccompProfile:
+            type: RuntimeDefault

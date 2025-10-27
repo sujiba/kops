@@ -1,0 +1,116 @@
+---
+helmDefaults:
+  # wait for k8s resources via --wait. (default false)
+  wait: true
+  # if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful. It will wait for as long as --timeout (default false, Implemented in Helm3.5)
+  waitForJobs: true
+  # time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks, and waits on pod/pvc/svc/deployment readiness) (default 300)
+  timeout: 600
+  # forces resource update through delete/recreate if needed (default false)
+  force: true
+
+repositories:
+  # openebs
+  - name: openebs
+    url: https://openebs.github.io/openebs
+  # traefik
+  - name: traefik
+    url: https://traefik.github.io/charts
+  # cert-manager
+  - name: jetstack
+    url: https://charts.jetstack.io
+
+releases:
+  - name: openebs
+    namespace: openebs
+    chart: openebs/openebs
+    version: 4.3.3
+    values:
+      - templates/values.yaml.gotmpl
+
+  - name: kube-prometheus-stack
+    namespace: observability
+    chart: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
+    version: 78.2.1
+
+  - name: traefik
+    namespace: traefik
+    chart: traefik/traefik
+    version: 37.1.2
+    values:
+      - templates/values.yaml.gotmpl
+    set:
+      - name: crds.enabled
+        value: "true"
+    hooks:
+      - events: ["postsync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -k
+          - ../apps/traefik/middlewares
+
+  - name: cert-manager
+    namespace: cert-manager
+    chart: jetstack/cert-manager
+    version: v1.19.0
+    values:
+      - templates/values.yaml.gotmpl
+    set:
+      - name: crds.enabled
+        value: "true"
+    hooks:
+      - events: ["postsync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -f
+          - ../apps/cert-manager/issuer/letsencrypt-prod-issuer.yaml
+    needs:
+      - traefik/traefik
+
+  - name: forgejo
+    namespace: forgejo
+    chart: oci://code.forgejo.org/forgejo-helm/forgejo
+    version: 14.0.4
+    values:
+      - templates/values.yaml.gotmpl
+    hooks:
+      - events: ["presync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -f
+          - ../apps/forgejo/app/anubis.configmap.yaml
+    needs:
+      - openebs/openebs
+      - traefik/traefik
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.32.0
+    values:
+      - templates/values.yaml.gotmpl
+    needs:
+      - cert-manager/cert-manager
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.32.0
+    wait: false
+    values:
+      - templates/values.yaml.gotmpl
+    needs:
+      - flux-system/flux-operator
+
+  - name: system-upgrade-controller
+    namespace: system-upgrade
+    chart: oci://ghcr.io/bjw-s-labs/helm/app-template
+    version: 4.4.0
+    values:
+      - templates/values.yaml.gotmpl

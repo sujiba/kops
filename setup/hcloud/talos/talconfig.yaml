@@ -1,0 +1,136 @@
+clusterName: &clusterName "${clusterName}"
+
+talosVersion: 1.11.2
+kubernetesVersion: 1.34.1
+
+endpoint: https://${publicClusterIP}:6443
+#domain: ${myDomainName}
+
+additionalMachineCertSans: &sans
+  - 127.0.0.1 # KubePrism
+  - ${privateClusterIP} # hetzner internal network
+  - ${publicClusterIP} # public ip
+additionalApiServerCertSans: *sans
+
+nodes:
+  # control plane nodes
+  - hostname: talos
+    controlPlane: true
+    ipAddress: ${publicClusterIP}
+    networkInterfaces:
+      - interface: eth0
+        dhcp: true
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 172.31.1.1
+      - interface: eth1
+        dhcp: false
+        addresses:
+          - ${privateClusterIP}/24 # Private Netz
+    nameservers:
+      - 185.12.64.1
+      - 185.12.64.2
+    installDisk: /dev/sda
+    talosImageURL: factory.talos.dev/metal-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+    machineSpec:
+      mode: metal
+      arch: ${serverArch}
+    nodeAnnotations:
+      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+
+controlPlane:
+  schematic:
+    customization:
+        systemExtensions:
+            officialExtensions:
+                - siderolabs/qemu-guest-agent
+  nodeLabels:
+    topology.kubernetes.io/region: germany
+    topology.kubernetes.io/zone: falkenstein
+
+  patches:
+    - |-
+      machine:
+        files:
+          - op: create
+            path: /etc/cri/conf.d/20-customization.part
+            content: |
+              [plugins]
+                [plugins."io.containerd.grpc.v1.cri"]
+                  enable_unprivileged_ports = true
+                  enable_unprivileged_icmp = true
+              [plugins."io.containerd.grpc.v1.cri".containerd]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                discard_unpacked_layers = false
+    - |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/mnt/extra
+              type: bind
+              source: /var/mnt/extra
+              options:
+                - bind
+                - rshared
+                - rw
+          nodeIP:
+            validSubnets:
+              - ${publicClusterIP}/32
+    - |-
+      machine:
+        network:
+          disableSearchDomain: true
+    - |-
+      machine:
+        time:
+          servers:
+            - ntp1.hetzner.de
+    - |-
+      machine:
+        files:
+          - op: overwrite
+            path: /etc/nfsmount.conf
+            permissions: 0o644
+            content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              nconnect=16
+              noatime=True
+    # Configure custom sysctls
+    - |-
+      machine:
+        sysctls:
+          fs.inotify.max_user_watches: 1048576
+          fs.inotify.max_user_instances: 8192
+          net.core.default_qdisc: fq
+          net.core.rmem_max: 67108864
+          net.core.wmem_max: 67108864
+          net.ipv4.tcp_congestion_control: bbr
+          net.ipv4.tcp_fastopen: 3
+          net.ipv4.tcp_mtu_probing: 1
+          net.ipv4.tcp_rmem: 4096 87380 33554432
+          net.ipv4.tcp_wmem: 4096 65536 33554432
+          net.ipv4.tcp_window_scaling: 1
+          user.max_user_namespaces: 11255
+          vm.nr_hugepages: 1024
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - system-upgrade
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+    - |-
+      cluster:
+        network:
+          cni:
+            name: flannel
+        allowSchedulingOnControlPlanes: true

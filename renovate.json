@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>homelab/renovate-config"
+  ],
+  "baseBranchPatterns": ["main"],
+  "assignAutomerge": true,
+  "assignees": ["@sujiba-bot"],
+  "reviewers": ["@sujiba"],
+  "packageRules": [
+    {
+      "description": "add cluster name to commit message",
+      "matchFileNames": ["clusters/hcloud/**"],
+      "addLabels": ["cluster/hcloud"]
+    },
+    {
+      "description": "add cluster name to commit message",
+      "matchFileNames": ["clusters/home/**"],
+      "addLabels": ["cluster/home"]
+    }
+  ]
+}

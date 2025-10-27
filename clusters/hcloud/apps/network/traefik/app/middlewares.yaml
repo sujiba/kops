@@ -1,0 +1,89 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-middleware-compress
+  namespace: network
+spec:
+  compress:
+    encodings:
+      - zstd
+      - br
+    minResponseBodyBytes: 1024
+    excludedContentTypes:
+      - application/zip
+      - application/octet-stream
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-middleware-rate-limit
+  namespace: network
+spec:
+  rateLimit:
+    average: 50
+    burst: 100
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-middleware-redirect
+  namespace: network
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-middleware-secure-headers
+  namespace: network
+spec:
+  headers:
+    accessControlAllowMethods:
+      - GET
+      - OPTIONS
+      - PUT
+      - POST
+    accessControlMaxAge: 100
+    hostsProxyHeaders:
+      - "X-Forwarded-Host"
+      - "X-Forwarded-For"
+      - "X-Forwarded-Proto"
+    stsPreload: true
+    forceSTSHeader: true
+    stsSeconds: 31536000
+    stsIncludeSubdomains: true
+    referrerPolicy: "same-origin"
+    #contentSecurityPolicy: "upgrade-insecure-requests;"
+    frameDeny: true
+    customFrameOptionsValue: "SAMEORIGIN"
+    contentTypeNosniff: true
+    browserXssFilter: true
+    customResponseHeaders:
+      #permissionsPolicy: "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+      X-Frame-Options: "SAMEORIGIN"
+      X-Robots-Tag: "none,noindex,nofollow,noarchive,nosnippet,notranslate,noimageindex"
+      X-Permitted-Cross-Domain-Policies: "none"
+      X-Forwarded-Proto: "https"
+      X-Powered-By: ""
+      server: "UwU"
+      #City: X-GEO-City
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-middleware-chain-no-auth
+  namespace: network
+spec:
+  chain:
+    middlewares:
+      - name: network-traefik-middleware-compress@kubernetescrd
+      - name: network-traefik-middleware-rate-limit@kubernetescrd
+      - name: network-traefik-middleware-redirect@kubernetescrd
+      - name: network-traefik-middleware-secure-headers@kubernetescrd

@@ -1,0 +1,11 @@
+# Trash
+.DS_Store
+Thumbs.db
+
+# Sops
+.decrypted~*
+
+# Other files
+*.secrets.yaml
+kubeconfig
+talosconfig

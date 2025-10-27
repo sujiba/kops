@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openebs
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: openebs
+  interval: 1h
+  values:
+    # This runs only for upgrades from openebs v3 to v4. Uses the localpv-provisioner deployment to decide if it's v3 or v4.
+    preUpgradeHook:
+      enabled: false
+    engines:
+      local:
+        lvm:
+          enabled: false
+        zfs:
+          enabled: false
+      replicated:
+        mayastor:
+          enabled: false
+    openebs-crds:
+      csi:
+        volumeSnapshots:
+          enabled: false
+          keep: false
+    loki:
+      enabled: false
+    alloy:
+      enabled: false
+    minio:
+      enabled: false
+    localpv-provisioner:
+      localpv:
+        image:
+          registry: quay.io/
+        basePath: &basePath /var/mnt/extra
+      hostpathClass:
+        enabled: true
+        name: openebs-hostpath
+        isDefaultClass: true
