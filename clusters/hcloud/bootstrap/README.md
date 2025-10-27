@@ -60,5 +60,7 @@ If you want to host your k8s repo that is owned by a forgejo organization, FluxC
 
 ## Bootstrap k8s cluster with flux
 ```bash
+flux reconcile -n flux-system source git flux-system
 
+flux reconcile -n flux-system kustomization flux-system
 ```
