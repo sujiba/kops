@@ -5,9 +5,8 @@
   - [Create Namespaces](#create-namespaces)
   - [Add sops private key](#add-sops-private-key)
   - [Create secrets](#create-secrets)
-  - [Prepare k8s for fluxcd bootstrap](#prepare-k8s-for-fluxcd-bootstrap)
-  - [Create a dedicated forgejo user for flux](#create-a-dedicated-forgejo-user-for-flux)
-- [Bootstrap k8s cluster with flux](#bootstrap-k8s-cluster-with-flux)
+- [Prepare k8s and bootstrap fluxcd](#prepare-k8s-and-bootstrap-fluxcd)
+- [flux reconcile](#flux-reconcile)
 
 ## Required packages
 ```bash
@@ -41,7 +40,7 @@ sops encrypt -i bootstrap.secrets.sops.yaml
 sops --decrypt bootstrap.secrets.sops.yaml | kubectl apply -f -
 ```
 
-### Prepare k8s for fluxcd bootstrap
+## Prepare k8s and bootstrap fluxcd 
 ```bash
 # initiate helmfile
 helmfile init
@@ -51,16 +50,16 @@ helmfile sync
 helmfile apply
 ```
 
-### Create a dedicated forgejo user for flux
-If you want to host your k8s repo that is owned by a forgejo organization, FluxCD recommends to use a dedicated user under the organization. Additionaly you have to create a PAT for this user with the following permissions:
-```bash
-- read:misc
-- write:repository
-```
+## flux reconcile
+> [!TIP]
+> Keep in Mind that flux needs a cluster referenc with --kubeconfig ~/.kube/hcloud
 
-## Bootstrap k8s cluster with flux
-```bash
-flux reconcile -n flux-system source git flux-system
+`flux reconcile` checks, if there are any changes that should be deployed into the cluster.
 
-flux reconcile -n flux-system kustomization flux-system
+```bash
+# reconcile source git repo
+flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/hcloud
+
+# reconcile all kustomizations
+flux reconcile -n flux-system kustomization flux-system --kubeconfig ~/.kube/hcloud
 ```
