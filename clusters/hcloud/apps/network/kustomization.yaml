@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: network
 
 components:
-  - ../../components/sops
+  - ../../components/common
 
 resources:
   - ./traefik/ks.yaml
