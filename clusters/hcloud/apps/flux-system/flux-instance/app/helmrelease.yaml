@@ -31,7 +31,7 @@ spec:
         - notification-controller
       sync:
         kind: GitRepository
-        url: https://code.${EXTERNAL_DOMAIN}/bjw-s-labs/kops.git
+        url: https://code42.next.offene.cloud/homelab/kops.git
         ref: refs/heads/main
         path: clusters/hcloud/flux/cluster
         interval: 1h
