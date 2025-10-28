@@ -7,6 +7,13 @@
   "assignAutomerge": true,
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
+  "flux": {
+    "managerFilePatterns": [
+      "/kubernetes/.+\\.ya?ml$/",
+      "/bootstrap/.+\\.ya?ml$/",
+      "/talos/.+\\.ya?ml$/"
+    ]
+  },
   "packageRules": [
     {
       "description": "add cluster name to commit message",
