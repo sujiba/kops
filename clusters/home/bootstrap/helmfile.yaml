@@ -74,7 +74,7 @@ releases:
   - name: forgejo
     namespace: forgejo
     chart: oci://code.forgejo.org/forgejo-helm/forgejo
-    version: 14.0.4
+    version: 15.0.2
     values:
       - templates/values.yaml.gotmpl
     hooks:
