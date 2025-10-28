@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: zola-blog
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: zola-blog
+  interval: 30m
+
+  values:
+    controllers:
+      zola-blog:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          hostUsers: false
+
+        containers:
+          app:
+            image:
+              repository: sujiba/my-zola-blog
+              tag: 2025.10.8
+            env:
+              TZ: Europe/Berlin
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 12m
+                memory: 128M
+              limits:
+                memory: 512M
+
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+
+    ingress:
+      app:
+        className: traefik
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          cert-manager.io/private-key-rotation-policy: Always
+          cert-manager.io/private-key-algorithm: ECDSA
+          cert-manager.io/private-key-size: "384"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-traefik-middleware-chain-no-auth@kubernetescrd"
+          kubernetes.io/ingress.class: traefik
+        hosts:
+          - host: "blog.next.offene.cloud"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - "blog.next.offene.cloud"
+            secretName: zola-blog-tls
