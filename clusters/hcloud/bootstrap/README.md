@@ -58,10 +58,8 @@ helmfile apply
 `flux reconcile` checks, if there are any changes that should be deployed into the cluster.
 
 ```bash
-# reconcile source git repo
-flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/hcloud
-
-# reconcile all kustomizations
+# reconcile source git repo and all kustomizations
+flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/hcloud && \
 flux reconcile -n flux-system kustomization flux-system --kubeconfig ~/.kube/hcloud
 ```
 
