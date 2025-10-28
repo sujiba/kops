@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: sujiba/my-zola-blog
-              tag: 2025.10.8
+              tag: 2025.10.9
             env:
               TZ: Europe/Berlin
             probes:
