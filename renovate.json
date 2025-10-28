@@ -8,9 +8,13 @@
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
   "flux": {
-    "managerFilePatterns": [
-      "/clusters/.+\\.ya?ml$/"
-    ]
+    "managerFilePatterns": ["/clusters/.+\\.ya?ml$/"]
+  },
+  "helm-values": {
+    "managerFilePatterns": ["/clusters/.+\\.ya?ml$/"]
+  },
+  "kubernetes": {
+    "managerFilePatterns": ["/clusters/.+\\.ya?ml$/"]
   },
   "packageRules": [
     {
