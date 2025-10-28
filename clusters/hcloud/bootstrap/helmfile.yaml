@@ -44,7 +44,7 @@ releases:
           - ../apps/network/traefik/app/middlewares.yaml
 
   - name: cert-manager
-    namespace: certificates
+    namespace: cert-manager
     chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.19.1
     values:
@@ -59,7 +59,7 @@ releases:
         args:
           - apply
           - -f
-          - ../apps/certificates/cert-manager/app/cluster-issuers.yaml
+          - ../apps/cert-manager/cert-manager/app/cluster-issuers.yaml
     needs:
       - network/traefik
 
@@ -91,7 +91,7 @@ releases:
     values:
       - templates/values.yaml.gotmpl
     needs:
-      - certificates/cert-manager
+      - cert-manager/cert-manager
 
   - name: flux-instance
     namespace: flux-system
