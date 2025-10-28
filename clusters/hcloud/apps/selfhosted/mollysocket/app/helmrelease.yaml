@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mollyim/mollysocket
-              tag: 1.6.0@sha256:981128d5ce54b0142a51ffebcf1aec92145105b728a8cab81699d4112504705e
+              tag: 1.6.0@sha256:2813160902792de063dd04c51d0928228b93be7f3928413fe0939a8078edc6b0
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
