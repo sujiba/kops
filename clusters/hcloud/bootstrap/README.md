@@ -7,6 +7,7 @@
   - [Create secrets](#create-secrets)
 - [Prepare k8s and bootstrap fluxcd](#prepare-k8s-and-bootstrap-fluxcd)
 - [flux reconcile](#flux-reconcile)
+- [flux cheat-sheet](#flux-cheat-sheet)
 
 ## Required packages
 ```bash
@@ -62,4 +63,47 @@ flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/hcloud
 
 # reconcile all kustomizations
 flux reconcile -n flux-system kustomization flux-system --kubeconfig ~/.kube/hcloud
+```
+
+## flux cheat-sheet
+Helpful `flux get` commands:
+```bash
+# Alle Kustomizations live verfolgen
+flux get kustomizations --watch
+
+# Alle Sources (Git, Helm, etc.)
+flux get sources all --watch
+
+# Nur Git Sources
+flux get sources git --watch
+
+# Helm Releases
+flux get helmreleases --watch
+
+# Alles zusammen
+flux get all --watch
+```
+
+Helpful `flux logs` commands:
+```bash
+# Alle Flux Logs live
+flux logs --all-namespaces --follow
+
+# Nur die letzten 5 Minuten
+flux logs --all-namespaces --follow --since=5m
+
+# Nur errors
+flux logs --all-namespaces --follow --level=error
+
+# Nur ein bestimmter Controller
+flux logs --kind=Kustomization --name=apps --namespace=flux-system
+
+# Source Controller (für Git pulls)
+kubectl logs -n flux-system deploy/source-controller --follow
+
+# Kustomize Controller (für deployments)
+kubectl logs -n flux-system deploy/kustomize-controller --follow
+
+# Helm Controller (für Helm releases)
+kubectl logs -n flux-system deploy/helm-controller --follow
 ```
