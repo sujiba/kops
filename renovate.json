@@ -9,9 +9,7 @@
   "reviewers": ["@sujiba"],
   "flux": {
     "managerFilePatterns": [
-      "/kubernetes/.+\\.ya?ml$/",
-      "/bootstrap/.+\\.ya?ml$/",
-      "/talos/.+\\.ya?ml$/"
+      "/clusters/.+\\.ya?ml$/"
     ]
   },
   "packageRules": [
