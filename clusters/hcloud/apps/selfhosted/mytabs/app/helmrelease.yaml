@@ -1,0 +1,75 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mytabs
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mytabs
+  interval: 30m
+
+  values:
+    controllers:
+      mytabs:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          hostUsers: false
+
+        containers:
+          app:
+            image:
+              repository: louislam/its-mytabs
+              tag: 1.0.1
+            env:
+              TZ: Europe/Berlin
+              # MYTABS_HOST: tabs.next.offene.cloud
+              MYTABS_PORT: &port 47777
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 12m
+                memory: 128M
+              limits:
+                memory: 512M
+
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      app:
+        className: traefik
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          cert-manager.io/private-key-rotation-policy: Always
+          cert-manager.io/private-key-algorithm: ECDSA
+          cert-manager.io/private-key-size: "384"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
+          kubernetes.io/ingress.class: traefik
+        hosts:
+          - host: "tabs.next.offene.cloud"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - "tabs.next.offene.cloud"
+            secretName: mytabs-tls
+
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        existingClaim: mytabs
