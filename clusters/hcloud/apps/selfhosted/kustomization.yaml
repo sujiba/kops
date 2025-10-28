@@ -10,5 +10,6 @@ resources:
   - ./namespace.yaml
   - ./freshrss/ks.yaml
   - ./it-tools/ks.yaml
+  - ./mollysocket/ks.yaml
   - ./ntfy/ks.yaml
   - ./zola-blog/ks.yaml
