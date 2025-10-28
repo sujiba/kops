@@ -5,7 +5,7 @@ metadata:
   name: it-tools
 spec:
   interval: 1h
-  path: ./kubernetes/hcloud/apps/selfhosted/it-tools/app
+  path: ./clusters/hcloud/apps/selfhosted/it-tools/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
