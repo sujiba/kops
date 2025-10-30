@@ -35,7 +35,7 @@ spec:
               IDM_ADMIN_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: opencloud-secret
+                    name: opencloud-secrets
                     key: idm-admin-password
               OC_ENABLE_OCM: false
               OC_LOG_LEVEL: info
