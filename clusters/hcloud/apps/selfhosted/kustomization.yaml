@@ -13,4 +13,5 @@ resources:
   - ./mollysocket/ks.yaml
   - ./mytabs/ks.yaml
   - ./ntfy/ks.yaml
+  - ./opencloud/ks.yaml
   - ./zola-blog/ks.yaml
