@@ -45,16 +45,16 @@ spec:
               # INSECURE: needed if OpenCloud / reverse proxy is using self generated certificates
               OC_INSECURE: false
               # enable to allow using the banned passwords list
-              OC_PASSWORD_POLICY_BANNED_PASSWORDS_LIST: banned-password-list.txt
+              #OC_PASSWORD_POLICY_BANNED_PASSWORDS_LIST: banned-password-list.txt
               # control the password enforcement and policy for public shares
               OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
               OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: false
-              OC_PASSWORD_POLICY_DISABLED: false
-              OC_PASSWORD_POLICY_MIN_CHARACTERS: 12
-              OC_PASSWORD_POLICY_MIN_LOWERCASE_CHARACTERS: 1
-              OC_PASSWORD_POLICY_MIN_UPPERCASE_CHARACTERS: 1
-              OC_PASSWORD_POLICY_MIN_DIGITS: 1
-              OC_PASSWORD_POLICY_MIN_SPECIAL_CHARACTERS: 1
+              #OC_PASSWORD_POLICY_DISABLED: false
+              #OC_PASSWORD_POLICY_MIN_CHARACTERS: 12
+              #OC_PASSWORD_POLICY_MIN_LOWERCASE_CHARACTERS: 1
+              #OC_PASSWORD_POLICY_MIN_UPPERCASE_CHARACTERS: 1
+              #OC_PASSWORD_POLICY_MIN_DIGITS: 1
+              #OC_PASSWORD_POLICY_MIN_SPECIAL_CHARACTERS: 1
             probes:
               liveness:
                 enabled: true
