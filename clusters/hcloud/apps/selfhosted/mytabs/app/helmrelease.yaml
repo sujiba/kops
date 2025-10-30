@@ -25,7 +25,7 @@ spec:
               tag: 1.0.1
             env:
               TZ: Europe/Berlin
-              # MYTABS_HOST: tabs.next.offene.cloud
+              # MYTABS_HOST: tabs.offene.cloud
               MYTABS_PORT: &port 47777
             probes:
               liveness:
@@ -57,7 +57,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
           kubernetes.io/ingress.class: traefik
         hosts:
-          - host: "tabs.next.offene.cloud"
+          - host: "tabs.offene.cloud"
             paths:
               - path: /
                 service:
@@ -65,7 +65,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "tabs.next.offene.cloud"
+              - "tabs.offene.cloud"
             secretName: mytabs-tls
 
     persistence:

@@ -94,7 +94,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
           kubernetes.io/ingress.class: traefik
         hosts:
-          - host: "molly.next.offene.cloud"
+          - host: "molly.offene.cloud"
             paths:
               - path: /
                 service:
@@ -102,7 +102,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "molly.next.offene.cloud"
+              - "molly.offene.cloud"
             secretName: mollysocket-tls
 
     persistence:

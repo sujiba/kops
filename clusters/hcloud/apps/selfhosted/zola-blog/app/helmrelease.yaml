@@ -55,7 +55,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
           kubernetes.io/ingress.class: traefik
         hosts:
-          - host: "blog.next.offene.cloud"
+          - host: "blog.offene.cloud"
             paths:
               - path: /
                 service:
@@ -63,5 +63,5 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "blog.next.offene.cloud"
+              - "blog.offene.cloud"
             secretName: zola-blog-tls

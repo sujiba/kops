@@ -29,7 +29,7 @@ spec:
         traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
         kubernetes.io/ingress.class: traefik
       hosts:
-        - host: code42.next.offene.cloud
+        - host: code.offene.cloud
           paths:
             - path: /
               pathType: Prefix
@@ -107,9 +107,9 @@ spec:
           LEVEL: Debug
         mailer:
           ENABLED: false
-          #FROM: no-reply@next.offene.cloud
+          #FROM: no-reply@offene.cloud
           #PROTOCOL: smtps
-          #SMTP_ADDR: mx.next.offene.cloud
+          #SMTP_ADDR: mx.offene.cloud
           #SMTP_PORT: 465
         oauth2_client:
           UPDATE_AVATAR: true
@@ -136,9 +136,9 @@ spec:
           #DEFAULT_ALLOW_CREATE_ORGANIZATION: false
           MAX_CREATION_LIMIT: 100
         server:
-          ROOT_URL: https://code42.next.offene.cloud
-          DOMAIN: code42.next.offene.cloud
-          SSH_DOMAIN: code42.next.offene.cloud
+          ROOT_URL: https://code.offene.cloud
+          DOMAIN: code.offene.cloud
+          SSH_DOMAIN: code.offene.cloud
           LFS_START_SERVER: true
           OFFLINE_MODE: true
           LANDING_PAGE: login
@@ -148,8 +148,8 @@ spec:
         #signing:
         #  FORMAT: ssh
         #  SIGNING_KEY: /ssh-key/id_ed25519_forgejo.pub
-        #  SIGNING_NAME: next.offene.cloud
-        #  SIGNING_EMAIL: noreply@next.offene.cloud
+        #  SIGNING_NAME: offene.cloud
+        #  SIGNING_EMAIL: noreply@offene.cloud
         #  INITIAL_COMMIT: pubkey
         #  DEFAULT_TRUST_MODEL: pubkey
         #  CRUD_ACTIONS: pubkey

@@ -26,7 +26,7 @@ spec:
             env:
               TZ: Europe/Berlin
               CRON_MIN: "*"
-              DOMAIN: rss.next.offene.cloud
+              DOMAIN: rss.offene.cloud
               LISTEN: &port 8080
             probes:
               liveness:
@@ -58,7 +58,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
           kubernetes.io/ingress.class: traefik
         hosts:
-          - host: "rss.next.offene.cloud"
+          - host: "rss.offene.cloud"
             paths:
               - path: /
                 service:
@@ -66,7 +66,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "rss.next.offene.cloud"
+              - "rss.offene.cloud"
             secretName: freshrss-tls
 
     persistence:

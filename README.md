@@ -24,7 +24,7 @@ Kubernetes cluster stats:
 
 ## ⛵ Kubernetes 
 ### Installation
-1. `git clone https://code42.next.offene.cloud/homelab/k8s.git`
+1. `git clone https://code.offene.cloud/homelab/k8s.git`
 2. [Create talos node on hcloud](setup/hcloud/opentofu/README.md)
 3. [Bootstrap talos node](setup/hcloud/talos/README.md)
 4. [Bootstrap k8s](clusters/hcloud/bootstrap/README.md)

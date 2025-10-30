@@ -42,7 +42,7 @@ spec:
               TZ: Europe/Berlin
               NTFY_DEBUG: false # enable/disable debug
               NTFY_LOG_LEVEL: INFO # adjust log level
-              NTFY_BASE_URL: https://ntfy.next.offene.cloud # add base url
+              NTFY_BASE_URL: https://ntfy.offene.cloud # add base url
               NTFY_BEHIND_PROXY: true
               NTFY_CACHE_FILE: /var/cache/ntfy/cache.db
               NTFY_AUTH_FILE: /var/lib/ntfy/auth.db
@@ -105,7 +105,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
           kubernetes.io/ingress.class: traefik
         hosts:
-          - host: "ntfy.next.offene.cloud"
+          - host: "ntfy.offene.cloud"
             paths:
               - path: /
                 service:
@@ -113,7 +113,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "ntfy.next.offene.cloud"
+              - "ntfy.offene.cloud"
             secretName: ntfy-tls
 
     persistence:

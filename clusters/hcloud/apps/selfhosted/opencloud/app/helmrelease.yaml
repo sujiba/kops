@@ -39,7 +39,7 @@ spec:
                     key: idm-admin-password
               OC_ENABLE_OCM: false
               OC_LOG_LEVEL: info
-              OC_URL: https://files.next.offene.cloud
+              OC_URL: https://files.offene.cloud
               # do not use SSL between the reverse proxy and OpenCloud
               PROXY_TLS: false
               # INSECURE: needed if OpenCloud / reverse proxy is using self generated certificates
@@ -90,7 +90,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
           kubernetes.io/ingress.class: traefik
         hosts:
-          - host: files.next.offene.cloud
+          - host: files.offene.cloud
             paths:
               - path: /
                 service:
@@ -98,7 +98,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - files.next.offene.cloud
+              - files.offene.cloud
             secretName: opencloud-tls
 
     persistence:
