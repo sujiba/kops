@@ -103,7 +103,7 @@ spec:
 
     persistence:
       data:
-        existingClaim: opencloud
+        existingClaim: opencloud-pvc
         globalMounts:
           - path: /var/lib/opencloud
             subPath: data
