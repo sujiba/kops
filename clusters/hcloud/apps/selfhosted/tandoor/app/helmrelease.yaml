@@ -24,6 +24,11 @@ spec:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 2.3.3@sha256:af6bd76e703d644748a93d581da05c25159d742b94b2da9eddadaaec93555858
             env:
+              SECRET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-secrets
+                    key: secret-key
               TZ: ${TIMEZONE}
               DEBUG: 0
               DB_ENGINE: django.db.backends.postgresql
@@ -33,20 +38,17 @@ spec:
               POSTGRES_USER:
                 valueFrom:
                   secretKeyRef:
-                    name: tandoor-secret
+                    name: tandoor-secrets
                     key: username
               POSTGRES_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: tandoor-secret
+                    name: tandoor-secrets
                     key: password
               ALLOWED_HOSTS: rezepte.offene.cloud
               CSRF_TRUSTED_ORIGINS: 'https://rezepte.offene.cloud'
               TANDOOR_PORT: 80
               ENABLE_SIGNUP: 0
-            envFrom:
-              - secretRef:
-                  name: tandoor-secret
             #securityContext:
             #  allowPrivilegeEscalation: false
             #  readOnlyRootFilesystem: true
