@@ -24,7 +24,7 @@
     - [Jellyseerr](#jellyseerr)
 
 # auth-users
-
+You can set this as a secret:
 ```bash
 # https://docs.ntfy.sh/config/#users-via-the-config
 auth-users: '<username-1>:<password-hash>:<role>,<username-1>:<password-hash>:<role>'
@@ -34,7 +34,7 @@ auth-users: 'username:$2a$10$ciAnPNcWemcX6AEAgen5cOCsOoDrGmqfKeGx9Kj9IpM9TdSIdtF
 ```
 
 # auth-access
-
+You can set this as a secret:
 ```bash
 # https://docs.ntfy.sh/config/#acl-entries-via-the-config
 auth-access: '<username-1>:<topic-pattern-1>:<access>,<username-2>:<topic-pattern-2>:<access>'
