@@ -26,7 +26,20 @@ spec:
             env:
               TZ: ${TIMEZONE}
               DEBUG: 0
-              DB_ENGINE: django.db.backends.sqlite3
+              DB_ENGINE: django.db.backends.postgresql
+              POSTGRES_HOST:
+              POSTGRES_DB: tandoor
+              POSTGRES_PORT: 5432
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-secret
+                    key: username
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-secret
+                    key: password
               ALLOWED_HOSTS: rezepte.offene.cloud
               CSRF_TRUSTED_ORIGINS: 'https://rezepte.offene.cloud'
               TANDOOR_PORT: 80
@@ -90,13 +103,11 @@ spec:
         advancedMounts:
           tandoor:
             app:
-              #- path: /opt/recipes/mediafiles
-              #  subPath: mediafiles
-              #  readOnly: false
-              #- path: /opt/recipes/staticfiles
-              #  subPath: staticfiles
-              #  readOnly: false
-              - path: /opt/recipes
+              - path: /opt/recipes/mediafiles
+                subPath: mediafiles
+                readOnly: false
+              - path: /opt/recipes/staticfiles
+                subPath: staticfiles
                 readOnly: false
       tmpfs:
         enabled: true
