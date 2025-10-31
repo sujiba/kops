@@ -50,10 +50,10 @@ spec:
               TANDOOR_PORT: 80
               ENABLE_SIGNUP: 0
               SPACE_AI_ENABLED: 0
-            securityContext:
-              allowPrivilegeEscalation: true
-              readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
+            #securityContext:
+            #  allowPrivilegeEscalation: true
+            #  readOnlyRootFilesystem: false
+            #  capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -61,13 +61,13 @@ spec:
               limits:
                 memory: 1024Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: false
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
-        fsGroupChangePolicy: OnRootMismatch
+    #defaultPodOptions:
+    #  securityContext:
+    #    runAsNonRoot: false
+    #    runAsUser: 0
+    #    runAsGroup: 0
+    #    fsGroup: 0
+    #    fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
