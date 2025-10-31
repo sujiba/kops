@@ -86,7 +86,7 @@ spec:
     persistence:
       data:
         enabled: true
-        type: persistenVolumeClaim
+        type: persistentVolumeClaim
         existingClaim: tandoor-data-pvc
         advancedMounts:
           tandoor:
