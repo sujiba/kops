@@ -106,4 +106,3 @@ spec:
               - path: /tmp
                 subPath: tmp
               - path: /var/lib/nginx
-                subPath: nginx
