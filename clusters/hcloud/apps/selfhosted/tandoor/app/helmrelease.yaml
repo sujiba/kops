@@ -29,15 +29,15 @@ spec:
               DB_ENGINE: django.db.backends.sqlite3
               ALLOWED_HOSTS: rezepte.offene.cloud
               CSRF_TRUSTED_ORIGINS: 'https://rezepte.offene.cloud'
-              TANDOOR_PORT: 8080
+              TANDOOR_PORT: 80
               ENABLE_SIGNUP: 0
             envFrom:
               - secretRef:
                   name: tandoor-secret
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+            #securityContext:
+            #  allowPrivilegeEscalation: false
+            #  readOnlyRootFilesystem: true
+            #  capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -45,19 +45,19 @@ spec:
               limits:
                 memory: 1024Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+    #defaultPodOptions:
+    #  securityContext:
+    #    runAsNonRoot: true
+    #    runAsUser: 1000
+    #    runAsGroup: 1000
+    #    fsGroup: 1000
+    #    fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
         ports:
           http:
-            port: 8080
+            port: 80
 
     ingress:
       app:
