@@ -96,6 +96,9 @@ spec:
               - path: /opt/recipes/staticfiles
                 subPath: staticfiles
                 readOnly: false
+              - path: /opt/recipes/db.sqlite3
+                subPath: db.sqlite3
+                readOnly: false
       tmpfs:
         enabled: true
         type: emptyDir
