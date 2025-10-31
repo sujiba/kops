@@ -29,17 +29,15 @@ spec:
               DB_ENGINE: django.db.backends.sqlite3
               ALLOWED_HOSTS: rezepte.offene.cloud
               CSRF_TRUSTED_ORIGINS: 'https://rezepte.offene.cloud'
-              TANDOOR_PORT: 80
+              TANDOOR_PORT: 8080
               ENABLE_SIGNUP: 0
             envFrom:
               - secretRef:
                   name: tandoor-secret
             securityContext:
-              allowPrivilegeEscalation: true
-              readOnlyRootFilesystem: false
-              capabilities:
-                drop:
-                  - ALL
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -49,17 +47,17 @@ spec:
 
     defaultPodOptions:
       securityContext:
-        runAsNonRoot: false
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
         ports:
           http:
-            port: 80
+            port: 8080
 
     ingress:
       app:
@@ -104,6 +102,11 @@ spec:
         advancedMounts:
           tandoor:
             app:
+              - path: /opt/recipes/cookbook/static/django_js_reverse
+                subPath: django_js_reverse
+              - path: /var/lib/nginx/logs
+                subPath: nginx_logs
+              - path: /var/lib/nginx/tmp
+                subPath: nginx_tmp
               - path: /tmp
                 subPath: tmp
-              - path: /var/lib/nginx
