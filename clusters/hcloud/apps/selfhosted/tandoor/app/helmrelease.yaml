@@ -38,12 +38,12 @@ spec:
               POSTGRES_USER:
                 valueFrom:
                   secretKeyRef:
-                    name: tandoor-secrets
+                    name: tandoor-db-secrets
                     key: username
               POSTGRES_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: tandoor-secrets
+                    name: tandoor-db-secrets
                     key: password
               ALLOWED_HOSTS: rezepte.offene.cloud
               CSRF_TRUSTED_ORIGINS: 'https://rezepte.offene.cloud'

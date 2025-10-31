@@ -33,4 +33,4 @@ spec:
       database: tandoor
       owner: tandoor
       secret:
-        name: tandoor-secrets
+        name: tandoor-db-secrets
