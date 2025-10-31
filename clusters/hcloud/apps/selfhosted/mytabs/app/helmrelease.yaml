@@ -72,4 +72,4 @@ spec:
       data:
         enabled: true
         type: persistentVolumeClaim
-        existingClaim: mytabs
+        existingClaim: mytabs-pvc
