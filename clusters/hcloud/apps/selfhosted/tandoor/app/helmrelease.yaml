@@ -49,6 +49,7 @@ spec:
               CSRF_TRUSTED_ORIGINS: 'https://rezepte.offene.cloud'
               TANDOOR_PORT: 80
               ENABLE_SIGNUP: 0
+              SPACE_AI_ENABLED: 0
             #securityContext:
             #  allowPrivilegeEscalation: false
             #  readOnlyRootFilesystem: true
