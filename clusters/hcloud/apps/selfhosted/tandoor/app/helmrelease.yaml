@@ -90,14 +90,13 @@ spec:
         advancedMounts:
           tandoor:
             app:
-              - path: /opt/recipes/mediafiles
-                subPath: mediafiles
-                readOnly: false
-              - path: /opt/recipes/staticfiles
-                subPath: staticfiles
-                readOnly: false
-              - path: /opt/recipes/db.sqlite3
-                subPath: db.sqlite3
+              #- path: /opt/recipes/mediafiles
+              #  subPath: mediafiles
+              #  readOnly: false
+              #- path: /opt/recipes/staticfiles
+              #  subPath: staticfiles
+              #  readOnly: false
+              - path: /opt/recipes
                 readOnly: false
       tmpfs:
         enabled: true
