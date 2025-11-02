@@ -55,6 +55,12 @@ spec:
               #OC_PASSWORD_POLICY_MIN_UPPERCASE_CHARACTERS: 1
               #OC_PASSWORD_POLICY_MIN_DIGITS: 1
               #OC_PASSWORD_POLICY_MIN_SPECIAL_CHARACTERS: 1
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
             probes:
               liveness:
                 enabled: true
@@ -66,12 +72,6 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 1024Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
 
     service:
       app:

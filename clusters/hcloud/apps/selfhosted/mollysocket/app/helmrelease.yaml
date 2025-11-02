@@ -64,6 +64,12 @@ spec:
                 value: "8020"
               - name: RUST_LOG
                 value: "info"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
             probes:
               liveness:
                 enabled: true
