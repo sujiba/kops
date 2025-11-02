@@ -84,4 +84,4 @@ spec:
         type: persistentVolumeClaim
         existingClaim: mytabs-pvc
         globalMounts:
-          - path: /app/data
+          - path: /app
