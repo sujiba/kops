@@ -33,7 +33,7 @@ spec:
               MYTABS_PORT: &port 47777
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities:
                 drop:
                   - ALL
