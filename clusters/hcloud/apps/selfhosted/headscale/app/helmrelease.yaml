@@ -52,8 +52,7 @@ spec:
               HEADSCALE_DERP_SERVER_IPV4: 91.98.37.31
               # HEADSCALE_DERP_SERVER_IPV6:
               HEADSCALE_DERP_URLS: ""
-              HEADSCALE_DERP_PATHS:
-                - /etc/headscale/derp.yaml
+              HEADSCALE_DERP_PATHS: "/etc/headscale/derp.yaml"
               HEADSCALE_DERP_AUTO_UPDATE_ENABLED: true
               HEADSCALE_DERP_UPDATE_FREQUENCY: 3h
               HEADSCALE_DISABLE_CHECK_UPDATES: false
@@ -74,9 +73,7 @@ spec:
               HEADSCALE_DNS_MAGIC_DNS: true
               HEADSCALE_DNS_BASE_DOMAIN: offene.cloud
               HEADSCALE_DNS_OVERRIDE_LOCAL_DNS: true
-              HEADSCALE_DNS_NAMESERVERS_GLOBAL:
-                - 176.9.93.198
-                - 176.9.1.117
+              HEADSCALE_DNS_NAMESERVERS_GLOBAL: "176.9.93.198 176.9.1.117"
               # HEADSCALE_DNS_SPLIT: {}
               # HEADSCALE_DNS_SEARCH_DOMAINS: []
               # HEADSCALE_DNS_EXTRA_RECORDS: []
