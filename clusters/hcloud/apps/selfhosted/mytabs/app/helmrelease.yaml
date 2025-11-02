@@ -85,4 +85,4 @@ spec:
         existingClaim: mytabs-pvc
         globalMounts:
           - path: /app/data
-            subpath: data
+            subPath: data
