@@ -7,6 +7,6 @@ generatorOptions:
 
 resources:
   - ./resources/anubis.configmap.yaml
-  - ./forgejo.secrets.sops.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
+  - ./secrets.sops.yaml
