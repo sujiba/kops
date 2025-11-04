@@ -12,7 +12,7 @@ resources:
   - ./it-tools/ks.yaml
   #- ./headscale/ks.yaml
   - ./mollysocket/ks.yaml
-  #- ./mytabs/ks.yaml
+  - ./mytabs/ks.yaml
   - ./ntfy/ks.yaml
   - ./opencloud/ks.yaml
   - ./tandoor/ks.yaml
