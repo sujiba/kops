@@ -35,9 +35,9 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                add:
-                  - CHOWN
+              #capabilities:
+              #  add:
+              #    - CHOWN
                 #drop:
                 #  - ALL
             probes:
