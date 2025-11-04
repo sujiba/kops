@@ -37,9 +37,9 @@ spec:
               readOnlyRootFilesystem: true
               capabilities:
                 add:
-                  - CAP_CHOWN
-                drop:
-                  - ALL
+                  - CHOWN
+                #drop:
+                #  - ALL
             probes:
               liveness:
                 enabled: true
