@@ -33,7 +33,7 @@ spec:
               MYTABS_HOST: tabs.offene.cloud
               MYTABS_PORT: &port 47777
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               readOnlyRootFilesystem: true
               #capabilities:
               #  add:
