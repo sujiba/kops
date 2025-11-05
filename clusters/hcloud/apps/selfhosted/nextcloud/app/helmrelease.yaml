@@ -114,8 +114,8 @@ spec:
       existingSecret:
         enabled: true
         secretName: nextcloud-db-secret
-        usernameKey: password
-        passwordKey: username
+        usernameKey: username
+        passwordKey: password
 
     redis:
       enabled: false
