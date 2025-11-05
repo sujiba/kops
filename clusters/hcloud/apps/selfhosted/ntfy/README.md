@@ -22,6 +22,7 @@
     - [Forgejo Actions](#forgejo-actions)
     - [Home Assistant](#home-assistant)
     - [Jellyseerr](#jellyseerr)
+    - [Basic auth with token](#basic-auth-with-token)
 
 # auth-users
 You can set this as a secret:
@@ -281,5 +282,9 @@ See also homeassistant-ntfy integration: [https://github.com/ivanmihov/homeassis
     "click": "https://requests.example.com/{{media_type}}/{{media_tmdbid}}"
 }
 ```
+
+### Basic auth with token
+
+Base64 encode the token like this `:tk_DAKasdmnd2eqdwk2`. Without the username ntfy treats the basic auth password as a token.
 
 </details>
