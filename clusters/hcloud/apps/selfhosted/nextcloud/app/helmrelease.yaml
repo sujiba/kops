@@ -157,7 +157,7 @@ spec:
                 pathType: ImplementationSpecific
         tls:
           - hosts:
-              - ccollabora.offene.cloud
+              - collabora.offene.cloud
             secretName: collabora-tls
 
     cronjob:
