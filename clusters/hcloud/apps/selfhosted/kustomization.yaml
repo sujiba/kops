@@ -13,6 +13,7 @@ resources:
   #- ./headscale/ks.yaml
   - ./mollysocket/ks.yaml
   - ./mytabs/ks.yaml
+  - ./nextcloud/ks.yaml
   - ./ntfy/ks.yaml
   - ./tandoor/ks.yaml
   - ./zola-blog/ks.yaml
