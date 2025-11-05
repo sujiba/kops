@@ -7,4 +7,4 @@ metadata:
 spec:
   interval: 1h
   timeout: 3m
-  url: https://nextcloud.github.io/helm/
+  url: https://nextcloud.github.io/helm
