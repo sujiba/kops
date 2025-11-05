@@ -7,7 +7,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: mytabs
-  interval: 1m
+  interval: 30m
 
   values:
     controllers:

@@ -4,7 +4,7 @@ kind: Kustomization
 metadata:
   name: mytabs
 spec:
-  interval: 1m
+  interval: 1h
   path: ./clusters/hcloud/apps/selfhosted/mytabs/app
   postBuild:
     substituteFrom:
