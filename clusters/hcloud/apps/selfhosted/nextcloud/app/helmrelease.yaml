@@ -121,7 +121,7 @@ spec:
       enabled: false
     externalRedis:
       enabled: true
-      host: nextcloud-dragonfly.selfosted.svc.cluster.local
+      host: nextcloud-dragonfly.selfhosted.svc.cluster.local
       port: 6379
       existingSecret:
         enabled: true
