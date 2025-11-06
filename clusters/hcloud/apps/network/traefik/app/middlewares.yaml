@@ -49,7 +49,6 @@ spec:
       - OPTIONS
       - PUT
       - POST
-      - PROPFIND
     accessControlMaxAge: 100
     hostsProxyHeaders:
       - "X-Forwarded-Host"
