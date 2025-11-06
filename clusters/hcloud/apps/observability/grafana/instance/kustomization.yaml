@@ -6,4 +6,4 @@ resources:
   - ./grafana.yaml
   - ./grafanadatasource.yaml
   - ./ingress.yaml
-  - ./servicemonitor.yaml
+  #- ./servicemonitor.yaml
