@@ -23,7 +23,7 @@ metadata:
 spec:
   rateLimit:
     average: 100
-    burst: 500
+    burst: 200
 
 ---
 apiVersion: traefik.io/v1alpha1
