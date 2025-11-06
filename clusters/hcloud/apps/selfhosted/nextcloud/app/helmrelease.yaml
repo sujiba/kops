@@ -144,9 +144,9 @@ spec:
       collabora:
         aliasgroups:
           - host: "https://files.offene.cloud:443"
-        extra_params: --o:ssl.enable=false
+        extra_params: --o:ssl.enable=true
 
-      server_name: collabora.offene.cloud
+      server_name: office.offene.cloud
 
       existingSecret:
         enabled: true
@@ -167,13 +167,13 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
           kubernetes.io/ingress.class: traefik
         hosts:
-          - host: collabora.offene.cloud
+          - host: office.offene.cloud
             paths:
               - path: /
                 pathType: ImplementationSpecific
         tls:
           - hosts:
-              - collabora.offene.cloud
+              - office.offene.cloud
             secretName: collabora-tls
 
     cronjob:
