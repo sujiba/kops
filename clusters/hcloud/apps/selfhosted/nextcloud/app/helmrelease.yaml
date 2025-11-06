@@ -144,7 +144,7 @@ spec:
       collabora:
         aliasgroups:
           - host: "https://files.offene.cloud:443"
-        extra_params: --o:ssl.enable=true
+        extra_params: --o:ssl.enable=false --o:ssl.termination=true
 
       server_name: office.offene.cloud
 
