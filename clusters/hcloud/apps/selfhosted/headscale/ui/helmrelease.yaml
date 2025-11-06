@@ -61,7 +61,7 @@ spec:
           cert-manager.io/private-key-algorithm: ECDSA
           cert-manager.io/private-key-size: "384"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          kubernetes.io/ingress.class: traefik
+          spec.ingressClassName: traefik
         hosts:
           - host: "headplane.offene.cloud"
             paths:

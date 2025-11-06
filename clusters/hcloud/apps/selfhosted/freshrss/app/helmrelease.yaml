@@ -56,7 +56,7 @@ spec:
           cert-manager.io/private-key-size: "384"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-          kubernetes.io/ingress.class: traefik
+          spec.ingressClassName: traefik
         hosts:
           - host: "rss.offene.cloud"
             paths:
