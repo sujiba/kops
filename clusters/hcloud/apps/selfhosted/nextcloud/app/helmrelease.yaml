@@ -64,8 +64,6 @@ spec:
           post_max_size = 16G
           max_input_time = 3600
           max_execution_time = 3600
-      defaultConfigs:
-        redis.config.php: false
       configs:
         local.config.php: |-
           <?php
@@ -79,6 +77,7 @@ spec:
             'auth.bruteforce.protection.enabled' => true,
             'maintenance_window_start' => 1,
             'simpleSignUpLink.shown' => false,
+            'overwrite.cli.url' => 'https://files.offene.cloud',
           );
 
       hooks:
