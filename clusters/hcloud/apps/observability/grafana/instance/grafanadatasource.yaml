@@ -13,6 +13,7 @@ spec:
     access: proxy
     isDefault: true
     url: http://prometheus-operated.observability.svc.cluster.local:9090
+
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource

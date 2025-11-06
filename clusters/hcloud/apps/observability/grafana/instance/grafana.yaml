@@ -5,6 +5,7 @@ metadata:
   name: grafana
   labels:
     grafana.internal/instance: grafana
+
 spec:
   config:
     analytics:
@@ -29,6 +30,7 @@ spec:
     server:
       enable_gzip: "true"
       root_url: https://grafana.offene.cloud
+
   deployment:
     spec:
       strategy:
@@ -62,6 +64,7 @@ spec:
             - name: grafana-data
               persistentVolumeClaim:
                 claimName: grafana-pvc
+
   persistentVolumeClaim:
     spec:
       accessModes:

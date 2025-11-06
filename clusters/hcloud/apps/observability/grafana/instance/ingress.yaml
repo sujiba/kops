@@ -10,6 +10,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
     kubernetes.io/ingress.class: traefik
+
 spec:
   rules:
     - host: grafana.offene.cloud
