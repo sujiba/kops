@@ -22,8 +22,8 @@ metadata:
   namespace: network
 spec:
   rateLimit:
-    average: 50
-    burst: 100
+    average: 100
+    burst: 500
 
 ---
 apiVersion: traefik.io/v1alpha1
@@ -65,14 +65,12 @@ spec:
     contentTypeNosniff: true
     browserXssFilter: true
     customResponseHeaders:
-      #permissionsPolicy: "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
       X-Frame-Options: "SAMEORIGIN"
       X-Robots-Tag: "noindex,nofollow"
       X-Permitted-Cross-Domain-Policies: "none"
       X-Forwarded-Proto: "https"
       X-Powered-By: ""
       server: "UwU"
-      #City: X-GEO-City
 
 ---
 apiVersion: traefik.io/v1alpha1
