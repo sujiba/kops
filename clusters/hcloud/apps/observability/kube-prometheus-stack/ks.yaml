@@ -8,7 +8,7 @@ spec:
     labels:
       app.kubernetes.io/name: kube-prometheus-stack
   interval: 1h
-  path: ./clusters/hcloud/apps/selfhosted/kube-prometheus-stack/app
+  path: ./clusters/hcloud/apps/observability/kube-prometheus-stack/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
