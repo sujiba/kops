@@ -1,6 +1,6 @@
 <div align="center">
 
-# My K(ubernetes) Op(eration)s Repository <!-- omit in toc -->
+# K(ubernetes) Op(eration)s <!-- omit in toc -->
 
 _... managed by FluxCD, Renovate, and Forgejo Actions_ 🤖
 
