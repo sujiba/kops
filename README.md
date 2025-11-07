@@ -7,10 +7,14 @@ _... managed by FluxCD, Renovate, and Forgejo Actions_ 🤖
 [![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/k8s-at-home)
 [![Renovate](https://img.shields.io/badge/powered_by-Renovate-blue?style=for-the-badge&logo=renovate)](https://www.mend.io/renovate/)
 
+
 Kubernetes cluster stats:
 
+[![Age-Days](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_age_days&style=flat-square&label=Age)](https://github.com/kashalls/kromgo)
+[![Uptime-Days](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/Fcluster_uptime_days&style=flat-square&label=Uptime)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
 
 </div>
+
 
 ## 📖 Overview
 - [📖 Overview](#-overview)
