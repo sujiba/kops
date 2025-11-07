@@ -30,12 +30,6 @@ spec:
             image:
               repository: ghcr.io/mollyim/mollysocket
               tag: 1.6.0@sha256:6fd584433479b7e3e4237dd7c65500ede8819a97a8bdaa8c76faf070d1aa4562
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-              readOnlyRootFilesystem: true
             args: ["server"]
             workingDir: /data
             env:
@@ -98,7 +92,6 @@ spec:
           cert-manager.io/private-key-size: "384"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-          spec.ingressClassName: traefik
         hosts:
           - host: "molly.offene.cloud"
             paths:
