@@ -9,9 +9,9 @@ metadata:
     cert-manager.io/private-key-size: "384"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-    spec.ingressClassName: traefik
 
 spec:
+  ingressClassName: traefik
   rules:
     - host: grafana.offene.cloud
       http:
