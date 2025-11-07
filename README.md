@@ -8,10 +8,9 @@ _... managed by FluxCD, Renovate, and Forgejo Actions_ 🤖
 [![Renovate](https://img.shields.io/badge/powered_by-Renovate-blue?style=for-the-badge&logo=renovate)](https://www.mend.io/renovate/)
 
 
-[![Talos](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/talos_version&style=for-the-badge&logo=talos&logoColor=white&color=blue&label=%20)](https://talos.dev)
+[![Talos](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/talos_version&style=for-the-badge&logo=talos&logoColor=white&color=orange&label=%20)](https://talos.dev)
 [![Kubernetes](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/kubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=blue&label=%20)](https://kubernetes.io)
 [![Flux](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/flux_version&style=for-the-badge&logo=flux&logoColor=white&color=blue&label=%20)](https://fluxcd.io)
-![Renovate](https://code.offene.cloud/homelab/renovate-config/badges/workflows/renovate.yaml/badge.svg)
 
 Kubernetes cluster stats:
 
