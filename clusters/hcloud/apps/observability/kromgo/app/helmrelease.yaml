@@ -87,9 +87,8 @@ spec:
           cert-manager.io/private-key-size: "384"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-traefik-middleware-chain-no-auth@kubernetescrd"
-
         hosts:
-          - host: "kromgo.next.offene.cloud"
+          - host: "kromgo.offene.cloud"
             paths:
               - path: /
                 service:
@@ -97,7 +96,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "kromgo.next.offene.cloud"
+              - "kromgo.offene.cloud"
             secretName: kromgo-tls
 
     persistence:
