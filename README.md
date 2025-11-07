@@ -1,18 +1,18 @@
 <div align="center">
 
-# My Home Operations Repository <!-- omit in toc -->
+# My K(ubernetes) Op(eration)s Repository <!-- omit in toc -->
 
 _... managed by FluxCD, Renovate, and Forgejo Actions_ 🤖
 
-[![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/k8s-at-home)
-[![Renovate](https://img.shields.io/badge/powered_by-Renovate-blue?style=for-the-badge&logo=renovate)](https://www.mend.io/renovate/)
+[![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=5A65EA)](https://discord.gg/k8s-at-home)
+[![Renovate](https://img.shields.io/badge/Renovate-193B87?style=for-the-badge&logo=renovate&logoColor=white)](https://www.mend.io/renovate/)
+[![Forgejo](https://img.shields.io/badge/Forgejo-EC622A?style=for-the-badge&logo=forgejo&logoColor=white)](https://forgejo.org)
 
+**_hcloud cluster stats:_**
 
-[![Talos](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/talos_version&style=for-the-badge&logo=talos&logoColor=white&color=orange&label=%20)](https://talos.dev)
-[![Kubernetes](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/kubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=blue&label=%20)](https://kubernetes.io)
-[![Flux](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/flux_version&style=for-the-badge&logo=flux&logoColor=white&color=blue&label=%20)](https://fluxcd.io)
-
-Kubernetes cluster stats:
+[![Talos](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/talos_version&style=for-the-badge&logo=talos&logoColor=white&color=D14459&label=%20)](https://talos.dev)
+[![Kubernetes](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/kubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=416BDD&label=%20)](https://kubernetes.io)
+[![Flux](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/flux_version&style=for-the-badge&logo=flux&logoColor=white&color=416BDD&label=%20)](https://fluxcd.io)
 
 ![Age-Days](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_age_days&style=flat-square&label=Age)
 ![Uptime-Days](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_uptime_days&style=flat-square&label=Uptime)
