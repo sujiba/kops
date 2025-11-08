@@ -64,7 +64,7 @@ spec:
         hosts:
           - host: "headplane.offene.cloud"
             paths:
-              - path: /
+              - path: /admin
                 service:
                   identifier: app
                   port: http
