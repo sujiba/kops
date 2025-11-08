@@ -63,24 +63,9 @@ spec:
         # the domain we send email from
         domain: ${MAIL_DOMAIN}
         smtp:
-          host:
-            valueFrom:
-              secretKeyRef:
-                name: nextcloud-secret
-                key: mail-server
           secure: ssl
           port: 465
           authtype: LOGIN
-          name:
-            valueFrom:
-              secretKeyRef:
-                name: nextcloud-secret
-                key: mail-user
-          password:
-            valueFrom:
-              secretKeyRef:
-                name: nextcloud-secret
-                key: mail-password
 
       phpConfigs:
         uploadLimit.ini: |
