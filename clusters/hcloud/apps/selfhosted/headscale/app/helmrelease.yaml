@@ -74,8 +74,8 @@ spec:
 
     persistence:
       config:
-        type: configMap
-        name: headscale-configmap
+        type: secret
+        name: headscale-secret
         globalMounts:
           - path: /etc/headscale/config.yaml
             subPath: config.yaml

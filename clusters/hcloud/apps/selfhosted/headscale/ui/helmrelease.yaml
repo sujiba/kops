@@ -75,15 +75,18 @@ spec:
 
     persistence:
       config:
-        enabled: true
         type: secret
-        name: headplane-config
+        name: headplane-secret
         globalMounts:
-          - path: /etc/headplane
+          - path: /etc/headplane/config.yaml
+            subPath: config.yaml
       data:
+        type: persistentVolumeClaim
+        existingClaim: headplane-pvc
         storageClass:
         globalMounts:
           - path: /var/lib/headplane
+            subPath: data
       tmp:
         enabled: true
         type: emptyDir

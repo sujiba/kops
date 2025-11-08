@@ -10,7 +10,7 @@ resources:
   - ./namespace.yaml
   - ./freshrss/ks.yaml
   - ./it-tools/ks.yaml
-  #- ./headscale/ks.yaml
+  - ./headscale/ks.yaml
   - ./mollysocket/ks.yaml
   - ./mytabs/ks.yaml
   - ./nextcloud/ks.yaml

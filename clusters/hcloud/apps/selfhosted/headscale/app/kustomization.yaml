@@ -4,8 +4,7 @@ kind: Kustomization
 namespace: selfhosted
 
 resources:
-  - ./configmap.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./pvc.yaml
-  # - ./secrets.sops.yaml
+  - ./secrets.sops.yaml
