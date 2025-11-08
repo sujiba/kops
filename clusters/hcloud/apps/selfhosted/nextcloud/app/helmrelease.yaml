@@ -63,11 +63,19 @@ spec:
         # the domain we send email from
         domain: ${MAIL_DOMAIN}
         smtp:
-          host: mx.${MAIL_DOMAIN}
+          host:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud-secret
+                key: mail-server
           secure: ssl
           port: 465
           authtype: LOGIN
-          name: no-reply@${MAIL_DOMAIN}
+          name:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud-secret
+                key: mail-user
           password:
             valueFrom:
               secretKeyRef:
