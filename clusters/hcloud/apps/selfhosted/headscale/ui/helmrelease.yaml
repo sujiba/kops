@@ -62,7 +62,7 @@ spec:
           cert-manager.io/private-key-size: "384"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "headplane.offene.cloud"
+          - host: "headscale.offene.cloud"
             paths:
               - path: /admin
                 service:
@@ -70,8 +70,8 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "headplane.offene.cloud"
-            secretName: headplane-tls
+              - "headscale.offene.cloud"
+            secretName: headscale-tls
 
     persistence:
       config:
