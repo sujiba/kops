@@ -148,7 +148,7 @@ spec:
         passwordKey: password
 
     collabora:
-      enabled: true
+      enabled: false
 
       collabora:
         aliasgroups:
