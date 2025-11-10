@@ -160,7 +160,7 @@ spec:
       existingSecret:
         enabled: true
         # name of existing Kubernetes Secret with collboara admin credentials
-        secretName: nextcloud-collabora-secret
+        secretName: nextcloud-collabora
         usernameKey: username
         passwordKey: password
 
