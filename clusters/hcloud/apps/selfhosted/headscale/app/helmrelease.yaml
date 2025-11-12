@@ -12,6 +12,7 @@ spec:
   values:
     controllers:
       headscale:
+        type: StatefulSet
         replicas: 1
         strategy: RollingUpdate
 

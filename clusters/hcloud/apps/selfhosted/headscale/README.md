@@ -28,7 +28,7 @@ kubectl -n <namespace> exec <podname> -- headscale apikeys delete --prefix "Wl6E
 kubectl -n <namesapce> exec <podname> -- headscale nodes tag -i <node_id> -t tag:<name>,tag:<name2>
 
 # list nodes with their tags
-kubectl -n <namesapce> exec <podname> -- headscale nodes list 
+kubectl -n <namesapce> exec <podname> -- headscale nodes list -t
 ```
 
 # ACLs
