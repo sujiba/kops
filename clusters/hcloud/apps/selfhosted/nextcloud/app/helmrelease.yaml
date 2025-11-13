@@ -154,13 +154,11 @@ spec:
         aliasgroups:
           - host: "https://files.offene.cloud:443"
         extra_params: --o:ssl.enable=false --o:ssl.termination=true
-
         server_name: office.offene.cloud
-
         existingSecret:
           enabled: true
           # name of existing Kubernetes Secret with col"lboara admin credentials
-          secretName: nextcloud-collabora
+          secretName: nextcloud-collabora-secret
           usernameKey: username
           passwordKey: password
 
