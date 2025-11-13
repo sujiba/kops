@@ -155,14 +155,14 @@ spec:
           - host: "https://files.offene.cloud:443"
         extra_params: --o:ssl.enable=false --o:ssl.termination=true
 
-      server_name: office.offene.cloud
+        server_name: office.offene.cloud
 
-      existingSecret:
-        enabled: true
-        # name of existing Kubernetes Secret with col"lboara admin credentials
-        secretName: nextcloud-collabora
-        usernameKey: username
-        passwordKey: password
+        existingSecret:
+          enabled: true
+          # name of existing Kubernetes Secret with col"lboara admin credentials
+          secretName: nextcloud-collabora
+          usernameKey: username
+          passwordKey: password
 
       ingress:
         enabled: true
