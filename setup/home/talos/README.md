@@ -32,7 +32,7 @@ age-keygen -o  $HOME/Library/Application\ Support/sops/age/keys.txt
 ```
 
 ## talhelper
-Change into the directory `setup/hcloud/talos`
+Change into the directory `setup/home/talos`
 
 ### Encryption setup
 Create the file `.sops.yaml` and copy the following content into it. Replace `YOUR_PULBIC_AGE_KEY` with the public key that you can find in your previously genereted keys.txt.
@@ -78,9 +78,12 @@ vi talconfig.yaml
 > [!CAUTION]
 > The `.gitignore` contains all genereted files from `talhelper genconfig` because those files contain unencrypted secrets.
 
-The command `talhelper genconfig` will create a `.gitignore`, `talosconfig` and `CLUSTERNAME_HOSTNAMEs.yaml` under clusterconfig. 
+The command `talhelper genconfig` will create a `.gitignore`, `talosconfig` and `CLUSTERNAME_HOSTNAMEs.yaml` under clusterconfig.
 
 ## Cluster bootstrap
+
+> [!TIP]
+> After booting talos from usb, change with F3 into network and configure a static ip adress
 
 ```bash
 talosctl apply-config --insecure -n IP_ADDRESS --file clusterconfig/clustername-host.yaml

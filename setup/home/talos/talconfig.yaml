@@ -1,0 +1,166 @@
+clusterName: &clusterName "${clusterName}"
+
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: 1.11.5
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: 1.34.2
+
+endpoint: https://${privateClusterIP}:6443
+#domain: ${myDomainName}
+
+additionalMachineCertSans: &sans
+  - 127.0.0.1 # KubePrism
+  - ${privateClusterIP} # home network
+additionalApiServerCertSans: *sans
+
+nodes:
+  # control plane nodes
+  - hostname: talos-01
+    controlPlane: true
+    ipAddress: ${privateClusterIP}
+    networkInterfaces:
+      - interface: enp86s0
+        addresses:
+          - ${privateClusterIP}/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.10.10.1
+        dhcp: false
+    nameservers:
+      - 10.10.10.2
+    installDisk: /dev/nvme0n1
+    talosImageURL: factory.talos.dev/metal-installer-secureboot/cc720ffb8efc8f12637b8660a86448a88b3f89f516995fb9c67bf80564e723b1
+    machineSpec:
+      mode: metal
+      arch: ${serverArch}
+    nodeAnnotations:
+      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+
+controlPlane:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - -init_on_alloc # Less security, faster puter
+        - -init_on_free # Less security, faster puter
+        - -selinux # Less security, faster puter
+        - apparmor=0 # Less security, faster puter
+        - i915.enable_guc=3 # Meteor Lake CPU & Intel iGPU
+        - init_on_alloc=0 # Less security, faster puter
+        - init_on_free=0 # Less security, faster puter
+        - intel_iommu=on # PCI Passthrough
+        - iommu=pt # PCI Passthrough
+        - mitigations=off # Less security, faster puter
+        - security=none # Less security, faster puter
+        - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU & Intel iGPU
+        - talos.auditd.disabled=1 # Less security, faster puter
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915
+          - siderolabs/intel-ucode
+          - siderolabs/mei
+          - siderolabs/thunderbolt
+
+  nodeLabels:
+    topology.kubernetes.io/region: ${region}
+    topology.kubernetes.io/zone: ${zone}
+    node.kubernetes.io/gpu: "true"
+
+  patches:
+    - |-
+      machine:
+        files:
+          - op: create
+            path: /etc/cri/conf.d/20-customization.part
+            content: |
+              [plugins]
+                [plugins."io.containerd.grpc.v1.cri"]
+                  enable_unprivileged_ports = true
+                  enable_unprivileged_icmp = true
+              [plugins."io.containerd.grpc.v1.cri".containerd]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                discard_unpacked_layers = false
+
+    - |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/mnt/extra
+              type: bind
+              source: /var/mnt/extra
+              options:
+                - bind
+                - rshared
+                - rw
+          nodeIP:
+            validSubnets:
+              - ${privateClusterIP}/32
+    - |-
+      machine:
+        network:
+          disableSearchDomain: true
+    - |-
+      machine:
+        time:
+          servers:
+            - 10.10.10.1
+
+    - |-
+      machine:
+        files:
+          - op: overwrite
+            path: /etc/nfsmount.conf
+            permissions: 0o644
+            content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              nconnect=16
+              noatime=True
+
+    # Configure custom sysctls
+    - |-
+      machine:
+        sysctls:
+          fs.inotify.max_user_instances: "8192"
+          fs.inotify.max_user_watches: "1048576"
+          net.core.default_qdisc: fq
+          net.core.rmem_max: "67108864"
+          net.core.wmem_max: "67108864"
+          net.ipv4.neigh.default.gc_thresh1: "4096"
+          net.ipv4.neigh.default.gc_thresh2: "8192"
+          net.ipv4.neigh.default.gc_thresh3: "16384"
+          net.ipv4.tcp_congestion_control: bbr
+          net.ipv4.tcp_fastopen: "3"
+          net.ipv4.tcp_mtu_probing: "1"
+          net.ipv4.tcp_rmem: 4096 87380 33554432
+          net.ipv4.tcp_window_scaling: "1"
+          net.ipv4.tcp_wmem: 4096 65536 33554432
+          sunrpc.tcp_max_slot_table_entries: "128"
+          sunrpc.tcp_slot_table_entries: "128"
+          user.max_user_namespaces: "11255"
+          vm.nr_hugepages: "1024"
+
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - system-upgrade
+
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+
+    - |-
+      cluster:
+        network:
+          cni:
+            name: none
+        proxy:
+          disabled: true
+        allowSchedulingOnControlPlanes: true
