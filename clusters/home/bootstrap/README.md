@@ -62,8 +62,8 @@ helmfile apply
 
 ```bash
 # reconcile source git repo and all kustomizations
-flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/hcloud && \
-flux reconcile -n flux-system kustomization flux-system --kubeconfig ~/.kube/hcloud
+flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/home && \
+flux reconcile -n flux-system kustomization flux-system --kubeconfig ~/.kube/home
 ```
 
 ## flux cheat-sheet
