@@ -43,6 +43,23 @@ releases:
         #  - postsync
         #showlogs: true
 
+  - name: cert-manager
+    namespace: cert-manager
+    chart: oci://quay.io/jetstack/charts/cert-manager
+    version: v1.19.1
+    values:
+      - templates/values.yaml.gotmpl
+    set:
+      - name: crds.enabled
+        value: "true"
+    hooks:
+      - events: ["postsync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -f
+          - ../apps/cert-manager/cert-manager/app/cluster-issuers.yaml
 
   #- name: democratic-csi
   #  namespace: storage
