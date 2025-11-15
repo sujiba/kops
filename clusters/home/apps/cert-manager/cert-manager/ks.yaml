@@ -13,7 +13,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 1m
+  interval: 1h
   path: ./clusters/home/apps/cert-manager/cert-manager/app
   prune: true
   sourceRef:
@@ -40,7 +40,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager
-  interval: 30m
+  interval: 1h
   path: ./clusters/home/apps/cert-manager/cert-manager/netcup
   prune: true
   sourceRef:
