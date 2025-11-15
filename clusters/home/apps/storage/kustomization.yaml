@@ -9,4 +9,3 @@ components:
 resources:
   - ./namespace.yaml
   #- ./democratic-csi/ks.yaml
-  #- ./volsync/ks.yaml
