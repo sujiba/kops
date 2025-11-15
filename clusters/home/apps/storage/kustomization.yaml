@@ -8,4 +8,4 @@ components:
 
 resources:
   - ./namespace.yaml
-  #- ./democratic-csi/ks.yaml
+  - ./democratic-csi/ks.yaml
