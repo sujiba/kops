@@ -6,6 +6,10 @@ metadata:
   namespace: &namespace cert-manager
 spec:
   targetNamespace: *namespace
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
