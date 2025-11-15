@@ -39,7 +39,7 @@ spec:
       isDefaultClass: true
     ingressRoute:
       dashboard:
-        enabled: false
+        enabled: true
     providers:
       kubernetesCRD:
         enabled: true
@@ -65,6 +65,11 @@ spec:
           default: false
       web:
         port: 80
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
       websecure:
         port: 443
         tls:

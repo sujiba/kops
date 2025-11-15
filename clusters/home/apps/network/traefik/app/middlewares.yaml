@@ -59,7 +59,6 @@ spec:
     stsSeconds: 31536000
     stsIncludeSubdomains: true
     referrerPolicy: "same-origin"
-    #contentSecurityPolicy: "upgrade-insecure-requests;"
     frameDeny: true
     customFrameOptionsValue: "SAMEORIGIN"
     contentTypeNosniff: true
