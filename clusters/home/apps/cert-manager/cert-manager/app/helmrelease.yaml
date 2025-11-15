@@ -22,4 +22,4 @@ spec:
     podDnsPolicy: None
     podDnsConfig:
       nameservers:
-      - ${PRIVATE_DNS_IP}
+        - ${PRIVATE_DNS_IP}
