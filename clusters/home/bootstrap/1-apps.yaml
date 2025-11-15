@@ -43,6 +43,26 @@ releases:
         #  - postsync
         #showlogs: true
 
+  - name: traefik
+    namespace: network
+    chart: traefik/traefik
+    version: 37.3.0
+    values:
+      - templates/values.yaml.gotmpl
+    set:
+      - name: crds.enabled
+        value: "true"
+    hooks:
+      - events: ["postsync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -f
+          - ../apps/network/traefik/app/middlewares.yaml
+    needs:
+      - kube-system/cilium
+
   - name: cert-manager
     namespace: cert-manager
     chart: oci://quay.io/jetstack/charts/cert-manager
@@ -60,13 +80,8 @@ releases:
           - apply
           - -f
           - ../apps/cert-manager/cert-manager/app/cluster-issuers.yaml
-
-  #- name: democratic-csi
-  #  namespace: storage
-  #  chart: democratic-csi/democratic-csi
-  #  version: 0.15.0
-  #  values:
-  #    - templates/values.yaml.gotmpl
+    needs:
+      - kube-system/cilium
 
   - name: flux-operator
     namespace: flux-system
