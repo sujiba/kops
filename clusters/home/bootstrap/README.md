@@ -4,7 +4,6 @@
 - [Prerequisites](#prerequisites)
   - [Create Namespaces](#create-namespaces)
   - [Add sops private key](#add-sops-private-key)
-  - [Create secrets](#create-secrets)
 - [Prepare k8s and bootstrap fluxcd](#prepare-k8s-and-bootstrap-fluxcd)
 - [flux reconcile](#flux-reconcile)
 - [flux cheat-sheet](#flux-cheat-sheet)
@@ -15,30 +14,20 @@ brew install helm helmfile kubectl fluxcd/tap/flux yq
 ```
 
 ## Prerequisites
-Change into the directory `clusters/hcloud/bootstrap`
+Change into the directory `clusters/home/bootstrap`
 
 ### Create Namespaces
 ```bash
 # create namespace upfront to apply secrets
 kubectl create ns flux-system
-kubectl create ns development
 ```
 
 ### Add sops private key
 ```bash
-cat $HOME/Library/Application\ Support/sops/age/keys.txt | kubectl create secret generic sops-age --from-file=age.agekey=/dev/stdin -n flux-system
-```
-
-### Create secrets
-```bash
-# Do not forget to encrypt all your *.sops.yaml files
-mv bootstrap.secrets.sops.yaml_example bootstrap.secrets.sops.yaml
-
-# in-place encrypt secrets file, so we can store them in our git repo
-sops encrypt -i bootstrap.secrets.sops.yaml
-
-# Apply secrets to cluster
-sops --decrypt bootstrap.secrets.sops.yaml | kubectl apply -f -
+cat $HOME/Library/Application\ Support/sops/age/keys.txt | \
+  kubectl create secret generic sops-age \
+  --from-file=age.agekey=/dev/stdin \
+  -n flux-system --kubeconfig ~/.kube/home
 ```
 
 ## Prepare k8s and bootstrap fluxcd 
@@ -49,9 +38,8 @@ helmfile init
 # render all necessary crds
 helmfile -f 0-crds.yaml template -q | kubectl apply --server-side -f -
 
-# sync before apply, to install crds
-helmfile sync
-helmfile apply
+# sync helm
+helmfile -f 1-apps.yaml sync
 ```
 
 ## flux reconcile

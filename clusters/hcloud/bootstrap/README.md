@@ -26,7 +26,10 @@ kubectl create ns development
 
 ### Add sops private key
 ```bash
-cat $HOME/Library/Application\ Support/sops/age/keys.txt | kubectl create secret generic sops-age --from-file=age.agekey=/dev/stdin -n flux-system
+cat $HOME/Library/Application\ Support/sops/age/keys.txt | \
+  kubectl create secret generic sops-age \
+  --from-file=age.agekey=/dev/stdin \
+  -n flux-system --kubeconfig ~/.kube/hcloud
 ```
 
 ### Create secrets
@@ -46,9 +49,11 @@ sops --decrypt bootstrap.secrets.sops.yaml | kubectl apply -f -
 # initiate helmfile
 helmfile init
 
-# sync before apply, to install crds
-helmfile sync
-helmfile apply
+# render all necessary crds
+helmfile -f 0-crds.yaml template -q | kubectl apply --server-side -f -
+
+# sync helm
+helmfile -f 1-apps.yaml sync
 ```
 
 ## flux reconcile
