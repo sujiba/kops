@@ -15,12 +15,11 @@ spec:
   values:
     crds:
       enabled: true
-    dns01RecursiveNameservers: "185.12.64.1:53"
+    dns01RecursiveNameservers: ${PRIVATE_DNS_IP}
     dns01RecursiveNameserversOnly: true
     cainjector:
       replicaCount: 1
-    podDnsPolicy: "None"
+    podDnsPolicy: None
     podDnsConfig:
       nameservers:
-      - "185.12.64.1"
-      - "185.12.64.2"
+      - ${PRIVATE_DNS_IP}
