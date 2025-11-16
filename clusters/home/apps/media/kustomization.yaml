@@ -8,5 +8,5 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./media-nfs.yaml
   - ./jellyfin/ks.yaml
+  - ./media-nfs/ks.yaml
