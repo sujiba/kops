@@ -5,7 +5,7 @@ metadata:
   name: grafana
 spec:
   hostnames:
-    - grafana.${INTERNAL_DOMAIN}
+    - "grafana.${INTERNAL_DOMAIN}"
   parentRefs:
     - name: envoy-internal
       namespace: network

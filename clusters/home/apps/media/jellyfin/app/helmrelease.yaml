@@ -75,7 +75,7 @@ spec:
     route:
       app:
         hostnames:
-          - "jellyfin.${PRIVATE_DOMAIN}"
+          - "jellyfin.${INTERNAL_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
