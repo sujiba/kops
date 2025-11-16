@@ -4,7 +4,6 @@ kind: Kustomization
 
 resources:
   - ./helmrelease.yaml
-  - ./media-nfs.yaml
   - ./ocirepository.yaml
   - ./pvc.yaml
   - ./resourceclaimtemplate.yaml
