@@ -9,11 +9,6 @@ helmDefaults:
   # forces resource update through delete/recreate if needed (default false)
   force: true
 
-repositories:
-  # democratic-csi
-  - name: democratic-csi
-    url: https://democratic-csi.github.io/charts/
-
 releases:
   - name: cilium
     namespace: kube-system
@@ -30,38 +25,6 @@ releases:
         events:
           - postsync
         showlogs: true
-      # Apply cilium network configuration
-      #- command: kubectl
-        #args:
-        #  - apply
-        #  - --namespace=kube-system
-        #  - --server-side
-        #  - --field-manager=kustomize-controller
-        #  - --kustomize
-        #  - ../../apps/kube-system/cilium/config/
-        #events:
-        #  - postsync
-        #showlogs: true
-
-  - name: traefik
-    namespace: network
-    chart: traefik/traefik
-    version: 37.3.0
-    values:
-      - templates/values.yaml.gotmpl
-    set:
-      - name: crds.enabled
-        value: "true"
-    hooks:
-      - events: ["postsync"]
-        showlogs: true
-        command: kubectl
-        args:
-          - apply
-          - -f
-          - ../apps/network/traefik/app/middlewares.yaml
-    needs:
-      - kube-system/cilium
 
   - name: cert-manager
     namespace: cert-manager
