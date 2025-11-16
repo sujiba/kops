@@ -27,7 +27,7 @@ metadata:
 spec:
   dependsOn:
     - name: grafana
-    - name: openebs
+    - name: democratic-csi
       namespace: storage
   interval: 1h
   path: ./clusters/home/apps/observability/grafana/instance
