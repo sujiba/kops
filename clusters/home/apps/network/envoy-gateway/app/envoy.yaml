@@ -68,7 +68,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: internal-wildcard
+            name: internal-wildcard-tls
 
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
