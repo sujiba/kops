@@ -51,7 +51,7 @@ spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      lbipam.cilium.io/ips: ${ENVOY_INTERNAL_IP}
+      lbipam.cilium.io/ips: ${ENVOY_INTERNAL_IPv4},${ENVOY_INTERNAL_IPv6}
   listeners:
     - name: http
       protocol: HTTP
