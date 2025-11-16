@@ -20,4 +20,5 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "${PRIVATE_CIDR}"
+    - cidr: "${ENVOY_INTERNAL_IP}/32"
+    - cidr: "${ENVOY_VPN_IP}/32"
