@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: internal-wildcard
+  namespace: traefik
+spec:
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  secretName: internal-wildcard-tls
+  commonName: ${INTERNAL_DOMAIN}
+  dnsNames:
+    - ${INTERNAL_DOMAIN}
+    - "*.${INTERNAL_DOMAIN}"
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always
