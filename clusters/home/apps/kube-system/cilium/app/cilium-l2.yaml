@@ -5,7 +5,6 @@ metadata:
   name: policy
 spec:
   loadBalancerIPs: true
-  interfaces:
   # NOTE: This might need to be set if you have more than one active NIC on your nodes
   # interfaces:
   #  - ^enp[0-9]+
