@@ -95,7 +95,6 @@ spec:
         existingClaim: media-nfs
         globalMounts:
           - path: /media
-            readOnly: true
       transcode:
         type: emptyDir
         globalMounts:
