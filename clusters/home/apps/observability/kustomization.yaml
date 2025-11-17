@@ -8,6 +8,7 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./gatus/ks.yalm
   - ./grafana/ks.yaml
   #- ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
