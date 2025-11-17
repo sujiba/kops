@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+spec:
+  interval: 1h
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: vaultwarden
+
+  values:
+    controllers:
+      vaultwarden:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: ${VOLSYNC_UID}
+            runAsGroup: ${VOLSYNC_GID}
+            fsGroup: ${VOLSYNC_GID}
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/dani-garcia/vaultwarden
+              tag: 1.34.3
+            env:
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.${INTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+
+    persistence:
+      data:
+        existingClaim: ${VOLSYNC_CLAIM}
+        globalMounts:
+          - path: /data
