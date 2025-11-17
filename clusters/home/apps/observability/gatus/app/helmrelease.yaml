@@ -83,7 +83,8 @@ spec:
         type: secret
         name: gatus-secret
         globalMounts:
-          - path: /config
+          - path: /config/config.yaml
+            subPath: config.yaml
             readOnly: true
       data:
         type: persistentVolumeClaim
