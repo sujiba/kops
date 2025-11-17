@@ -51,7 +51,7 @@ spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      lbipam.cilium.io/ips: ${ENVOY_INTERNAL_IPv4},${ENVOY_INTERNAL_IPv6}
+      lbipam.cilium.io/ips: ${ENVOY_INTERNAL_IPv4} #,${ENVOY_INTERNAL_IPv6}
   listeners:
     - name: http
       protocol: HTTP
@@ -69,6 +69,7 @@ spec:
         certificateRefs:
           - kind: Secret
             name: internal-wildcard-tls
+            namespace: network
 
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
