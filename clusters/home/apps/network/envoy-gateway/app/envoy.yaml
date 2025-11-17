@@ -62,7 +62,6 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: "*.${INTERNAL_DOMAIN}"
       allowedRoutes:
         namespaces:
           from: All
