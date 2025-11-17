@@ -23,6 +23,10 @@ spec:
             image:
               repository: ghcr.io/twin/gatus
               tag: v5.32.0
+            env:
+              TZ: ${TZ}
+              GATUS_DELAY_START_SECONDS: 5
+              CUSTOM_WEB_PORT: &port 8080
             probes:
               startup:
                 enabled: true
@@ -30,7 +34,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: &port 8080
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 5
                   timeoutSeconds: 1
@@ -58,12 +62,6 @@ spec:
               limits:
                 memory: 105Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-
     service:
       app:
         controller: gatus
@@ -89,6 +87,3 @@ spec:
       data:
         type: persistentVolumeClaim
         existingClaim: gatus-pvc
-        globalMounts:
-          - path: /data/data.db
-            subPath: data.db
