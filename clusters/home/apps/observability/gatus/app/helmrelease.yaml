@@ -73,7 +73,7 @@ spec:
 
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames: ["{{ .Release.Name }}.${INTERNAL_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
             namespace: network
