@@ -71,7 +71,7 @@ spec:
 
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${INTERNAL_DOMAIN}"]
+        hostnames: ["status.${INTERNAL_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
             namespace: network

@@ -5,8 +5,8 @@ metadata:
   name: ${APP}-volsync
 type: Opaque
 stringData:
-  RESTIC_REPOSITORY: "s3:https://${S3_DOMAIN_EXTERNAL}/${APP}"
-  RESTIC_PASSWORD: ${VOLSYNC_RESTIC_PASSWORD}
+  KOPIA_REPOSITORY: s3:https://${S3_DOMAIN_EXTERNAL}
+  KOPIA_PASSWORD: ${VOLSYNC_RESTIC_PASSWORD}
   AWS_ACCESS_KEY_ID: ${VOLSYNC_S3_ACCESS_KEY}
   AWS_SECRET_ACCESS_KEY: ${VOLSYNC_S3_SECRET_KEY}
 
@@ -14,17 +14,18 @@ stringData:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: ${APP}
+  name: ${APP}-backup
 spec:
   sourcePVC: ${VOLSYNC_CLAIM}
   trigger:
-    schedule: "0 */17 * * *"
-  restic:
+    schedule: "0 17 * * *"  # Daily at 5 PM
+  kopia:
+    repository: volsync-kopia
+    username: ${APP}-kopia
     copyMethod: Snapshot
-    pruneIntervalDays: 7
-    repository: ${APP}-volsync
-    volumeSnapshotClassName: csi-local-hostpath
+    compression: "zstd"
     cacheCapacity: ${VOLSYNC_CAPACITY}
+    volumeSnapshotClassName: csi-local-hostpath
     cacheStorageClassName: local-hostpath
     cacheAccessModes: ["ReadWriteOnce"]
     storageClassName: local-hostpath
@@ -34,5 +35,6 @@ spec:
       runAsGroup: ${VOLSYNC_GID}
       fsGroup: ${VOLSYNC_GID}
     retain:
-      daily: 7
-      weekly: 4
+      daily: 7        # Keep 7 daily snapshots
+      weekly: 4       # Keep 4 weekly snapshots
+      monthly: 12     # Keep 12 monthly snapshots
