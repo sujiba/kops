@@ -18,7 +18,7 @@ metadata:
 spec:
   sourcePVC: ${VOLSYNC_CLAIM}
   trigger:
-    schedule: "0 */18 * * *"
+    schedule: "0 */17 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 7
@@ -34,6 +34,5 @@ spec:
       runAsGroup: ${VOLSYNC_GID}
       fsGroup: ${VOLSYNC_GID}
     retain:
-      hourly: 24
       daily: 7
-      weekly: 5
+      weekly: 4
