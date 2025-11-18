@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1h
   timeout: 5m
-  path: ./clusters/hcloud/apps/selfhosted/vaultwarden/app
+  path: ./clusters/home/apps/selfhosted/vaultwarden/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
