@@ -5,10 +5,10 @@ metadata:
   name: ${APP}-volsync
 type: Opaque
 stringData:
-  RESTIC_REPOSITORY: "s3:https://${S3_DOMAIN_EXTERNAL}/homelab-${APP}"
-  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
-  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_S3_ACCESS_KEY}
-  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_S3_SECRET_KEY}
+  RESTIC_REPOSITORY: "s3:https://${S3_DOMAIN_EXTERNAL}/${APP}"
+  RESTIC_PASSWORD: ${VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${VOLSYNC_S3_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${VOLSYNC_S3_SECRET_KEY}
 
 ---
 apiVersion: volsync.backube/v1alpha1
@@ -18,7 +18,7 @@ metadata:
 spec:
   sourcePVC: ${VOLSYNC_CLAIM}
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 */18 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 7

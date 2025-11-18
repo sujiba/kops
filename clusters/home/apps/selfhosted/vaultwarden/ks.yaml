@@ -13,8 +13,8 @@ spec:
         kind: Secret
     substitute:
       APP: *app
+      VOLSYNC_CLAIM: vaultwarden-data
       VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CLAIM: vaultwarden-data-v1
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "2000"
   prune: true

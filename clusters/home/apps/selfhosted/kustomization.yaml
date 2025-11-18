@@ -8,4 +8,4 @@ components:
 
 resources:
   - ./namespace.yaml
-  #- ./vaultwarden/ks.yaml
+  - ./vaultwarden/ks.yaml
