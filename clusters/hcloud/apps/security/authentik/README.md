@@ -15,7 +15,7 @@ If you're not redirected to the inital setup flow, try to open it directly:
 If this doesn't work you can force create an admin account through this command:
 
 ```bash
-kubectl exec -it security/authentik-server -c server -- ak changepassword authmin
+kubectl --kubeconfig ~/.kube/hcloud  -n security exec -it authentik-server -c server -- ak changepassword authmin
 ```
 
 ### Change admin username
