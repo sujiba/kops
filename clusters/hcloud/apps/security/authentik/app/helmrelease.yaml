@@ -32,7 +32,7 @@ spec:
               key: password
       envFrom:
         - secretRef:
-          name: authentik-secret
+            name: authentik-secret
     authentik:
       error_reporting:
         enabled: false
