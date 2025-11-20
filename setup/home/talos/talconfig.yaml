@@ -39,6 +39,7 @@ nodes:
 controlPlane:
   schematic:
     customization:
+      # WARNING: extra kernel arguments are not supported when booting using SDBoot
       extraKernelArgs:
         - -init_on_alloc # Less security, faster puter
         - -init_on_free # Less security, faster puter
