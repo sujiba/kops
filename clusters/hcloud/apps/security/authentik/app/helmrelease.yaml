@@ -18,8 +18,22 @@ spec:
       interval: 30m
 
   values:
+    global:
+      env:
+        - name: AUTHENTIK_POSTGRESQL__USER
+          valueFrom:
+            secretKeyRef:
+              name: authentik-db-secret
+              key: username
+        - name: AUTHENTIK_POSTGRESQL__PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentik-db-secret
+              key: password
+      envFrom:
+        - secretRef:
+          name: authentik-secret
     authentik:
-      secret_key: "${AUTHENTIK_KEY}"
       error_reporting:
         enabled: false
       disable_startup_analytics: true
@@ -28,14 +42,10 @@ spec:
         host: authentik-postgres-rw.security.svc.cluster.local
         port: 5432
         name: authentik
-        user: authentik
-        password: "${AUTHENTIK_DB_PASS}"
 
       email:
-        host:
         port: 465
-        use_ssl: true
-        from: "Authentik <no-reply@${SECRET_DOMAIN}>"
+        use_tls: true
 
       redis:
         host: authentik-dragonfly.security.svc.cluster.local

@@ -5,4 +5,7 @@ kind: Kustomization
 namespace: security
 
 resources:
+  - ./database.yaml
+  - ./dragonfly.yaml
   - ./helmrelease.yaml
+  - ./secret.sops.yaml
