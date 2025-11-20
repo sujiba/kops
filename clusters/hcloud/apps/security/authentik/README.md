@@ -15,7 +15,7 @@ If you're not redirected to the inital setup flow, try to open it directly:
 If this doesn't work you can force create an admin account through this command:
 
 ```bash
-kubectl --kubeconfig ~/.kube/hcloud  -n security exec -it authentik-server -c server -- ak changepassword authmin
+kubectl --kubeconfig ~/.kube/hcloud  -n security exec -it <server_pod_name> -- ak changepassword authmin
 ```
 
 ### Change admin username
@@ -26,6 +26,12 @@ You could change the default username of the administrator account to something 
 
 
 ## Settings
+### Test mail settings
+
+```bash
+kubectl --kubeconfig ~/.kube/hcloud  -n security exec -it <worker_pod_name> -- ak test_email your_mail_address
+```
+
 ### Create users
 `https://auth.offene.cloud/if/admin/#/identity/users`
 

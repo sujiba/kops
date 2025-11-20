@@ -46,6 +46,7 @@ spec:
       email:
         port: 465
         use_tls: true
+        timeout: 30
 
       redis:
         host: authentik-dragonfly.security.svc.cluster.local
