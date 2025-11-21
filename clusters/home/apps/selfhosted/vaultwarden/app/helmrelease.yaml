@@ -44,12 +44,11 @@ spec:
               ICON_SERVICE: internal
               DISABLE_ICON_DOWNLOAD: true
               SENDS_ALLOWED: true
-              SMTP_HOST: ${SMTP_HOST}
-              SMTP_PORT: 465
-              SMTP_SECURITY: force_tls
-              SMTP_FROM: ${SMTP_USERNAME}
+              SMTP_HOST: smtp-relay.network.svc.cluster.local
+              SMTP_PORT: 2525
+              SMTP_SECURITY: off
+              SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_FROM_NAME: "{{ .Release.Name }}"
-              SMTP_USERNAME: ${SMTP_USERNAME}
               EXPERIMENTAL_CLIENT_FEATURE_FLAGS: ssh-key-vault-item,ssh-agent
             envFrom:
               - secretRef:
