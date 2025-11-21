@@ -44,10 +44,9 @@ spec:
         name: authentik
 
       email:
-        port: 587
-        use_tls: false
-        use_ssl: true
-        timeout: 30
+        host: smtp-relay.network.svc.cluster.local
+        port: 2525
+        use_ssl: false
 
       redis:
         host: authentik-dragonfly.security.svc.cluster.local
