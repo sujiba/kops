@@ -44,8 +44,9 @@ spec:
         name: authentik
 
       email:
-        port: 465
-        use_tls: true
+        port: 587
+        use_tls: false
+        use_ssl: true
         timeout: 30
 
       redis:
