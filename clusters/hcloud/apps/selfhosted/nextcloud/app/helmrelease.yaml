@@ -22,7 +22,7 @@ spec:
 
     image:
       repository: nextcloud
-      tag: 32.0.1-fpm-alpine
+      tag: 32.0.2-fpm-alpine
       flavor: fpm-alpine
 
     replicaCount: 1
