@@ -47,6 +47,7 @@ spec:
         host: smtp-relay.network.svc.cluster.local
         port: 2525
         use_ssl: false
+        from: "Authentik <no-reply@${MAIL_DOMAIN}>"
 
       redis:
         host: authentik-dragonfly.security.svc.cluster.local

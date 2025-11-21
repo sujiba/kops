@@ -40,7 +40,7 @@ spec:
 
       tls:
         - hosts:
-            - "files.offene.cloud"
+            - files.offene.cloud
           secretName: nextcloud-tls
 
     lifecycle:
@@ -63,9 +63,8 @@ spec:
         # the domain we send email from
         domain: ${MAIL_DOMAIN}
         smtp:
-          secure: ssl
-          port: 465
-          authtype: LOGIN
+          port: 2525
+          secure: ''
 
       phpConfigs:
         uploadLimit.ini: |
