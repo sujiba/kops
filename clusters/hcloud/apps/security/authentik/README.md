@@ -37,6 +37,8 @@ kubectl --kubeconfig ~/.kube/hcloud  -n security exec -it <worker_pod_name> -- a
 
 ### Disable Gravatar
 
+Remove gravatar from avatar settings.
+
 `https://your.authentik.domain/if/admin/#/admin/settings`
 
 ## Integrations
