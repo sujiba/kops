@@ -67,28 +67,28 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-    configMaps:
-      config:
-        data:
-          repository.config: |-
-            "storage": {
-              "type": "s3",
-              "config": {
-                "bucket": "${AWS_S3_BUCKET}",
-                "endpoint": ${AWS_S3_ENDPOINT},
-                "accessKeyID": "${AWS_ACCESS_KEY_ID}",
-                "secretAccessKey": "${AWS_SECRET_ACCESS_KEY}"
-              }
-            },
-              "enableActions": false
-            }
+    #configMaps:
+    #  config:
+    #    data:
+    #      repository.config: |-
+    #        "storage": {
+    #          "type": "s3",
+    #          "config": {
+    #            "bucket": "${AWS_S3_BUCKET}",
+    #            "endpoint": ${AWS_S3_ENDPOINT},
+    #            "accessKeyID": "${AWS_ACCESS_KEY_ID}",
+    #            "secretAccessKey": "${AWS_SECRET_ACCESS_KEY}"
+    #          }
+    #        },
+    #          "enableActions": false
+    #        }
     persistence:
-      config-file:
-        type: configMap
-        identifier: config
-        globalMounts:
-          - path: /config/repository.config
-            subPath: repository.config
+    #  config-file:
+    #    type: configMap
+    #    identifier: config
+    #   globalMounts:
+    #      - path: /config/repository.config
+    #        subPath: repository.config
       tmpfs:
         type: emptyDir
         advancedMounts:
