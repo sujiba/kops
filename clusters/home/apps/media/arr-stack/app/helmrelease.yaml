@@ -1,0 +1,398 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: arr-stack
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: arr-stack
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: ${VOLSYNC_UID}
+        runAsGroup: ${VOLSYNC_GID}
+        fsGroup: ${VOLSYNC_GID}
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      arr-stack:
+        annotations:
+          reloader.stakater.com/auto: true
+
+        pod:
+          labels:
+            gluetun: true
+          hostname: arr-stack
+
+        initContainers:
+          gluetun:
+            image:
+              repository: ghcr.io/jfroy/gluetun
+              tag: v3.40.3@sha256:23f4a7d62102af5e5d96401a89bc9e6911580b4d87dabb85474a732fc4ee851d
+            env:
+              BLOCK_MALICIOUS: off # save 300MB of RAM; https://github.com/qdm12/gluetun/issues/2054
+              DOT: off
+              DOT_CACHING: off
+              DOT_IPV6: off
+              FIREWALL_DEBUG: on
+              # SABnzbd, socks5, radarr, sonarr, sonarr-animes, prowlarr, health check
+              FIREWALL_INPUT_PORTS: "80,1080,7878,8989,8990,9696,9999"
+              HEALTH_SERVER_ADDRESS: ":9999"
+              HEALTH_SERVER_DISABLE_LOOP: on
+              LOG_LEVEL: debug
+              STORAGE_FILEPATH: "" # prevent memory spike and avoid I/O
+              UPDATER_PERIOD: 24h
+              VERSION_INFORMATION: off
+              VPN_IPV6_SERVER: off
+              TZ: ${TZ}
+            envFrom:
+              - secretRef:
+                  name: gluetun-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /check/
+                    port: 9999
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /check/
+                    port: 9999
+                  initialDelaySeconds: 10
+                  timeoutSeconds: 10
+            restartPolicy: Always
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { add: ["NET_ADMIN", "NET_RAW"] }
+              readOnlyRootFilesystem: false
+              runAsNonRoot: false
+              runAsUser: 0
+
+        containers:
+          sabnzbd:
+            image:
+              repository: ghcr.io/home-operations/sabnzbd
+              tag: 4.5.5@sha256:da57e01cdebc547852b6df85c8df8c0e4d87792742c7608c5590dc653b184e8c
+            env:
+              SABNZBD__HOST_WHITELIST_ENTRIES: >-
+                sabnzbd,
+                sabnzbd.selfhosted,
+                sabnzbd.selfhosted.svc,
+                sabnzbd.selfhosted.svc.cluster,
+                sabnzbd.selfhosted.svc.cluster.local,
+                "sabnzbd.${INTERNAL_DOMAIN}",
+              SABNZBD__PORT: &port 80
+              TZ: ${TZ}
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api?mode=version
+                    port: *port
+              readiness: *probe
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+
+          radarr:
+            image:
+              repository: ghcr.io/home-operations/radarr
+              tag: 6.0.4.10291@sha256:73fbdba72dcde5fec16264e63a9daba7829b5c2806a75615463a67117b100de3
+            env:
+              RADARR__APP__INSTANCENAME: Radarr
+              #RADARR__APP__THEME: dark
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 7878
+              RADARR__UPDATE__BRANCH: develop
+              TZ: ${TZ}
+            probes:
+              liveness: &probes-radarr
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes-radarr
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+
+          sonarr:
+            image:
+              repository: ghcr.io/home-operations/sonarr
+              tag: 4.0.16.2943@sha256:0a1b8f5cb5b072f7ad8c6ff64a25dc512115d1a114ecf19a58a3b4f870207ddd
+            env:
+              SONARR__APP__INSTANCENAME: Sonarr
+              #SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: 8989
+              SONARR__UPDATE__BRANCH: develop
+              TZ: ${TZ}
+            probes:
+              liveness: &probes-sonarr
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 8989
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes-sonarr
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+
+          sonarr-animes:
+            image:
+              repository: ghcr.io/home-operations/sonarr
+              tag: 4.0.16.2943@sha256:0a1b8f5cb5b072f7ad8c6ff64a25dc512115d1a114ecf19a58a3b4f870207ddd
+            env:
+              SONARR__APP__INSTANCENAME: Sonarr-Animes
+              #SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 8990
+              SONARR__UPDATE__BRANCH: develop
+              TZ: ${TZ}
+            probes:
+              liveness: &probes-sonarr-animes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes-sonarr-animes
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+
+          prowlarr:
+            image:
+              repository: ghcr.io/home-operations/prowlarr
+              tag: 2.3.0.5236@sha256:1a8a4b11972b2e62671b49949c622b8cb1110e2b5c77199ac795a6d79fe106e8
+            env:
+              PROWLARR__APP__INSTANCENAME: Prowlarr
+              #PROWLARR__APP__THEME: dark
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              PROWLARR__LOG__DBENABLED: "False"
+              PROWLARR__LOG__LEVEL: info
+              PROWLARR__SERVER__PORT: &port 9696
+              PROWLARR__UPDATE__BRANCH: develop
+              TZ: ${TZ}
+            probes:
+              liveness: &probes-prowlarr
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes-prowlarr
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+
+    service:
+      sabnzbd:
+        controller: arr-stack
+        ports:
+          sabnzbd:
+            port: 80
+
+      radarr:
+        controller: arr-stack
+        ports:
+          radarr:
+            port: 7878
+
+      sonarr:
+        controller: arr-stack
+        ports:
+          sonarr:
+            port: 8989
+
+      sonarr-animes:
+        controller: arr-stack
+        ports:
+          sonarr:
+            port: 8990
+
+      prowlarr:
+        controller: arr-stack
+        ports:
+          sonarr:
+            port: 9696
+
+    route:
+      sabnzbd:
+        hostnames: ["sabnzbd.${INTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: arr-stack-sabnzbd
+                port: 80
+
+      radarr:
+        hostnames: ["radarr.${INTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: arr-stack-radarr
+                port: 7878
+
+      sonarr:
+        hostnames: ["sonarr.${INTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: arr-stack-sonarr
+                port: 8989
+
+      sonarr-animes:
+        hostnames: ["sonarr-animes.${INTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: arr-stack-sonarr-animes
+                port: 8990
+
+      prowlarr:
+        hostnames: ["prowlarr.${INTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: arr-stack-prowlarr
+                port: 9696
+
+    persistence:
+      config:
+        existingClaim: arr-stack-config
+        advancedMounts:
+          arr-stack:
+            sabnzbd:
+              - path: "/config"
+                subPath: "sabnzbd-config"
+            radarr:
+              - path: "/config"
+                subPath: "radarr-config"
+            sonarr:
+              - path: "/config"
+                subPath: "sonarr-config"
+            sonarr-animes:
+              - path: "/config"
+                subPath: "sonarr-animes-config"
+            prowlarr:
+              - path: "/config"
+                subPath: "prowlarr-config"
+
+      incomplete:
+        existingClaim: arr-stack-incomplete
+        advancedMounts:
+          arr-stack:
+            sabnzbd:
+              - path: /incomplete
+
+      downloads:
+        existingClaim: arr-stack-downloads
+        advancedMounts:
+          arr-stack:
+            sabnzbd:
+              - path: "/downloads"
+                subPath: ""
+            radarr:
+              - path: "/downloads"
+                subPath: ""
+            sonarr:
+              - path: "/downloads"
+                subPath: ""
+            sonarr-animes:
+              - path: "/downloads"
+                subPath: ""
+            sonarr-prowlarr:
+              - path: "/downloads"
+                subPath: ""
+
+      media:
+        existingClaim: media-nfs
+        advancedMounts:
+          arr-stack:
+            radarr:
+              - path: /media
+            sonarr:
+              - path: /media
+            sonarr-animes:
+              - path: /media
+
+      run:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 10Mi
+        globalMounts:
+          - path: /run
+          - path: /var/run
