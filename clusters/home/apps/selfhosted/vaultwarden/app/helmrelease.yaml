@@ -79,12 +79,17 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
-        filters:
-          - type: RequestHeaderModifier
-            requestHeaderModifier:
-              set:
-                - name: x-real-ip
-                  value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  set:
+                    - name: x-real-ip
+                      value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
 
     persistence:
       data:
