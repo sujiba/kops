@@ -67,38 +67,48 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-    #configMaps:
-    #  config:
-    #    data:
-    #      repository.config: |-
-    #        "storage": {
-    #          "type": "s3",
-    #          "config": {
-    #            "bucket": "${AWS_S3_BUCKET}",
-    #            "endpoint": ${AWS_S3_ENDPOINT},
-    #            "accessKeyID": "${AWS_ACCESS_KEY_ID}",
-    #            "secretAccessKey": "${AWS_SECRET_ACCESS_KEY}"
-    #          }
-    #        },
-    #          "enableActions": false
-    #        }
+    configMaps:
+      config:
+        data:
+          repository.config: |-
+            {
+              "storage": {
+                "type": "s3",
+                "config": {
+                  "bucket": "${AWS_S3_BUCKET}",
+                  "endpoint": "${AWS_S3_ENDPOINT}",
+                  "accessKeyID": "${AWS_ACCESS_KEY_ID}",
+                  "secretAccessKey": "${DEz33HTnrfzjHp3NcnegDcjaSfWUXC1KsW0t1lMw}",
+                  "region": "${AWS_REGION}"
+                }
+              },
+              "caching": {
+                "cacheDirectory": "cache",
+                "maxCacheSize": 5242880000,
+                "maxMetadataCacheSize": 5242880000,
+                "maxListCacheDuration": 30
+              },
+              "hostname": "kopia",
+              "username": "nobody",
+              "description": "${AWS_S3_BUCKET}",
+              "enableActions": false,
+              "formatBlobCacheDuration": 900000000000
+            }
     persistence:
-    #  config-file:
-    #    type: configMap
-    #    identifier: config
-    #   globalMounts:
-    #      - path: /config/repository.config
-    #        subPath: repository.config
+      config-file:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /config/repository.config
+            subPath: repository.config
       tmpfs:
         type: emptyDir
         advancedMounts:
           kopia:
             app:
-              - path: /config
-                subPath: config
-              #- path: /config/cache
-              #  subPath: cache
-              #- path: /config/logs
-              #  subPath: logs
+              - path: /config/cache
+                subPath: cache
+              - path: /config/logs
+                subPath: logs
               - path: /tmp
                 subPath: tmp
