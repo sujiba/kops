@@ -366,7 +366,7 @@ spec:
             sonarr-animes:
               - path: "/downloads/animes"
                 subPath: "animes"
-            sonarr-prowlarr:
+            prowlarr:
               - path: "/downloads/prowlarr"
                 subPath: "prowlarr"
 
