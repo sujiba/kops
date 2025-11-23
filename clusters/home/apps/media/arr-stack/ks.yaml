@@ -5,7 +5,7 @@ metadata:
   name: &app arr-stack
 spec:
   interval: 1h
-  path: ./clusters/home/apps/selfhosted/arr-stack/app
+  path: ./clusters/home/apps/media/arr-stack/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
