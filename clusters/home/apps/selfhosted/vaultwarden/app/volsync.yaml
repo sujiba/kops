@@ -20,17 +20,17 @@ spec:
   trigger:
     schedule: "0 17 * * *"  # Daily at 5 PM
   kopia:
-    repository: volsync-kopiac
-    username: ${APP}-kopia
-    copyMethod: Snapshot
     compression: "zstd"
-    storageClassName: local-hostpath
-    volumeSnapshotClassName: csi-local-hostpath
-    accessModes: ["ReadWriteOnce"]
+    copyMethod: Snapshot
     moverSecurityContext:
       runAsUser: ${VOLSYNC_UID}
       runAsGroup: ${VOLSYNC_GID}
       fsGroup: ${VOLSYNC_GID}
+    repository: volsync-kopiac
     retain:
       daily: 7        # Keep 7 daily snapshots
       weekly: 4       # Keep 4 weekly snapshots
+
+    storageClassName: local-hostpath
+    volumeSnapshotClassName: csi-local-hostpath
+    accessModes: ["ReadWriteOnce"]
