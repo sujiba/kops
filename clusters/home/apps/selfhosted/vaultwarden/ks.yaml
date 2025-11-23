@@ -11,6 +11,8 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+      - name: volsync-kopia-secret
+        kind: Secret
     substitute:
       APP: *app
       VOLSYNC_CLAIM: vaultwarden-data
