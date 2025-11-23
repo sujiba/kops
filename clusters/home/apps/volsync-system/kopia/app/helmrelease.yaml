@@ -78,7 +78,7 @@ spec:
                   "bucket": "${AWS_S3_BUCKET}",
                   "endpoint": "${AWS_S3_ENDPOINT}",
                   "accessKeyID": "${AWS_ACCESS_KEY_ID}",
-                  "secretAccessKey": "${DEz33HTnrfzjHp3NcnegDcjaSfWUXC1KsW0t1lMw}",
+                  "secretAccessKey": "${AWS_SECRET_ACCESS_KEY}",
                   "region": "${AWS_REGION}"
                 }
               },
