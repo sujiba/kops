@@ -348,7 +348,7 @@ spec:
         advancedMounts:
           arr-stack:
             sabnzbd:
-              - path: /incomplete
+              - path: /incomplete-downloads
 
       downloads:
         existingClaim: arr-stack-downloads
