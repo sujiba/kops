@@ -358,17 +358,17 @@ spec:
               - path: "/downloads"
                 subPath: ""
             radarr:
-              - path: "/downloads"
-                subPath: ""
+              - path: "/downloads/filme"
+                subPath: "filme"
             sonarr:
-              - path: "/downloads"
-                subPath: ""
+              - path: "/downloads/serien"
+                subPath: "serien"
             sonarr-animes:
-              - path: "/downloads"
-                subPath: ""
+              - path: "/downloads/animes"
+                subPath: "animes"
             sonarr-prowlarr:
-              - path: "/downloads"
-                subPath: ""
+              - path: "/downloads/prowlarr"
+                subPath: "prowlarr"
 
       media:
         existingClaim: media-nfs
