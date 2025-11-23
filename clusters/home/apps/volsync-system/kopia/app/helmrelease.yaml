@@ -30,6 +30,7 @@ spec:
               KOPIA_PASSWORD: ${KOPIA_PASSWORD}
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 8080
+              TZ: ${TZ}
             args:
               - --without-password
             probes:
