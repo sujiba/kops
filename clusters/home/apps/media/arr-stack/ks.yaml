@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: arr-stack
+  name: &app arr-stack
 spec:
   interval: 1h
   path: ./clusters/home/apps/selfhosted/arr-stack/app
@@ -10,8 +10,12 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+      - name: volsync-kopia-secret
+        kind: Secret
     substitute:
-      APP: arr-stack
+      APP: *app
+      VOLSYNC_CLAIM: arr-stack-config
+      VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
   prune: true

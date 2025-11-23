@@ -8,6 +8,6 @@ components:
 
 resources:
   - ./namespace.yaml
-  #- ./arr-stack/ks.yaml
+  - ./arr-stack/ks.yaml
   - ./jellyfin/ks.yaml
   - ./media-nfs/ks.yaml

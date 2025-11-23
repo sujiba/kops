@@ -1,23 +1,22 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: "${APP}-r2"
+  name: ${APP}-backup
 spec:
-  sourcePVC: "${APP}"
+  sourcePVC: ${VOLSYNC_CLAIM}
   trigger:
-    schedule: "0 10 * * *"
+    schedule: "0 17 * * *"  # Daily at 5 PM
   kopia:
+    capacity: ${VOLSYNC_CAPACITY}
     compression: zstd
-    copyMethod: Clone
+    copyMethod: Snapshot
     moverSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-    parallelism: 2
-    repository: volsync-kopia-r2
+      runAsUser: ${VOLSYNC_UID}
+      runAsGroup: ${VOLSYNC_GID}
+      fsGroup: ${VOLSYNC_GID}
+    repository: volsync-kopia-secret
     retain:
-      daily: 7
-      weekly: 4
-      monthly: 12
+      daily: 7        # Keep 7 daily snapshots
+      weekly: 4       # Keep 4 weekly snapshots
+      monthly: 12     # Keep 12 monthly snapshots
