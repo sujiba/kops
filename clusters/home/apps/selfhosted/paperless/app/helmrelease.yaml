@@ -37,7 +37,6 @@ spec:
               # Configure folders
               PAPERLESS_CONSUMPTION_DIR: /usr/src/paperless/incoming
               PAPERLESS_DATA_DIR: /usr/src/paperless/data
-              PAPERLESS_EXPORT_DIR: /usr/src/paperless/export
               PAPERLESS_MEDIA_ROOT: /usr/src/paperless/media
               # Configure folder importer
               PAPERLESS_CONSUMER_POLLING: "60"
@@ -121,4 +120,9 @@ spec:
         advancedMounts:
           paperless:
             app:
-              - path: /usr/src/paperless
+              - path: /usr/src/paperless/data
+                subPath: data
+              - path: /usr/src/paperless/media
+                subPath: media
+              - path: /usr/src/paperless/consume
+                subPath: consume
