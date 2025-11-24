@@ -35,10 +35,10 @@ spec:
               PAPERLESS_WEBSERVER_WORKERS: "1"
               PAPERLESS_TASK_WORKERS: "1"
               # Configure folders
-              PAPERLESS_CONSUMPTION_DIR: /data/local/incoming
-              PAPERLESS_DATA_DIR: /data/local/data
-              PAPERLESS_EXPORT_DIR: /data/local/export
-              PAPERLESS_MEDIA_ROOT: /data/local/media
+              PAPERLESS_CONSUMPTION_DIR: /usr/src/paperless/incoming
+              PAPERLESS_DATA_DIR: /usr/src/paperless/data
+              PAPERLESS_EXPORT_DIR: /usr/src/paperless/export
+              PAPERLESS_MEDIA_ROOT: /usr/src/paperless/media
               # Configure folder importer
               PAPERLESS_CONSUMER_POLLING: "60"
               PAPERLESS_CONSUMER_RECURSIVE: "true"
@@ -121,4 +121,4 @@ spec:
         advancedMounts:
           paperless:
             app:
-              - path: /data/local
+              - path: /usr/src/paperless
