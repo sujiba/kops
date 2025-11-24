@@ -63,8 +63,11 @@ spec:
         # the domain we send email from
         domain: ${MAIL_DOMAIN}
         smtp:
+          host: smtp-relay.network.svc.cluster.local
           port: 2525
-          secure: ''
+          secure: ""
+          name: ""
+          password: ""
 
       phpConfigs:
         uploadLimit.ini: |
