@@ -29,7 +29,7 @@ spec:
                   secretKeyRef:
                     name: tandoor-secrets
                     key: secret-key
-              TZ: ${TIMEZONE}
+              TZ: ${TZ}
               DEBUG: 0
               DB_ENGINE: django.db.backends.postgresql
               POSTGRES_HOST: tandoor-postgres-rw.selfhosted.svc.cluster.local
@@ -48,8 +48,16 @@ spec:
               ALLOWED_HOSTS: rezepte.offene.cloud
               CSRF_TRUSTED_ORIGINS: 'https://rezepte.offene.cloud'
               TANDOOR_PORT: 80
-              ENABLE_SIGNUP: 0
               SPACE_AI_ENABLED: 0
+              ENABLE_SIGNUP: 0
+              EMAIL_HOST: smtp-relay.network.svc.cluster.local
+              EMAIL_PORT: 2525
+              EMAIL_HOST_USER: ''
+              EMAIL_HOST_PASSWORD: ''
+              EMAIL_USE_TLS: 0
+              EMAIL_USE_SSL: 0
+              # email sender address (default 'webmaster@localhost')
+              DEFAULT_FROM_EMAIL: no-reply@${MAIL_DOMAIN}
             #securityContext:
             #  allowPrivilegeEscalation: true
             #  readOnlyRootFilesystem: false
