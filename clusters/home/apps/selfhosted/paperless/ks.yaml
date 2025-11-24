@@ -17,8 +17,8 @@ spec:
       APP: *app
       VOLSYNC_CLAIM: paperless-data
       VOLSYNC_CAPACITY: 50Gi
-      VOLSYNC_GID: "0"
-      VOLSYNC_UID: "0"
+      VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
   prune: true
   sourceRef:
     kind: GitRepository

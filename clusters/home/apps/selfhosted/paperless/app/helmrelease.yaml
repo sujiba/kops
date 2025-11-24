@@ -48,8 +48,6 @@ spec:
               PAPERLESS_OCR_LANGUAGE: deu
               # Configure redis integration
               PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
-              # Configure user permissions
-              USERMAP_GID: "100" # gladius:users
               # Configure admin user
               PAPERLESS_ADMIN_USER:
                 valueFrom:
