@@ -76,10 +76,6 @@ spec:
                 cpu: 100m
               limits:
                 memory: 1Gi
-            lifecycle:
-              postStart:
-                exec:
-                  command: [ "/bin/sh", "-c", "rm /bin/chown ; ln -s /bin/true /bin/chown" ]
 
     service:
       app:
