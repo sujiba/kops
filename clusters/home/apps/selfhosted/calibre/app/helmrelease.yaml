@@ -22,7 +22,7 @@ spec:
         pod:
           securityContext:
             runAsNonRoot: false
-            runAsUser: ${VOLSYNC_UID}
+            runAsUser: "0"
             runAsGroup: ${VOLSYNC_GID}
             fsGroup: ${VOLSYNC_GID}
             fsGroupChangePolicy: OnRootMismatch
