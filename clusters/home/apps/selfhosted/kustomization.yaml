@@ -8,6 +8,6 @@ components:
 
 resources:
   - ./namespace.yaml
-  #- ./calibre/ks.yaml
+  - ./calibre/ks.yaml
   - ./paperless/ks.yaml
   - ./vaultwarden/ks.yaml
