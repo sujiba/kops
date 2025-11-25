@@ -6,7 +6,7 @@ metadata:
 spec:
   sourcePVC: ${VOLSYNC_CLAIM}
   trigger:
-    schedule: "0 18 * * *"  # Daily at 6 PM UTC
+    schedule: "0 16 * * *" # Daily at 4 PM UTC or 5 PM CET
   kopia:
     capacity: ${VOLSYNC_CAPACITY}
     compression: zstd
