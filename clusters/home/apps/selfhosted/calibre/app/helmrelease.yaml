@@ -68,7 +68,7 @@ spec:
             lifecycle:
               postStart:
                 exec:
-                  command: [ "/bin/sh", "-c", "echo '#!/bin/bash\nexit' > /bin/chown" ]
+                  command: [ "/bin/sh", "-c", "rm /bin/chown ; ln -s /bin/true /bin/chown" ]
 
     service:
       app:
