@@ -1,0 +1,103 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: calibre
+spec:
+  interval: 1h
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: calibre
+
+  values:
+    controllers:
+      calibre:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: ${VOLSYNC_UID}
+            runAsGroup: ${VOLSYNC_GID}
+            fsGroup: ${VOLSYNC_GID}
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile: { type: RuntimeDefault }
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/crocodilestick/calibre
+              tag: latest
+            env:
+              TZ: ${TZ}
+              PUID: ${VOLSYNC_UID}
+              PGID: ${VOLSYNC_GID}
+              CWA_PORT_OVERRIDE: &port 8083
+              #HARDCOVER_TOKEN:
+              #  valueFrom:
+              #    secretKeyRef:
+              #      name: ${APP}-secret
+              #      key: HARDCOVER_TOKEN
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /login
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: true
+              readOnlyRootFilesystem: false
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 1Gi
+            lifecycle:
+              postStart:
+                exec:
+                  command: [ "/bin/sh", "-c", "echo '#!/bin/bash\nexit' > /bin/chown" ]
+
+    service:
+      app:
+        controller: calibre
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        hostnames:
+        - "books.${INTERNAL_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+
+    persistence:
+      data:
+        existingClaim: ${VOLSYNC_CLAIM}
+        globalMounts:
+          - path: /confg
+            subPath: config
+          - path: /cwa-book-ingest
+            subPath: cwa-book-ingest
+          - path: /calibre-library
+            subPath: calibre-library
+      tmp:
+        type: emptyDir
