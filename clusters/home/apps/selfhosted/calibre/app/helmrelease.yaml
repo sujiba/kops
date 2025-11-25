@@ -21,7 +21,7 @@ spec:
 
         pod:
           securityContext:
-            runAsNonRoot: true
+            runAsNonRoot: false
             runAsUser: ${VOLSYNC_UID}
             runAsGroup: ${VOLSYNC_GID}
             fsGroup: ${VOLSYNC_GID}
@@ -38,6 +38,8 @@ spec:
               PUID: ${VOLSYNC_UID}
               PGID: ${VOLSYNC_GID}
               CWA_PORT_OVERRIDE: &port 8083
+              S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: "1"
+              S6_READ_ONLY_ROOT: "1"
               #HARDCOVER_TOKEN:
               #  valueFrom:
               #    secretKeyRef:
@@ -59,7 +61,16 @@ spec:
             securityContext:
               allowPrivilegeEscalation: true
               readOnlyRootFilesystem: false
-              capabilities: {drop: ["ALL"]}
+              capabilities:
+                drop:
+                  - ALL
+                add:
+                  # S6
+                  - CHOWN
+                  - SETUID
+                  - SETGID
+                  - FOWNER
+                  - DAC_OVERRIDE
             resources:
               requests:
                 cpu: 100m
