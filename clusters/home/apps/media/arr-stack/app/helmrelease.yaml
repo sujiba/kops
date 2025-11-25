@@ -114,6 +114,8 @@ spec:
             env:
               RADARR__APP__INSTANCENAME: Radarr
               #RADARR__APP__THEME: dark
+              RADARR_AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
               RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 7878
@@ -146,6 +148,8 @@ spec:
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               #SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: 8989
@@ -178,6 +182,8 @@ spec:
             env:
               SONARR__APP__INSTANCENAME: Sonarr-Animes
               #SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: &port 8990
@@ -210,6 +216,8 @@ spec:
             env:
               PROWLARR__APP__INSTANCENAME: Prowlarr
               #PROWLARR__APP__THEME: dark
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
               PROWLARR__LOG__DBENABLED: "False"
               PROWLARR__LOG__LEVEL: info
               PROWLARR__SERVER__PORT: &port 9696
