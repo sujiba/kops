@@ -1,0 +1,28 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app audiobookshelf
+spec:
+  interval: 1h
+  timeout: 5m
+  path: ./clusters/home/apps/media/audiobookshelf/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: volsync-kopia-secret
+        kind: Secret
+    substitute:
+      APP: *app
+      VOLSYNC_CLAIM: audiobookshelf-config
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_GID: "2000"
+      VOLSYNC_UID: "2000"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: media
+  wait: false
