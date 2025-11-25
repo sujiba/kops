@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: dragonfly-operator
 spec:
-  image: ghcr.io/dragonflydb/dragonfly:v1.35.0
+  image: ghcr.io/dragonflydb/dragonfly:v1.35.1
   replicas: 1
   env:
     - name: MAX_MEMORY
