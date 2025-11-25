@@ -60,7 +60,7 @@ spec:
     route:
       app:
         hostnames:
-          - audiobookshelf.&{INTERNAL_DOMAIN}
+          - audiobookshelf.${INTERNAL_DOMAIN}
         parentRefs:
           - name: envoy-internal
             namespace: network
