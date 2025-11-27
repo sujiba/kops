@@ -7,8 +7,8 @@ spec:
   chartRef:
     kind: OCIRepository
     name: pihole
-  interval: 1m
-  #timeout: 5m
+  interval: 1h
+  timeout: 5m
   values:
     defaultPodOptions:
       hostUsers: false
@@ -36,18 +36,6 @@ spec:
             envFrom:
               - secretRef:
                   name: pihole-secret
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  exec:
-                    command:
-                      - /usr/bin/nslookup
-                      - pihole
-                      - '127.0.0.1'
-              startup: *probes
-              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
             resources:
