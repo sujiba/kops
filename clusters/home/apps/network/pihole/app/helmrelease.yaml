@@ -34,7 +34,7 @@ spec:
               - secretRef:
                   name: pihole-secret
             probes:
-              liveness: &pihole-probes
+              liveness: &probes
                 enabled: true
                 custom: true
                 spec:
@@ -43,8 +43,8 @@ spec:
                       - /usr/bin/nslookup
                       - pihole
                       - '127.0.0.1'
-              startup: *pihole-probes
-              readiness: *pihole-probes
+              startup: *probes
+              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
             resources:
