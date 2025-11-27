@@ -10,6 +10,9 @@ spec:
   interval: 1h
   timeout: 5m
   values:
+    defaultPodOptions:
+      hostUsers: false
+
     controllers:
       pihole:
         replicas: 1
@@ -52,11 +55,6 @@ spec:
                 cpu: 100m
               limits:
                 memory: 512Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
 
     service:
       app:
