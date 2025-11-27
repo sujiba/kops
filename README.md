@@ -64,7 +64,17 @@ _hcloud cluster stats:_
 
 ## ☁ Cloud Dependencies
 
+| Service | Use             | Cost    |
+|---------|-----------------|---------|
+| Netcup  | DNS             | ~80€/yr |
+| Hetnzer | Server / Backup | ~25€/mo |
+
 ## 🔧 Hardware
+
+| Device                      | Num | OS Disk Size | Data Disk Size                  | Ram  | OS            | Function                |
+|-----------------------------|-----|--------------|---------------------------------|------|---------------|-------------------------|
+| ASUS NUC 15 Pro CU 5 225H   | 1   | 2TB SSD      | -                               | 96GB | Talos         | Kubernetes              |
+| Synology RS1221+            | 1   | -            | 7x12TB btrfs (SHR-2)            | 4GB  | DSM           | NFS                     |
 
 ## 🤝 Special thanks
 - [Home Operations discord community](https://discord.gg/home-operations)
