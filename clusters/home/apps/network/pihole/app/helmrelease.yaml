@@ -7,8 +7,8 @@ spec:
   chartRef:
     kind: OCIRepository
     name: pihole
-  interval: 1h
-  timeout: 5m
+  interval: 1m
+  #timeout: 5m
   values:
     defaultPodOptions:
       hostUsers: false
