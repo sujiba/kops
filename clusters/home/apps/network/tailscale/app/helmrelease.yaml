@@ -32,7 +32,6 @@ spec:
               TS_ACCEPT_DNS: false
               TS_HOSTNAME: cologne-exit
               TS_KUBE_SECRET: tailscale-state
-              TS_LOCAL_ADDR_PORT: &port 9002
               TS_ENABLE_HEALTH_CHECK: true
               TS_ENABLE_METRICS: true
               TS_EXTRA_ARGS: >-
@@ -62,7 +61,7 @@ spec:
                 spec:
                   httpGet:
                     path: /healthz
-                    port: *port
+                    port: &port 9002
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
