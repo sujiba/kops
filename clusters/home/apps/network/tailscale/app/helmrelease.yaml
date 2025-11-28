@@ -87,3 +87,7 @@ spec:
       tailscale:
         forceRename: tailscale
         enabled: true
+
+    persistence:
+      tmp:
+        type: emptyDir
