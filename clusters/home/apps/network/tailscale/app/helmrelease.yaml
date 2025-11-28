@@ -36,7 +36,7 @@ spec:
               TS_ENABLE_METRICS: true
               TS_EXTRA_ARGS: >-
                 --advertise-exit-node
-                --login-server=https://headscale.$(EXTERNAL_DOMAIN)
+                --login-server=https://headscale.${EXTERNAL_DOMAIN}
                 --advertise-tags=tag:cologne
               TS_USERSPACE: true
             envFrom:
