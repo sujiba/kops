@@ -16,8 +16,10 @@ spec:
         type: statefulset
         replicas: 1
         strategy: RollingUpdate
+
         serviceAccount:
           identifier: tailscale
+
         annotations:
           reloader.stakater.com/auto: "true"
 
