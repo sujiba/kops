@@ -7,3 +7,4 @@ resources:
   - ./ocirepository.yaml
   - ./pvc.yaml
   - ./resourceclaimtemplate.yaml
+  - ./volsync.yaml
