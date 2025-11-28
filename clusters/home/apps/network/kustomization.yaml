@@ -12,3 +12,4 @@ resources:
   - ./envoy-gateway/ks.yaml
   - ./pihole/ks.yaml
   - ./smtp-relay/ks.yaml
+  - ./tailscale
