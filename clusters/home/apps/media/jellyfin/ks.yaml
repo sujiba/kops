@@ -17,7 +17,7 @@ spec:
         kind: Secret
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: jellfin-config
+      VOLSYNC_CLAIM: jellyfin-data
       VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "2000"
