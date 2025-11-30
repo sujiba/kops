@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pihole
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: pihole
+  interval: 1h
+  timeout: 5m
+  values:
+    defaultPodOptions:
+      hostUsers: false
+
+    controllers:
+      pihole:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/sujiba/pihole-unbound-hyperlocal
+              tag: 2025.11.1
+            env:
+              TZ: ${TZ}
+              FTLCONF_dns_listeningMode: all
+              FTLCONF_webserver_port: &port 80
+              FTLCONF_dns_upstreams: 127.0.0.1#5335
+              FTLCONF_dns_dnssec: true
+              FTLCONF_webserver_interface_theme: default-dark
+            envFrom:
+              - secretRef:
+                  name: pihole-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 512Mi
+
+    service:
+      app:
+        forceRename: pihole
+        controller: pihole
+        type: ClusterIP
+        clusterIP: 10.244.0.2
+        ports:
+          dns-udp:
+            port: 53
+            protocol: UDP
+          dns-tcp:
+            port: 53
+            protocol: TCP
+          http:
+            primary: true
+            port: *port
+            protocol: HTTP
+
+    persistence:
+      data:
+        existingClaim: pihole-data
+        globalMounts:
+          - path: "/etc/pihole"
+            subPath: "pihole"
