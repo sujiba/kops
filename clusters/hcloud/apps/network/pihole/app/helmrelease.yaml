@@ -49,7 +49,6 @@ spec:
         forceRename: pihole
         controller: pihole
         type: ClusterIP
-        clusterIPs: ["10.96.0.2"]
         ports:
           dns-udp:
             port: 53
