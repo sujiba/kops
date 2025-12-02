@@ -10,10 +10,10 @@ resources:
   - ./secret.sops.yaml
 
 patches:
-  - patch: |-
-      - op: replace
-        path: /spec/clusterIP
-        value: 10.96.0.2
-    target:
+  - target:
       kind: Service
       name: pihole
+    patch: |-
+      - op: replace
+        path: /spec/clusterIP
+        value: 10.96.0.10
