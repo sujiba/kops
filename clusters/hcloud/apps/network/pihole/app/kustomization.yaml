@@ -16,4 +16,4 @@ patches:
     patch: |-
       - op: replace
         path: /spec/clusterIP
-        value: 10.96.0.10
+        value: 10.96.0.2
