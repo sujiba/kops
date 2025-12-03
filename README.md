@@ -79,5 +79,5 @@ _hcloud cluster stats:_
 ## 🤝 Special thanks
 - [Home Operations discord community](https://discord.gg/home-operations)
 - [kubesearch.dev](https://kubesearch.dev/)
-- [naoalb](https://code.onji.space/lab/k8s-cluster)
+- [naoalb](https://code.onji.space/lab/k8s)
 - [bjw-s](https://github.com/bjw-s-labs)
