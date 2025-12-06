@@ -40,6 +40,7 @@ spec:
               CONTINUWUITY_ALLOW_CHECK_FOR_UPDATES: 'true'
               CONTINUWUITY_TRUSTED_SERVERS: '["matrix.org"]'
               CONTINUWUITY_ADDRESS: 0.0.0.0
+              CONTINUWUITY_PORT: &port 8080
               CONTINUWUITY_WELL_KNOWN__CLIENT: https://chat.offene.cloud
               CONTINUWUITY_WELL_KNOWN__SERVER: chat.offene.cloud:443
             envFrom:
@@ -60,7 +61,7 @@ spec:
       app:
         ports:
           http:
-            port: 8080
+            port: *port
 
     ingress:
       app:
@@ -79,7 +80,7 @@ spec:
               - path: /
                 service:
                   identifier: app
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - "chat.offene.cloud"
