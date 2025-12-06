@@ -8,6 +8,7 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./continuwuity/ks.yaml
   - ./freshrss/ks.yaml
   - ./it-tools/ks.yaml
   - ./headscale/ks.yaml
