@@ -4,10 +4,11 @@ kind: HelmRelease
 metadata:
   name: continuwuity
 spec:
+  interval: 1h
+  timeout: 5m
   chartRef:
     kind: OCIRepository
     name: continuwuity
-  interval: 30m
 
   values:
     controllers:
