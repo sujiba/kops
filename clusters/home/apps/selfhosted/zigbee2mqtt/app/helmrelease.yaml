@@ -52,6 +52,9 @@ spec:
               ZIGBEE2MQTT_CONFIG_FRONTEND_ENABLED: "true"
               ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: &port 8080
               ZIGBEE2MQTT_CONFIG_FRONTEND_URL: https://zigbee.${INTERNAL_DOMAIN}
+            envFrom:
+              - secretRef:
+                  name: zigbee2mqtt-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
