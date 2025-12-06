@@ -9,3 +9,15 @@ spec:
     requests:
       storage: ${VOLSYNC_CAPACITY}
   storageClassName: local-hostpath
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-assistant-cache
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-hostpath
