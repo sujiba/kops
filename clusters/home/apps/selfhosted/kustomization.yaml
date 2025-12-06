@@ -8,6 +8,7 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./home-assistant/ks.yaml
   - ./mosquitto/ks.yaml
   - ./paperless/ks.yaml
   - ./vaultwarden/ks.yaml
