@@ -38,13 +38,13 @@ spec:
               capabilities: {drop: ["ALL"]}
             resources:
               requests:
-                cpu: 15m
-                memory: 105Mi
+                cpu: 10m
               limits:
-                memory: 105Mi
+                memory: 128Mi
 
     service:
       app:
+        type: LoadBalancer
         ports:
           http:
             port: 1883
@@ -53,11 +53,13 @@ spec:
       config:
         data:
           mosquitto.conf: |
-            listener 1883
             allow_anonymous true
+            autosave_interval 60
+            connection_messages false
+            listener 1883
             persistence true
             persistence_location /data
-            connection_messages false
+
     persistence:
       config:
         type: configMap
