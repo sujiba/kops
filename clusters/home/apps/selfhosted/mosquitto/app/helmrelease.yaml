@@ -44,7 +44,6 @@ spec:
 
     service:
       app:
-        type: LoadBalancer
         ports:
           http:
             port: 1883
