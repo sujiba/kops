@@ -8,5 +8,7 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./mosquitto/ks.yaml
   - ./paperless/ks.yaml
   - ./vaultwarden/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
