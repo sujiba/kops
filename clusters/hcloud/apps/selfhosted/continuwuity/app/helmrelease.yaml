@@ -33,7 +33,7 @@ spec:
             env:
               CONTINUWUITY_SERVER_NAME: chat.offene.cloud
               CONTINUWUITY_DATABASE_PATH: /data/db
-              CONTINUWUITY_MAX_REQUEST_SIZE: 20000000 # in bytes, ~20 MB
+              CONTINUWUITY_MAX_REQUEST_SIZE: 104857600 # in bytes, ~104 MB
               CONTINUWUITY_ALLOW_REGISTRATION: 'true'
               CONTINUWUITY_ALLOW_FEDERATION: 'true'
               CONTINUWUITY_ALLOW_CHECK_FOR_UPDATES: 'true'
