@@ -63,13 +63,12 @@ spec:
     persistence:
       config:
         type: configMap
-        name: mosquitto
+        identifier: config
         advancedMounts:
           mosquitto:
-            main:
+            app:
               - path: /mosquitto/config/mosquitto.conf
                 subPath: mosquitto.conf
-                readOnly: true
       data:
         existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
