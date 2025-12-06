@@ -15,7 +15,7 @@ spec:
         kind: Secret
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: home-assistant-data
+      VOLSYNC_CLAIM: home-assistant-config
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "2000"
