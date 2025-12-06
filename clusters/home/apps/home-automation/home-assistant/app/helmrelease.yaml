@@ -70,13 +70,6 @@ spec:
             app:
               - path: /config
                 subPath: config
-      hass-cache:
-        existingClaim: hass-cache
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /config/.venv
-                subPath: hass-venv
       tmpfs:
         type: emptyDir
         advancedMounts:
