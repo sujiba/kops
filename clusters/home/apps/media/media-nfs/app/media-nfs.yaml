@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: "${NFS_SERVER}"
+    server: "${STORAGE_IP}"
     path: /volume2/media
   mountOptions:
     - nfsvers=4
