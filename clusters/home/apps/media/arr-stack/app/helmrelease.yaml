@@ -31,13 +31,14 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: pr-2988
+              tag: v3.40.3
             env:
               # Other options
               TZ: ${TZ}
               LOG_LEVEL: debug
               VERSION_INFORMATION: off
               # DNS options
+              DNS_SERVER: on
               DNS_UPSTREAM_RESOLVER_TYPE: dot
               DNS_UPSTREAM_RESOLVERS: quad9
               DNS_CACHING: off
