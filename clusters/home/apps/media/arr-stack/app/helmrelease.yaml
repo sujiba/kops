@@ -35,11 +35,11 @@ spec:
             env:
               BLOCK_MALICIOUS: off # save 300MB of RAM; https://github.com/qdm12/gluetun/issues/2054
               DNS_UPSTREAM_RESOLVERS: quad9
-              FIREWALL_DEBUG: on
               # SABnzbd, socks5, radarr, sonarr, sonarr-animes, prowlarr, health check
               FIREWALL_INPUT_PORTS: "80,1080,7878,8989,8990,9696,9999"
+              FIREWALL_DEBUG: on
               HEALTH_SERVER_ADDRESS: ":9999"
-              HEALTH_SERVER_DISABLE_LOOP: on
+              # HEALTH_SERVER_DISABLE_LOOP: on
               LOG_LEVEL: debug
               STORAGE_FILEPATH: "" # prevent memory spike and avoid I/O
               UPDATER_PERIOD: 24h
