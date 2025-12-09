@@ -10,4 +10,4 @@ spec:
     operation: copy
   url: oci://ghcr.io/home-operations/charts-mirror/cilium
   ref:
-    tag: v1.19.0-pre.3
+    tag: 1.19.0-pre.3
