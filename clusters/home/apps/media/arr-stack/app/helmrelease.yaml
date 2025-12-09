@@ -30,16 +30,11 @@ spec:
         initContainers:
           gluetun:
             image:
-              repository: ghcr.io/jfroy/gluetun
-              tag: v3.40.3@sha256:23f4a7d62102af5e5d96401a89bc9e6911580b4d87dabb85474a732fc4ee851d
+              repository: qmcgaw/gluetun
+              tag: v3.40.3
             env:
               BLOCK_MALICIOUS: off # save 300MB of RAM; https://github.com/qdm12/gluetun/issues/2054
-              DOT: on
-              DOT_CACHING: off
-              DOT_IPV6: off
-              DNS_CACHING: off
-              DNS_UPSTREAM_RESOLVER_TYPE: dot
-              DNS_UPSTREAM_RESOLVERS: quad9,cloudflare
+              DNS_UPSTREAM_RESOLVERS: quad9
               FIREWALL_DEBUG: on
               # SABnzbd, socks5, radarr, sonarr, sonarr-animes, prowlarr, health check
               FIREWALL_INPUT_PORTS: "80,1080,7878,8989,8990,9696,9999"
@@ -116,7 +111,6 @@ spec:
               tag: 6.1.0.10293@sha256:22bbf7e924dd929b756147d8110664c3e2da37c59516b249945ab1d63657be29
             env:
               RADARR__APP__INSTANCENAME: Radarr
-              #RADARR__APP__THEME: dark
               RADARR_AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
               RADARR__LOG__DBENABLED: "False"
@@ -150,7 +144,6 @@ spec:
               tag: 4.0.16.2943@sha256:0a1b8f5cb5b072f7ad8c6ff64a25dc512115d1a114ecf19a58a3b4f870207ddd
             env:
               SONARR__APP__INSTANCENAME: Sonarr
-              #SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
@@ -184,7 +177,6 @@ spec:
               tag: 4.0.16.2943@sha256:0a1b8f5cb5b072f7ad8c6ff64a25dc512115d1a114ecf19a58a3b4f870207ddd
             env:
               SONARR__APP__INSTANCENAME: Sonarr-Animes
-              #SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
@@ -218,7 +210,6 @@ spec:
               tag: 2.3.0.5236@sha256:1a8a4b11972b2e62671b49949c622b8cb1110e2b5c77199ac795a6d79fe106e8
             env:
               PROWLARR__APP__INSTANCENAME: Prowlarr
-              #PROWLARR__APP__THEME: dark
               PROWLARR__AUTH__METHOD: External
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
               PROWLARR__LOG__DBENABLED: "False"
