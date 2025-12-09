@@ -23,12 +23,12 @@ spec:
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: Backend
 metadata:
-  name: nas-service
+  name: nas-backend
   namespace: network
 spec:
   endpoints:
     - ip:
         address: "${STORAGE_IP}"
-        port: 5000
+        port: 5001
   tls:
     insecureSkipVerify: true
