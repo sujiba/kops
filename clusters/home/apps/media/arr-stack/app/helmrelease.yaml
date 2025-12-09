@@ -35,6 +35,7 @@ spec:
             env:
               BLOCK_MALICIOUS: off # save 300MB of RAM; https://github.com/qdm12/gluetun/issues/2054
               DNS_UPSTREAM_RESOLVERS: quad9
+              DNS_ADDRESS: 127.0.0.1
               # SABnzbd, socks5, radarr, sonarr, sonarr-animes, prowlarr, health check
               FIREWALL_INPUT_PORTS: "80,1080,7878,8989,8990,9696,9999"
               FIREWALL_DEBUG: on
