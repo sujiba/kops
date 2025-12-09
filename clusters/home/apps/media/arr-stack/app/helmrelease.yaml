@@ -30,23 +30,23 @@ spec:
         initContainers:
           gluetun:
             image:
-              repository: qmcgaw/gluetun
-              tag: v3.40.3
+              repository: ghcr.io/qdm12/gluetun
+              tag: pr-2988
             env:
-              BLOCK_MALICIOUS: off # save 300MB of RAM; https://github.com/qdm12/gluetun/issues/2054
-              DNS_UPSTREAM_RESOLVERS: quad9
-              DNS_ADDRESS: 127.0.0.1
-              # SABnzbd, socks5, radarr, sonarr, sonarr-animes, prowlarr, health check
+              # Other options
+              TZ: ${TZ}
+              LOG_LEVEL: debug
+              VERSION_INFORMATION: off
+              # DNS options
+              # Firewall options
               FIREWALL_INPUT_PORTS: "80,1080,7878,8989,8990,9696,9999"
               FIREWALL_DEBUG: on
+              # Healthcheck options
               HEALTH_SERVER_ADDRESS: ":9999"
-              # HEALTH_SERVER_DISABLE_LOOP: on
-              LOG_LEVEL: debug
+              # Storage options
               STORAGE_FILEPATH: "" # prevent memory spike and avoid I/O
+              # Updater options
               UPDATER_PERIOD: 24h
-              VERSION_INFORMATION: off
-              VPN_IPV6_SERVER: off
-              TZ: ${TZ}
             envFrom:
               - secretRef:
                   name: gluetun-secret
