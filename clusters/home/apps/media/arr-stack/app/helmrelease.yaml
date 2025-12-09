@@ -38,6 +38,10 @@ spec:
               LOG_LEVEL: debug
               VERSION_INFORMATION: off
               # DNS options
+              DNS_UPSTREAM_RESOLVER_TYPE: dot
+              DNS_UPSTREAM_RESOLVERS: quad9
+              DNS_CACHING: off
+              DNS_UPSTREAM_IPV6: off
               # Firewall options
               FIREWALL_INPUT_PORTS: "80,1080,7878,8989,8990,9696,9999"
               FIREWALL_DEBUG: on
