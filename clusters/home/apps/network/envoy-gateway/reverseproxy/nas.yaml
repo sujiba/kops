@@ -29,6 +29,6 @@ spec:
   endpoints:
     - ip:
         address: "${STORAGE_IP}"
-        port: 5001
+        port: 5000
   tls:
     insecureSkipVerify: true
