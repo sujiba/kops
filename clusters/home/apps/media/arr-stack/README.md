@@ -1,14 +1,21 @@
 # media stack
 
-Now start the gluetun and sonarr_anime container with docker compose up -d gluetun sonarr_anime. Edit `/opt/docker/arr_stack/volumes/sonarr_anime/config/conifg.xml` and change the ports to 8990 and 9899. Save the changes and stop the containers with docker compose down`.
+## Gluetun
 
-Create the folder structure under /opt/docker/arr_stack/volumes/donwloads`:
+### Quad9 
+To check if dns is working as exptected, you can query for dns info with the following commands inside the containers:
 
 ```bash
-mkdir -p /opt/docker/arr_stack/volumes/donwloads/{animes,movies,music,tv}
+dig +short txt proto.on.quad9.net.
+
+# response
+dot
+
+# Replace [session] with a random hash (40 chars long) and [random] with random chars every request.
+curl https://[session]-[random].ipleak.net/dnsdetection/
 ```
 
-Start all containers with docker compose up -d`. 
+The curl output is a list of quad9 ip addresses. With whois you can search for the owner of the ip address. It should be one of those [network providers](https://docs.quad9.net/FAQs/#network-providers-dns-leak-tests).
 
 ## SABnzbd
 
