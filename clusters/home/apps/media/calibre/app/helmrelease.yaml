@@ -38,18 +38,15 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /login
                     port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
+                    path: /login
               readiness: *probes
             resources:
               requests:
-                cpu: 100m
+                cpu: 50m
+                memory: 200Mi
               limits:
-                memory: 1Gi
+                memory: 600Mi
 
     service:
       app:

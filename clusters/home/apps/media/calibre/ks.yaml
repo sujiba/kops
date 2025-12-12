@@ -17,7 +17,7 @@ spec:
       APP: *app
       VOLSYNC_CLAIM: calibre-data
       VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_GID: "0"
+      VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
   prune: true
   sourceRef:
