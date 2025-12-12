@@ -71,7 +71,7 @@ spec:
       data:
         existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
-          - path: /confg
+          - path: /config
             subPath: config
           - path: /cwa-book-ingest
             subPath: cwa-book-ingest
