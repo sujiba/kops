@@ -2,54 +2,52 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: zola-blog
+  name: bentopdf
 spec:
   chartRef:
     kind: OCIRepository
-    name: zola-blog
+    name: bentopdf
   interval: 30m
 
   values:
     controllers:
-      zola-blog:
+      bentopdf:
+        replicas: 1
+        strategy: RollingUpdate
+
         annotations:
           reloader.stakater.com/auto: "true"
 
         pod:
           securityContext:
-            fsGroup: 1000
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
             fsGroupChangePolicy: "OnRootMismatch"
-            runAsGroup: 1000
-            runAsUser: 1000
 
         containers:
           app:
             image:
-              repository: sujiba/my-zola-blog
-              tag: 2025.12.1
+              repository: ghcr.io/alam00000/bentopdf-simple
+              tag: v1.11.1@sha256:5aecdcc4c81079712bbc3d1945f4495edae2ccae07eaae5f9f1a0879c0c3f4fd
             env:
               TZ: ${TZ}
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
             resources:
               requests:
-                cpu: 12m
-                memory: 128M
+                cpu: 10m
+                memory: 50Mi
               limits:
-                memory: 512M
+                memory: 512Mi
 
     service:
       app:
         ports:
           http:
-            port: 80
+            port: 8080
 
     ingress:
       app:
@@ -61,8 +59,9 @@ spec:
           cert-manager.io/private-key-size: "384"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
+
         hosts:
-          - host: "blog.offene.cloud"
+          - host: "pdf.offene.cloud"
             paths:
               - path: /
                 service:
@@ -70,5 +69,14 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "blog.offene.cloud"
-            secretName: zola-blog-tls
+              - "pdf.offene.cloud"
+            secretName: bentopdf-tls
+
+    persistence:
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /var/cache/nginx
+            subPath: cache
+          - path: /etc/nginx/tmp
+            subPath: tmp
