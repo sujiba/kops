@@ -20,7 +20,6 @@ _hcloud cluster stats:_
 ![Pod-Count](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_pod_count&style=flat-square&label=Pods)
 ![CPU-Usage](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_cpu_usage&style=flat-square&label=CPU)
 ![Memory-Usage](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_memory_usage&style=flat-square&label=Memory)
-![Alerts](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_alert_count&style=flat-square&label=Alerts)
 
 </div>
 
