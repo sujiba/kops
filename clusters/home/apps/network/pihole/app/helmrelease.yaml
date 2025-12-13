@@ -50,7 +50,7 @@ spec:
         controller: pihole
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${PRIVATE_DNS_IPv4},${PRIVATE_DNS_IPv6}
+          lbipam.cilium.io/ips: ${PRIVATE_DNS_IPv4} #,${PRIVATE_DNS_IPv6}
         ports:
           dns-udp:
             port: 53
