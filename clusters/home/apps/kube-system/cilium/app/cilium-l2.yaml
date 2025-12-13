@@ -20,8 +20,8 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    #- cidr: "${PRIVATE_DNS_IPv4}/32"
-    #- cidr: "${PRIVATE_DNS_IPv6}/128"
+    - cidr: "${PRIVATE_DNS_IPv4}/32"
+    - cidr: "${PRIVATE_DNS_IPv6}/128"
     - cidr: "${ENVOY_INTERNAL_IPv4}/32"
     - cidr: "${ENVOY_INTERNAL_IPv6}/128"
     - cidr: "${ENVOY_VPN_IPv4}/32"
