@@ -41,7 +41,7 @@ spec:
                 cpu: 100m
                 memory: 2Gi
               limits:
-                memory: 2Gi
+                memory: 4Gi
 
     service:
       app:
@@ -49,10 +49,6 @@ spec:
           http:
             appProtocol: kubernetes.io/wss
             port: 8123
-        primary: true
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: ${HASS_IPv4}
 
     route:
       app:
