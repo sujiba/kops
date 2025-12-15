@@ -4,7 +4,8 @@ kind: HelmRelease
 metadata:
   name: home-assistant
 spec:
-  interval: 1m
+  interval: 1h
+  timeout: 5m
   chartRef:
     kind: OCIRepository
     name: home-assistant
