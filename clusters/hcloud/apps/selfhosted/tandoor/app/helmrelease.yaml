@@ -54,8 +54,8 @@ spec:
               # email sender address (default 'webmaster@localhost')
               DEFAULT_FROM_EMAIL: no-reply@${MAIL_DOMAIN}
             envFrom:
-              - secretKeyRef:
-                  name: tandoor-secrets
+              - secretRef:
+                  name: tandoor-secret
             #securityContext:
             #  allowPrivilegeEscalation: true
             #  readOnlyRootFilesystem: false
