@@ -37,7 +37,7 @@ spec:
               # Configure redis integration
               PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
             envFrom:
-              existingSecret:
+              - secretRef:
                 name: paperless-secret
             probes:
               liveness:
