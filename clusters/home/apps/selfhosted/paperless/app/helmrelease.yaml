@@ -38,7 +38,7 @@ spec:
               PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
             envFrom:
               - secretRef:
-                name: paperless-secret
+                  name: paperless-secret
             probes:
               liveness:
                 enabled: true
