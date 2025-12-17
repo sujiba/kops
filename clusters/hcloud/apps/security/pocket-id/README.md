@@ -12,4 +12,4 @@ Confirm [y/N]: y
 ```
 
 # Setup
-You can now sign in with the admin account on https://<your-app-url>/setup.
+You can now sign in with the admin account on `https://<your-app-url>/setup`.
