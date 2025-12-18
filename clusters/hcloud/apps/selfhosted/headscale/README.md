@@ -19,6 +19,10 @@ kubectl -n <namespace> exec <podname> -- headscale apikeys delete --prefix "Wl6E
 ```
 
 # Add users
+## OIDC setup with Pocket-ID
+- Headscale [docs](https://github.com/juanfont/headscale/blob/main/config-example.yaml) to configure oidc.
+- Pocket-ID [docs](https://pocket-id.org/docs/client-examples/headscale) to configure oidc.
+
 
 # Add nodes
 
