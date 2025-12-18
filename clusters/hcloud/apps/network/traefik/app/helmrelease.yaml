@@ -48,7 +48,7 @@ spec:
       kubernetesIngress:
         enabled: true
         allowExternalNameServices: true
-        allowCrossNamespace: true
+        #allowCrossNamespace: true
         ingressClass: traefik
     globalArguments:
       - --api.insecure=true
