@@ -84,7 +84,8 @@ spec:
             allowEncodedPercent: false
             allowEncodedQuestionMark: true
             allowEncodedHash: false
-          #sanitizePath: false
+        http3:
+          enabled: true
       metrics:
         port: 8082
         expose:
