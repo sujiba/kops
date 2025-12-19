@@ -1,0 +1,32 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: oidc-home
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: arr-stack-prowlarr
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: arr-stack-radarr
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: arr-stack-sabnzbd
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: arr-stack-sonarr
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: arr-stack-sonarr-animes
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: kopia
+  oidc:
+    provider:
+      issuer: "https://id.offene.cloud"
+    clientIDRef:
+      name: "envoy-oidc-secret"
+    clientSecret:
+      name: "envoy-oidc-secret"
