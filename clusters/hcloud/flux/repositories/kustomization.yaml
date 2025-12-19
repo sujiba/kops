@@ -7,4 +7,3 @@ resources:
   - ./authentik-charts.yaml
   - ./cloudnative-pg.yaml
   - ./nextcloud-charts.yaml
-  - ./traefik-charts.yaml
