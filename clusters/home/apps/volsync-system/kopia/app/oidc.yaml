@@ -15,3 +15,5 @@ spec:
       name: "envoy-oidc-secret"
     clientSecret:
       name: "envoy-oidc-secret"
+    redirectURL: "https://kopia.${INTERNAL_DOMAIN}/oauth2/callback"
+    logoutPath: "/logout"
