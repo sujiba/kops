@@ -169,10 +169,8 @@ spec:
         imagePullPolicy: Always
         # https://anubis.techaro.lol/docs/admin/installation
         env:
-          - name: 'BIND'
-            value: ':8080'
-          - name: 'DIFFICULTY'
-            value: '2'
+          BIND: ':8080'
+          DIFFICULTY: '2'
           # The hex-encoded ed25519 private key used to sign Anubis responses.
           # If this is not set, Anubis will generate one for you.
           #- name: ED25519_PRIVATE_KEY_HEX
@@ -180,10 +178,8 @@ spec:
           #    secretKeyRef:
           #      name: anubis-key-forgejo
           #      key: ED25519_PRIVATE_KEY_HEX
-          - name: 'TARGET'
-            value: 'http://localhost:3000'
-          - name: 'POLICY_FNAME'
-            value: '/etc/anubisBotPolicy.json'
+          TARGET: 'http://localhost:3000'
+          POLICY_FNAME: '/etc/anubisBotPolicy.json'
         volumeMounts:
           - name: anubis-bot-policy
             mountPath: /etc/anubisBotPolicy.json
