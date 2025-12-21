@@ -172,7 +172,7 @@ spec:
           - name: 'BIND'
             value: ':8080'
           - name: 'DIFFICULTY'
-            value: '4'
+            value: '2'
           # The hex-encoded ed25519 private key used to sign Anubis responses.
           # If this is not set, Anubis will generate one for you.
           #- name: ED25519_PRIVATE_KEY_HEX
@@ -197,8 +197,6 @@ spec:
           runAsGroup: 1000
           runAsNonRoot: true
           allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
+          capabilities: {drop: ["ALL"]}
           seccompProfile:
             type: RuntimeDefault
