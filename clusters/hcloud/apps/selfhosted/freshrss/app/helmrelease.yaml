@@ -30,7 +30,7 @@ spec:
               LISTEN: &port 8080
               OIDC_ENABLED: 1
               OIDC_SCOPES: openid email profile
-              OIDC_X_FORWARDED_HEADERS: X-Forwarded-Proto X-Forwarded-Host
+              OIDC_X_FORWARDED_HEADERS: X-Forwarded-Proto X-Forwarded-Host X-Forwarded-Port
               OIDC_REMOTE_USER_CLAIM: preferred_username
             envFrom:
               - secretRef:
