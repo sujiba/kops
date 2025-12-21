@@ -4,10 +4,11 @@ kind: HelmRelease
 metadata:
   name: headscale
 spec:
+  interval: 1h
+  timeout: 5m
   chartRef:
     kind: OCIRepository
     name: headscale
-  interval: 30m
 
   values:
     controllers:
@@ -35,9 +36,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 5m
