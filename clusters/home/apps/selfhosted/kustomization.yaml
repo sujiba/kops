@@ -8,5 +8,6 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./immich/ks.yaml
   - ./paperless/ks.yaml
   - ./vaultwarden/ks.yaml
