@@ -45,6 +45,7 @@ spec:
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_HOST: smtp-relay.network.svc.cluster.local
               SMTP_PORT: 2525
+              SESSION_DURATION: 28800 # 8h
               TRUST_PROXY: true
               TZ: ${TZ}
               UI_CONFIG_DISABLED: true
