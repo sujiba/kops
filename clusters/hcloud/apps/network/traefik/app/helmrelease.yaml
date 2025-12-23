@@ -49,9 +49,7 @@ spec:
     global:
       checkNewVersion: false
       sendAnonymousUsage: false
-    env:
-      - name: TZ
-        value: Europe/Berlin
+    # env:
     ports:
       traefik:
         expose:
