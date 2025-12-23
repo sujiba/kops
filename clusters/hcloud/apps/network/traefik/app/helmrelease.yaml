@@ -51,7 +51,7 @@ spec:
       sendAnonymousUsage: false
     env:
       - name: TZ
-        value: ${TZ}
+        value: Europe/Berlin
     ports:
       traefik:
         expose:
