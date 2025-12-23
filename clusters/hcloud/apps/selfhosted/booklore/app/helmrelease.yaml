@@ -1,0 +1,94 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: booklore
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: booklore
+  interval: 30m
+
+  values:
+    controllers:
+      booklore:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/booklore-app/booklore
+              tag: v1.15.0
+            env:
+              TZ: America/Chicago
+              PUID: 1000
+              PGID: 1000
+              DATABASE_URL: "jdbc:mariadb://mariadb.database.svc.cluster.local:3306/booklore"
+              DATABASE_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: booklore-secret
+                    key: DATABASE_USERNAME
+              DATABASE_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: booklore-secret
+                    key: DATABASE_PASSWORD
+              SWAGGER_ENABLED: "false"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+              limits:
+                memory: 256Mi
+
+    service:
+      app:
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      app:
+        className: traefik
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          cert-manager.io/private-key-rotation-policy: Always
+          cert-manager.io/private-key-algorithm: ECDSA
+          cert-manager.io/private-key-size: "384"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
+
+        hosts:
+          - host: "tools.offene.cloud"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - "tools.offene.cloud"
+            secretName: booklore-tls
+
+    persistence:
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
