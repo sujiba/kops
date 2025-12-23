@@ -7,4 +7,4 @@ resources:
   #- ./backube-charts.yaml
   - ./cert-manager-webhook-netcup.yaml
   - ./cloudnative-pg.yaml
-  - ./traefik-charts.yaml
+
