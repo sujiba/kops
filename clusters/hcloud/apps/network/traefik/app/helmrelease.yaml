@@ -50,7 +50,8 @@ spec:
       checkNewVersion: false
       sendAnonymousUsage: false
     env:
-      TZ: ${TZ}
+      - name: TZ
+        value: ${TZ}
     ports:
       traefik:
         expose:
