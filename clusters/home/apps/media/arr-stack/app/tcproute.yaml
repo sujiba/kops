@@ -1,28 +1,13 @@
 ---
-apiVersion: gateway.networking.k8s.io/v1
-kind: Gateway
-metadata:
-  name: tcp-gateway
-spec:
-  gatewayClassName: envoy
-  listeners:
-  - name: arr-stack-socks5
-    protocol: TCP
-    port: 1080
-    allowedRoutes:
-      kinds:
-      - kind: TCPRoute
-
----
 apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: TCPRoute
 metadata:
   name: tcp-socks5
 spec:
   parentRefs:
-  - name: tcp-gateway
-    sectionName: arr-stack-socks5
+    - name: envoy-internal
+      sectionName: socks5
   rules:
-  - backendRefs:
-    - name: arr-stack-socks5
-      port: 1080
+    - backendRefs:
+      - name: arr-stack-socks5
+        port: 1080

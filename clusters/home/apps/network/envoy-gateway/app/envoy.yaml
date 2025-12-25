@@ -70,6 +70,12 @@ spec:
           - kind: Secret
             name: internal-wildcard-tls
             namespace: network
+    - name: socks5
+      protocol: TCP
+      port: 1080
+      allowedRoutes:
+        kinds:
+        - kind: TCPRoute
 
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
