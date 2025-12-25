@@ -8,4 +8,5 @@ resources:
   - ./oidc.yaml
   - ./pvc.yaml
   - ./secret.sops.yaml
+  - ./tcproute.yaml
   - ./volsync.yaml
