@@ -31,7 +31,7 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: latest
+              tag: 3.41.0
             env:
               # Other options
               TZ: ${TZ}
