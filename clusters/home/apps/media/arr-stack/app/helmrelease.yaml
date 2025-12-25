@@ -243,13 +243,13 @@ spec:
               limits:
                 memory: 4Gi
 
-          #socks5:
-          #  image:
-          #    repository: serjs/go-socks5-proxy
-          #    tag: v0.0.4
-          #  env:
-          #    REQUIRE_AUTH: false
-          #    ALLOWED_IPS: ${PRIVATE_NETWORK}/24
+          socks5:
+            image:
+              repository: serjs/go-socks5-proxy
+              tag: v0.0.4
+            env:
+              REQUIRE_AUTH: false
+              ALLOWED_IPS: ${PRIVATE_NETWORK}/24
 
     service:
       sabnzbd:
@@ -281,6 +281,12 @@ spec:
         ports:
           sonarr:
             port: 9696
+
+      socks5:
+        controller: arr-stack
+        ports:
+          sonarr:
+            port: 1080
 
     route:
       sabnzbd:
