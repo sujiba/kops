@@ -74,8 +74,8 @@ spec:
       protocol: TCP
       port: 1080
       allowedRoutes:
-        kinds:
-        - kind: TCPRoute
+        namespaces:
+          from: All
 
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
