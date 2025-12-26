@@ -241,7 +241,7 @@ spec:
               tag: v0.0.4
             env:
               REQUIRE_AUTH: false
-              ALLOWED_IPS: ${PRIVATE_NETWORK}/24
+              ALLOWED_IPS: 10.0.0.0/8
 
     service:
       sabnzbd:
