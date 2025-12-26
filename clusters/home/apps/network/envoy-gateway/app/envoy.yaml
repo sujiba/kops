@@ -74,8 +74,8 @@ spec:
       protocol: TCP
       port: 1080
       allowedRoutes:
-        namespaces:
-          from: All
+        #namespaces:
+        #  from: All
         kinds:
           - kind: TCPRoute
 
