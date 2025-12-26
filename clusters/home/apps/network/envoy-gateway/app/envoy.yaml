@@ -76,6 +76,8 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+        kinds:
+          - kind: TCPRoute
 
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
