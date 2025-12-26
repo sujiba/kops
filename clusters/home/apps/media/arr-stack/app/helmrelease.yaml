@@ -141,8 +141,6 @@ spec:
             resources:
               requests:
                 cpu: 100m
-              limits:
-                memory: 4Gi
 
           sonarr:
             image:
@@ -174,8 +172,6 @@ spec:
             resources:
               requests:
                 cpu: 100m
-              limits:
-                memory: 4Gi
 
           sonarr-animes:
             image:
@@ -207,8 +203,6 @@ spec:
             resources:
               requests:
                 cpu: 100m
-              limits:
-                memory: 4Gi
 
           prowlarr:
             image:
@@ -240,8 +234,6 @@ spec:
             resources:
               requests:
                 cpu: 100m
-              limits:
-                memory: 4Gi
 
           socks5:
             image:
@@ -406,7 +398,7 @@ spec:
       run:
         type: emptyDir
         medium: Memory
-        sizeLimit: 10Mi
+        sizeLimit: 20Mi
         globalMounts:
           - path: /run
           - path: /var/run
