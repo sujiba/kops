@@ -1,0 +1,30 @@
+---
+# true or false
+sonarrEnabled: true
+radarrEnabled: true
+lidarrEnabled: false
+readarrEnabled: false
+whisparrEnabled: false
+
+radarr:
+  radarr:
+    base_url: http://arr-stack-radarr:7878
+    api_key: !env RADARR_API_KEY
+
+    delete_unmanaged_custom_formats:
+      enabled: true
+
+sonarr:
+  sonarr:
+    base_url: http://arr-stack-sonarr:8989
+    api_key: !env SONARR_API_KEY
+
+    delete_unmanaged_custom_formats:
+      enabled: true
+
+  sonarr_animes:
+    base_url: http://arr-stack-sonarr-animes:8990
+    api_key: !env SONARR_ANIMES_API_KEY
+
+    delete_unmanaged_custom_formats:
+      enabled: true
