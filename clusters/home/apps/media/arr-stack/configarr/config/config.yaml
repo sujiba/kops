@@ -6,25 +6,174 @@ lidarrEnabled: false
 readarrEnabled: false
 whisparrEnabled: false
 
-radarr:
-  radarr:
-    base_url: http://arr-stack-radarr:7878
-    api_key: !env RADARR_API_KEY
+#radarr:
+#  radarr:
+#    base_url: http://arr-stack-radarr:7878
+#    api_key: !env RADARR_API_KEY
+#
+#    delete_unmanaged_custom_formats:
+#      enabled: false
 
-    delete_unmanaged_custom_formats:
-      enabled: true
-
+# Prepare your sonarr instances
+# https://trash-guides.info/Sonarr/sonarr-setup-quality-profiles-german-en/
 sonarr:
   sonarr:
     base_url: http://arr-stack-sonarr:8989
     api_key: !env SONARR_API_KEY
 
-    delete_unmanaged_custom_formats:
-      enabled: true
-
-  sonarr_animes:
-    base_url: http://arr-stack-sonarr-animes:8990
-    api_key: !env SONARR_ANIMES_API_KEY
+    quality_definition:
+      type: series
 
     delete_unmanaged_custom_formats:
-      enabled: true
+      enabled: false
+    delete_unmanaged_quality_profiles:
+      enabled: false
+
+    quality_profiles:
+      # UHD 2160p
+      - name: Remux-WEB-2160p-test
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-2160p
+          until_score: 15500
+          # score increment
+          min_format_score: 1
+        min_format_score: 5000
+        quality_sort: top
+        qualities:
+          - name: Remux-2160p
+            qualities:
+              - Remux-2160p
+              - Bluray-2160p
+              - WEBDL-2160p
+              - WEBRip-2160p
+      # HD 1080p
+      - name: Remux-WEB-1080p-test
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-1080p
+          until_score: 15500
+          # score increment
+          min_format_score: 1
+        min_format_score: 5000
+        quality_sort: top
+        qualities:
+          - name: Remux-1080p
+            qualities:
+              - Remux-1080p
+              - Bluray-1080p
+              - WEBDL-1080p
+              - WEBRip-1080p
+          - name: HDTV-1080p
+          - name: Bluray-720p
+            qualities:
+              - WEBDL-720p
+              - WEBRip-720p
+          - name: HDTV-720p
+          - name: Bluray-576p
+          - name: Bluray-480p
+          - name: WEB 480p
+            qualities:
+              - WEBDL-480p
+              - WEBRip-480p
+          - name: DVD
+          - name: SDTV
+
+    custom_formats:
+      # Scores from TRaSH Guides
+      - trash_ids:
+          # german audio
+          - 8a9fcdbb445f2add0505926df3bb7b8a # German
+          - ed51973a811f51985f14e2f6f290e47a # German DL
+          - c5dd0fd675f85487ad5bdf97159180bd # German DL (undefined)
+          - 133589380b89f8f8394320901529bac1 # Not German or English
+          # hq source groups
+          - da0f005f9c3edf34fc26e18dce8c6573 # German Remux Tier 01
+          - 6bc5ccd80a03e7abb8f556eecd174b73 # German Remux Tier 02
+          - 7940b2fb0278f27cf4f70187f2be95d6 # German Bluray Tier 01
+          - 83b336a90d90d6b35ca673b007f80661 # German Bluray Tier 02
+          - d8f8e1539827967e0e564833e6c08d33 # German Bluray Tier 03
+          - 68be37323132b35cf333c81a2ac8fc16 # German Web Tier 01
+          - f51b96a50b0e6196cb69724b7833d837 # German Web Tier 02
+          - bda67c2c0aae257308a4723d92475b86 # German Web Tier 03
+          - c2eec878fa1989599c226ce4c287d6a7 # German Scene
+          - e6258996055b9fbab7e9cb2f75819294 # WEB Tier 01
+          - 58790d4e2fdcd9733aa7ae68ba2bb503 # WEB Tier 02
+          - d84935abd3f8556dcd51d4f27e22d0a6 # WEB Tier 03
+          # german unwanted
+          - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
+          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
+          - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
+          - a6a6c33d057406aaad978a6902823c35 # German LQ
+          - 237eda4ef550a97da2c9d87b437e500b # German Microsized
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+          - fbcb31d8dabd2a319072b84fc0b7249c # Extras
+          - 15a05bc7c1a36e2b57fd628f8977e2fc # AV1
+          - 23297a736ca77c0fc8e70f8edd7ee56c # Upscaled
+          # miscellaneous (required)
+          - ec8fa7296b64e8cd390a1600981f3923 # Repack/Proper
+          - eb3d5cc0a2be0db205fb823640db6a3c # Repack v2
+          - 44e7c4de10ae50265753082e5dc76047 # Repack v3
+          # miscellaneous (optional)
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
+          - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
+          - 06d66ab109d4d2eddb2794d21526d140 # Retags
+          # general streaming services
+          - d660701077794679fd59e8bdf4ce3a29 # AMZN
+          - f67c9ca88f463a48346062e8ad07713f # ATVP
+          - 77a7b25585c18af08f60b1547bb9b4fb # CC
+          - 36b72f59f4ea20aad9316f475f2d9fbb # DCU
+          - 89358767a60cc28783cdc3d0be9388a4 # DNSP
+          - a880d6abc21e7c16884f3ae393f84179 # HMAX
+          - 7a235133c87f7da4c8cccceca7e3c7a6 # HBO
+          - f6cce30f1733d5c8194222a7507909bb # HULU
+          - 0ac24a2a68a9700bcb7eeca8e5cd644c # iT
+          - 81d1fbf600e2540cee87f3a23f9d3c1c # MAX
+          - d34870697c9db575f17700212167be23 # NF
+          - c67a75ae4a1715f2bb4d492755ba4195 # PMTP
+          - 1656adc6d7bb2c8cca6acfb6592db421 # PCOK
+          - 6eb71887a8db6e783dd398446eb0e65d # PLAY
+          - ae58039e1319178e6be73caab5c42166 # SHO
+          - 1efe8da11bfd74fbbcd4d8117ddb9213 # STAN
+          - 9623c5c9cac8e939c1b9aedd32f640bf # SYFY
+          - 218e93e5702f44a68ad9e3c6ba87d2f0 # HD Streaming Boost
+        assign_scores_to:
+          - name: Remux-WEB-1080p-test
+          - name: Remux-WEB-2160p-test
+
+      - trash_ids:
+          # german resolution up to 1080p
+          - 9aa0ca0d2d66b6f6ee51fc630f46cf6f # German 1080p Booster
+          - c99279ee27a154c2f20d1d505cc99e25 # 720p
+          - 290078c8b266272a5cc8e251b5e2eb0b # 1080p
+        assign_scores_to:
+          - name: Remux-WEB-1080p-test
+          - name: Remux-WEB-2160p-test
+
+      - trash_ids:
+          # german resolution up to 2160p
+          - b493cd40d8a3bbf2839127a706bdb673 # German 2160p Booster
+          - 1bef6c151fa35093015b0bfef18279e5 # 2160p
+        assign_scores_to:
+          - name: Remux-WEB-2160p-test
+
+      - trash_ids:
+          # hdr formats
+          - 505d871304820ba7106b693be6fe4a9e # HDR
+          - 7c3a61a9c6cb04f52f1544be6d44a026 # DV Boost
+          - 0c4b99df9206d2cfac3c05ab897dd62a # HDR10+ Boost
+          - 9b27ab6498ec0f31a3353992e19434ca # DV (w/o HDR fallback)
+        assign_scores_to:
+          - name: Remux-WEB-2160p-test
+
+#  sonarr_animes:
+#    base_url: http://arr-stack-sonarr-animes:8990
+#    api_key: !env SONARR_ANIMES_API_KEY
+
+#    delete_unmanaged_custom_formats:
+#      enabled: false
