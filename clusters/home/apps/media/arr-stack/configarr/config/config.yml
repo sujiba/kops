@@ -248,14 +248,6 @@ sonarr:
     custom_formats:
       # Scores from TRaSH Guides
       - trash_ids:
-          # custom custom format
-          - anime-gersub
-          - german-dubbed-dl
-          - lang-not-eng-ger-jpn
-          - german-anime-bluray-tier-01
-          - german-anime-bluray-tier-02
-          - german-anime-web-tier-01
-          - german-anime-web-tier-02
           # german audio
           - 8a9fcdbb445f2add0505926df3bb7b8a # German
           - ed51973a811f51985f14e2f6f290e47a # German DL
@@ -340,7 +332,7 @@ sonarr:
           - 9623c5c9cac8e939c1b9aedd32f640bf # SYFY
           - 218e93e5702f44a68ad9e3c6ba87d2f0 # HD Streaming Boost
         assign_scores_to:
-          - name: "HD Remux + WEB (1080p)"
+          - name: "Animes HD Remux + WEB (1080p)"
 
       - trash_ids:
           # german resolution up to 1080p
@@ -348,9 +340,17 @@ sonarr:
           - c99279ee27a154c2f20d1d505cc99e25 # 720p
           - 290078c8b266272a5cc8e251b5e2eb0b # 1080p
         assign_scores_to:
-          - name: "HD Remux + WEB (1080p)"
+          - name: "Animes HD Remux + WEB (1080p)"
 
       - trash_ids:
+          # custom custom format
+          - anime-gersub
+          - german-dubbed-dl
+          - lang-not-eng-ger-jpn
+          - german-anime-bluray-tier-01
+          - german-anime-bluray-tier-02
+          - german-anime-web-tier-01
+          - german-anime-web-tier-02
           # Anime CF/Scoring
           - fb3ccc5d5cc8f77c9055d4cb4561dded # Anime BD Tier 01 (Top SeaDex Muxers)
           - 66926c8fa9312bc74ab71bf69aae4f4a # Anime BD Tier 02 (SeaDex Muxers)
@@ -388,8 +388,7 @@ sonarr:
           - 570b03b3145a25011bf073274a407259 # HIDIVE
           - a370d974bc7b80374de1d9ba7519760b # ABEMA
         assign_scores_to:
-          - name: "HD Remux + WEB (1080p)"
-
+          - name: "Animes HD Remux + WEB (1080p)"
 
     customFormatDefinitions:
       - trash_id: anime-gersub
