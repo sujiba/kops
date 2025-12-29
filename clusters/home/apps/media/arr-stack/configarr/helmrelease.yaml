@@ -13,8 +13,7 @@ spec:
   values:
     controllers:
       configarr:
-        replicas: 1
-        strategy: RollingUpdate
+        type: cronjob
 
         annotations:
           reloader.stakater.com/auto: "true"
