@@ -185,8 +185,8 @@ radarr:
           - 44c2b54d7c81c1a442a8b2cabeaef54f # ROKU
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
         assign_scores_to:
-          - name: "HD Remux + WEB (1080p)"
-          - name: "UHD Remux + WEB (2160p)"
+          - name: "TEST HD Remux + WEB (1080p)"
+          - name: "TEST UHD Remux + WEB (2160p)"
 
       - trash_ids:
         # german resolution up to 1080p
@@ -194,15 +194,15 @@ radarr:
         - b2be17d608fc88818940cd1833b0b24c # 720p
         - 820b09bb9acbfde9c35c71e0e565dad8 # 1080p
         assign_scores_to:
-          - name: "HD Remux + WEB (1080p)"
-          - name: "UHD Remux + WEB (2160p)"
+          - name: "TEST HD Remux + WEB (1080p)"
+          - name: "TST UHD Remux + WEB (2160p)"
 
       - trash_ids:
         # german resolution up to 2160p
         - cc7b1e64e2513a6a271090cdfafaeb55 # German 2160p Booster
         - fb392fb0d61a010ae38e49ceaa24a1ef # 2160p
         assign_scores_to:
-          - name: "UHD Remux + WEB (2160p)"
+          - name: "TEST UHD Remux + WEB (2160p)"
 
       - trash_ids:
         # hdr formats
@@ -211,7 +211,7 @@ radarr:
         - caa37d0df9c348912df1fb1d88f9273a # HDR10+ Boost
         - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback)
         assign_scores_to:
-          - name: "UHD Remux + WEB (2160p)"
+          - name: "TEST UHD Remux + WEB (2160p)"
 
 # Prepare your sonarr instances
 # https://trash-guides.info/Sonarr/sonarr-setup-quality-profiles-german-en/
