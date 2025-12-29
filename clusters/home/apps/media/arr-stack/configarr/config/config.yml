@@ -198,9 +198,519 @@ sonarr:
         assign_scores_to:
           - name: "UHD Remux + WEB (2160p)"
 
-#  sonarr_animes:
-#    base_url: http://arr-stack-sonarr-animes:8990
-#    api_key: !env SONARR_ANIMES_API_KEY
+  sonarr_animes:
+    base_url: http://arr-stack-sonarr-animes:8990
+    api_key: !env SONARR_ANIMES_API_KEY
 
-#    delete_unmanaged_custom_formats:
-#      enabled: false
+    quality_definition:
+      type: animes
+
+    delete_unmanaged_quality_profiles:
+      enabled: true
+    delete_unmanaged_custom_formats:
+      enabled: true
+
+    quality_profiles:
+      # HD 1080p
+      - name: "Anime HD Remux + WEB (1080p)"
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-1080p
+          until_score: 15500
+          # score increment
+          min_format_score: 1
+        min_format_score: 5000
+        quality_sort: top
+        qualities:
+          - name: Remux-1080p
+            qualities:
+              - Bluray-1080p
+              - Remux-1080p
+          - name: WEB 1080p
+            qualities:
+              - WEBDL-1080p
+              - WEBRip-1080p
+              - HDTV-1080p
+          - name: Bluray-720p
+          - name: WEB 720p
+            qualities:
+              - WEBDL-720p
+              - WEBRip-720p
+              - HDTV-720p
+          - name: Bluray-576p
+          - name: Bluray-480p
+          - name: WEB 480p
+            qualities:
+              - WEBDL-480p
+              - WEBRip-480p
+          - name: DVD
+          - name: SDTV
+
+    custom_formats:
+      # Scores from TRaSH Guides
+      - trash_ids:
+          # custom custom format
+          - anime-gersub
+          - german-dubbed-dl
+          - lang-not-eng-ger-jpn
+          - german-anime-bluray-tier-01
+          - german-anime-bluray-tier-02
+          - german-anime-web-tier-01
+          - german-anime-web-tier-02
+          # german audio
+          - 8a9fcdbb445f2add0505926df3bb7b8a # German
+          - ed51973a811f51985f14e2f6f290e47a # German DL
+          - c5dd0fd675f85487ad5bdf97159180bd # German DL (undefined)
+          - 133589380b89f8f8394320901529bac1 # Not German or English
+          # hq source groups
+          - da0f005f9c3edf34fc26e18dce8c6573 # German Remux Tier 01
+          - 6bc5ccd80a03e7abb8f556eecd174b73 # German Remux Tier 02
+          - 7940b2fb0278f27cf4f70187f2be95d6 # German Bluray Tier 01
+          - 83b336a90d90d6b35ca673b007f80661 # German Bluray Tier 02
+          - d8f8e1539827967e0e564833e6c08d33 # German Bluray Tier 03
+          - 68be37323132b35cf333c81a2ac8fc16 # German Web Tier 01
+          - f51b96a50b0e6196cb69724b7833d837 # German Web Tier 02
+          - bda67c2c0aae257308a4723d92475b86 # German Web Tier 03
+          - c2eec878fa1989599c226ce4c287d6a7 # German Scene
+          - e6258996055b9fbab7e9cb2f75819294 # WEB Tier 01
+          - 58790d4e2fdcd9733aa7ae68ba2bb503 # WEB Tier 02
+          - d84935abd3f8556dcd51d4f27e22d0a6 # WEB Tier 03
+          # german unwanted
+          - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
+          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
+          - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
+          - a6a6c33d057406aaad978a6902823c35 # German LQ
+          - 237eda4ef550a97da2c9d87b437e500b # German Microsized
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+          - fbcb31d8dabd2a319072b84fc0b7249c # Extras
+          - 15a05bc7c1a36e2b57fd628f8977e2fc # AV1
+          - 23297a736ca77c0fc8e70f8edd7ee56c # Upscaled
+          # miscellaneous (required)
+          - ec8fa7296b64e8cd390a1600981f3923 # Repack/Proper
+          - eb3d5cc0a2be0db205fb823640db6a3c # Repack v2
+          - 44e7c4de10ae50265753082e5dc76047 # Repack v3
+          # miscellaneous (optional)
+          - 3a4127d8aa781b44120d907f2cd62627 # Hybrid
+          - b735f09d3c025cbb7d75a5d38325b73b # Remaster
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
+          - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
+          - 06d66ab109d4d2eddb2794d21526d140 # Retags
+          # audio
+          - 0d7824bb924701997f874e7ff7d4844a # TrueHD ATMOS
+          - 9d00418ba386a083fbf4d58235fc37ef # DTS X
+          - b6fbafa7942952a13e17e2b1152b539a # ATMOS (undefined)
+          - 4232a509ce60c4e208d13825b7c06264 # DDPlus ATMOS
+          - 1808e4b9cee74e064dfae3f1db99dbfe # TrueHD
+          - c429417a57ea8c41d57e6990a8b0033f # DTS-HD MA
+          - 851bd64e04c9374c51102be3dd9ae4cc # FLAC
+          - 30f70576671ca933adbdcfc736a69718 # PCM
+          - cfa5fbd8f02a86fc55d8d223d06a5e1f # DTS-HD HRA
+          - 63487786a8b01b7f20dd2bc90dd4a477 # DDPlus
+          - c1a25cd67b5d2e08287c957b1eb903ec # DTS-ES
+          - 5964f2a8b3be407d083498e4459d05d0 # DTS
+          - a50b8a0c62274a7c38b09a9619ba9d86 # AAC
+          - dbe00161b08a25ac6154c55f95e6318d # DD
+          - 3e8b714263b26f486972ee1e0fe7606c # MP3
+          - 28f6ef16d61e2d1adfce3156ed8257e3 # OPUS
+          # audio channels
+          - bd6dd5e043aa27ff4696a08d011c7d96 # 1.0 Mono
+          - 834e534f103938853ffced4203b53e72 # 2.0 Stereo
+          - 42cba7e38c7947a6d1d0a62580ee6d62 # 3.0 Sound
+          - 1895195e84767de180653914ce207245 # 4.0 Sound
+          - 3fbafa924f361e66fbc6187af82dfa85 # 5.1 Surround
+          - 9fb6d778592c293467437593ef394bf1 # 6.1 Surround
+          - 204c8c3e7315bb0ea81332774fa888d6 # 7.1 Surround
+          # general streaming services
+          - d660701077794679fd59e8bdf4ce3a29 # AMZN
+          - f67c9ca88f463a48346062e8ad07713f # ATVP
+          - 77a7b25585c18af08f60b1547bb9b4fb # CC
+          - 36b72f59f4ea20aad9316f475f2d9fbb # DCU
+          - 89358767a60cc28783cdc3d0be9388a4 # DNSP
+          - a880d6abc21e7c16884f3ae393f84179 # HMAX
+          - 7a235133c87f7da4c8cccceca7e3c7a6 # HBO
+          - f6cce30f1733d5c8194222a7507909bb # HULU
+          - 0ac24a2a68a9700bcb7eeca8e5cd644c # iT
+          - 81d1fbf600e2540cee87f3a23f9d3c1c # MAX
+          - d34870697c9db575f17700212167be23 # NF
+          - c67a75ae4a1715f2bb4d492755ba4195 # PMTP
+          - 1656adc6d7bb2c8cca6acfb6592db421 # PCOK
+          - 6eb71887a8db6e783dd398446eb0e65d # PLAY
+          - ae58039e1319178e6be73caab5c42166 # SHO
+          - 1efe8da11bfd74fbbcd4d8117ddb9213 # STAN
+          - 9623c5c9cac8e939c1b9aedd32f640bf # SYFY
+          - 218e93e5702f44a68ad9e3c6ba87d2f0 # HD Streaming Boost
+        assign_scores_to:
+          - name: "HD Remux + WEB (1080p)"
+
+      - trash_ids:
+          # german resolution up to 1080p
+          - 9aa0ca0d2d66b6f6ee51fc630f46cf6f # German 1080p Booster
+          - c99279ee27a154c2f20d1d505cc99e25 # 720p
+          - 290078c8b266272a5cc8e251b5e2eb0b # 1080p
+        assign_scores_to:
+          - name: "HD Remux + WEB (1080p)"
+
+      - trash_ids:
+          # Anime CF/Scoring
+          - fb3ccc5d5cc8f77c9055d4cb4561dded # Anime BD Tier 01 (Top SeaDex Muxers)
+          - 66926c8fa9312bc74ab71bf69aae4f4a # Anime BD Tier 02 (SeaDex Muxers)
+          - fa857662bad28d5ff21a6e611869a0ff # Anime BD Tier 03 (SeaDex Muxers)
+          - f262f1299d99b1a2263375e8fa2ddbb3 # Anime BD Tier 04 (SeaDex Muxers)
+          - ca864ed93c7b431150cc6748dc34875d # Anime BD Tier 05 (Remuxes)
+          - 9dce189b960fddf47891b7484ee886ca # Anime BD Tier 06 (FanSubs)
+          - 1ef101b3a82646b40e0cab7fc92cd896 # Anime BD Tier 07 (P2P/Scene)
+          - 6115ccd6640b978234cc47f2c1f2cadc # Anime BD Tier 08 (Mini Encodes)
+          - 8167cffba4febfb9a6988ef24f274e7e # Anime Web Tier 01 (Muxers)
+          - 8526c54e36b4962d340fce52ef030e76 # Anime Web Tier 02 (Top FanSubs)
+          - de41e72708d2c856fa261094c85e965d # Anime Web Tier 03 (Official Subs)
+          - 9edaeee9ea3bcd585da9b7c0ac3fc54f # Anime Web Tier 04 (Official Subs)
+          - 22d953bbe897857b517928f3652b8dd3 # Anime Web Tier 05 (FanSubs)
+          - a786fbc0eae05afe3bb51aee3c83a9d4 # Anime Web Tier 06 (FanSubs)
+          - b0fdc5897f68c9a68c70c25169f77447 # Anime LQ Groups
+          - c259005cbaeb5ab44c06eddb4751e70c # v0
+          - 5f400539421b8fcf71d51e6384434573 # v1
+          - 3df5e6dfef4b09bb6002f732bed5b774 # v2
+          - db92c27ba606996b146b57fbe6d09186 # v3
+          - d4e5e842fad129a3c097bdb2d20d31a0 # v4
+          - 06b6542a47037d1e33b15aa3677c2365 # Anime Raws
+          - 9172b2f683f6223e3a1846427b417a3d # VOSTFR
+          - b23eae459cc960816f2d6ba84af45055 # Dubs Only
+          # Anime Streaming Services
+          - 3e0b26604165f463f3e8e192261e7284 # CR
+          - 1284d18e693de8efe0fe7d6b3e0b9170 # FUNi
+          - 44a8ee6403071dd7b8a3a8dd3fe8cb20 # VRV
+          - 89358767a60cc28783cdc3d0be9388a4 # DSNP
+          - d34870697c9db575f17700212167be23 # NF
+          - d660701077794679fd59e8bdf4ce3a29 # AMZN
+          - d54cd2bf1326287275b56bccedb72ee2 # ADN
+          - 7dd31f3dee6d2ef8eeaa156e23c3857e # B-Global
+          - 4c67ff059210182b59cdd41697b8cb08 # Bilibili
+          - 570b03b3145a25011bf073274a407259 # HIDIVE
+          - a370d974bc7b80374de1d9ba7519760b # ABEMA
+        assign_scores_to:
+          - name: "HD Remux + WEB (1080p)"
+
+
+    customFormatDefinitions:
+      - trash_id: anime-gersub
+        trash_scores:
+          default: 5000
+        trash_description: "German (and possibly english) Subtitles"
+        name: "German Subbed"
+        includeCustomFormatWhenRenaming: false
+        specifications:
+          - name: "German Subbed"
+            implementation: ReleaseTitleSpecification
+            negate: false
+            required: false
+            fields:
+              value: "(?:[Gg][Ee][Rr]|[Gg]erman)[\\. \\-]?(?:[Ee]ng|[Ee]nglish)?[\\. \\-]?(?:[Ss]ub|[Ss]ubbed)"
+      ##############
+      - trash_id: german-dubbed-dl
+        trash_scores:
+          default: 10000
+        trash_description: "Anime with German Dubbed DL in title to counteract negative Dubs only score"
+        name: "Anime: German Dubbed DL"
+        includeCustomFormatWhenRenaming: false
+        specifications:
+          - name: "German Dubbed DL"
+            implementation: ReleaseTitleSpecification
+            negate: false
+            required: true
+            fields:
+              value: "(German|Ger)([\\\\.\\\\-_ ]Dubbed)[\\\\.\\\\-_ ]DL"
+      ##############
+      - trash_id: lang-not-eng-ger-jpn
+        trash_scores:
+          default: -35000
+        trash_description: "Language: Not ENG/GER/JPN"
+        name: "Language: Not ENG/GER/JPN"
+        includeCustomFormatWhenRenaming: false
+        specifications:
+          - name: "Not English Language"
+            implementation: LanguageSpecification
+            negate: true
+            required: true
+            fields:
+              value: 1
+          - name: "Not German Language"
+            implementation: LanguageSpecification
+            negate: true
+            required: true
+            fields:
+              value: 4
+          - name: "Not German in Title"
+            implementation: ReleaseTitleSpecification
+            negate: true
+            required: true
+            fields:
+              value: "(?i)\\bgerman\\b"
+          - name: "Not Japanese Language"
+            implementation: LanguageSpecification
+            negate: true
+            required: true
+            fields:
+              value: 8
+      ##############
+      - trash_id: german-anime-bluray-tier-01
+        trash_scores:
+          default: 2900
+        trash_description: "German Anime Bluray Tier 01 Groups"
+        name: "German Anime Bluray Tier 01"
+        includeCustomFormatWhenRenaming: false
+        specifications:
+          - name: AO
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(AO)$"
+          - name: AST4u
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(AST4u)$"
+          - name: Baka
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Baka)$"
+          - name: FumoFriday
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(FumoFriday)$"
+          - name: Fuuko
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Fuuko)$"
+          - name: GP
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(GP)$"
+          - name: snk
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(snk|shw)$"
+          - name: Waechter
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Waechter)$"
+          - name: Bluray
+            implementation: SourceSpecification
+            negate: false
+            required: true
+            fields:
+              value: 6
+          - name: "Not REMUX"
+            implementation: SourceSpecification
+            negate: true
+            required: true
+            fields:
+              value: 7
+      ##############
+      - trash_id: german-anime-bluray-tier-02
+        trash_scores:
+          default: 2650
+        trash_description: "German Anime Bluray Tier 02 Groups"
+        name: "German Anime Bluray Tier 02"
+        includeCustomFormatWhenRenaming: false
+        specifications:
+          - name: DK
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(DK)$"
+          - name: DRiFTKiNG
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(DRiFTKiNG)$"
+          - name: FWB
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(FWB)$"
+          - name: ONiGiRi
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(ONiGiRi)$"
+          - name: Pudding-sama
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Pudding-sama)$"
+          - name: SkittleChan
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(SkittleChan)$"
+          - name: Tanuki
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Tanuki)$"
+          - name: Bluray
+            implementation: SourceSpecification
+            negate: false
+            required: true
+            fields:
+              value: 6
+          - name: "Not REMUX"
+            implementation: SourceSpecification
+            negate: true
+            required: true
+            fields:
+              value: 7
+      ##############
+      - trash_id: german-anime-web-tier-01
+        trash_scores:
+          default: 2100
+        trash_description: "German Anime Web Tier 01 Groups"
+        name: "German Anime Web Tier 01"
+        includeCustomFormatWhenRenaming: false
+        specifications:
+          - name: AO
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(AO)$"
+          - name: AST4u
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(AST4u)$"
+          - name: Baka
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Baka)$"
+          - name: FumoFriday
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(FumoFriday)$"
+          - name: Fuuko
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Fuuko)$"
+          - name: GP
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(GP)$"
+          - name: snk
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(snk|shw)$"
+          - name: Waechter
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Waechter)$"
+          - name: WebDL
+            implementation: SourceSpecification
+            negate: false
+            required: true
+            fields:
+              value: 3
+          - name: "WebRip"
+            implementation: SourceSpecification
+            negate: true
+            required: true
+            fields:
+              value: 4
+      ##############
+      - trash_id: german-anime-web-tier-02
+        trash_scores:
+          default: 1900
+        trash_description: "German Anime Web Tier 02 Groups"
+        name: "German Anime Web Tier 02"
+        includeCustomFormatWhenRenaming: false
+        specifications:
+          - name: DK
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(DK)$"
+          - name: DRiFTKiNG
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(DRiFTKiNG)$"
+          - name: FWB
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(FWB)$"
+          - name: ONiGiRi
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(ONiGiRi)$"
+          - name: Pudding-sama
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Pudding-sama)$"
+          - name: SkittleChan
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(SkittleChan)$"
+          - name: Tanuki
+            implementation: ReleaseGroupSpecification
+            negate: false
+            required: false
+            fields:
+              value: "^(Tanuki)$"
+          - name: WebDL
+            implementation: SourceSpecification
+            negate: false
+            required: true
+            fields:
+              value: 3
+          - name: "WebRip"
+            implementation: SourceSpecification
+            negate: true
+            required: true
+            fields:
+              value: 4
