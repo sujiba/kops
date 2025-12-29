@@ -212,7 +212,7 @@ sonarr:
 
     quality_profiles:
       # HD 1080p
-      - name: "Animes HD Remux + WEB (1080p)"
+      - name: "HD Remux + WEB (1080p) Animes"
         reset_unmatched_scores:
           enabled: true
         upgrade:
@@ -332,7 +332,7 @@ sonarr:
           - 9623c5c9cac8e939c1b9aedd32f640bf # SYFY
           - 218e93e5702f44a68ad9e3c6ba87d2f0 # HD Streaming Boost
         assign_scores_to:
-          - name: "Animes HD Remux + WEB (1080p)"
+          - name: "HD Remux + WEB (1080p) Animes"
 
       - trash_ids:
           # german resolution up to 1080p
@@ -340,7 +340,7 @@ sonarr:
           - c99279ee27a154c2f20d1d505cc99e25 # 720p
           - 290078c8b266272a5cc8e251b5e2eb0b # 1080p
         assign_scores_to:
-          - name: "Animes HD Remux + WEB (1080p)"
+          - name: "HD Remux + WEB (1080p) Animes"
 
       - trash_ids:
           # custom custom format
@@ -380,7 +380,7 @@ sonarr:
           - 570b03b3145a25011bf073274a407259 # HIDIVE
           - a370d974bc7b80374de1d9ba7519760b # ABEMA
         assign_scores_to:
-          - name: "Animes HD Remux + WEB (1080p)"
+          - name: "HD Remux + WEB (1080p) Animes"
 
     customFormatDefinitions:
       - trash_id: anime-gersub
