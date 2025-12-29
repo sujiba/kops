@@ -23,7 +23,7 @@ radarr:
 
     quality_profiles:
       # UHD 2160p
-      - name: "UHD Remux + WEB (2160p)"
+      - name: "TEST UHD Remux + WEB (2160p)"
         reset_unmatched_scores:
           enabled: true
         upgrade:
@@ -63,7 +63,7 @@ radarr:
           - name: DVD
           - name: SDTV
       # HD 1080p
-      - name: "HD Remux + WEB (1080p)"
+      - name: "TEST HD Remux + WEB (1080p)"
         reset_unmatched_scores:
           enabled: true
         upgrade:
