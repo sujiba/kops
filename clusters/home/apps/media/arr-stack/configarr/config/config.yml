@@ -28,7 +28,7 @@ radarr:
           enabled: true
         upgrade:
           allowed: true
-          until_quality: Remux-2160p
+          until_quality: Remux-Bluray-Web-2160p
           until_score: 24000
           # score increment
           min_format_score: 1
@@ -41,7 +41,7 @@ radarr:
               - Bluray-2160p
               - WEBDL-2160p
               - WEBRip-2160p
-          - name: Remux-Bluray-Web--1080p
+          - name: Remux-Bluray-Web-1080p
             qualities:
               - Bluray-1080p Remux
               - Bluray-1080p
@@ -68,7 +68,7 @@ radarr:
           enabled: true
         upgrade:
           allowed: true
-          until_quality: Remux-1080p
+          until_quality: Remux-Bluray-Web-1080p
           until_score: 15500
           # score increment
           min_format_score: 1
@@ -235,7 +235,7 @@ sonarr:
           enabled: true
         upgrade:
           allowed: true
-          until_quality: Remux-2160p
+          until_quality: Remux-Bluray-Web-2160p
           until_score: 24000
           # score increment
           min_format_score: 1
@@ -254,7 +254,7 @@ sonarr:
           enabled: true
         upgrade:
           allowed: true
-          until_quality: Remux-1080p
+          until_quality: Remux-Bluray-Web-1080p
           until_score: 15500
           # score increment
           min_format_score: 1
@@ -417,7 +417,7 @@ sonarr:
           enabled: true
         upgrade:
           allowed: true
-          until_quality: Remux-1080p
+          until_quality: Remux-Bluray-Web-1080p
           until_score: 15500
           # score increment
           min_format_score: 1
