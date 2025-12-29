@@ -119,10 +119,37 @@ sonarr:
           - eb3d5cc0a2be0db205fb823640db6a3c # Repack v2
           - 44e7c4de10ae50265753082e5dc76047 # Repack v3
           # miscellaneous (optional)
+          - 3a4127d8aa781b44120d907f2cd62627 # Hybrid
+          - b735f09d3c025cbb7d75a5d38325b73b # Remaster
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
+          # audio
+          - 0d7824bb924701997f874e7ff7d4844a # TrueHD ATMOS
+          - 9d00418ba386a083fbf4d58235fc37ef # DTS X
+          - b6fbafa7942952a13e17e2b1152b539a # ATMOS (undefined)
+          - 4232a509ce60c4e208d13825b7c06264 # DDPlus ATMOS
+          - 1808e4b9cee74e064dfae3f1db99dbfe # TrueHD
+          - c429417a57ea8c41d57e6990a8b0033f # DTS-HD MA
+          - 851bd64e04c9374c51102be3dd9ae4cc # FLAC
+          - 30f70576671ca933adbdcfc736a69718 # PCM
+          - cfa5fbd8f02a86fc55d8d223d06a5e1f # DTS-HD HRA
+          - 63487786a8b01b7f20dd2bc90dd4a477 # DDPlus
+          - c1a25cd67b5d2e08287c957b1eb903ec # DTS-ES
+          - 5964f2a8b3be407d083498e4459d05d0 # DTS
+          - a50b8a0c62274a7c38b09a9619ba9d86 # AAC
+          - dbe00161b08a25ac6154c55f95e6318d # DD
+          - 3e8b714263b26f486972ee1e0fe7606c # MP3
+          - 28f6ef16d61e2d1adfce3156ed8257e3 # OPUS
+          # audio channels
+          - bd6dd5e043aa27ff4696a08d011c7d96 # 1.0 Mono
+          - 834e534f103938853ffced4203b53e72 # 2.0 Stereo
+          - 42cba7e38c7947a6d1d0a62580ee6d62 # 3.0 Sound
+          - 1895195e84767de180653914ce207245 # 4.0 Sound
+          - 3fbafa924f361e66fbc6187af82dfa85 # 5.1 Surround
+          - 9fb6d778592c293467437593ef394bf1 # 6.1 Surround
+          - 204c8c3e7315bb0ea81332774fa888d6 # 7.1 Surround
           # general streaming services
           - d660701077794679fd59e8bdf4ce3a29 # AMZN
           - f67c9ca88f463a48346062e8ad07713f # ATVP
