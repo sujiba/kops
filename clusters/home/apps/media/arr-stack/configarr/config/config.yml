@@ -1,7 +1,7 @@
 ---
 # true or false
 sonarrEnabled: true
-radarrEnabled: true
+radarrEnabled: false
 lidarrEnabled: false
 readarrEnabled: false
 whisparrEnabled: false
@@ -37,7 +37,7 @@ sonarr:
         upgrade:
           allowed: true
           until_quality: Remux-2160p
-          until_score: 15500
+          until_score: 24000
           # score increment
           min_format_score: 1
         min_format_score: 5000
@@ -45,7 +45,7 @@ sonarr:
         qualities:
           - name: Remux-2160p
             qualities:
-              - Remux-2160p
+              - Bluray-2160p Remux
               - Bluray-2160p
               - WEBDL-2160p
               - WEBRip-2160p
@@ -64,7 +64,7 @@ sonarr:
         qualities:
           - name: Remux-1080p
             qualities:
-              - Remux-1080p
+              - Bluray-1080p Remux
               - Bluray-1080p
               - WEBDL-1080p
               - WEBRip-1080p
