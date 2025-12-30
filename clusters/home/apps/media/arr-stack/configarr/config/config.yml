@@ -23,7 +23,7 @@ radarr:
 
     quality_profiles:
       # UHD 2160p
-      - name: "TEST UHD Remux + WEB (2160p)"
+      - name: "UHD Remux + WEB (2160p)"
         reset_unmatched_scores:
           enabled: true
         upgrade:
@@ -63,7 +63,7 @@ radarr:
           - name: DVD
           - name: SDTV
       # HD 1080p
-      - name: "TEST HD Remux + WEB (1080p)"
+      - name: "HD Remux + WEB (1080p)"
         reset_unmatched_scores:
           enabled: true
         upgrade:
@@ -185,8 +185,8 @@ radarr:
           - 44c2b54d7c81c1a442a8b2cabeaef54f # ROKU
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
         assign_scores_to:
-          - name: "TEST HD Remux + WEB (1080p)"
-          - name: "TEST UHD Remux + WEB (2160p)"
+          - name: "HD Remux + WEB (1080p)"
+          - name: "UHD Remux + WEB (2160p)"
 
       - trash_ids:
         # german resolution up to 1080p
@@ -194,7 +194,7 @@ radarr:
         - b2be17d608fc88818940cd1833b0b24c # 720p
         - 820b09bb9acbfde9c35c71e0e565dad8 # 1080p
         assign_scores_to:
-          - name: "TEST HD Remux + WEB (1080p)"
+          - name: "HD Remux + WEB (1080p)"
           - name: "TST UHD Remux + WEB (2160p)"
 
       - trash_ids:
@@ -202,7 +202,7 @@ radarr:
         - cc7b1e64e2513a6a271090cdfafaeb55 # German 2160p Booster
         - fb392fb0d61a010ae38e49ceaa24a1ef # 2160p
         assign_scores_to:
-          - name: "TEST UHD Remux + WEB (2160p)"
+          - name: "UHD Remux + WEB (2160p)"
 
       - trash_ids:
         # hdr formats
@@ -211,7 +211,7 @@ radarr:
         - caa37d0df9c348912df1fb1d88f9273a # HDR10+ Boost
         - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback)
         assign_scores_to:
-          - name: "TEST UHD Remux + WEB (2160p)"
+          - name: "UHD Remux + WEB (2160p)"
 
 # Prepare your sonarr instances
 # https://trash-guides.info/Sonarr/sonarr-setup-quality-profiles-german-en/
@@ -242,46 +242,47 @@ sonarr:
         min_format_score: 5000
         quality_sort: top
         qualities:
+          # UHD 2160p
           - name: Remux-Bluray-Web-2160p
             qualities:
               - Bluray-2160p Remux
               - Bluray-2160p
               - WEBDL-2160p
               - WEBRip-2160p
-      # HD 1080p
-      - name: "HD Remux + WEB (1080p)"
-        reset_unmatched_scores:
-          enabled: true
-        upgrade:
-          allowed: true
-          until_quality: Remux-Bluray-Web-1080p
-          until_score: 15500
-          # score increment
-          min_format_score: 1
-        min_format_score: 5000
-        quality_sort: top
-        qualities:
-          - name: Remux-Bluray-Web-1080p
+          # HD 1080p
+          - name: "HD Remux + WEB (1080p)"
+            reset_unmatched_scores:
+              enabled: true
+            upgrade:
+              allowed: true
+              until_quality: Remux-Bluray-Web-1080p
+              until_score: 15500
+              # score increment
+              min_format_score: 1
+            min_format_score: 5000
+            quality_sort: top
             qualities:
-              - Bluray-1080p Remux
-              - Bluray-1080p
-              - WEBDL-1080p
-              - WEBRip-1080p
-          - name: HDTV-1080p
-          - name: Bluray-Web-720p
-            qualities:
-              - Bluray-720p
-              - WEBDL-720p
-              - WEBRip-720p
-          - name: HDTV-720p
-          - name: Bluray-576p
-          - name: Bluray-480p
-          - name: WEB 480p
-            qualities:
-              - WEBDL-480p
-              - WEBRip-480p
-          - name: DVD
-          - name: SDTV
+              - name: Remux-Bluray-Web-1080p
+                qualities:
+                  - Bluray-1080p Remux
+                  - Bluray-1080p
+                  - WEBDL-1080p
+                  - WEBRip-1080p
+              - name: HDTV-1080p
+              - name: Bluray-Web-720p
+                qualities:
+                  - Bluray-720p
+                  - WEBDL-720p
+                  - WEBRip-720p
+              - name: HDTV-720p
+              - name: Bluray-576p
+              - name: Bluray-480p
+              - name: WEB 480p
+                qualities:
+                  - WEBDL-480p
+                  - WEBRip-480p
+              - name: DVD
+              - name: SDTV
 
     custom_formats:
       # Scores from TRaSH Guides
