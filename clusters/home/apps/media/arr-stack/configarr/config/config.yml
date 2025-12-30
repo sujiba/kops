@@ -249,40 +249,40 @@ sonarr:
               - Bluray-2160p
               - WEBDL-2160p
               - WEBRip-2160p
-          # HD 1080p
-          - name: "HD Remux + WEB (1080p)"
-            reset_unmatched_scores:
-              enabled: true
-            upgrade:
-              allowed: true
-              until_quality: Remux-Bluray-Web-1080p
-              until_score: 15500
-              # score increment
-              min_format_score: 1
-            min_format_score: 5000
-            quality_sort: top
+      # HD 1080p
+      - name: "HD Remux + WEB (1080p)"
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-Bluray-Web-1080p
+          until_score: 15500
+          # score increment
+          min_format_score: 1
+        min_format_score: 5000
+        quality_sort: top
+        qualities:
+          - name: Remux-Bluray-Web-1080p
             qualities:
-              - name: Remux-Bluray-Web-1080p
-                qualities:
-                  - Bluray-1080p Remux
-                  - Bluray-1080p
-                  - WEBDL-1080p
-                  - WEBRip-1080p
-              - name: HDTV-1080p
-              - name: Bluray-Web-720p
-                qualities:
-                  - Bluray-720p
-                  - WEBDL-720p
-                  - WEBRip-720p
-              - name: HDTV-720p
-              - name: Bluray-576p
-              - name: Bluray-480p
-              - name: WEB 480p
-                qualities:
-                  - WEBDL-480p
-                  - WEBRip-480p
-              - name: DVD
-              - name: SDTV
+              - Bluray-1080p Remux
+              - Bluray-1080p
+              - WEBDL-1080p
+              - WEBRip-1080p
+          - name: HDTV-1080p
+          - name: Bluray-Web-720p
+            qualities:
+              - Bluray-720p
+              - WEBDL-720p
+              - WEBRip-720p
+          - name: HDTV-720p
+          - name: Bluray-576p
+          - name: Bluray-480p
+          - name: WEB 480p
+            qualities:
+              - WEBDL-480p
+              - WEBRip-480p
+          - name: DVD
+          - name: SDTV
 
     custom_formats:
       # Scores from TRaSH Guides
