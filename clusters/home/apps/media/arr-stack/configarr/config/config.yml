@@ -17,9 +17,9 @@ radarr:
       type: movie
 
     delete_unmanaged_quality_profiles:
-      enabled: false
+      enabled: true
     delete_unmanaged_custom_formats:
-      enabled: false
+      enabled: true
 
     quality_profiles:
       # UHD 2160p
