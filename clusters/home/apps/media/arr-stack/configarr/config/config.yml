@@ -29,7 +29,7 @@ radarr:
         upgrade:
           allowed: true
           until_quality: Remux-Bluray-Web-2160p
-          until_score: 24000
+          until_score: 35000
           # score increment
           min_format_score: 1
         min_format_score: 5000
@@ -69,7 +69,7 @@ radarr:
         upgrade:
           allowed: true
           until_quality: Remux-Bluray-Web-1080p
-          until_score: 15500
+          until_score: 35000
           # score increment
           min_format_score: 1
         min_format_score: 5000
@@ -101,8 +101,15 @@ radarr:
       # Scores from TRaSH Guides
       - trash_ids:
           # german audio
+          - f845be10da4f442654c13e1f2c3d6cd5 # German DL (default -10000)
+        assign_scores_to:
+          - name: "HD Remux + WEB (1080p)"
+            score: 11000
+          - name: "UHD Remux + WEB (2160p)"
+            score: 11000
+      - trash_ids:
+          # german audio
           - 86bc3115eb4e9873ac96904a4a68e19e # German
-          - f845be10da4f442654c13e1f2c3d6cd5 # German DL
           - 6aad77771dabe9d3e9d7be86f310b867 # German DL (undefined)
           - 4eadb75fb23d09dfc0a8e3f687e72287 # Not German or English
           # german hq source groups
@@ -236,7 +243,7 @@ sonarr:
         upgrade:
           allowed: true
           until_quality: Remux-Bluray-Web-2160p
-          until_score: 24000
+          until_score: 35000
           # score increment
           min_format_score: 1
         min_format_score: 5000
@@ -256,7 +263,7 @@ sonarr:
         upgrade:
           allowed: true
           until_quality: Remux-Bluray-Web-1080p
-          until_score: 15500
+          until_score: 35000
           # score increment
           min_format_score: 1
         min_format_score: 5000
@@ -288,8 +295,15 @@ sonarr:
       # Scores from TRaSH Guides
       - trash_ids:
           # german audio
+          - ed51973a811f51985f14e2f6f290e47a # German DL (default -10000)
+        assign_scores_to:
+          - name: "HD Remux + WEB (1080p)"
+            score: 11000
+          - name: "UHD Remux + WEB (2160p)"
+            score: 11000
+      - trash_ids:
+          # german audio
           - 8a9fcdbb445f2add0505926df3bb7b8a # German
-          - ed51973a811f51985f14e2f6f290e47a # German DL
           - c5dd0fd675f85487ad5bdf97159180bd # German DL (undefined)
           - 133589380b89f8f8394320901529bac1 # Not German or English
           # hq source groups
@@ -419,7 +433,7 @@ sonarr:
         upgrade:
           allowed: true
           until_quality: Remux-Bluray-Web-1080p
-          until_score: 15500
+          until_score: 35000
           # score increment
           min_format_score: 1
         min_format_score: 5000
@@ -451,8 +465,15 @@ sonarr:
       # Scores from TRaSH Guides
       - trash_ids:
           # german audio
+          - ed51973a811f51985f14e2f6f290e47a # German DL (default -10000)
+        assign_scores_to:
+          - name: "HD Remux + WEB (1080p)"
+            score: 11000
+          - name: "UHD Remux + WEB (2160p)"
+            score: 11000
+      - trash_ids:
+          # german audio
           - 8a9fcdbb445f2add0505926df3bb7b8a # German
-          - ed51973a811f51985f14e2f6f290e47a # German DL
           - c5dd0fd675f85487ad5bdf97159180bd # German DL (undefined)
           - 133589380b89f8f8394320901529bac1 # Not German or English
           # hq source groups
