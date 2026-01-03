@@ -39,7 +39,6 @@ spec:
               DB_CONNECTION_STRING: file:/data/pocket-id.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(2500)&_txlock=immediate
               EMAILS_VERIFIED: true
               EMAIL_LOGIN_NOTIFICATION_ENABLED: true
-              KEYS_STORAGE: database
               LOG_JSON: true
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_HOST: smtp-relay.network.svc.cluster.local
