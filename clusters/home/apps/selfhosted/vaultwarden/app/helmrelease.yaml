@@ -51,6 +51,10 @@ spec:
               SMTP_PASSWORD: ''
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_FROM_NAME: "{{ .Release.Name }}"
+              SSO_ENABLED: true
+              SSO_PKCE: true
+              SSO_SIGNUPS_MATCH_EMAIL: true
+              SSO_SCOPES: email profile groups offline_access
               EXPERIMENTAL_CLIENT_FEATURE_FLAGS: ssh-key-vault-item,ssh-agent
             envFrom:
               - secretRef:
