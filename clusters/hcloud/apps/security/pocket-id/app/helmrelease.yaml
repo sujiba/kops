@@ -37,7 +37,6 @@ spec:
               ANALYTICS_DISABLED: true
               APP_URL: https://id.offene.cloud
               DB_CONNECTION_STRING: file:/data/pocket-id.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(2500)&_txlock=immediate
-              DB_PROVIDER: sqlite
               EMAILS_VERIFIED: true
               EMAIL_LOGIN_NOTIFICATION_ENABLED: true
               KEYS_STORAGE: database
