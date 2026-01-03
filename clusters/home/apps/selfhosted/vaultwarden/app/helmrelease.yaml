@@ -51,7 +51,7 @@ spec:
               SMTP_PASSWORD: ''
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_FROM_NAME: "{{ .Release.Name }}"
-              SSO_ENABLED: true
+              SSO_ENABLED: false
               SSO_PKCE: true
               SSO_SIGNUPS_MATCH_EMAIL: true
               SSO_SCOPES: email profile groups offline_access
