@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: louislam/its-mytabs
-              tag: 1.0.1
+              tag: 1.1.0
             env:
               TZ: Europe/Berlin
               MYTABS_PORT: &port 47777
