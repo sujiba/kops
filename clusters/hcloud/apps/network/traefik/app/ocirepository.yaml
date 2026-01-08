@@ -10,4 +10,4 @@ spec:
     operation: copy
   url: oci://ghcr.io/traefik/helm/traefik
   ref:
-    tag: 38.0.1
+    tag: 38.0.2
