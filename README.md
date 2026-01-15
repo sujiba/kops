@@ -66,7 +66,7 @@ _hcloud cluster stats:_
 | Service | Use             | Cost    |
 |---------|-----------------|---------|
 | Netcup  | DNS             | ~80€/yr |
-| Hetnzer | Server / Backup | ~25€/mo |
+| Hetzner | Server / Backup | ~25€/mo |
 
 ## 🔧 Hardware
 
