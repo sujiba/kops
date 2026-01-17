@@ -7,11 +7,11 @@ spec:
   chartRef:
     kind: OCIRepository
     name: snapshot-controller
-  interval: 15m
+  interval: 1h
   values:
     controller:
       replicaCount: 1
       serviceMonitor:
         create: true
-      args:
-        enableDistributedSnapshotting: true
+    webhook:
+      enabled: false
