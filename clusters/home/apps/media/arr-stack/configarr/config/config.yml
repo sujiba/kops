@@ -473,7 +473,7 @@ sonarr:
           # german audio
           - 8a9fcdbb445f2add0505926df3bb7b8a # German
           - c5dd0fd675f85487ad5bdf97159180bd # German DL (undefined)
-          #- 133589380b89f8f8394320901529bac1 # Not German or English replaced with lang-not-eng-ger-jpn
+          - 133589380b89f8f8394320901529bac1 # Not German or English
           # hq source groups
           - da0f005f9c3edf34fc26e18dce8c6573 # German Remux Tier 01
           - 6bc5ccd80a03e7abb8f556eecd174b73 # German Remux Tier 02
@@ -567,7 +567,7 @@ sonarr:
           # custom custom format
           - anime-gersub
           - german-dubbed-dl
-          - lang-not-eng-ger-jpn
+          #- lang-not-eng-ger-jpn
           - german-anime-bluray-tier-01
           - german-anime-bluray-tier-02
           - german-anime-web-tier-01
