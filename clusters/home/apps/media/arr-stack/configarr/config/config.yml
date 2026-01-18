@@ -565,7 +565,7 @@ sonarr:
 
       - trash_ids:
           # custom custom format
-          - anime-gersub
+          #- anime-gersub
           - german-dubbed-dl
           #- lang-not-eng-ger-jpn
           - german-anime-bluray-tier-01
