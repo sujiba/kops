@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: volsync
       namespace: volsync-system
-  interval: 1m
+  interval: 15m
   values:
     controller:
       fullnameOverride: *name
