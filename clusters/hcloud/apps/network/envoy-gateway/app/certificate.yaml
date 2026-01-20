@@ -1,18 +1,18 @@
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: internal-wildcard
-  namespace: network
+  name: offene-cloud-tls
 spec:
+  secretName: offene-cloud-tls
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt-production-dns
     kind: ClusterIssuer
-  secretName: internal-wildcard-tls
-  commonName: ${INTERNAL_DOMAIN}
+  commonName: offene.cloud
   dnsNames:
-    - ${INTERNAL_DOMAIN}
-    - "*.${INTERNAL_DOMAIN}"
+    - offene.cloud
+    - "*.offene.cloud"
   privateKey:
     algorithm: ECDSA
-    size: 384
+    size: 256
     rotationPolicy: Always

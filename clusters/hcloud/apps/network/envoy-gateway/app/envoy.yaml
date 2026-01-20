@@ -10,17 +10,27 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
-      envoyDeployment:
-        replicas: 1
+      useListenerPortAsContainerPort: true
+      envoyService:
+        type: ClusterIP
+      envoyDaemonSet:
+        patch:
+          value:
+            spec:
+              template:
+                spec:
+                  hostNetwork: true
+                  dnsPolicy: ClusterFirstWithHostNet
         container:
+          securityContext:
+            runAsUser: 0
+            allowPrivilegeEscalation: true
           imageRepository: mirror.gcr.io/envoyproxy/envoy
           resources:
             requests:
               cpu: 100m
             limits:
               memory: 1Gi
-      envoyService:
-        externalTrafficPolicy: Local
   shutdown:
     drainTimeout: 180s
   telemetry:
@@ -28,7 +38,6 @@ spec:
       prometheus:
         compression:
           type: Gzip
-
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
@@ -41,17 +50,13 @@ spec:
     kind: EnvoyProxy
     name: envoy
     namespace: network
-
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: envoy-internal
+  name: envoy-external
 spec:
   gatewayClassName: envoy
-  infrastructure:
-    annotations:
-      lbipam.cilium.io/ips: ${ENVOY_INTERNAL_IPv4},${ENVOY_INTERNAL_IPv6}
   listeners:
     - name: http
       protocol: HTTP
@@ -68,9 +73,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: internal-wildcard-tls
-            namespace: network
-
+            name: albdev-tls
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
@@ -90,7 +93,13 @@ spec:
   timeout:
     http:
       requestTimeout: 0s
-
+  #ratelimit:
+  #  type: local
+  #  local:
+  #    rules:
+  #      - limit:
+  #          requests: 500
+  #          unit: minute
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
@@ -107,20 +116,41 @@ spec:
     initialStreamWindowSize: 2Mi
     initialConnectionWindowSize: 32Mi
     onInvalidMessage: TerminateStream
-  http3: {}
-  targetSelectors:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
   tcpKeepalive: {}
   timeout:
     http:
       requestReceivedTimeout: 0s
+  http3: {}
   tls:
-    minVersion: "1.3"
+    minVersion: "1.2"
     alpnProtocols:
       - h2
       - http/1.1
-
+  targetSelectors:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+  headers:
+    earlyRequestHeaders:
+      set:
+      - name: X-Real-IP
+        value: '%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%'
+    lateResponseHeaders:
+      remove:
+       - "x-powered-by"
+       - "x-xss-protection"
+      set:
+        - name: Strict-Transport-Security
+          value: max-age=31536000; includeSubDomains; preload
+        - name: Referrer-Policy
+          value: same-origin, strict-origin-when-cross-origin
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Frame-Options
+          value: SAMEORIGIN
+        - name: server
+          value: "albcloud"
+        - name: X-Robots-tag
+          value: "noindex, nofollow"
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -130,7 +160,7 @@ metadata:
     external-dns.alpha.kubernetes.io/controller: none
 spec:
   parentRefs:
-    - name: envoy-internal
+    - name: envoy-external
       namespace: network
       sectionName: http
   rules:
@@ -139,3 +169,22 @@ spec:
           requestRedirect:
             scheme: https
             statusCode: 301
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyPatchPolicy
+metadata:
+  name: headscale-upgrade
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-external
+  type: JSONPatch
+  jsonPatches:
+    - type: type.googleapis.com/envoy.config.listener.v3.Listener
+      name: network/envoy-external/https
+      operation:
+        op: add
+        path: /filter_chains/0/filters/0/typed_config/upgrade_configs/-
+        value:
+          upgrade_type: tailscale-control-protocol
