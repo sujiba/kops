@@ -6,7 +6,7 @@ metadata:
 spec:
   sourcePVC: ${VOLSYNC_CLAIM}
   trigger:
-    schedule: "0 16 * * *" # Daily at 4 PM UTC or 5 PM CET
+    schedule: "0 19 * * *" # Daily at 4 PM UTC or 5 PM CET
   kopia:
     capacity: ${VOLSYNC_CAPACITY}
     compression: zstd
@@ -29,7 +29,7 @@ metadata:
 spec:
   sourcePVC: ${APP}-postgres-data
   trigger:
-    schedule: "0 16 * * *" # Daily at 4 PM UTC or 5 PM CET
+    schedule: "0 19 * * *" # Daily at 4 PM UTC or 5 PM CET
   kopia:
     capacity: 5Gi
     compression: zstd
