@@ -6,6 +6,6 @@ metadata:
 spec:
   enabled: true
   trigger:
-    schedule: 0 17 * * *
+    schedule: 0 16 * * *
   repository:
     repository: volsync-kopia-r2

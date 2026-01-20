@@ -27,7 +27,7 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
 
         cronjob:
-          schedule: "0 17 * * *"
+          schedule: "0 16 * * *"
           timeZone: ${TZ}
           concurrencyPolicy: Forbid
           successfulJobsHistory: 1
