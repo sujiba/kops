@@ -1,6 +1,7 @@
 myDomainName: ENC[AES256_GCM,data:L0VE7SjZvwp/XjKnz2METyKvrw==,iv:VuyScOczqO9To6lb9+ses+twAs3kjbXOMt3o9taHJsU=,tag:w+Z2Sv4ePCaxFlDBn8cGSA==,type:str]
 clusterName: ENC[AES256_GCM,data:CqkDCw==,iv:c0HuE0i0idlFAHLQ0Xs8hX25BSnx9TChd1W8x2CW5Y8=,tag:MBQhxcLHDpfGcBK6WE7y9Q==,type:str]
 serverArch: ENC[AES256_GCM,data:ftZoucU=,iv:CunrMFrp5W//Hnwo6zLIEiGNf/wqm2aKaWckXvI7xks=,tag:rRLfuHAeGoabfSxioa8xqw==,type:str]
+dnsIPv4: ENC[AES256_GCM,data:G5FgwcIFk6v5Nw==,iv:/4V1bTcDnzC2iUMZgK37pklQHaLxb992MzNrZh6YIxc=,tag:5bwkqOvMLgCCo+SOjQqJYg==,type:str]
 privateClusterIP: ENC[AES256_GCM,data:gIPompQHjevz2A==,iv:8VlC4AqmTcehkRJ/6/8VapZDsfKkY6yt/PHVJBwujlQ=,tag:Ni56fWqHnX4SBZTAEI4bng==,type:str]
 region: ENC[AES256_GCM,data:niRcJzqvaw==,iv:MpRnf03CWlIKzwNymuU9wjpkm7fioIbOe3cpTaOrx2w=,tag:yQWHi/j37N6/eNPGyC9geg==,type:str]
 zone: ENC[AES256_GCM,data:Yz++uOV4lQ==,iv:etMQBZLkpKt/PT044ApAC5ExoQfxJPSf32R1WAcDQjg=,tag:AK9HK/wqudkoxXPBDPq9pw==,type:str]
@@ -15,7 +16,7 @@ sops:
             WUdzaSttVUN0QmhmdGVxaDVSV1FBbmcKz6D+BNy9KidIDfe4lwC4INx++z96P1PV
             TRidxe+Ug78lgzU5twdZTT5udXuvfZ8dJ0Z22NqzykUZbb/Nuj3SQA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-13T22:23:16Z"
-    mac: ENC[AES256_GCM,data:3wJd1YbBTt2BWVjnzXKErV+qrfNRDX+xdRO2OjcP+yHkQI6IQo/gIAPv0wHKPakd6VPn1YoJWjNGf3zYp8U1p/VXO7HCu0GVNWV+QFpy+Mm8I62pveJkVmCQULYh6ZZXWDMMYnyMmmhFYdYTQzdikEbmUqw0YQys9SprBKph7/c=,iv:upOhtNhwnlp/n/49P4qyWjEYqZcqFvK4F0CljWbsB14=,tag:GQTxL0jrCR5Yei6a88Wd7g==,type:str]
+    lastmodified: "2026-01-22T21:32:53Z"
+    mac: ENC[AES256_GCM,data:UKc/FWK2IG/38MGRj0ZmhsGlY02WLaXAA72/uG6uxMW0UghUp5Fs8g6DzkoylOsdZ+6afPyyez6hIMOUepRlDQgtUE9cFg1DcQ2XCwkP9kXnYkIvtDw7KvWWPiXuA2YXXthX/1JXyznH6wo/IfeySoGmObhDExjYK78F8Ou1Ml4=,iv:HkJPsPXVFnpLsCnzsArRjS6yzniJIpr/Yglxg1zdP9Y=,tag:b7o0Zaq9lvYijwYIKqwNHw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0

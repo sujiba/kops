@@ -2,6 +2,7 @@ clusterName: &clusterName "${clusterName}"
 
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: 1.12.2
+
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: 1.35.0
 
@@ -27,9 +28,7 @@ nodes:
             gateway: 10.10.10.1
         dhcp: false
     nameservers:
-      # Quad 9
-      - 9.9.9.9
-      - 149.112.112.112
+      - ${dnsIPv4}
     installDisk: /dev/nvme0n1
     talosImageURL: factory.talos.dev/metal-installer-secureboot/cc720ffb8efc8f12637b8660a86448a88b3f89f516995fb9c67bf80564e723b1
     machineSpec:
@@ -98,9 +97,11 @@ controlPlane:
             validSubnets:
               - ${privateClusterIP}/32
     - |-
-      machine:
-        network:
-          disableSearchDomain: true
+      apiVersion: v1alpha1
+      kind: ResolverConfig
+      searchDomains:
+        disableDefault: true
+
     - |-
       machine:
         time:
@@ -155,8 +156,14 @@ controlPlane:
               - system-upgrade
 
     - |-
-      - op: remove
-        path: /cluster/apiServer/admissionControl
+      cluster:
+        apiServer:
+          admissionControl:
+            $$patch: delete
+
+    #- |-
+    #  - op: remove
+    #    path: /cluster/apiServer/admissionControl
 
     - |-
       cluster:
