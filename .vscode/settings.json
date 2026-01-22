@@ -1,5 +1,0 @@
-{
-  "yaml.schemas": {
-    "kubernetes://schema/volsync.backube/v1alpha1%40replicationsource": "file:///Users/simon/Documents/homelab/kops/clusters/home/apps/selfhosted/vaultwarden/app/volsync.yaml"
-  }
-}
