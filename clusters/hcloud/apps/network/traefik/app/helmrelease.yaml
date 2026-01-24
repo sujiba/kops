@@ -43,7 +43,7 @@ spec:
         enabled: true
         allowExternalNameServices: true
         ingressClass: traefik
-    globalArguments:
+    additionalArguments:
       - --api.insecure=true
       - --serverstransport.insecureskipverify
     global:
