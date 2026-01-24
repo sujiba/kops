@@ -24,12 +24,12 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
       tlsEnabled: true
+      tlsSecret: matrix-tls
 
     synapse:
       enabled: true
       ingress:
         host: matrix.offene.cloud
-        className: traefik
         tlsEnabled: true
       media:
         storage:
@@ -81,7 +81,6 @@ spec:
       enabled: true
       ingress:
         host: mas.offene.cloud
-        className: traefik
         tlsEnabled: true
       additional:
         1-mas-config:
@@ -125,7 +124,6 @@ spec:
       enabled: true
       ingress:
         host: rtc.offene.cloud
-        className: traefik
         tlsEnabled: true
       sfu:
         useStunToDiscoverPublicIP: false
@@ -135,14 +133,13 @@ spec:
       enabled: true
       ingress:
         host: matrix-admin.offene.cloud
-        className: traefik
+
         tlsEnabled: true
 
     elementWeb:
       enabled: true
       ingress:
         host: chat.offene.cloud
-        className: traefik
         tlsEnabled: true
       additional:
         extra-config.json: |
@@ -180,7 +177,6 @@ spec:
     wellKnownDelegation:
       enabled: true
       ingress:
-        className: traefik
         tlsEnabled: true
       additional:
         server: |
