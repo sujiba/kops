@@ -10,11 +10,10 @@ resources:
   - ./namespace.yaml
   - ./bentopdf/ks.yaml
   - ./freshrss/ks.yaml
-  - ./it-tools/ks.yaml
   - ./headscale/ks.yaml
+  - ./it-tools/ks.yaml
   - ./matrix/ks.yaml
   - ./mollysocket/ks.yaml
-  - ./mytabs/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ntfy/ks.yaml
   - ./tandoor/ks.yaml
