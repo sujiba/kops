@@ -1,0 +1,209 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: matrix
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: matrix
+
+  values:
+    serverName: matrix.offene.cloud
+    labels:
+      app.kubernetes.io/instance: matrix
+
+    ingress:
+      className: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        cert-manager.io/private-key-rotation-policy: Always
+        cert-manager.io/private-key-algorithm: ECDSA
+        cert-manager.io/private-key-size: "384"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
+      tlsEnabled: true
+
+    synapse:
+      enabled: true
+      ingress:
+        host: matrix.offene.cloud
+        className: traefik
+        tlsEnabled: true
+      media:
+        storage:
+          existingClaim: matrix-media
+        maxUploadSize: 100M
+      additional:
+        1-base-config:
+          config: |
+            public_baseurl: https://matrix.offene.cloud
+            presence:
+              enabled: true
+            enable_metrics: true
+            report_stats: false
+            suppress_key_server_warning: true
+            trusted_key_servers:
+              - server_name: "matrix.org"
+            admin_contact: "mailto:hostmaster@${MAIL_DOMAIN}"
+            enable_search: true
+            url_preview_enabled: true
+            url_preview_ip_range_blacklist:
+              - '127.0.0.0/8'
+              - '10.0.0.0/8'
+              - '172.16.0.0/12'
+              - '192.168.0.0/16'
+              - '100.64.0.0/10'
+              - '169.254.0.0/16'
+              - '::1/128'
+              - 'fe80::/64'
+              - 'fc00::/7'
+            rc_message:
+              per_second: 10
+              burst_count: 50
+            experimental_features:
+              msc3575_enabled: true
+              msc4186_enabled: true
+            database:
+              allow_unsafe_locale: true
+        2-email-config:
+          config: |
+            email:
+              smtp_host: smtp-relay.network.svc.cluster.local
+              smtp_port: 2525
+              smtp_user: ""
+              smtp_pass: ""
+              require_transport_security: false
+              notif_from: "Matrix <no-reply@${MAIL_DOMAIN}>"
+
+    matrixAuthenticationService:
+      enabled: true
+      ingress:
+        host: mas.offene.cloud
+        className: traefik
+        tlsEnabled: true
+      additional:
+        1-mas-config:
+          config: |
+            branding:
+              service_name: "offene.cloud Matrix"
+            passwords:
+              enabled: false
+              minimum_length: 12
+            account:
+              email_change_allowed: true
+              displayname_change_allowed: true
+            upstream_oauth2:
+              providers:
+                - id: 01KFNXQM0TWGX125SAXYABC3CR
+                  human_name: Pocket-ID
+                  issuer: https://id.offene.cloud
+                  client_id: ${MATRIX_CLIENT_ID}
+                  client_secret: ${MATRIX_CLIENT_SECRET}
+                  userinfo_endpoint: https://id.offene.cloud/api/oidc/userinfo
+                  authorization_endpoint: https://id.offene.cloud/authorize
+                  token_endpoint: https://id.offene.cloud/api/oidc/token
+                  jwks_uri: https://id.offene.cloud/.well-known/jwks.json
+                  token_endpoint_auth_method: client_secret_post
+                  scope: "openid email profile"
+                  discovery_mode: oidc
+                  pkce_method: auto
+                  claims_imports:
+                    localpart:
+                      action: require
+                      template: "{{ user.preferred_username }}"
+                      on_conflict: replace
+                    displayname:
+                      action: suggest
+                      template: "{{ user.name }}"
+                    email:
+                      action: suggest
+                      template: "{{ user.email }}"
+
+    matrixRTC:
+      enabled: true
+      ingress:
+        host: rtc.offene.cloud
+        className: traefik
+        tlsEnabled: true
+      sfu:
+        useStunToDiscoverPublicIP: false
+
+
+    elementAdmin:
+      enabled: true
+      ingress:
+        host: matrix-admin.offene.cloud
+        className: traefik
+        tlsEnabled: true
+
+    elementWeb:
+      enabled: true
+      ingress:
+        host: chat.offene.cloud
+        className: traefik
+        tlsEnabled: true
+      additional:
+        extra-config.json: |
+          {
+            "brand": "offene.cloud Matrix",
+            "default_theme": "light",
+            "show_labs_settings": false,
+            "force_verification": false,
+            "default_server_config": {
+              "m.homeserver": {
+                "base_url": "https://matrix.offene.cloud",
+                "server_name": "matrix.offene.cloud"
+              },
+              "m.identity_server": {
+                "base_url": "https://vector.im"
+              }
+            },
+            "features": {
+              "feature_video_rooms": true,
+              "feature_element_call_video_rooms": true,
+              "feature_group_calls": true,
+              "feature_native_sliding_sync": true,
+              "feature_cross_signing": false,
+              "feature_pinning": true
+            },
+            "setting_defaults": {
+              "FTUE.userOnboardingButton": false
+            },
+            "jitsi": {
+              "preferred_domain": "meet.jit.si"
+            },
+            "permalink_prefix": "https://chat.offene.cloud"
+          }
+
+    wellKnownDelegation:
+      enabled: true
+      ingress:
+        className: traefik
+        tlsEnabled: true
+      additional:
+        server: |
+          {
+            "m.server": "matrix.offene.cloud:443"
+          }
+        client: |
+          {
+            "m.homeserver": {
+              "base_url": "https://matrix.offene.cloud"
+            },
+            "m.identity_server": {
+              "base_url": "https://vector.im"
+            },
+            "org.matrix.msc3575.proxy": {
+              "url": "https://matrix.offene.cloud"
+            },
+            "io.element.call": {
+              "rtc_backend": "https://rtc.offene.cloud"
+            }
+          }
+
+    postgres:
+      enabled: true
+      storage:
+        existingClaim: matrix-postgres
