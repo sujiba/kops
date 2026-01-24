@@ -92,8 +92,6 @@ spec:
         minVersion: VersionTLS12
         maxVersion: VersionTLS13
         sniStrict: true
-    pilot:
-      enabled: false
     resources:
       requests:
         memory: 110Mi
