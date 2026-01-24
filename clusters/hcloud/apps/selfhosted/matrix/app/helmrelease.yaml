@@ -99,8 +99,8 @@ spec:
                 - id: 01KFQYGGPP62VZME0SS0YMD2F4
                   human_name: Pocket-ID
                   issuer: https://id.offene.cloud
-                  client_id: ${MATRIX_CLIENT_ID}
-                  client_secret: ${MATRIX_CLIENT_SECRET}
+                  client_id: "${MATRIX_CLIENT_ID}"
+                  client_secret: "${MATRIX_CLIENT_SECRET}"
                   userinfo_endpoint: https://id.offene.cloud/api/oidc/userinfo
                   authorization_endpoint: https://id.offene.cloud/authorize
                   token_endpoint: https://id.offene.cloud/api/oidc/token
