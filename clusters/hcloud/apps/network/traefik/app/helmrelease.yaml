@@ -56,16 +56,14 @@ spec:
           default: false
       web:
         port: 80
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
       websecure:
         port: 443
-        tls:
-          enabled: true
-          options: "default"
-        transport:
-          respondingTimeouts:
-            readTimeout: 3600s
-            idleTimeout: 3600s
-            writeTimeout: 3600s
         http:
           encodedCharacters:
             allowEncodedSlash: true
@@ -75,6 +73,14 @@ spec:
             allowEncodedPercent: false
             allowEncodedQuestionMark: true
             allowEncodedHash: false
+          tls:
+            enabled: true
+            options: "default"
+        transport:
+          respondingTimeouts:
+            readTimeout: 3600s
+            idleTimeout: 3600s
+            writeTimeout: 3600s
         http3:
           enabled: true
       metrics:
