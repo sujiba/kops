@@ -27,7 +27,7 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
       tlsEnabled: true
-      tlsSecret: matrix-tls
+      #tlsSecret: matrix-tls
 
     synapse:
       enabled: true
