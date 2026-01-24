@@ -3,11 +3,12 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ntfy
+
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: ntfy
-  interval: 30m
 
   values:
     controllers:

@@ -5,7 +5,7 @@ metadata:
   name: nextcloud
 
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: nextcloud
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: nextcloud-charts
         namespace: flux-system
-      interval: 30m
+      interval: 1h
 
   values:
     deploymentAnnotations:
