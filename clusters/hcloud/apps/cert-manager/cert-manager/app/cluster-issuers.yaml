@@ -1,7 +1,6 @@
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
-
 metadata:
   name: letsencrypt-production
 spec:
@@ -22,34 +21,34 @@ metadata:
   namespace: cert-manager
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org./directory
     privateKeySecretRef:
       name: letsencrypt-production-dns
     solvers:
-    - dns01:
-        webhook:
+      - dns01:
+          webhook:
             groupName: com.netcup.webhook
             solverName: netcup
             config:
-                secretRef: netcup-secret
-                secretNamespace: cert-manager
+              secretRef: netcup-secret
+              secretNamespace: cert-manager
 
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-staging
+  name: letsencrypt-staging-dns
   namespace: cert-manager
 spec:
   acme:
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org./directory
     privateKeySecretRef:
-      name: letsencrypt-staging
+      name: letsencrypt-staging-dns
     solvers:
-    - dns01:
-        webhook:
+      - dns01:
+          webhook:
             groupName: com.netcup.webhook
             solverName: netcup
             config:
-                secretRef: netcup-secret
-                secretNamespace: cert-manager
+              secretRef: netcup-secret
+              secretNamespace: cert-manager
