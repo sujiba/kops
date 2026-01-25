@@ -17,27 +17,6 @@ spec:
       repository: forgejo/forgejo
       rootless: true
 
-    ingress:
-      enabled: true
-      className: traefik
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-production
-        cert-manager.io/private-key-rotation-policy: Always
-        cert-manager.io/private-key-algorithm: ECDSA
-        cert-manager.io/private-key-size: 384
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-      hosts:
-        - host: code.offene.cloud
-          paths:
-            - path: /
-              pathType: Prefix
-              port: anubis
-      tls:
-        - hosts:
-            - code.offene.cloud
-          secretName: forgejo-tls
-
     httpRoute:
       enabled: true
       hostnames: [ "code.${EXTERNAL_DOMAIN}" ]
