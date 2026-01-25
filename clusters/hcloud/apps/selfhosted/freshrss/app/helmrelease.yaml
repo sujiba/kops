@@ -27,7 +27,7 @@ spec:
             env:
               TZ: ${TZ}
               CRON_MIN: "*"
-              DOMAIN: rss.offene.cloud
+              DOMAIN: rss.${EXTERNAL_DOMAIN}
               LISTEN: &port 8080
               OIDC_ENABLED: 1
               OIDC_SCOPES: openid email profile
@@ -61,6 +61,16 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
+        rules:
+          - backendRefs:
+              - name: freshrss
+                port: *port
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  add:
+                    - name: X-Robots-tag
+                      value: "noindex, nofollow"
 
     persistence:
       data:
