@@ -50,7 +50,7 @@ sops --decrypt bootstrap.secrets.sops.yaml | kubectl apply -f -
 helmfile init
 
 # render all necessary crds
-helmfile -f 0-crds.yaml template -q | kubectl apply --server-side -f -
+helmfile -f 0-crds.yaml template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -
 
 # sync helm
 helmfile -f 1-apps.yaml sync

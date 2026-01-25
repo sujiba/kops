@@ -28,7 +28,7 @@ releases:
   - name: traefik
     namespace: network
     chart: traefik/traefik
-    version: 37.3.0
+    version: 39.0.0
     values:
       - templates/values.yaml.gotmpl
     set:
@@ -46,7 +46,7 @@ releases:
   - name: cert-manager
     namespace: cert-manager
     chart: oci://quay.io/jetstack/charts/cert-manager
-    version: v1.19.1
+    version: v1.19.2
     values:
       - templates/values.yaml.gotmpl
     set:
@@ -84,7 +84,7 @@ releases:
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.33.0
+    version: 0.40.0
     set:
       - name: crds.enabled
         value: "true"
@@ -96,7 +96,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.33.0
+    version: 0.40.0
     wait: false
     values:
       - templates/values.yaml.gotmpl
