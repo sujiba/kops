@@ -32,16 +32,7 @@ spec:
       className: traefik
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
-        cert-manager.io/private-key-rotation-policy: Always
-        cert-manager.io/private-key-algorithm: ECDSA
-        cert-manager.io/private-key-size: "384"
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-
-      tls:
-        - hosts:
-            - files.offene.cloud
-          secretName: nextcloud-tls
 
     lifecycle:
       postStartCommand:
@@ -50,7 +41,7 @@ spec:
       enabled: true
 
     nextcloud:
-      host: files.offene.cloud
+      host: files.${EXTERNAL_DOMAIN}
       existingSecret:
         enabled: true
         secretName: nextcloud-secret
@@ -147,39 +138,7 @@ spec:
         passwordKey: password
 
     collabora:
-      enabled: true
-
-      collabora:
-        aliasgroups:
-          - host: "https://files.offene.cloud:443"
-        extra_params: --o:ssl.enable=false --o:ssl.termination=true
-        server_name: office.offene.cloud
-        existingSecret:
-          enabled: true
-          # name of existing Kubernetes Secret with col"lboara admin credentials
-          secretName: nextcloud-collabora-secret
-          usernameKey: username
-          passwordKey: password
-
-      ingress:
-        enabled: true
-        className: traefik
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          cert-manager.io/private-key-rotation-policy: Always
-          cert-manager.io/private-key-algorithm: ECDSA
-          cert-manager.io/private-key-size: "384"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-        hosts:
-          - host: office.offene.cloud
-            paths:
-              - path: /
-                pathType: ImplementationSpecific
-        tls:
-          - hosts:
-              - office.offene.cloud
-            secretName: collabora-tls
+      enabled: false
 
     cronjob:
       enabled: true

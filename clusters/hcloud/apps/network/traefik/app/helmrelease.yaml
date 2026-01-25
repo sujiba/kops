@@ -55,7 +55,7 @@ spec:
         expose:
           default: false
       web:
-        port: 80
+        port: 81
         #http:
         #  redirections:
         #    entryPoint:
@@ -63,7 +63,7 @@ spec:
         #      scheme: https
         #      permanent: true
       websecure:
-        port: 443
+        port: 444
         http:
           encodedCharacters:
             allowEncodedSlash: true

@@ -63,26 +63,19 @@ spec:
           health:
             port: *healthPort
 
-    ingress:
+    route:
       app:
-        className: traefik
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          cert-manager.io/private-key-rotation-policy: Always
-          cert-manager.io/private-key-algorithm: "ECDSA"
-          cert-manager.io/private-key-size: "384"
-          traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-        hosts:
-          - host: "kromgo.offene.cloud"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - "kromgo.offene.cloud"
-            secretName: kromgo-tls
+        hostnames:
+          - "kromgo.${EXTERNAL_DOMAIN}"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: kromgo
+                port: *port
+
     persistence:
       config-file:
         type: configMap

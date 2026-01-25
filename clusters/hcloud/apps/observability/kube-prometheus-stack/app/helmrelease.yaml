@@ -12,23 +12,14 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       enabled: true
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          cert-manager.io/private-key-rotation-policy: Always
-          cert-manager.io/private-key-algorithm: ECDSA
-          cert-manager.io/private-key-size: "384"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-        pathType: Prefix
-        hosts:
-          - &host "alertmanager.offene.cloud"
-        tls:
-          - hosts:
-              - *host
-            secretName: "alertmanager-tls"
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - "alertmanager.${EXTERNAL_DOMAIN}"
+          parentRefs:
+            - name: envoy-external
+              namespace: network
       alertmanagerSpec:
         ## Todo no config right now
         #alertmanagerConfiguration:
@@ -48,26 +39,16 @@ spec:
     kubeProxy:
       enabled: true
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          cert-manager.io/private-key-rotation-policy: Always
-          cert-manager.io/private-key-algorithm: ECDSA
-          cert-manager.io/private-key-size: "384"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "network-traefik-middleware-chain-no-auth@kubernetescrd"
-
-        pathType: Prefix
-        hosts:
-          - &host "prometheus.offene.cloud"
-        tls:
-          - hosts:
-              - *host
-            secretName: "prometheus-tls"
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - "prometheus.${EXTERNAL_DOMAIN}"
+          parentRefs:
+            - name: envoy-external
+              namespace: network
       prometheusSpec:
-        externalUrl: https://prometheus.offene.cloud
+        externalUrl: https://prometheus.${EXTERNAL_DOMAIN}
         version: v2.55.1 # override 'unsupported Prometheus version' error
         image:
           registry: docker.io

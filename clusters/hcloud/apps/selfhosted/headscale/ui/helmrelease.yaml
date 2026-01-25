@@ -54,26 +54,20 @@ spec:
           http:
             port: 3000
 
-    ingress:
+    route:
       app:
-        className: traefik
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          cert-manager.io/private-key-rotation-policy: Always
-          cert-manager.io/private-key-algorithm: ECDSA
-          cert-manager.io/private-key-size: "384"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hosts:
-          - host: "headscale.offene.cloud"
-            paths:
-              - path: /admin
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - "headscale.offene.cloud"
-            secretName: headscale-tls
+        hostnames: ["headscale.${EXTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /admin
+            backendRefs:
+              - identifier: app
 
     persistence:
       config:

@@ -1,0 +1,96 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nextcloud-collabora
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: collabora
+  values:
+    controllers:
+      collabora:
+        containers:
+          app:
+            image:
+              repository: collabora/code
+              tag: 25.04.8.1.1@sha256:3c58d0e9bae75e4647467d0c7d91cb66f261d3e814709aed590b5c334a04db26
+            resources:
+              requests:
+                cpu: 150m
+                memory: 768Mi
+              limits:
+                memory: 3Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
+            env:
+              extra_params: --o:ssl.termination=true --o:ssl.enable=false --o:security.capabilities=false --o:logging.level=error
+              aliasgroup1: https://files.offene.cloud:443
+              domain: files\\.offene\\.cloud
+
+    defaultPodOptions:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: nextcloud-collabora
+
+    rawResources:
+      autoscaling:
+        enabled: false
+        apiVersion: autoscaling/v2
+        kind: HorizontalPodAutoscaler
+        spec:
+          spec:
+            scaleTargetRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: nextcloud-collabora
+            minReplicas: 1
+            maxReplicas: 4
+            metrics:
+              - type: Resource
+                resource:
+                  name: cpu
+                  target:
+                    type: Utilization
+                    averageUtilization: 60
+              - type: Resource
+                resource:
+                  name: memory
+                  target:
+                    type: Utilization
+                    averageUtilization: 80
+            behavior:
+              scaleDown:
+                stabilizationWindowSeconds: 300
+                policies:
+                  - type: Pods
+                    value: 1
+                    periodSeconds: 60
+              scaleUp:
+                stabilizationWindowSeconds: 0
+                policies:
+                  - type: Pods
+                    value: 1
+                    periodSeconds: 30
+    service:
+      app:
+        ports:
+          http:
+            port: 9980
+
+    route:
+      app:
+        hostnames:
+          - office.${EXTERNAL_DOMAIN}
+        parentRefs:
+          - name: envoy-external
+            namespace: network
