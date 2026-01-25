@@ -12,7 +12,7 @@ resources:
   - ./freshrss/ks.yaml
   - ./headscale/ks.yaml
   - ./it-tools/ks.yaml
-  - ./matrix/ks.yaml
+  #- ./matrix/ks.yaml
   - ./mollysocket/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ntfy/ks.yaml
