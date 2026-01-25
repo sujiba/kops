@@ -6,7 +6,7 @@ metadata:
   name: matrix-synapse
   namespace: selfhosted
 spec:
-  hostnames: ["matrix.albdev.cloud"]
+  hostnames: ["matrix.${EXTERNAL_DOMAIN}"]
   parentRefs:
     - name: envoy-external
       namespace: network
@@ -29,7 +29,7 @@ metadata:
   name: matrix-auth-service
   namespace: selfhosted
 spec:
-  hostnames: ["mas.albdev.cloud"]
+  hostnames: ["mas.${EXTERNAL_DOMAIN}"]
   parentRefs:
     - name: envoy-external
       namespace: network
@@ -52,7 +52,7 @@ metadata:
   name: matrix-rtc
   namespace: selfhosted
 spec:
-  hostnames: ["rtc.albdev.cloud"]
+  hostnames: ["rtc.${EXTERNAL_DOMAIN}"]
   parentRefs:
     - name: envoy-external
       namespace: network
@@ -83,7 +83,7 @@ metadata:
   name: matrix-admin
   namespace: selfhosted
 spec:
-  hostnames: ["admin-matrix.albdev.cloud"]
+  hostnames: ["madmin.${EXTERNAL_DOMAIN}"]
   parentRefs:
     - name: envoy-external
       namespace: network
@@ -106,7 +106,7 @@ metadata:
   name: matrix-element
   namespace: selfhosted
 spec:
-  hostnames: ["chat.albdev.cloud"]
+  hostnames: ["chat.${EXTERNAL_DOMAIN}"]
   parentRefs:
     - name: envoy-external
       namespace: network
@@ -129,7 +129,7 @@ metadata:
   name: matrix-well-known
   namespace: selfhosted
 spec:
-  hostnames: ["matrix.albdev.cloud"]
+  hostnames: ["matrix.${EXTERNAL_DOMAIN}"]
   parentRefs:
     - name: envoy-external
       namespace: network
