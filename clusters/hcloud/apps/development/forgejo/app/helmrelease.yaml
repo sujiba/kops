@@ -38,6 +38,19 @@ spec:
             - code.offene.cloud
           secretName: forgejo-tls
 
+    httpRoute:
+      enabled: true
+      hostnames: [ "code.${EXTERNAL_DOMAIN}" ]
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+          sectionName: https
+      rules:
+        - backendRefs:
+            - name: forgejo-http
+              namespace: development
+              port: anubis
+
     service:
       ssh:
         ipFamilyPolicy: SingleStack # todo: remove after apply
