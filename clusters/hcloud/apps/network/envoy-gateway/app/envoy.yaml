@@ -68,7 +68,7 @@ spec:
           from: Same
     - name: https
       protocol: HTTPS
-      port: 443
+      port: 444
       allowedRoutes:
         namespaces:
           from: All
