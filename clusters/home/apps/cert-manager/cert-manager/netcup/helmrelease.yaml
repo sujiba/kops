@@ -4,6 +4,7 @@ kind: HelmRelease
 metadata:
   name: cert-manager-webhook-netcup
 spec:
+  interval: 1h
   chart:
     spec:
       chart: cert-manager-webhook-netcup
@@ -12,7 +13,6 @@ spec:
         kind: HelmRepository
         name: cert-manager-webhook-netcup
         namespace: flux-system
-  interval: 1h
   values:
     groupName: com.netcup.webhook
     certManager:
