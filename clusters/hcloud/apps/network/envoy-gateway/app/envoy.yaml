@@ -178,22 +178,22 @@ spec:
             scheme: https
             statusCode: 301
 
----
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: EnvoyPatchPolicy
-metadata:
-  name: headscale-upgrade
-spec:
-  targetRef:
-    group: gateway.networking.k8s.io
-    kind: Gateway
-    name: envoy-external
-  type: JSONPatch
-  jsonPatches:
-    - type: type.googleapis.com/envoy.config.listener.v3.Listener
-      name: network/envoy-external/https
-      operation:
-        op: add
-        path: /filter_chains/0/filters/0/typed_config/upgrade_configs/-
-        value:
-          upgrade_type: tailscale-control-protocol
+#---
+#apiVersion: gateway.envoyproxy.io/v1alpha1
+#kind: EnvoyPatchPolicy
+#metadata:
+#  name: headscale-upgrade
+#spec:
+#  targetRef:
+#    group: gateway.networking.k8s.io
+#    kind: Gateway
+#    name: envoy-external
+#  type: JSONPatch
+#  jsonPatches:
+#    - type: type.googleapis.com/envoy.config.listener.v3.Listener
+#      name: network/envoy-external/https
+#      operation:
+#        op: add
+#        path: /filter_chains/0/filters/0/typed_config/upgrade_configs/-
+#        value:
+#          upgrade_type: tailscale-control-protocol
