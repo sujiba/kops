@@ -61,16 +61,6 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: freshrss
-                port: *port
-            filters:
-              - type: RequestHeaderModifier
-                requestHeaderModifier:
-                  add:
-                    - name: X-Robots-tag
-                      value: "noindex, nofollow"
 
     persistence:
       data:
