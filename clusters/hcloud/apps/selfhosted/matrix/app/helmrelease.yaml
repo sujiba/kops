@@ -89,7 +89,7 @@ spec:
         1-mas-config:
           config: |
             branding:
-              service_name: "offene.cloud Matrix"
+              service_name: "offene.cloud"
             passwords:
               enabled: false
               minimum_length: 12
@@ -134,7 +134,7 @@ spec:
     elementAdmin:
       enabled: true
       ingress:
-        host: matrix-admin.offene.cloud
+        host: madmin.offene.cloud
         tlsEnabled: true
 
     elementWeb:
@@ -145,7 +145,7 @@ spec:
       additional:
         extra-config.json: |
           {
-            "brand": "offene.cloud Matrix",
+            "brand": "offene.cloud",
             "default_theme": "light",
             "show_labs_settings": false,
             "force_verification": false,
