@@ -88,16 +88,12 @@ spec:
                 - id: 01KFQYGGPP62VZME0SS0YMD2F4
                   human_name: Pocket-ID
                   issuer: https://id.offene.cloud
-                  client_id: "${MATRIX_CLIENT_ID}"
-                  client_secret: "${MATRIX_CLIENT_SECRET}"
-                  userinfo_endpoint: https://id.offene.cloud/api/oidc/userinfo
-                  authorization_endpoint: https://id.offene.cloud/authorize
-                  token_endpoint: https://id.offene.cloud/api/oidc/token
-                  jwks_uri: https://id.offene.cloud/.well-known/jwks.json
-                  token_endpoint_auth_method: client_secret_post
+                  client_id: ${MATRIX_CLIENT_ID}
+                  client_secret: ${MATRIX_CLIENT_SECRET}
+                  token_endpoint_auth_method: client_secret_basic
                   scope: "openid email profile"
                   discovery_mode: oidc
-                  pkce_method: auto
+                  pkce_method: always
                   claims_imports:
                     localpart:
                       action: require
