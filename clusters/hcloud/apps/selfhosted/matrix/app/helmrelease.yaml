@@ -25,7 +25,7 @@ spec:
           existingClaim: matrix-media
         maxUploadSize: 100M
       additional:
-        1-base-config:
+        base.yaml:
           config: |
             public_baseurl: https://matrix.${EXTERNAL_DOMAIN}
             presence:
@@ -56,7 +56,7 @@ spec:
               msc4186_enabled: true
             database:
               allow_unsafe_locale: true
-        2-email-config:
+        email.yaml:
           config: |
             email:
               smtp_host: smtp-relay.network.svc.cluster.local
@@ -73,7 +73,7 @@ spec:
         className: disabled
         tlsEnabled: false
       additional:
-        1-mas-config:
+        oidc.yaml:
           config: |
             branding:
               service_name: "offene.cloud"
