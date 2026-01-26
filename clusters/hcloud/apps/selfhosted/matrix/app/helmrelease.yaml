@@ -88,7 +88,7 @@ spec:
                 - id: 01KFQYGGPP62VZME0SS0YMD2F4
                   human_name: Pocket-ID
                   issuer: https://id.offene.cloud
-                  client_id: ${MATRIX_CLIENT_ID}
+                  client_id: 78afd856-2d20-48b3-afdb-63fa27aba8f3
                   client_secret: ${MATRIX_CLIENT_SECRET}
                   token_endpoint_auth_method: client_secret_basic
                   scope: "openid email profile"
