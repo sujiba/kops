@@ -35,6 +35,8 @@ spec:
             suppress_key_server_warning: true
             trusted_key_servers:
               - server_name: "matrix.org"
+            federation_domain_whitelist:
+              - matrix.albdev.cloud
             admin_contact: "mailto:hostmaster@${MAIL_DOMAIN}"
             enable_search: true
             url_preview_enabled: true
