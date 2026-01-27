@@ -7,5 +7,5 @@ components:
   - ../../components/common
 
 resources:
-  - ./forgejo/ks.yaml
   - ./namespace.yaml
+  - ./forgejo/ks.yaml

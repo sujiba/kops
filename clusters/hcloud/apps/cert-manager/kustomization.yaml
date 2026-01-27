@@ -8,5 +8,5 @@ components:
   - ../../components/common
 
 resources:
-  - ./cert-manager/ks.yaml
   - ./namespace.yaml
+  - ./cert-manager/ks.yaml
