@@ -43,7 +43,7 @@ _hcloud cluster stats:_
 
 ### Directories
 ```bash
-📁 clusters          # Kubernetes cluster
+📁 clusters          # Kubernetes clusters
 ├ 📁 hcloud          # hetzner single node cluster
 │  ├ 📁 apps         # apps sorted by namespaces
 │  ├ 📁 bootstrap    #
@@ -78,5 +78,6 @@ _hcloud cluster stats:_
 ## 🤝 Special thanks
 - [Home Operations discord community](https://discord.gg/home-operations)
 - [kubesearch.dev](https://kubesearch.dev/)
-- [naoalb](https://code.onji.space/lab/k8s)
 - [bjw-s](https://github.com/bjw-s-labs)
+- [onedr0p](https://github.com/onedr0p)
+- [naoalb](https://code.offene.cloud/lab/k8s)
