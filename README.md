@@ -37,26 +37,31 @@ _hcloud cluster stats:_
 ## ⛵ Kubernetes 
 ### Installation
 1. `git clone https://code.offene.cloud/homelab/k8s.git`
-2. [Create talos node on hcloud](setup/hcloud/opentofu/README.md)
-3. [Bootstrap talos node](setup/hcloud/talos/README.md)
-4. [Bootstrap k8s](kubernetes/hcloud/bootstrap/README.md)
+2. [Create talos node on hcloud](bootstrap/hcloud/1_tofu/opentofu/README.md)
+3. [Bootstrap talos node](bootstrap/hcloud/2_talos/README.md)
+4. [Bootstrap k8s](bootstrap/hcloud/3_flux/README.md)
 
 ### Directories
 ```bash
-📁 kubernetes          # Kubernetes kubernetes
-├ 📁 hcloud          # hetzner single node cluster
-│  ├ 📁 apps         # apps sorted by namespaces
-│  ├ 📁 bootstrap    #
-│  ├ 📁 components   #
-│  └ 📁 flux         #
-├ 📁 home            # home single node cluster
-│  ├ 📁 apps         # apps sorted by namespaces
-│  ├ 📁 bootstrap    #
-│  ├ 📁 components   #
-│  └ 📁 flux         #
-├ 📁 setup           # 
-│  ├ 📁 hcloud       #
-│  └ 📁 home         #
+📁 kops
+├─📁 archive
+├─📁 bootstrap
+│  ├─📁 hcloud
+│  │ ├─📁 1_tofu
+│  │ ├─📁 2_talos
+│  │ └─📁 3_flux
+│  └─📁 home
+│    ├─📁 2_talos
+│    └─📁 3_flux
+├─📁 kubernetes         # k8s clusters
+│  ├─📁 hcloud          # single node cluster
+│  │ ├─📁 apps          # apps sorted by namespaces
+│  │ ├─📁 components    # cluster components
+│  │ └─📁 flux
+│  └─📁 home            # single node cluster
+│    ├─📁 apps          # apps sorted by namespaces
+│    ├─📁 components    # cluster components
+│    └─📁 flux
 ```
 
 ### Networking
