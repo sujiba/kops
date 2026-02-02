@@ -39,11 +39,11 @@ _hcloud cluster stats:_
 1. `git clone https://code.offene.cloud/homelab/k8s.git`
 2. [Create talos node on hcloud](setup/hcloud/opentofu/README.md)
 3. [Bootstrap talos node](setup/hcloud/talos/README.md)
-4. [Bootstrap k8s](clusters/hcloud/bootstrap/README.md)
+4. [Bootstrap k8s](kubernetes/hcloud/bootstrap/README.md)
 
 ### Directories
 ```bash
-📁 clusters          # Kubernetes clusters
+📁 kubernetes          # Kubernetes kubernetes
 ├ 📁 hcloud          # hetzner single node cluster
 │  ├ 📁 apps         # apps sorted by namespaces
 │  ├ 📁 bootstrap    #

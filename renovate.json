@@ -8,23 +8,23 @@
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
   "flux": {
-    "managerFilePatterns": ["/clusters/.+\\.ya?ml$/"]
+    "managerFilePatterns": ["/kubernetes/.+\\.ya?ml$/"]
   },
   "helm-values": {
-    "managerFilePatterns": ["/clusters/.+\\.ya?ml$/"]
+    "managerFilePatterns": ["/kubernetes/.+\\.ya?ml$/"]
   },
   "kubernetes": {
-    "managerFilePatterns": ["/clusters/.+\\.ya?ml$/"]
+    "managerFilePatterns": ["/kubernetes/.+\\.ya?ml$/"]
   },
   "packageRules": [
     {
       "description": "add cluster name to commit message",
-      "matchFileNames": ["clusters/hcloud/**"],
+      "matchFileNames": ["kubernetes/hcloud/**"],
       "addLabels": ["cluster/hcloud"]
     },
     {
       "description": "add cluster name to commit message",
-      "matchFileNames": ["clusters/home/**"],
+      "matchFileNames": ["kubernetes/home/**"],
       "addLabels": ["cluster/home"]
     }
   ]
