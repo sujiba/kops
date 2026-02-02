@@ -1,0 +1,182 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nextcloud
+
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: nextcloud
+      version: 8.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: nextcloud-charts
+        namespace: flux-system
+      interval: 1h
+
+  values:
+    deploymentAnnotations:
+      secret.reloader.stakater.com/reload: nextcloud-secret
+
+    image:
+      repository: nextcloud
+      tag: 32.0.5-fpm-alpine
+      flavor: fpm-alpine
+
+    replicaCount: 1
+
+    ingress:
+      enabled: false
+
+    lifecycle:
+      postStartCommand:
+
+    phpClientHttpsFix:
+      enabled: true
+
+    nextcloud:
+      host: files.${EXTERNAL_DOMAIN}
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-secret
+        usernameKey: nextcloud-username
+        passwordKey: nextcloud-password
+      mail:
+        enabled: true
+        # the user we send email as
+        fromAddress: no-reply
+        # the domain we send email from
+        domain: ${MAIL_DOMAIN}
+        smtp:
+          port: 2525
+          secure: ''
+
+      phpConfigs:
+        uploadLimit.ini: |
+          upload_max_filesize = 16G
+          post_max_size = 16G
+          max_input_time = 3600
+          max_execution_time = 3600
+      configs:
+        local.config.php: |-
+          <?php
+          $CONFIG = array(
+            'trusted_proxies' => array(
+              '127.0.0.1',
+              '10.0.0.0/8',
+            ),
+            'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
+            'default_phone_region' => 'DE',
+            'auth.bruteforce.protection.enabled' => true,
+            'maintenance_window_start' => 1,
+            'simpleSignUpLink.shown' => false,
+            'overwrite.cli.url' => 'https://files.offene.cloud',
+          );
+
+      hooks:
+        post-installation: |-
+          php occ maintenance:repair --include-expensive
+          php occ db:add-missing-indices
+          php occ db:add-missing-columns
+          php occ db:add-missing-primary-keys
+        before-starting: |-
+          # disable unneceserry apps
+          for appname in activity circles systemtags federation privacy \
+              nextcloud_announcements announcementcenter support survey_client \
+              user_status weather_status dashboard app_api
+            do
+            php occ app:disable "$appname"
+          done
+        post-upgrade: |-
+          php occ maintenance:repair --include-expensive
+          php occ db:add-missing-indices
+          php occ db:add-missing-columns
+          php occ db:add-missing-primary-keys
+
+    nginx:
+      enabled: true
+      image:
+        repository: public.ecr.aws/nginx/nginx
+        tag: "1.29.4"
+      config:
+        default: true
+      resources:
+        requests:
+          cpu: 50m
+          memory: 20Mi
+        limits:
+          memory: 100Mi
+
+    internalDatabase:
+      enabled: false
+    externalDatabase:
+      enabled: true
+      type: postgresql
+      host: nextcloud-postgres-rw.selfhosted.svc.cluster.local
+      database: nextcloud
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-db-secret
+        usernameKey: username
+        passwordKey: password
+
+    redis:
+      enabled: false
+    externalRedis:
+      enabled: true
+      host: nextcloud-dragonfly.selfhosted.svc.cluster.local
+      port: 6379
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-redis-secret
+        passwordKey: password
+
+    collabora:
+      enabled: false
+
+    cronjob:
+      enabled: true
+      cronjob:
+        schedule: "0 */4 * * *"
+
+    securityContext:
+      fsGroupChangePolicy: OnRootMismatch
+
+    service:
+      type: ClusterIP
+      port: 8080
+
+    persistence:
+      enabled: true
+      existingClaim: nextcloud-pvc
+
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        memory: 2Gi
+
+    startupProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 360
+      successThreshold: 1
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1

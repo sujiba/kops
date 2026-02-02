@@ -1,0 +1,28 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app paperless
+spec:
+  interval: 1h
+  timeout: 5m
+  path: ./kubernetes/home/apps/selfhosted/paperless/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: volsync-kopia-secret
+        kind: Secret
+    substitute:
+      APP: *app
+      VOLSYNC_CLAIM: paperless-data
+      VOLSYNC_CAPACITY: 50Gi
+      VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: selfhosted
+  wait: false

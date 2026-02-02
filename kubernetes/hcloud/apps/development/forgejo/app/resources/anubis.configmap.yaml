@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: anubis-bot-policy
+  namespace: development
+data:
+  anubisBotPolicy.json: |
+    {
+      "bots": [
+        {
+          "name": "generic-browser",
+          "user_agent_regex": "(?i:mozilla|opera)",
+          "action": "CHALLENGE"
+        }
+      ],
+      "status_codes": {
+        "CHALLENGE": 202,
+        "DENY": 406
+      },
+      "dnsbl": false
+    }

@@ -1,0 +1,96 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mollysocket
+
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: mollysocket
+
+  values:
+    controllers:
+      mollysocket:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mollyim/mollysocket
+              tag: 1.6.0@sha256:b0d6cc1f09bad9681ba949eede01c7b39b83c9f775d826ba7129a60d8b97cf2c
+            args: ["server"]
+            workingDir: /data
+            env:
+              - name: TZ
+                value: Europe/Berlin
+              - name: MOLLY_ALLOWED_ENDPOINTS
+                valueFrom:
+                  secretKeyRef:
+                    name: mollysocket-secrets
+                    key: allowed_endpoints
+              - name: MOLLY_VAPID_PRIVKEY
+                valueFrom:
+                  secretKeyRef:
+                    name: mollysocket-secrets
+                    key: vapid_privkey
+              - name: MOLLY_ALLOWED_UUIDS
+                valueFrom:
+                  secretKeyRef:
+                    name: mollysocket-secrets
+                    key: allowed_uuids
+              - name: MOLLY_DB
+                value: "/data/mollysocket.db"
+              - name: MOLLY_HOST
+                value: "0.0.0.0"
+              - name: MOLLY_PORT
+                value: "8020"
+              - name: RUST_LOG
+                value: "info"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+              limits:
+                memory: 256Mi
+
+    service:
+      app:
+        ports:
+          http:
+            port: 8020
+
+    route:
+      app:
+        hostnames: ["molly.${EXTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        existingClaim: mollysocket-pvc

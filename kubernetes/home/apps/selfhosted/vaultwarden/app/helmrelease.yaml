@@ -1,0 +1,91 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+spec:
+  interval: 1h
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: vaultwarden
+
+  values:
+    controllers:
+      vaultwarden:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: ${VOLSYNC_UID}
+            runAsGroup: ${VOLSYNC_GID}
+            fsGroup: ${VOLSYNC_GID}
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/dani-garcia/vaultwarden
+              tag: 1.35.2
+            env:
+              TZ: ${TZ}
+              DOMAIN: "https://vault.${INTERNAL_DOMAIN}"
+              # Disable signups
+              SIGNUPS_ALLOWED: false
+              # Disable invitations
+              INVITATIONS_ALLOWED: false
+              # Cache time-to-live for successfully obtained icons, in seconds (0 is "forever")
+              ICON_CACHE_TTL: 0
+              ICON_SERVICE: internal
+              DISABLE_ICON_DOWNLOAD: true
+              SENDS_ALLOWED: true
+              SMTP_HOST: smtp-relay.network.svc.cluster.local
+              SMTP_PORT: 2525
+              SMTP_SECURITY: off
+              SMTP_USERNAME: ''
+              SMTP_PASSWORD: ''
+              SMTP_FROM: no-reply@${MAIL_DOMAIN}
+              SMTP_FROM_NAME: "{{ .Release.Name }}"
+              SSO_ENABLED: false
+              SSO_PKCE: true
+              SSO_SIGNUPS_MATCH_EMAIL: true
+              SSO_SCOPES: email profile groups offline_access
+              EXPERIMENTAL_CLIENT_FEATURE_FLAGS: ssh-key-vault-item,ssh-agent
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+
+    route:
+      app:
+        hostnames: ["vault.${INTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+
+    persistence:
+      data:
+        existingClaim: ${VOLSYNC_CLAIM}
+        globalMounts:
+          - path: /data
