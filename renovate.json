@@ -10,22 +10,19 @@
   "flux": {
     "managerFilePatterns": [
       "/bootstrap/.+\\.ya?ml$/",
-      "/kubernetes/.+\\.ya?ml$/",
-      "/talos/.+\\.ya?ml$/"
+      "/kubernetes/.+\\.ya?ml$/"
     ]
   },
   "helm-values": {
     "managerFilePatterns": [
       "/bootstrap/.+\\.ya?ml$/",
-      "/kubernetes/.+\\.ya?ml$/",
-      "/talos/.+\\.ya?ml$/"
+      "/kubernetes/.+\\.ya?ml$/"
     ]
   },
   "kubernetes": {
     "managerFilePatterns": [
       "/bootstrap/.+\\.ya?ml$/",
-      "/kubernetes/.+\\.ya?ml$/",
-      "/talos/.+\\.ya?ml$/"
+      "/kubernetes/.+\\.ya?ml$/"
     ]
   },
   "packageRules": [
@@ -41,22 +38,12 @@
     },
     {
       "description": "add cluster name to commit message",
-      "matchFileNames": ["talos/hcloud/**"],
-      "addLabels": ["cluster/hcloud"]
-    },
-    {
-      "description": "add cluster name to commit message",
       "matchFileNames": ["bootstrap/home/**"],
       "addLabels": ["cluster/home"]
     },
     {
       "description": "add cluster name to commit message",
       "matchFileNames": ["kubernetes/home/**"],
-      "addLabels": ["cluster/home"]
-    },
-    {
-      "description": "add cluster name to commit message",
-      "matchFileNames": ["talos/home/**"],
       "addLabels": ["cluster/home"]
     }
   ]
