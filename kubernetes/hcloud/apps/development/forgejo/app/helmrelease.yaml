@@ -92,16 +92,12 @@ spec:
         log:
           MODE: console, file
           LEVEL: 'info'
-          ACCESS: file # deprecated, but works https://codeberg.org/forgejo/forgejo/src/commit/012a1e0497bce557658a3f00485bf67d01cb9252/modules/setting/log.go#L63-L70
-          # logger.access.MODE: file # doesn't work because of lowercase chars
-        log.file:
-          LEVEL: Debug
         mailer:
           ENABLED: false
-          #FROM: no-reply@offene.cloud
-          #PROTOCOL: smtps
-          #SMTP_ADDR: mx.offene.cloud
-          #SMTP_PORT: 465
+          #FROM: no-reply@${MAIL_DOMAIN}
+          #PROTOCOL: smtp
+          #SMTP_ADDR: smtp-relay.network.svc.cluster.local
+          #SMTP_PORT: 2525
         oauth2_client:
           UPDATE_AVATAR: true
         packages:
