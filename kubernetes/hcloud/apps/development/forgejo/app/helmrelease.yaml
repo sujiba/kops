@@ -93,6 +93,8 @@ spec:
           MODE: console, file
           LEVEL: 'info'
           LOGGER_ACCESS_MODE: file
+        log.file:
+          LEVEL: Debug
         mailer:
           ENABLED: false
           #FROM: no-reply@${MAIL_DOMAIN}
