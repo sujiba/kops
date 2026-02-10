@@ -8,15 +8,32 @@
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
   "flux": {
-    "managerFilePatterns": ["/kubernetes/.+\\.ya?ml$/"]
+    "managerFilePatterns": [
+      "/bootstrap/.+\\.ya?ml$/",
+      "/kubernetes/.+\\.ya?ml$/",
+      "/talos/.+\\.ya?ml$/"
+    ]
   },
   "helm-values": {
-    "managerFilePatterns": ["/kubernetes/.+\\.ya?ml$/"]
+    "managerFilePatterns": [
+      "/bootstrap/.+\\.ya?ml$/",
+      "/kubernetes/.+\\.ya?ml$/",
+      "/talos/.+\\.ya?ml$/"
+    ]
   },
   "kubernetes": {
-    "managerFilePatterns": ["/kubernetes/.+\\.ya?ml$/"]
+    "managerFilePatterns": [
+      "/bootstrap/.+\\.ya?ml$/",
+      "/kubernetes/.+\\.ya?ml$/",
+      "/talos/.+\\.ya?ml$/"
+    ]
   },
   "packageRules": [
+    {
+      "description": "add cluster name to commit message",
+      "matchFileNames": ["bootstrap/hcloud/**"],
+      "addLabels": ["cluster/hcloud"]
+    },
     {
       "description": "add cluster name to commit message",
       "matchFileNames": ["kubernetes/hcloud/**"],
@@ -24,7 +41,22 @@
     },
     {
       "description": "add cluster name to commit message",
+      "matchFileNames": ["talos/hcloud/**"],
+      "addLabels": ["cluster/hcloud"]
+    },
+    {
+      "description": "add cluster name to commit message",
+      "matchFileNames": ["bootstrap/home/**"],
+      "addLabels": ["cluster/home"]
+    },
+    {
+      "description": "add cluster name to commit message",
       "matchFileNames": ["kubernetes/home/**"],
+      "addLabels": ["cluster/home"]
+    },
+    {
+      "description": "add cluster name to commit message",
+      "matchFileNames": ["talos/home/**"],
       "addLabels": ["cluster/home"]
     }
   ]
