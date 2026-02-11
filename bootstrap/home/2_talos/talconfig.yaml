@@ -4,7 +4,7 @@ clusterName: &clusterName "${clusterName}"
 talosVersion: 1.12.3
 
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: 1.35.0
+kubernetesVersion: 1.35.1
 
 endpoint: https://${privateClusterIP}:6443
 #domain: ${myDomainName}
