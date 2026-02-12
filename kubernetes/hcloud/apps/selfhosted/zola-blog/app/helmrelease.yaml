@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: sujiba/my-zola-blog
-              tag: 2026.02.2
+              tag: 2026.02.3
             env:
               TZ: ${TZ}
             securityContext:
