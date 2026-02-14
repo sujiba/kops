@@ -9,20 +9,20 @@
   "reviewers": ["@sujiba"],
   "flux": {
     "managerFilePatterns": [
-      "/bootstrap/.+\\.ya?ml$/",
-      "/kubernetes/.+\\.ya?ml$/"
+      "/^bootstrap/.+\\.ya?ml$/",
+      "/^kubernetes/.+\\.ya?ml$/"
     ]
   },
   "helm-values": {
     "managerFilePatterns": [
-      "/bootstrap/.+\\.ya?ml$/",
-      "/kubernetes/.+\\.ya?ml$/"
+      "/^bootstrap/.+\\.ya?ml$/",
+      "/^kubernetes/.+\\.ya?ml$/"
     ]
   },
   "kubernetes": {
     "managerFilePatterns": [
-      "/bootstrap/.+\\.ya?ml$/",
-      "/kubernetes/.+\\.ya?ml$/"
+      "/^bootstrap/.+\\.ya?ml$/",
+      "/^kubernetes/.+\\.ya?ml$/"
     ]
   },
   "packageRules": [
