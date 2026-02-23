@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mollyim/mollysocket
-              tag: 1.7.0@sha256:2f15fd7b1036f1cb3f3c5be008abf6f738a7467b5c2794cc44edfde32226b3de
+              tag: 1.7.0@sha256:eeb08a3650b8afe1f57fbbd4dc95fc58210d5624cb32e7420ee4c1bea278db02
             args: ["server"]
             workingDir: /data
             env:
