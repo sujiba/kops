@@ -9,6 +9,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./bentopdf/ks.yaml
+  - ./drawio/ks.yaml
   - ./freshrss/ks.yaml
   - ./headscale/ks.yaml
   - ./it-tools/ks.yaml
