@@ -27,7 +27,7 @@ spec:
           exporter:
             image:
               repository: docker.io/jgraph/export-server
-              tag: latest@sha256:88ecb260450006eac16b6d9bf828890b5262e3a6b24d38b4773bda30ae1d6f88
+              tag: latest@sha256:9667a71912e5605197aff73b645116649dcbf25f87b5398364037ef412831005
 
     service:
       app:
