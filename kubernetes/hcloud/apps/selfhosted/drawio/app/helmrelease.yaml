@@ -15,11 +15,19 @@ spec:
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
+
         containers:
           app:
             image:
               repository: docker.io/jgraph/drawio
               tag: 29.5.2
+            #env:
+            #  EXPORT_URL: http://image-export:8000/
+
+          exporter:
+            image:
+              repository: docker.io/jgraph/export-server
+              tag: latest@sha256:88ecb260450006eac16b6d9bf828890b5262e3a6b24d38b4773bda30ae1d6f88
 
     service:
       app:
@@ -27,6 +35,11 @@ spec:
         ports:
           http:
             port: &port 8080
+      exporter:
+        controller: drawio
+        ports:
+          http:
+            port: 8000
 
     route:
       app:
