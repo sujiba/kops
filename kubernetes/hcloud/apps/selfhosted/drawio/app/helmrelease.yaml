@@ -21,13 +21,13 @@ spec:
             image:
               repository: docker.io/jgraph/drawio
               tag: 29.5.2
-            env:
-              EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
+            #env:
+            #  EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
 
-          exporter:
-            image:
-              repository: docker.io/jgraph/export-server
-              tag: latest@sha256:9667a71912e5605197aff73b645116649dcbf25f87b5398364037ef412831005
+          #exporter:
+          #  image:
+          #    repository: docker.io/jgraph/export-server
+          #    tag: latest@sha256:9667a71912e5605197aff73b645116649dcbf25f87b5398364037ef412831005
 
     service:
       app:
@@ -35,11 +35,11 @@ spec:
         ports:
           http:
             port: &port 8080
-      exporter:
-        controller: drawio
-        ports:
-          http:
-            port: 8000
+      #exporter:
+      #  controller: drawio
+      #  ports:
+      #    http:
+      #      port: 8000
 
     route:
       app:
