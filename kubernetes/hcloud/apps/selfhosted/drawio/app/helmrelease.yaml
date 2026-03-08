@@ -22,7 +22,8 @@ spec:
               repository: docker.io/jgraph/drawio
               tag: 29.6.1
             env:
-              DRAWIO_CSP_HEADER: 'default-src "self"; frame-src "self" https://files.${EXTERNAL_DOMAIN};'
+              DRAWIO_SERVER_URL: https://files.${EXTERNAL_DOMAIN}/
+              DRAWIO_CSP_HEADER: 'frame-src "self" https://files.${EXTERNAL_DOMAIN};'
             #  EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
 
           #exporter:
