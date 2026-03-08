@@ -22,9 +22,9 @@ spec:
               repository: docker.io/jgraph/drawio
               tag: 29.6.1
             env:
-              DRAWIO_SERVER_URL: https://files.${EXTERNAL_DOMAIN}/
-              DRAWIO_CSP_HEADER: 'frame-src "self" https://files.${EXTERNAL_DOMAIN};'
-            #  EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
+              DRAWIO_SERVER_URL: https://files.${EXTERNAL_DOMAIN}/draw/
+              DRAWIO_CSP_HEADER: "frame-src 'self' https://files.${EXTERNAL_DOMAIN};"
+              #EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
 
           #exporter:
           #  image:
@@ -45,12 +45,16 @@ spec:
 
     route:
       app:
-        hostnames: ["draw.${EXTERNAL_DOMAIN}"]
+        hostnames: ["files.${EXTERNAL_DOMAIN}"]
         parentRefs:
           - name: envoy-external
             namespace: network
             sectionName: https
         rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /draw
           - backendRefs:
               - name: *app
                 port: *port

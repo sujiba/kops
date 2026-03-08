@@ -37,3 +37,23 @@ spec:
     namespace: flux-system
   targetNamespace: selfhosted
   wait: false
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: drawio
+spec:
+  interval: 1h
+  path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/drawio
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: selfhosted
+  wait: false
