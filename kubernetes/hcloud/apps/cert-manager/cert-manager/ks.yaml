@@ -26,14 +26,14 @@ metadata:
   name: cert-manager-webhook-netcup
   namespace: &namespace cert-manager
 spec:
-  interval: 1m
+  dependsOn:
+    - name: cert-manager
+  interval: 1h
   timeout: 5m
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-  #dependsOn:
-  #  - name: cert-manager
   path: ./kubernetes/hcloud/apps/cert-manager/cert-manager/netcup
   prune: true
   sourceRef:
