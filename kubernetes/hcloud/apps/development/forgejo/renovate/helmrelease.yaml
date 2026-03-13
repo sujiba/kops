@@ -1,0 +1,40 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: renovate-operator
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: renovate-operator
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  dependsOn:
+    - name: valkey
+
+  values:
+    fullnameOverride: renovate-operator
+    route:
+      enabled: true
+      hostnames:
+        - renovate.${EXTERNAL_DOMAIN}
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+    webhook:
+      enabled: true
+
+    auth:
+      oidc:
+        enabled: true
+        issuerUrl: "https://id.{EXTERNAL_DOMAIN}"   # OIDC provider issuer URL
+        clientId: "1d6c2fed-e6a8-47bd-ac39-52d19acbb30f"
+        existingSecret: "renovate-oidc-secret"      # Kubernetes secret name
+        secretKey: "client-secret"                 # Key inside the secret
+        sessionSecretKey: "session-secret"         # Optional: key for session encryption secret
+        redirectUrl: ""                            # Optional: auto-detected from ingress
+        insecureSkipVerify: false                  # Do not use in production
+        logoutUrl: ""                              # Optional: auto-discovered via OIDC metadata
