@@ -12,8 +12,6 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
-  dependsOn:
-    - name: valkey
 
   values:
     fullnameOverride: renovate-operator
