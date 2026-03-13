@@ -18,7 +18,7 @@ spec:
     route:
       enabled: true
       hostnames:
-        - renovate.${EXTERNAL_DOMAIN}
+        - "renovate.${EXTERNAL_DOMAIN}"
       parentRefs:
         - name: envoy-external
           namespace: network
