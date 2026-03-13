@@ -26,7 +26,7 @@ spec:
 
     auth:
       oidc:
-        enabled: true
+        enabled: false
         issuerUrl: "https://id.${EXTERNAL_DOMAIN}"   # OIDC provider issuer URL
         clientId: "1d6c2fed-e6a8-47bd-ac39-52d19acbb30f"
         existingSecret: "renovate-oidc-secret"      # Kubernetes secret name
