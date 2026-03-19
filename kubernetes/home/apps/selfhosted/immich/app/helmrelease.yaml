@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.6.0
+              tag: v2.6.1
             env:
               TZ: ${TZ}
               DB_HOSTNAME: immich-postgresql
