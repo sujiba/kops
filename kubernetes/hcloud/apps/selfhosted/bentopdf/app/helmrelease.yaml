@@ -21,9 +21,9 @@ spec:
 
         pod:
           securityContext:
-            runAsUser: 65534
-            runAsGroup: 65534
-            fsGroup: 65534
+            runAsUser: 101
+            runAsGroup: 101
+            fsGroup: 101
             fsGroupChangePolicy: "OnRootMismatch"
 
         containers:
@@ -35,7 +35,7 @@ spec:
               TZ: ${TZ}
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
+              readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
             resources:
               requests:
@@ -66,3 +66,5 @@ spec:
             subPath: cache
           - path: /etc/nginx/tmp
             subPath: tmp
+          - path: /var/lib/nginx/tmp
+            subPath: var-tmp
