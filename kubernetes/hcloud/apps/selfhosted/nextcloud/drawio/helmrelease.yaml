@@ -53,3 +53,11 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+            filters:
+              - type: ResponseHeaderModifier
+                responseHeaderModifier:
+                  set:
+                    - name: Content-Security-Policy
+                      value: "frame-ancestors 'self' https://your-nextcloud.domain"
+                  remove:
+                    - X-Frame-Options
