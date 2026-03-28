@@ -7,6 +7,6 @@ resources:
   - ./database.yaml
   - ./dragonfly.yaml
   - ./helmrelease.yaml
-  - ./httproute.yaml
+  #- ./httproute.yaml
   - ./pvc.yaml
   - ./secrets.sops.yaml

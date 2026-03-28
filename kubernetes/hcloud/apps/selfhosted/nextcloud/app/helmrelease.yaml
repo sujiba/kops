@@ -27,6 +27,21 @@ spec:
 
     replicaCount: 1
 
+    httpRoute:
+      enabled: true
+      apiVersion: gateway.networking.k8s.io/v1
+      kind: HTTPRoute
+      hostnames:
+        - files.${EXTERNAL_DOMAIN}
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: "/"
+
     ingress:
       enabled: false
 
