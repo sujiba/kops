@@ -21,9 +21,9 @@ spec:
 
         pod:
           securityContext:
-            runAsUser: 101
-            runAsGroup: 101
-            fsGroup: 101
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
             fsGroupChangePolicy: "OnRootMismatch"
 
         containers:
@@ -66,5 +66,3 @@ spec:
             subPath: cache
           - path: /etc/nginx/tmp
             subPath: tmp
-          - path: /var/lib/nginx/tmp
-            subPath: var-tmp
