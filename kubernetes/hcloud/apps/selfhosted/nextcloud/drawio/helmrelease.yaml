@@ -57,11 +57,4 @@ spec:
             backendRefs:
                 - name: *app
                   port: *port
-            filters:
-              - type: ResponseHeaderModifier
-                responseHeaderModifier:
-                  add:
-                    - name: "Content-Security-Policy"
-                      value: "frame-ancestors 'self' https://files.${EXTERNAL_DOMAIN}"
-                  remove:
-                    - "x-frame-options"
+
