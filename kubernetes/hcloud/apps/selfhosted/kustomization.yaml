@@ -8,7 +8,7 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./bentopdf/ks.yaml
+  #- ./bentopdf/ks.yaml
   - ./freshrss/ks.yaml
   - ./headscale/ks.yaml
   - ./it-tools/ks.yaml
