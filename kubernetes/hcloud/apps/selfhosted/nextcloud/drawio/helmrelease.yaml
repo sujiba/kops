@@ -50,14 +50,18 @@ spec:
             namespace: network
             sectionName: https
         rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+                - name: *app
+                  port: *port
             filters:
               - type: ResponseHeaderModifier
                 responseHeaderModifier:
-                  set:
-                    - name: Content-Security-Policy
-                      value: "frame-ancestors 'self' https://files.${EXTERNAL_DOMAIN}/
+                  add:
+                    - name: "Content-Security-Policy"
+                      value: "default-src 'self'; frame-ancestors 'self' https://files.${EXTERNAL_DOMAIN}"
                   remove:
-                    - X-Frame-Options
+                    - "x-frame-options"
