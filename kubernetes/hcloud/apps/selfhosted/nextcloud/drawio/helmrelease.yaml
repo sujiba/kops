@@ -58,6 +58,6 @@ spec:
                 responseHeaderModifier:
                   set:
                     - name: Content-Security-Policy
-                      value: "frame-ancestors 'self' https://your-nextcloud.domain"
+                      value: "frame-ancestors 'self' https://files.${EXTERNAL_DOMAIN}/
                   remove:
                     - X-Frame-Options
