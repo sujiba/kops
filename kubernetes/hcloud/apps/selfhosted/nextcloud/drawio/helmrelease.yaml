@@ -62,6 +62,6 @@ spec:
                 responseHeaderModifier:
                   add:
                     - name: "Content-Security-Policy"
-                      value: "default-src 'self'; frame-ancestors 'self' https://files.${EXTERNAL_DOMAIN}"
+                      value: "frame-ancestors 'self' https://files.${EXTERNAL_DOMAIN}"
                   remove:
                     - "x-frame-options"
