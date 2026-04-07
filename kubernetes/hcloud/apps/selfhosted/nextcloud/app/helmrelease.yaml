@@ -114,7 +114,7 @@ spec:
       enabled: true
       image:
         repository: public.ecr.aws/nginx/nginx
-        tag: "1.29.7"
+        tag: "1.29.8"
       config:
         default: true
       resources:
