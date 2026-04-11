@@ -6,4 +6,3 @@ namespace: flux-system
 resources:
   - ./cert-manager-webhook-netcup.yaml
   - ./cloudnative-pg.yaml
-  - ./nextcloud-charts.yaml
