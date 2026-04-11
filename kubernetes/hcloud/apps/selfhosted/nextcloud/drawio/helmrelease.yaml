@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app drawio
+  name: &app nextcloud-drawio
 spec:
   interval: 1h
   chartRef:
@@ -57,4 +57,3 @@ spec:
             backendRefs:
                 - name: *app
                   port: *port
-

@@ -25,9 +25,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: {drop: ["ALL"]}
             env:
               extra_params: --o:ssl.termination=true --o:ssl.enable=false --o:security.capabilities=false --o:logging.level=error
               aliasgroup1: https://files.offene.cloud:443
