@@ -4,7 +4,7 @@ kind: Kustomization
 metadata:
   name: nextcloud
 spec:
-  interval: 1h
+  interval: 1m
   path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/app
   postBuild:
     substituteFrom:
