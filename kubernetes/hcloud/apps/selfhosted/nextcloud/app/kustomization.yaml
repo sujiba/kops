@@ -7,5 +7,6 @@ resources:
   - ./database.yaml
   - ./dragonfly.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
   - ./pvc.yaml
   - ./secrets.sops.yaml
