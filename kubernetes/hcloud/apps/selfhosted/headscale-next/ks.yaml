@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: headscale
+  name: headscale-next
 spec:
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/headscale-next/app
@@ -22,7 +22,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: headplane
+  name: headplane-next
 spec:
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/headscale-next/ui
