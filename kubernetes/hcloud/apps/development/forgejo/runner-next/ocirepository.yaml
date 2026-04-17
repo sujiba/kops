@@ -2,12 +2,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: forgejo
+  name: forgejo-runner-next
 spec:
   interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
-  url: oci://code.forgejo.org/forgejo-helm/forgejo
+  url: oci://code.forgejo.org/forgejo-helm/forgejo/forgejo-runner
   ref:
-    tag: 17.0.0
+    tag: 

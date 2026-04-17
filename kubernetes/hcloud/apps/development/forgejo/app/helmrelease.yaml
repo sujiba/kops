@@ -50,21 +50,10 @@ spec:
           name: anubis-bot-policy
           defaultMode: 0555
 
-    # https://code.forgejo.org/forgejo-helm/forgejo-helm/issues/1343
-    #  no ssh signing at the moment
-    #  - name: forgejo-ssh-signing
-    #    secret:
-    #      secretName: forgejo-ssh-signing
-
-    #extraVolumeMounts:
-    #  - name: forgejo-ssh-signing
-    #    mountPath: /ssh-key/id_ed25519_forgejo.pub
-    #    subPath: id_ed25519_forgejo.pub
-    #    readOnly: true
-    #  - name: forgejo-ssh-signing
-    #    mountPath: /ssh-key/id_ed25519_forgejo
-    #    subPath: id_ed25519_forgejo
-    #    readOnly: true
+    signing:
+      enabled: true
+      ssh:
+        existingSecret: 'forgejo-ssh-signing-secret'
 
     gitea:
       admin:
