@@ -83,7 +83,7 @@ spec:
           LEVEL: 'info'
           LOGGER_ACCESS_MODE: file
         log.file:
-          LEVEL: Debug
+          LEVEL: Info
         mailer:
           ENABLED: false
           #FROM: no-reply@${MAIL_DOMAIN}
