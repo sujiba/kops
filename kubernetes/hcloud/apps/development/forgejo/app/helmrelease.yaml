@@ -133,6 +133,7 @@ spec:
           MINIMUM_KEY_SIZE_CHECK: true
         session:
           PROVIDER: db
+        signing: {}
       livenessProbe:
         tcpSocket: ~
         httpGet:
