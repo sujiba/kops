@@ -96,7 +96,6 @@ spec:
           LIMIT_SIZE_CONTAINER: '2 GiB'
         queue:
           TYPE: level
-        signing: {}
         repository:
           ROOT: /data/git/repositories
           ENABLE_PUSH_CREATE_USER: true
