@@ -35,7 +35,7 @@ spec:
               PAPERLESS_OCR_LANGUAGES: deu
               PAPERLESS_OCR_LANGUAGE: deu
               # Configure redis integration
-              PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
+              PAPERLESS_REDIS: redis://paperless-valkey.selfhosted.svc.cluster.local:6379
             envFrom:
               - secretRef:
                   name: paperless-secret
@@ -56,9 +56,9 @@ spec:
               limits:
                 memory: 6Gi
 
-      redis:
+      valkey:
         containers:
-          redis:
+          valkey:
             image:
               repository: ghcr.io/valkey-io/valkey
               tag: 9.0.3
@@ -77,8 +77,8 @@ spec:
         ports:
           http:
             port: &port 8000
-      redis:
-        controller: redis
+      valkey:
+        controller: valkey
         ports:
           http:
             port: 6379
