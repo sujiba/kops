@@ -33,7 +33,6 @@ spec:
               HOME: /tmp
               TS_STATE_DIR: /tmp
               NO_AUTOUPDATE: true
-              TS_ACCEPT_DNS: false
               TS_HOSTNAME: cologne-exit
               TS_KUBE_SECRET: tailscale-state
               TS_ENABLE_HEALTH_CHECK: true
