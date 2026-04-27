@@ -30,6 +30,8 @@ spec:
               tag: v1.96.5
             env:
               TZ: ${TZ}
+              HOME: /tmp
+              TS_STATE_DIR: /tmp
               NO_AUTOUPDATE: true
               TS_ACCEPT_DNS: false
               TS_HOSTNAME: cologne-exit
@@ -72,11 +74,9 @@ spec:
 
     defaultPodOptions:
       securityContext:
+        runAsNonRoot: true
         runAsUser: 568
         runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        runAsNonRoot: true
 
     service:
       app:
