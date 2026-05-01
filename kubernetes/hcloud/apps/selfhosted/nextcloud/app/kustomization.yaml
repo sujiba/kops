@@ -6,6 +6,5 @@ namespace: selfhosted
 resources:
   - ./database.yaml
   - ./helmrelease.yaml
-  - ./ocirepository.yaml
   - ./pvc.yaml
   - ./secrets.sops.yaml
