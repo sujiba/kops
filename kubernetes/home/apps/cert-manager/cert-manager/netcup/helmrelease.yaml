@@ -5,14 +5,9 @@ metadata:
   name: cert-manager-webhook-netcup
 spec:
   interval: 1h
-  chart:
-    spec:
-      chart: cert-manager-webhook-netcup
-      version: 1.0.44
-      sourceRef:
-        kind: HelmRepository
-        name: cert-manager-webhook-netcup
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: cert-manager-webhook-netcup
   values:
     groupName: com.netcup.webhook
     certManager:
