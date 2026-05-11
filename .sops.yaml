@@ -1,16 +1,14 @@
 ---
 creation_rules:
-  - path_regex: bootstrap/.*/2_talos/.*\.sops\.ya?ml
-    key_groups:
-      - age:
-          - age1yqc8cmp2x5w4n7w4y7375wt7j6cudm0czan6x3yt2l442hmufqzsrf20ud
-  - path_regex: bootstrap/.*/3_flux/.*\.sops\.ya?ml
+  - path_regex: docker/.*\.sops\.ya?ml
     encrypted_regex: "^(data|stringData)$"
     key_groups:
       - age:
-          - age1yqc8cmp2x5w4n7w4y7375wt7j6cudm0czan6x3yt2l442hmufqzsrf20ud
+          - age1yqc8cmp2x5w4n7w4y7375wt7j6cudm0czan6x3yt2l442hmufqzsrf20ud # user
+          - age17tzquveqxe7mnzqky0xxypy6x3shd32vcnnj9j5va4uxqfthcyus3lgj7x # doco-cd
   - path_regex: kubernetes/.*\.sops\.ya?ml
     encrypted_regex: "^(data|stringData)$"
     key_groups:
       - age:
-          - age1yqc8cmp2x5w4n7w4y7375wt7j6cudm0czan6x3yt2l442hmufqzsrf20ud
+          - age1yqc8cmp2x5w4n7w4y7375wt7j6cudm0czan6x3yt2l442hmufqzsrf20ud # user
+          - age17jqh2nuea640s7st6qvyvtazjyahptcgf0ktyxxlxsn7xmephszq69yhxj # fluxcd
