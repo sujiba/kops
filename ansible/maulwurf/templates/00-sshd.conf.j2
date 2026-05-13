@@ -1,0 +1,17 @@
+#jinja2: lstrip_blocks: True
+# {{ ansible_managed }}
+
+ChallengeResponseAuthentication no
+UsePAM yes
+PasswordAuthentication no
+PermitRootLogin no
+
+MaxAuthTries 3
+LoginGraceTime 20
+StrictModes yes
+AllowTcpForwarding no
+AllowStreamLocalForwarding no
+X11Forwarding no
+
+# Allow specific users only
+AllowUsers {{ ansible_user }}

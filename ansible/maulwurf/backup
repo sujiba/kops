@@ -1,0 +1,123 @@
+
+    - name: crowdsec
+      tags:
+        - crowdsec
+      block:
+        - name: crowdsec | Wait for LAPI on loopback
+          ansible.builtin.wait_for:
+            host: 127.0.0.1
+            port: 8088
+            timeout: 180
+
+        - name: crowdsec | Register firewall bouncer (idempotent)
+          ansible.builtin.shell: |
+            set -e
+            if docker exec crowdsec cscli bouncers list -o json | jq -e '.[] | select(.name=="firewall")' >/dev/null; then
+              echo "ALREADY_REGISTERED"
+            else
+              docker exec crowdsec cscli bouncers add firewall --key "{{ crowdsec_api_key }}"
+            fi
+          register: bouncer_reg
+          changed_when: "'ALREADY_REGISTERED' not in bouncer_reg.stdout"
+
+        - name: crowdsec | Register CAPI (community blocklist)
+          ansible.builtin.shell: |
+            docker exec crowdsec cscli capi status >/dev/null 2>&1 \
+              || docker exec crowdsec cscli capi register
+          register: capi_reg
+          changed_when: "'Successfully' in capi_reg.stdout"
+
+        - name: crowdsec | Ensure /etc/apt/keyrings exists
+          ansible.builtin.file:
+            path: /etc/apt/keyrings
+            state: directory
+            mode: "0755"
+
+        - name: crowdsec | Download apt signing key
+          ansible.builtin.get_url:
+            url: https://packagecloud.io/crowdsec/crowdsec/gpgkey
+            dest: /etc/apt/keyrings/crowdsec.asc
+            mode: "0644"
+
+        - name: crowdsec | Add apt repository
+          ansible.builtin.apt_repository:
+            repo: "deb [signed-by=/etc/apt/keyrings/crowdsec.asc] https://packagecloud.io/crowdsec/crowdsec/any any main"
+            filename: crowdsec
+            state: present
+            update_cache: true
+
+        - name: crowdsec | Install host firewall bouncer
+          ansible.builtin.apt:
+            name: crowdsec-firewall-bouncer-iptables
+            state: present
+
+        - name: crowdsec | Render bouncer config
+          ansible.builtin.template:
+            src: crowdsec-firewall-bouncer.yaml.j2
+            dest: /etc/crowdsec/bouncers/crowdsec-firewall-bouncer.yaml
+            owner: root
+            group: root
+            mode: "0600"
+          notify: Restart crowdsec-firewall-bouncer
+
+        - name: crowdsec | Enable + start bouncer
+          ansible.builtin.systemd:
+            name: crowdsec-firewall-bouncer
+            enabled: true
+            state: started
+
+        - name: crowdsec | Verify bouncer is active
+          ansible.builtin.command: systemctl is-active crowdsec-firewall-bouncer
+          changed_when: false
+
+    - name: geo-block
+      tags:
+        - geo-block
+      vars:
+        blocked_countries:
+          - RU
+          - IL
+          - IR
+          - CN
+          - KP
+          - BY
+          - CU
+      block:
+        - name: geo-block | Create directory
+          ansible.builtin.file:
+            path: /opt/geo-block
+            state: directory
+            owner: root
+            group: root
+            mode: "0755"
+
+        - name: geo-block | Render update script
+          ansible.builtin.template:
+            src: update-country-blocks.sh.j2
+            dest: /opt/geo-block/update-country-blocks.sh
+            owner: root
+            group: root
+            mode: "0755"
+
+        - name: geo-block | Run initial block update
+          ansible.builtin.shell:
+            cmd: /opt/geo-block/update-country-blocks.sh "{{ blocked_countries | join(' ') }}"
+            creates: /opt/geo-block/zones
+
+        - name: geo-block | Create weekly cron job
+          ansible.builtin.cron:
+            name: "GeoIP country block weekly refresh"
+            minute: "0"
+            hour: "3"
+            day: "*"
+            month: "*"
+            weekday: "0"
+            job: "/opt/geo-block/update-country-blocks.sh {{ blocked_countries | join(' ') }} >> /var/log/geo-block.log 2>&1"
+            state: present
+
+        - name: geo-block | Create reboot cron job
+          ansible.builtin.cron:
+            name: "GeoIP country block restore on reboot"
+            special_time: reboot
+            job: "/opt/geo-block/update-country-blocks.sh {{ blocked_countries | join(' ') }} >> /var/log/geo-block.log 2>&1"
+            state: present
