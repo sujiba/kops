@@ -10,11 +10,11 @@
 
   vars_prompt:
     - name: age_secret_key
-      prompt: age private key (AGE-SECRET-KEY-1... line only)
+      prompt: age private key (AGE-SECRET-KEY-1... line only), empty = keep existing
       private: true
       confirm: false
     - name: crowdsec_api_key
-      prompt: CrowdSec bouncer API key
+      prompt: CrowdSec bouncer API key, empty = keep existing
       private: true
       confirm: false
     - name: doco_api_secret
