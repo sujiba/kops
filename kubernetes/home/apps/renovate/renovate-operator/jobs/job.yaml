@@ -1,0 +1,30 @@
+---
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: forgejo
+  namespace: renovate
+spec:
+  discoveryFilters:
+    - homelab/*
+  extraEnv:
+    - name: LOG_LEVEL
+      value: debug
+    - name: RENOVATE_ALLOWED_COMMANDS
+      value: |-
+        ["pnpm run bundle"]
+  image: ghcr.io/renovatebot/renovate:43.181.0@sha256:db781a0898340ca65159a865df1448c471bf093a5fb206fd369a901beb46f8db
+  parallelism: 5
+  provider:
+    name: forgejo
+    endpoint: https://code.${EXTERNAL_DOMAIN}/api/v1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  schedule: 0 * * * *
+  secretRef: renovate-secret
+  webhook:
+    enabled: true
+    authentication:
+      enabled: false
