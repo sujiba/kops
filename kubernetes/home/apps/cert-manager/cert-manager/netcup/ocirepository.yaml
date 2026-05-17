@@ -8,6 +8,6 @@ spec:
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
-  url: oci://ghcr.io/aellwein/cert-manager-webhook-netcup/cert-manager-webhook-netcup
   ref:
     tag: 1.0.48
+  url: oci://ghcr.io/aellwein/cert-manager-webhook-netcup/cert-manager-webhook-netcup
