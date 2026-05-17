@@ -7,7 +7,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: dragonfly-operator
-  interval: 1m
+  interval: 1h
   path: ./kubernetes/hcloud/apps/databases/dragonfly-operator/app
   postBuild:
     substituteFrom:
