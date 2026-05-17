@@ -18,11 +18,11 @@
       private: true
       confirm: false
     - name: doco_api_secret
-      prompt: doco-cd API secret
+      prompt: doco-cd API secret (openssl rand -base64 40), empty = keep existing
       private: true
       confirm: false
     - name: doco_webhook_secret
-      prompt: doco-cd webhook secret
+      prompt: doco-cd webhook secret (openssl rand -base64 40), empty = keep existing
       private: true
       confirm: false
 
@@ -416,7 +416,6 @@
             special_time: reboot
             job: "/opt/geo-block/update-country-blocks.sh {{ blocked_countries | join(' ') }} >> /var/log/geo-block.log 2>&1"
             state: present
-
 
   handlers:
     - name: Reload systemd daemon
