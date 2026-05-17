@@ -7,6 +7,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: forgejo
+  components:
+    - ../../../../components/dragonfly
   interval: 1h
   path: ./kubernetes/hcloud/apps/development/forgejo/app
   postBuild:

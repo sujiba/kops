@@ -16,6 +16,7 @@ spec:
       registry: code.forgejo.org
       repository: forgejo/forgejo
       rootless: true
+      tag: 15.0.2-rootless
 
     httpRoute:
       enabled: true
@@ -66,7 +67,9 @@ spec:
           SEND_NOTIFICATION_EMAIL_ON_NEW_USER: true
         APP_NAME: 'Git Invaders'
         cache:
-          ADAPTER: memory
+          ENABLED: true
+          ADAPTER: redis
+          HOST: redis://forgejo-dragonfly:6379?pool_size=100&idle_timeout=180s
         cron:
           ENABLED: true
         cron.archive_cleanup:
@@ -76,6 +79,9 @@ spec:
           PATH: /data/gitea.db
           DB_TYPE: sqlite3
           SQLITE_JOURNAL_MODE: wal
+        indexer:
+          ISSUE_INDEXER_TYPE: bleve
+          REPO_INDEXER_ENABLED: true
         lfs:
           PATH: /data/git/lfs
         log:
@@ -86,16 +92,13 @@ spec:
           LEVEL: Info
         mailer:
           ENABLED: false
-          #FROM: no-reply@${MAIL_DOMAIN}
-          #PROTOCOL: smtp
-          #SMTP_ADDR: smtp-relay.network.svc.cluster.local
-          #SMTP_PORT: 2525
         oauth2_client:
           UPDATE_AVATAR: true
         packages:
           LIMIT_SIZE_CONTAINER: '2 GiB'
         queue:
-          TYPE: level
+          TYPE: redis
+          CONN_STR: redis://forgejo-dragonfly:6379?pool_size=100&idle_timeout=180s
         repository:
           ROOT: /data/git/repositories
           ENABLE_PUSH_CREATE_USER: true
@@ -116,13 +119,18 @@ spec:
           REVERSE_PROXY_TRUSTED_PROXIES: 127.0.0.0/8,::1/128,10.42.0.0/16,fd01::/48
           INSTALL_LOCK: true
         service:
+          ALLOW_ONLY_EXTERNAL_REGISTRATION: true
           DISABLE_REGISTRATION: true
+          ENABLE_INTERNAL_SIGNIN: false
+          ENABLE_PASSWORD_SIGNIN_FORM: false
           SHOW_REGISTRATION_BUTTON: false
           DEFAULT_KEEP_EMAIL_PRIVATE: true
-          ENABLE_NOTIFY_MAIL: false
-          ALLOW_ONLY_EXTERNAL_REGISTRATION: false
-          #DEFAULT_ALLOW_CREATE_ORGANIZATION: false
           MAX_CREATION_LIMIT: 100
+        service.explore:
+          DISABLE_CODE_PAGE: false
+          DISABLE_ORGANIZATIONS_PAGE: true
+          DISABLE_USERS_PAGE: true
+          REQUIRE_SIGNIN_VIEW: false
         server:
           ROOT_URL: https://code.offene.cloud
           DOMAIN: code.offene.cloud
@@ -132,7 +140,9 @@ spec:
           LANDING_PAGE: login
           MINIMUM_KEY_SIZE_CHECK: true
         session:
-          PROVIDER: db
+          PROVIDER: redis
+          PROVIDER_CONFIG: redis://forgejo-dragonfly:6379?pool_size=100&idle_timeout=180s
+          SESSION_LIFE_TIME: "1209600"
       livenessProbe:
         tcpSocket: ~
         httpGet:
