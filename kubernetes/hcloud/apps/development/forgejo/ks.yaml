@@ -12,6 +12,9 @@ spec:
   interval: 1h
   path: ./kubernetes/hcloud/apps/development/forgejo/app
   postBuild:
+    substitute:
+      APP: nextcloud
+      DRAGONFLY_REPLICAS: "1"
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
