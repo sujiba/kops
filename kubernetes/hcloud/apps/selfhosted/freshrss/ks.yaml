@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: freshrss
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: freshrss
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/freshrss/app
   postBuild:

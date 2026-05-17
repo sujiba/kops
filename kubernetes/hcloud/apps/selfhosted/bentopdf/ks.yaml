@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: bentopdf
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: bentopdf
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/bentopdf/app
   postBuild:

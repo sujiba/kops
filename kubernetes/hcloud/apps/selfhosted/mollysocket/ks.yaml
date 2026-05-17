@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: mollysocket
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: mollysocket
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/mollysocket/app
   postBuild:

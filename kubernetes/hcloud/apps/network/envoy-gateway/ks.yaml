@@ -4,8 +4,10 @@ kind: Kustomization
 metadata:
   name: envoy-gateway
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: envoy-gateway
   interval: 1h
-  timeout: 5m
   path: ./kubernetes/hcloud/apps/network/envoy-gateway/app
   postBuild:
     substituteFrom:
@@ -17,4 +19,5 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: network
+  timeout: 5m
   wait: false

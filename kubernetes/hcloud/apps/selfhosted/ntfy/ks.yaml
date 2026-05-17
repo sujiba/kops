@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: ntfy
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: ntfy
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/ntfy/app
   postBuild:

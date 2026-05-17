@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: zola-blog
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: zola-blog
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/zola-blog/app
   postBuild:

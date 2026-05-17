@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: pihole
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: pihole
   interval: 1h
   path: ./kubernetes/hcloud/apps/network/pihole/app
   postBuild:

@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: matrix
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: matrix
   interval: 1h
   timeout: 5m
   path: ./kubernetes/hcloud/apps/selfhosted/matrix/app

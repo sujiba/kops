@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: it-tools
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: it-tools
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/it-tools/app
   postBuild:

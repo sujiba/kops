@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: tailscale
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: tailscale
   interval: 1h
   path: ./kubernetes/hcloud/apps/network/tailscale/app
   postBuild:

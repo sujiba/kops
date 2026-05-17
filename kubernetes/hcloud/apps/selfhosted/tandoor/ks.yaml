@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: tandoor
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: tandoor
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/tandoor/app
   postBuild:

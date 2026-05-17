@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: pocket-id
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: pocket-id
   interval: 1h
   path: ./kubernetes/hcloud/apps/security/pocket-id/app
   postBuild:

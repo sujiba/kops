@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: headscale
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: headscale
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/headscale/app
   postBuild:
@@ -24,6 +27,9 @@ kind: Kustomization
 metadata:
   name: headplane
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: headscale
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/headscale/ui
   postBuild:
