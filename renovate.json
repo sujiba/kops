@@ -8,38 +8,19 @@
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
   "flux": {
-    "managerFilePatterns": [
-      "/^bootstrap/.+\\.ya?ml$/",
-      "/^kubernetes/.+\\.ya?ml$/"
-    ]
+    "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"]
   },
   "helm-values": {
-    "managerFilePatterns": [
-      "/^bootstrap/.+\\.ya?ml$/",
-      "/^kubernetes/.+\\.ya?ml$/"
-    ]
+    "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"]
   },
   "kubernetes": {
-    "managerFilePatterns": [
-      "/^bootstrap/.+\\.ya?ml$/",
-      "/^kubernetes/.+\\.ya?ml$/"
-    ]
+    "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"]
   },
   "packageRules": [
     {
       "description": "add cluster name to commit message",
-      "matchFileNames": ["bootstrap/hcloud/**"],
-      "addLabels": ["cluster/hcloud"]
-    },
-    {
-      "description": "add cluster name to commit message",
       "matchFileNames": ["kubernetes/hcloud/**"],
       "addLabels": ["cluster/hcloud"]
-    },
-    {
-      "description": "add cluster name to commit message",
-      "matchFileNames": ["bootstrap/home/**"],
-      "addLabels": ["cluster/home"]
     },
     {
       "description": "add cluster name to commit message",
