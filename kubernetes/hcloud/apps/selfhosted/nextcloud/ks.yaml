@@ -8,7 +8,7 @@ spec:
     labels:
       app.kubernetes.io/name: nextcloud
   components:
-    - ../../../components/dragonfly
+    - .././../../components/dragonfly
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/app
   postBuild:
