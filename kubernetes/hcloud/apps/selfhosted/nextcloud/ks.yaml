@@ -4,9 +4,17 @@ kind: Kustomization
 metadata:
   name: nextcloud
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: nextcloud
+  components:
+    - ../../../components/dragonfly
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/app
   postBuild:
+    substitute:
+      APP: nextcloud
+      DRAGONFLY_REPLICAS: "1"
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
