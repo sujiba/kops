@@ -9,7 +9,9 @@ secrets:
 
 services:
   app:
+    image: ghcr.io/kimdre/doco-cd:0.88.0
     container_name: doco-cd
+    restart: unless-stopped
     environment:
       API_SECRET_FILE: /run/secrets/api_secret
       WEBHOOK_SECRET_FILE: /run/secrets/webhook_secret
@@ -22,21 +24,19 @@ services:
           reference: main
           interval: 3600
       TZ: Europe/Berlin
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - data:/data
+    secrets:
+      - age_key
+      - api_secret
+      - webhook_secret
     healthcheck:
       test: [CMD, /doco-cd, healthcheck]
       start_period: 15s
       interval: 30s
       timeout: 5s
       retries: 3
-    image: ghcr.io/kimdre/doco-cd:0.88.0
-    restart: unless-stopped
-    secrets:
-      - age_key
-      - api_secret
-      - webhook_secret
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - data:/data
 
 volumes:
   data: {}
