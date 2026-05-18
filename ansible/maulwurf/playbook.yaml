@@ -268,7 +268,7 @@
           no_log: true
           when: age_keyfile | length > 0 and doco_api_secret | length > 0 and doco_webhook_secret | length > 0
           loop:
-            - name: age.key
+            - name: age_key
               content: "{{ age_keyfile }}"
             - name: api_secret
               content: "{{ doco_api_secret }}"
