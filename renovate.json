@@ -8,13 +8,13 @@
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
   "flux": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"]
+    "managerFilePatterns": ["/^kubernetes/.+\\.yaml$/"]
   },
   "helm-values": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"]
+    "managerFilePatterns": ["/^kubernetes/.+\\.yaml$/"]
   },
   "kubernetes": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"]
+    "managerFilePatterns": ["/^kubernetes/.+\\.yaml$/"]
   },
   "packageRules": [
     {
