@@ -7,8 +7,6 @@ services:
     image: git.erwanleboucher.dev/eleboucher/towonel-node:0.0.29
     container_name: towonel-hub
     restart: unless-stopped
-    env_file:
-      - .enc.env
     environment:
       RUST_LOG: info
       TOWONEL_IDENTITY_KEY_PATH: /data/node.key
