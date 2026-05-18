@@ -8,3 +8,5 @@ force_recreate: false
 reconciliation:
   enabled: true
   interval: 3600
+env_files:
+  - global.enc.yaml

@@ -1,0 +1,7 @@
+---
+name: custom/home-allowlist
+description: "Allow home ISP (1&1 Versatel GmbH - AS8881)"
+whitelist:
+  reason: "home ISP (1&1 Versatel GmbH)"
+  expression:
+    - evt.Meta.ASNumber == "8881"
