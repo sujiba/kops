@@ -1,6 +1,6 @@
 ---
 creation_rules:
-  - path_regex: docker/.*\.enc\.ya?ml
+  - path_regex: docker/.*\.enc\.env
     encrypted_regex: ".*"
     key_groups:
       - age:
