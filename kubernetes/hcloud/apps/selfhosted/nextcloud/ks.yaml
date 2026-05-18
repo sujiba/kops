@@ -34,7 +34,7 @@ metadata:
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: nextcloud
+      app.kubernetes.io/name: nextcloud-collabora
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/collabora
   postBuild:
@@ -57,7 +57,7 @@ metadata:
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: nextcloud
+      app.kubernetes.io/name: nextcloud-drawio
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/drawio
   postBuild:

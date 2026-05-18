@@ -29,7 +29,7 @@ metadata:
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: headscale
+      app.kubernetes.io/name: headscale-ui
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/headscale/ui
   postBuild:

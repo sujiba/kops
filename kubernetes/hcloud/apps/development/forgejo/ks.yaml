@@ -34,7 +34,7 @@ metadata:
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: forgejo
+      app.kubernetes.io/name: forgejo-runner
   interval: 1h
   path: ./kubernetes/hcloud/apps/development/forgejo/runner
   postBuild:
