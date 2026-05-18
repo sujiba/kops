@@ -3,10 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: grafana
+  name: grafana-operator
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: grafana-operator
   interval: 1h
-  path: ./kubernetes/home/apps/observability/grafana/app
+  path: ./kubernetes/home/apps/observability/grafana/operator
   postBuild:
     substituteFrom:
       - name: cluster-secrets
@@ -25,8 +28,11 @@ kind: Kustomization
 metadata:
   name: grafana-instance
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: grafana-instance
   dependsOn:
-    - name: grafana
+    - name: grafana-operator
     - name: democratic-csi
       namespace: storage
   interval: 1h
