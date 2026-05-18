@@ -4,13 +4,16 @@ kind: Kustomization
 metadata:
   name: democratic-csi
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: democratic-csi
   interval: 1h
   path: ./kubernetes/home/apps/storage/democratic-csi/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

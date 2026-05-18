@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: media-nfs
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: media-nfs
   interval: 1h
   path: ./kubernetes/home/apps/media/media-nfs/app
   postBuild:

@@ -2,47 +2,47 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app volsync
+  name: volsync
 spec:
-  interval: 1h
-  timeout: 5m
-  wait: false
-  prune: true
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: volsync
   dependsOn:
     - name: snapshot-controller
       namespace: kube-system
+  interval: 1h
   path: ./kubernetes/home/apps/volsync-system/volsync/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: volsync-system
+  timeout: 5m
+  wait: false
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app volsync-maintenance
+  name: volsync-maintenance
 spec:
-  interval: 1h
-  timeout: 5m
-  wait: false
-  prune: true
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: volsync-maintenance
   dependsOn:
     - name: volsync
+  interval: 1h
   path: ./kubernetes/home/apps/volsync-system/volsync/maintenance
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: volsync-system
+  timeout: 5m
+  wait: false

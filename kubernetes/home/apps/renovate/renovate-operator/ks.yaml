@@ -34,7 +34,7 @@ metadata:
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: renovate-operator
+      app.kubernetes.io/name: renovate-operator-jobs
   dependsOn:
     - name: renovate-operator
   interval: 1h

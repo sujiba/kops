@@ -2,10 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app calibre
+  name: calibre
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: calibre
   interval: 1h
-  timeout: 5m
   path: ./kubernetes/home/apps/media/calibre/app
   postBuild:
     substituteFrom:
@@ -14,7 +16,7 @@ spec:
       - name: volsync-kopia-secret
         kind: Secret
     substitute:
-      APP: *app
+      APP: calibre
       VOLSYNC_CLAIM: calibre-data
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_GID: "1000"
@@ -25,4 +27,5 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: media
+  timeout: 5m
   wait: false

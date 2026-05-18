@@ -4,17 +4,20 @@ kind: Kustomization
 metadata:
   name: snapshot-controller
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: snapshot-controller
   interval: 1h
-  timeout: 5m
-  wait: false
-  prune: true
   path: ./kubernetes/home/apps/kube-system/snapshot-controller/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: kube-system
+  timeout: 5m
+  wait: false

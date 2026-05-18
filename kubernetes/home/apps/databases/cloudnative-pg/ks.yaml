@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: cloudnative-pg
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: cloudnative-pg
   interval: 1h
   path: ./kubernetes/home/apps/databases/cloudnative-pg/app
   postBuild:

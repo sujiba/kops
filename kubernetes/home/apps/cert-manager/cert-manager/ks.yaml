@@ -2,24 +2,24 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cert-manager
-  namespace: &namespace cert-manager
+  name: cert-manager
+  namespace: cert-manager
 spec:
-  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: cert-manager
+  interval: 1h
+  path: ./kubernetes/home/apps/cert-manager/cert-manager/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  interval: 1h
-  path: ./kubernetes/home/apps/cert-manager/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: cert-manager
   timeout: 5m
   wait: true
 
@@ -27,25 +27,25 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cert-manager-webhook-netcup
-  namespace: &namespace cert-manager
+  name: cert-manager-webhook-netcup
+  namespace: cert-manager
 spec:
-  targetNamespace: *namespace
-  postBuild:
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: cert-manager-webhook-netcup
   dependsOn:
     - name: cert-manager
   interval: 1h
   path: ./kubernetes/home/apps/cert-manager/cert-manager/netcup
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: cert-manager
   timeout: 5m
   wait: true

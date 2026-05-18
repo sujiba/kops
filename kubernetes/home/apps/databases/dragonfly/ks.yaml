@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: dragonfly
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: dragonfly
   interval: 1h
   path: ./kubernetes/home/apps/databases/dragonfly/app
   postBuild:

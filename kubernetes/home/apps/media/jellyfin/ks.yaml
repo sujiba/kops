@@ -2,8 +2,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app jellyfin
+  name: jellyfin
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: jellyfin
   dependsOn:
     - name: intel-gpu-resource-driver
       namespace: kube-system
@@ -16,7 +19,7 @@ spec:
       - name: volsync-kopia-secret
         kind: Secret
     substitute:
-      APP: *app
+      APP: jellyfin
       VOLSYNC_CLAIM: jellyfin-data
       VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_GID: "2000"

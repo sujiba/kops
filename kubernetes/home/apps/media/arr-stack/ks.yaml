@@ -2,8 +2,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app arr-stack
+  name: arr-stack
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: arr-stack
   interval: 1h
   path: ./kubernetes/home/apps/media/arr-stack/app
   postBuild:
@@ -13,7 +16,7 @@ spec:
       - name: volsync-kopia-secret
         kind: Secret
     substitute:
-      APP: *app
+      APP: arr-stack
       VOLSYNC_CLAIM: arr-stack-config
       VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_GID: "1000"
@@ -33,6 +36,9 @@ kind: Kustomization
 metadata:
   name: configarr
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: arr-stack-configarr
   dependsOn:
     - name: arr-stack
   interval: 1h

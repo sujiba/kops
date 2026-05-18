@@ -30,7 +30,7 @@ metadata:
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: tuppr
+      app.kubernetes.io/name: tuppr-upgrades
   dependsOn:
     - name: tuppr
   interval: 1h

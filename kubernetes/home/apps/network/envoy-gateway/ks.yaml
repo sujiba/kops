@@ -4,6 +4,9 @@ kind: Kustomization
 metadata:
   name: envoy-gateway
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: envoy-gateway
   interval: 1h
   path: ./kubernetes/home/apps/network/envoy-gateway/app
   postBuild:
@@ -24,6 +27,9 @@ kind: Kustomization
 metadata:
   name: reverseproxy
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: envoy-gateway-reverseproxy
   interval: 1h
   path: ./kubernetes/home/apps/network/envoy-gateway/reverseproxy
   postBuild:
