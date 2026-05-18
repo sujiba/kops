@@ -11,7 +11,11 @@ spec:
     - name: democratic-csi
       namespace: storage
   interval: 1h
-  path: "./kubernetes/home/apps/observability/victoria-logs/app"
+  path: ./kubernetes/home/apps/observability/victoria-logs/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository
@@ -33,7 +37,7 @@ spec:
   dependsOn:
     - name: victoria-logs
   interval: 1h
-  path: "./kubernetes/home/apps/observability/victoria-logs/collector"
+  path: ./kubernetes/home/apps/observability/victoria-logs/collector
   prune: true
   sourceRef:
     kind: GitRepository
