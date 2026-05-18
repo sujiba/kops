@@ -237,8 +237,6 @@
         - doco-cd
       vars:
         dococd_config_dir: /opt/doco-cd
-        age_keyfile: |-
-          {{ age_secret_key }}
       block:
         - name: doco-cd | Create directory
           ansible.builtin.file:
@@ -266,10 +264,10 @@
             group: "{{ ansible_user }}"
             mode: "0600"
           no_log: true
-          when: age_keyfile | length > 0 and doco_api_secret | length > 0 and doco_webhook_secret | length > 0
+          when: age_secret_key | length > 0 and doco_api_secret | length > 0 and doco_webhook_secret | length > 0
           loop:
             - name: age_key
-              content: "{{ age_keyfile }}"
+              content: "{{ age_secret_key }}"
             - name: api_secret
               content: "{{ doco_api_secret }}"
             - name: webhook_secret

@@ -1,7 +1,7 @@
 ---
 secrets:
   age_key:
-    file: /opt/doco-cd/age.key
+    file: /opt/doco-cd/age_key
   api_secret:
     file: /opt/doco-cd/api_secret
   webhook_secret:
