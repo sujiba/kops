@@ -95,7 +95,7 @@ spec:
           - path: /var/run/tailscale
 
     serviceAccount:
-      tailscale : {}
+      tailscale: {}
 
     rbac:
       bindings:
