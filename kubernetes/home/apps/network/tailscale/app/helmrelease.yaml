@@ -17,11 +17,17 @@ spec:
         replicas: 1
         strategy: RollingUpdate
 
+        annotations:
+          reloader.stakater.com/auto: "true"
+
         serviceAccount:
           name: tailscale
 
-        annotations:
-          reloader.stakater.com/auto: "true"
+        pod:
+          automountServiceAccountToken: true
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
 
         containers:
           app:
