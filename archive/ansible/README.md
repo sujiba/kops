@@ -18,3 +18,8 @@ users:
 runcmd:
   - reboot
 ```
+
+## Configure host
+```bash
+ansible-playbook maulwurf/playbook.yaml -i "IP_ADDRESS,"
+```
