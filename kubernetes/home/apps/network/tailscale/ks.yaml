@@ -4,7 +4,10 @@ kind: Kustomization
 metadata:
   name: tailscale
 spec:
-  interval: 1m
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: tailscale
+  interval: 1h
   path: ./kubernetes/home/apps/network/tailscale/app
   postBuild:
     substituteFrom:
