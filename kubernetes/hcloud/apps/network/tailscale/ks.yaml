@@ -7,7 +7,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: tailscale
-  interval: 1m
+  interval: 1h
   path: ./kubernetes/hcloud/apps/network/tailscale/app
   postBuild:
     substituteFrom:
