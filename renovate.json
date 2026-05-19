@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>homelab/renovate-config"
+    "local>homelab/renovate-config",
+    "local>homelab/kops//.renovate/talosFactory.json"
   ],
   "baseBranchPatterns": ["main"],
   "assignAutomerge": true,
