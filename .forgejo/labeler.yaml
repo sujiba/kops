@@ -1,0 +1,44 @@
+---
+area/ansible:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ansible/**/*
+area/bootstrap:
+  - changed-files:
+      - any-glob-to-any-file:
+          - kubernetes/bootstrap/hcloud/3_flux/**/*
+          - kubernetes/bootstrap/home/3_flux/**/*
+area/ci:
+  - changed-files:
+      - any-glob-to-any-file: ".forgejo/**/*"
+area/docker:
+  - changed-files:
+      - any-glob-to-any-file:
+          - docker/**/*
+area/hcloud:
+  - changed-files:
+      - any-glob-to-any-file:
+          - kubernetes/hcloud/**/*
+area/home:
+  - changed-files:
+      - any-glob-to-any-file:
+          - kubernetes/home/**/*
+area/kubernetes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - kubernetes/hcloud/**/*
+          - kubernetes/home/**/*
+area/renovate:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .renovate/**/*
+          - renovate.json
+area/talos:
+  - changed-files:
+      - any-glob-to-any-file:
+          - kubernetes/bootstrap/hcloud/2_talos/**/*
+          - kubernetes/bootstrap/home/2_talos/**/*
+area/tofu:
+  - changed-files:
+      - any-glob-to-any-file:
+          - kubernetes/bootstrap/hcloud/1_tofu/**/*
