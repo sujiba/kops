@@ -6,10 +6,24 @@ metadata:
 data:
   config.js: |
     module.exports = {
-      "gitAuthor": "sujiba-bot <bot@home.lan>",
-      "onboardingConfigFileName": "renovate.json",
-      "autodiscover": true,
-      "automerge": true,
-      "automergeType": "pr",
-      "platformAutomerge": true
-    }
+      gitAuthor: "sujiba-bot <bot@home.lan>",
+      autodiscover: true,
+      automerge: true,
+      automergeType: "pr",
+      platformAutomerge: true
+      onboardingConfigFileName: "renovate.json",
+      onboardingConfig: {
+        $schema: "https://docs.renovatebot.com/renovate-schema.json",
+        extends: [
+          "config:recommended",
+          ":dependencyDashboard",
+          ":disableRateLimiting",
+          ":semanticCommits",
+          ":timezone(Europe/Berlin)",
+          "abandonments:recommended",
+          "helpers:pinGitHubActionDigests",
+          "security:openssf-scorecard",
+          "local>homelab/renovate-config",
+        ]
+      }
+    };
