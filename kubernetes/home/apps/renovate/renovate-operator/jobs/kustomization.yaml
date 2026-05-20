@@ -6,5 +6,6 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
+  - ./resources/renovate-config.yaml
   - ./job.yaml
   - ./secret.sops.yaml

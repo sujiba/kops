@@ -13,6 +13,15 @@ spec:
     - name: RENOVATE_ALLOWED_COMMANDS
       value: |-
         ["pnpm run bundle"]
+    - name: RENOVATE_CONFIG_FILE
+      value: /config/config.js
+  extraVolumes:
+    - name: renovate-config
+      configMap:
+        name: renovate-config
+  extraVolumeMounts:
+    - name: renovate-config
+      mountPath: /config
   image: ghcr.io/renovatebot/renovate:43.190.1@sha256:3de1665808ecfc44bb8d63a4b3d759bf18a45c2f692978530a03bffeb7bddbbd
   parallelism: 5
   provider:
