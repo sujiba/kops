@@ -2,7 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>homelab/renovate-config",
-    "local>homelab/kops//.renovate/talosFactory.json"
+    "local>homelab/kops//.renovate/grafanaDashboards.json5",
+    "local>homelab/kops//.renovate/registryAliases.json5",
+    "local>homelab/kops//.renovate/renovateOperator.json5",
+    "local>homelab/kops//.renovate/talosFactory.json5"
   ],
   "baseBranchPatterns": ["main"],
   "assignAutomerge": true,
