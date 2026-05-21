@@ -10,6 +10,7 @@
   "assignAutomerge": true,
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
+  "ignorePaths": ["archive/**"],
   "flux": {
     "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
   },
