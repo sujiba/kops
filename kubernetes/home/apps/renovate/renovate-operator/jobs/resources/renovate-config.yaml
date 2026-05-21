@@ -10,7 +10,7 @@ data:
       autodiscover: true,
       automerge: true,
       automergeType: "pr",
-      platformAutomerge: true
+      platformAutomerge: true,
       onboardingConfigFileName: "renovate.json",
       onboardingConfig: {
         $schema: "https://docs.renovatebot.com/renovate-schema.json",
