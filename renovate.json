@@ -2,34 +2,21 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>homelab/renovate-config",
-    "local>homelab/kops//.renovate/grafanaDashboards.json5",
-    "local>homelab/kops//.renovate/registryAliases.json5",
-    "local>homelab/kops//.renovate/renovateOperator.json5",
-    "local>homelab/kops//.renovate/talosFactory.json5"
+    "local>homelab/kops//.renovate/groups.json5",
+    "local>homelab/kops//.renovate/labels.json5",
+    "local>homelab/kops//.renovate/renovateMerge.json5"
   ],
   "baseBranchPatterns": ["main"],
   "assignAutomerge": true,
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
   "flux": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.yaml$/"]
+    "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
   },
   "helm-values": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.yaml$/"]
+    "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
   },
   "kubernetes": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.yaml$/"]
-  },
-  "packageRules": [
-    {
-      "description": "add cluster name to commit message",
-      "matchFileNames": ["kubernetes/hcloud/**"],
-      "addLabels": ["cluster/hcloud"]
-    },
-    {
-      "description": "add cluster name to commit message",
-      "matchFileNames": ["kubernetes/home/**"],
-      "addLabels": ["cluster/home"]
-    }
-  ]
+    "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
+  }
 }

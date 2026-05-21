@@ -1,0 +1,20 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "add area name to commit message",
+      matchFileNames: ["kubernetes/bootstrap/**"],
+      addLabels: ["area/bootstrap"],
+    },
+    {
+      description: "add area name to commit message",
+      matchFileNames: ["kubernetes/hcloud/**"],
+      addLabels: ["area/hcloud"],
+    },
+    {
+      description: "add area name to commit message",
+      matchFileNames: ["kubernetes/home/**"],
+      addLabels: ["area/home"],
+    },
+  ],
+}
