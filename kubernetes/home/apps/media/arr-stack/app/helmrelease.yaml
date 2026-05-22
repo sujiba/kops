@@ -48,6 +48,11 @@ spec:
               FIREWALL_DEBUG: on
               # Healthcheck options
               HEALTH_SERVER_ADDRESS: ":9999"
+              # Socks5 proxy settings
+              #SOCKS5_ENABLED: off
+              #SOCKS5_LISTENING_ADDRESS: ":1080"
+              #SOCKS5_USER: ""
+              #SOCKS5_PASSWORD: ""
               # Storage options
               STORAGE_FILEPATH: "" # prevent memory spike and avoid I/O
               # Updater options
