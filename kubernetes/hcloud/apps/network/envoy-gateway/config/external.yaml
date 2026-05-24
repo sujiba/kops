@@ -128,3 +128,71 @@ spec:
           - SecRuleRemoveById 921110
           # Restricted file access – .git/ in repo names is not path traversal (global fallback for id:1013)
           - SecRuleRemoveById 930130
+
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: geoip-policy
+  namespace: network
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-external
+  authorization:
+    # Block everything that doesn't match an Allow rule below
+    defaultAction: Deny
+    rules:
+      # Allow private/internal networks (monitoring, health checks, internal services)
+      - name: allow-internal
+        action: Allow
+        principal:
+          clientCIDRs:
+            - 10.0.0.0/8
+            - 172.16.0.0/12
+            - 192.168.0.0/16
+
+      # Allow all EU member states
+      - name: allow-eu
+        action: Allow
+        principal:
+          clientIPGeoLocations:
+            - country: "AT"  # Austria
+            - country: "BE"  # Belgium
+            - country: "BG"  # Bulgaria
+            - country: "CY"  # Cyprus
+            - country: "CZ"  # Czech Republic
+            - country: "DE"  # Germany
+            - country: "DK"  # Denmark
+            - country: "EE"  # Estonia
+            - country: "ES"  # Spain
+            - country: "FI"  # Finland
+            - country: "FR"  # France
+            - country: "GR"  # Greece
+            - country: "HR"  # Croatia
+            - country: "HU"  # Hungary
+            - country: "IE"  # Ireland
+            - country: "IT"  # Italy
+            - country: "LT"  # Lithuania
+            - country: "LU"  # Luxembourg
+            - country: "LV"  # Latvia
+            - country: "MT"  # Malta
+            - country: "NL"  # Netherlands
+            - country: "PL"  # Poland
+            - country: "PT"  # Portugal
+            - country: "RO"  # Romania
+            - country: "SE"  # Sweden
+            - country: "SI"  # Slovenia
+            - country: "SK"  # Slovakia
+
+      # Allow EEA + closely associated countries
+      - name: allow-eea
+        action: Allow
+        principal:
+          clientIPGeoLocations:
+            - country: "CH" # Switzerland
+            - country: "NO" # Norway
+            - country: "IS" # Iceland
+            - country: "LI" # Liechtenstein
+            - country: "GB" # United Kingdom

@@ -8,3 +8,4 @@ resources:
   - ./external.yaml
   - ./grafanadashboard.yaml
   - ./monitoring.yaml
+  - ./secret.sops.yaml
