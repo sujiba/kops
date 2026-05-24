@@ -50,7 +50,7 @@ spec:
                           value: /etc/envoy/geoip
                         # Update every 168h (weekly) – matches MaxMind release cadence
                         - name: GEOIPUPDATE_FREQUENCY
-                          value: "168"
+                          value: "0"
                         - name: GEOIPUPDATE_VERBOSE
                           value: "1"
                       volumeMounts:
