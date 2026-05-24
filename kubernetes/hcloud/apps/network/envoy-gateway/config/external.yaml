@@ -81,7 +81,7 @@ spec:
           # Coraza defaults: phase actions, body limits, audit log
           - Include @coraza.conf-recommended
           # Blocking mode – use "DetectionOnly" for testing
-          - SecRuleEngine On
+          - SecRuleEngine DetectionOnly
           # Skip response body inspection – saves RAM, avoids breaking streaming
           - SecResponseBodyAccess Off
           # Inspect up to 128 MB of request body
