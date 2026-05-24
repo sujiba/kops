@@ -48,7 +48,7 @@ spec:
                           value: GeoLite2-Country GeoLite2-ASN
                         - name: GEOIPUPDATE_DB_DIR
                           value: /etc/envoy/geoip
-                        # Update every 168h (weekly) – matches MaxMind release cadence
+                        # Update every 168h (weekly) - matches MaxMind release cadence
                         - name: GEOIPUPDATE_FREQUENCY
                           value: "168"
                         - name: GEOIPUPDATE_VERBOSE
