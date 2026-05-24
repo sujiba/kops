@@ -152,6 +152,8 @@ spec:
             - 10.0.0.0/8
             - 172.16.0.0/12
             - 192.168.0.0/16
+            - 46.224.13.115/32 # albdev
+            - 91.98.37.31/32 # sujiba
 
       # Allow all EU member states
       - name: allow-eu
