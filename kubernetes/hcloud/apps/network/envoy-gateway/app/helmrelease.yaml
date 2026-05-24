@@ -4,14 +4,12 @@ kind: HelmRelease
 metadata:
   name: envoy-gateway
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: envoy-gateway
+  interval: 1h
 
   values:
-    global:
-      imageRegistry: mirror.gcr.io
     config:
       envoyGateway:
         extensionApis:
@@ -22,3 +20,5 @@ spec:
           kubernetes:
             deploy:
               type: GatewayNamespace
+    global:
+      imageRegistry: mirror.gcr.io

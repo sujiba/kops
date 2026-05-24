@@ -1,0 +1,130 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-external
+spec:
+  gatewayClassName: envoy
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: offene-cloud-tls
+
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: https-redirect
+  annotations:
+    external-dns.alpha.kubernetes.io/controller: none
+spec:
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+      sectionName: http
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301
+
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyPatchPolicy
+metadata:
+  name: headscale-upgrade
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-external
+  type: JSONPatch
+  jsonPatches:
+    - type: type.googleapis.com/envoy.config.listener.v3.Listener
+      name: network/envoy-external/https
+      operation:
+        op: add
+        path: /filter_chains/0/filters/0/typed_config/upgrade_configs/-
+        value:
+          upgrade_type: tailscale-control-protocol
+
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyExtensionPolicy
+metadata:
+  name: coraza-waf
+  namespace: network
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-external
+  dynamicModule:
+    - name: composer
+      filterName: coraza-waf
+      config:
+        directives:
+          # Coraza defaults: phase actions, body limits, audit log
+          - Include @coraza.conf-recommended
+          # Blocking mode – use "DetectionOnly" for testing
+          - SecRuleEngine On
+          # Skip response body inspection – saves RAM, avoids breaking streaming
+          - SecResponseBodyAccess Off
+          # Inspect up to 128 MB of request body
+          - SecRequestBodyLimit 134217728
+          # Keep up to 128 KB in memory, spill larger bodies to disk
+          - SecRequestBodyInMemoryLimit 131072
+          # If body exceeds limit: inspect partially instead of returning 413
+          - SecRequestBodyLimitAction ProcessPartial
+          # 2 = warnings only; set to 0 once stable
+          - SecDebugLogLevel 2
+          # CRS config: anomaly thresholds, allowed methods, etc.
+          - Include @crs-setup.conf
+
+          # Allow WebDAV methods required by Nextcloud sync clients (otherwise CRS rule 911100 blocks them)
+          - "SecAction \"id:900200,phase:1,nolog,pass,t:none,setvar:'tx.allowed_methods=GET HEAD POST PUT DELETE OPTIONS PATCH PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK REPORT'\""
+
+          # Nextcloud: disable body inspection for upload paths (uploads can be several GB)
+          - "SecRule REQUEST_URI \"@beginsWith /remote.php/dav/\" \"id:1000,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
+          - "SecRule REQUEST_URI \"@beginsWith /remote.php/webdav/\" \"id:1001,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
+          - "SecRule REQUEST_URI \"@beginsWith /public.php/dav/\" \"id:1002,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
+          - "SecRule REQUEST_URI \"@beginsWith /index.php/apps/files/\" \"id:1003,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
+
+          # Git: disable body inspection – binary pack data triggers massive false positives
+          - "SecRule REQUEST_URI \"@endsWith /git-receive-pack\" \"id:1010,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
+          - "SecRule REQUEST_URI \"@endsWith /git-upload-pack\" \"id:1011,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
+          # Git LFS: disable body inspection
+          - "SecRule REQUEST_URI \"@rx /info/lfs/\" \"id:1012,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
+
+          # Git: disable LFI rule 930130 for *.git/ paths – repo names are not an attack
+          - "SecRule REQUEST_URI \"@rx /[^/]+\\.git/\" \"id:1013,phase:1,pass,nolog,ctl:ruleRemoveById=930130\""
+
+          # Load all OWASP CRS attack rules (SQLi, XSS, RCE, LFI, ...)
+          - Include @owasp_crs/*.conf
+
+          # Multiple URL encoding – Nextcloud/DAV legitimately double-encodes special chars in paths
+          - SecRuleRemoveById 920230
+          # Missing Accept header – DAV and CLI clients do not send it
+          - SecRuleRemoveById 920300
+          # Disallowed Content-Type – DAV uses application/xml, text/xml, etc.
+          - SecRuleRemoveById 920420
+          # Restricted HTTP header – Git sends Content-Encoding: gzip
+          - SecRuleRemoveById 920450
+          # HTTP Request Smuggling – binary Git pack data triggers this heuristic
+          - SecRuleRemoveById 921110
+          # Restricted file access – .git/ in repo names is not path traversal (global fallback for id:1013)
+          - SecRuleRemoveById 930130

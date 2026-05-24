@@ -21,17 +21,37 @@ spec:
                 spec:
                   hostNetwork: true
                   dnsPolicy: ClusterFirstWithHostNet
+                  volumes:
+                    - name: dynamic-modules
+                      image:
+                        reference: ghcr.io/tetratelabs/built-on-envoy/composer:0.6.0-dev
+                        pullPolicy: IfNotPresent
         container:
           securityContext:
             runAsUser: 0
             allowPrivilegeEscalation: true
           imageRepository: mirror.gcr.io/envoyproxy/envoy
+          env:                                     # NEU
+            - name: GODEBUG
+              value: "cgocheck=0"
+          volumeMounts:                            # NEU
+            - name: dynamic-modules
+              mountPath: /etc/envoy/dynamic-modules
+              readOnly: true
           resources:
             requests:
               cpu: 100m
               memory: 500Mi
             limits:
               memory: 1Gi
+  dynamicModules:
+    - name: composer
+      source:
+        type: Local
+        local:
+          path: /etc/envoy/dynamic-modules/libcomposer.so
+      doNotClose: true
+      loadGlobally: false
   shutdown:
     drainTimeout: 180s
   telemetry:
@@ -52,31 +72,6 @@ spec:
     kind: EnvoyProxy
     name: envoy
     namespace: network
-
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: Gateway
-metadata:
-  name: envoy-external
-spec:
-  gatewayClassName: envoy
-  listeners:
-    - name: http
-      protocol: HTTP
-      port: 80
-      allowedRoutes:
-        namespaces:
-          from: Same
-    - name: https
-      protocol: HTTPS
-      port: 443
-      allowedRoutes:
-        namespaces:
-          from: All
-      tls:
-        certificateRefs:
-          - kind: Secret
-            name: offene-cloud-tls
 
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
@@ -167,41 +162,3 @@ spec:
         - name: X-Robots-tag
           value: "noindex, nofollow"
 
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: https-redirect
-  annotations:
-    external-dns.alpha.kubernetes.io/controller: none
-spec:
-  parentRefs:
-    - name: envoy-external
-      namespace: network
-      sectionName: http
-  rules:
-    - filters:
-        - type: RequestRedirect
-          requestRedirect:
-            scheme: https
-            statusCode: 301
-
----
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: EnvoyPatchPolicy
-metadata:
-  name: headscale-upgrade
-spec:
-  targetRef:
-    group: gateway.networking.k8s.io
-    kind: Gateway
-    name: envoy-external
-  type: JSONPatch
-  jsonPatches:
-    - type: type.googleapis.com/envoy.config.listener.v3.Listener
-      name: network/envoy-external/https
-      operation:
-        op: add
-        path: /filter_chains/0/filters/0/typed_config/upgrade_configs/-
-        value:
-          upgrade_type: tailscale-control-protocol
