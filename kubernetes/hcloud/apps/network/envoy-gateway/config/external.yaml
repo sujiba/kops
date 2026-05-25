@@ -199,3 +199,10 @@ spec:
             - country: "IS" # Iceland
             - country: "LI" # Liechtenstein
             - country: "GB" # United Kingdom
+
+      # Allow america
+      - name: allow-america
+        action: Allow
+        principal:
+          clientIPGeoLocations:
+            - country: "US" # USA
