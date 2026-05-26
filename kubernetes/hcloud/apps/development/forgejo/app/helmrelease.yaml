@@ -161,6 +161,8 @@ spec:
         env:
           - name: 'BIND'
             value: ':8080'
+          - name: 'METRICS_BIND'
+            value: ':9090'
           - name: 'DIFFICULTY'
             value: '2'
           # The hex-encoded ed25519 private key used to sign Anubis responses.
@@ -182,6 +184,8 @@ spec:
         ports:
           - name: anubis
             containerPort: 8080
+          - name: anubis-metrics
+            containerPort: 9090
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
