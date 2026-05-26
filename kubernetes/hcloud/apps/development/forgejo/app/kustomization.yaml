@@ -18,5 +18,6 @@ generatorOptions:
 resources:
   - ./envoyExtensionPolicy.yaml
   - ./helmrelease.yaml
+  - ./monitoring.yaml
   - ./ocirepository.yaml
   - ./secrets.sops.yaml
