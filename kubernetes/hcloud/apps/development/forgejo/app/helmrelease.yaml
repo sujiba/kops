@@ -49,7 +49,7 @@ spec:
       - name: anubis-bot-policy
         configMap:
           name: anubis-bot-policy
-          defaultMode: 0555
+          defaultMode: 0444
 
     signing:
       enabled: true
@@ -173,11 +173,11 @@ spec:
           - name: 'TARGET'
             value: 'http://localhost:3000'
           - name: 'POLICY_FNAME'
-            value: '/etc/anubisBotPolicy.json'
+            value: '/etc/anubisBotPolicy.yaml'
         volumeMounts:
           - name: anubis-bot-policy
-            mountPath: /etc/anubisBotPolicy.json
-            subPath: anubisBotPolicy.json
+            mountPath: /etc/anubisBotPolicy.yaml
+            subPath: anubisBotPolicy.yaml
             readOnly: true
         ports:
           - name: anubis
