@@ -29,7 +29,7 @@ spec:
         - backendRefs:
             - name: forgejo-http
               namespace: development
-              port: anubis
+              port: 8080
 
     service:
       ssh:
