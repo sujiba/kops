@@ -4,15 +4,19 @@ bots:
   - import: (data)/meta/ai-block-aggressive.yaml
   - import: (data)/common/rfc-violations.yaml
 
+  - import: (data)/clients/x-firefox-ai.yaml
   - import: (data)/common/keep-internet-working.yaml
   - import: (data)/common/allow-private-addresses.yaml
-  - import: (data)/clients/x-firefox-ai.yaml
+  - import: (data)/crawlers/_allow-good.yaml
 
+  - import: (data)/clients/docker-client.yaml
   - import: (data)/clients/git.yaml
   - import: (data)/apps/gitea-rss-feeds.yaml
-  - import: (data)/clients/docker-client.yaml
 
-  - import: (data)/crawlers/_allow-good.yaml
+  - name: renovate
+    user_agent_regex: >-
+      RenovateBot|Renovate
+    action: ALLOW
 
   - name: generic-browser
     user_agent_regex: >-
