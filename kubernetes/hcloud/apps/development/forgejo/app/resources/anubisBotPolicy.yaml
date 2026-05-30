@@ -1,44 +1,66 @@
 bots:
-  - name: known-crawler
-    action: CHALLENGE
-    expression:
-      # https://anubis.techaro.lol/docs/admin/configuration/expressions
-      all:
-        # Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36
-        - userAgent.contains("Macintosh; Intel Mac") && userAgent.contains("Chrome/125.0.0.0") # very old chrome?
-        - missingHeader(headers, "Sec-Ch-Ua") # a valid chrome has this header
-    challenge:
-      difficulty: 6
-      algorithm: slow
+  - import: (data)/bots/_deny-pathological.yaml
+  - import: (data)/bots/aggressive-brazilian-scrapers.yaml
+  - import: (data)/meta/ai-block-aggressive.yaml
+  - import: (data)/common/rfc-violations.yaml
 
-    # Assert behaviour that only genuine browsers display.
-    # This ensures that Chrome or Firefox versions
-  - name: realistic-browser-catchall
-    expression:
-      all:
-        - '"User-Agent" in headers'
-        - '( userAgent.contains("Firefox") ) || ( userAgent.contains("Chrome") ) || ( userAgent.contains("Safari") )'
-        - '"Accept" in headers'
-        - '"Sec-Fetch-Dest" in headers'
-        - '"Sec-Fetch-Mode" in headers'
-        - '"Sec-Fetch-Site" in headers'
-        - '"Accept-Encoding" in headers'
-        - '( headers["Accept-Encoding"].contains("zstd") || headers["Accept-Encoding"].contains("br") )'
-        - '"Accept-Language" in headers'
-    action: CHALLENGE
-    challenge:
-      difficulty: 2
-      algorithm: fast
+  - import: (data)/common/keep-internet-working.yaml
+  - import: (data)/common/allow-private-addresses.yaml
+  - import: (data)/clients/x-firefox-ai.yaml
+
+  - import: (data)/clients/git.yaml
+  - import: (data)/apps/gitea-rss-feeds.yaml
+  - import: (data)/clients/docker-client.yaml
+
+  - import: (data)/crawlers/_allow-good.yaml
 
   - name: generic-browser
-    user_agent_regex: (?i:mozilla|opera)
-    action: CHALLENGE
-    challenge:
-      difficulty: 4
-      algorithm: fast
-
-status_codes:
-  CHALLENGE: 202
-  DENY: 406
+    user_agent_regex: >-
+      Mozilla|Opera
+    action: WEIGH
+    weight:
+      adjust: 10
 
 dnsbl: false
+
+status_codes:
+  CHALLENGE: 200
+  DENY: 403
+
+thresholds:
+  - name: minimal-suspicion
+    expression: weight <= 0
+    action: ALLOW
+  - name: mild-suspicion
+    expression:
+      all:
+        - weight > 0
+        - weight < 10
+    action: CHALLENGE
+    challenge:
+      algorithm: metarefresh
+      difficulty: 1
+  - name: moderate-suspicion
+    expression:
+      all:
+        - weight >= 10
+        - weight < 20
+    action: CHALLENGE
+    challenge:
+      algorithm: fast
+      difficulty: 2
+  - name: mild-proof-of-work
+    expression:
+      all:
+        - weight >= 20
+        - weight < 30
+    action: CHALLENGE
+    challenge:
+      algorithm: fast
+      difficulty: 4
+  - name: extreme-suspicion
+    expression: weight >= 30
+    action: CHALLENGE
+    challenge:
+      algorithm: fast
+      difficulty: 6

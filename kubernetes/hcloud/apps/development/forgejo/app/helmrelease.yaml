@@ -153,21 +153,18 @@ spec:
       - name: anubis
         image: ghcr.io/techarohq/anubis:v1.25.0@sha256:5cf4c0d6c7ea01a356c6685a779971bdd28d6a5a4a6719201f73a9c4ae108db0
         imagePullPolicy: Always
-        # https://anubis.techaro.lol/docs/admin/installation
         env:
           - name: 'BIND'
             value: ':8080'
           - name: 'METRICS_BIND'
             value: ':9090'
           - name: 'DIFFICULTY'
-            value: '2'
-          # The hex-encoded ed25519 private key used to sign Anubis responses.
-          # If this is not set, Anubis will generate one for you.
-          #- name: ED25519_PRIVATE_KEY_HEX
-          #  valueFrom:
-          #    secretKeyRef:
-          #      name: anubis-key-forgejo
-          #      key: ED25519_PRIVATE_KEY_HEX
+            value: '4'
+          - name: ED25519_PRIVATE_KEY_HEX
+            valueFrom:
+              secretKeyRef:
+                name: anubis-key-forgejo
+                key: ED25519_PRIVATE_KEY_HEX
           - name: 'TARGET'
             value: 'http://localhost:3000'
           - name: 'POLICY_FNAME'
