@@ -5,9 +5,8 @@ metadata:
   name: tandoor-data-pvc
   namespace: selfhosted
 spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: openebs-hostpath
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 10Gi
+  storageClassName: openebs-hostpath
