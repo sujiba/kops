@@ -8,7 +8,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: kromgo
-  interval: 1m
+  interval: 1h
   values:
     config:
       prometheus: http://prometheus-operated.observability.svc.cluster.local:9090
