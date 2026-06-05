@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/juanfont/headscale
-              tag: main-1f9635c
+              tag: 0.29.0-beta.2
             command: [headscale, serve]
             securityContext:
               allowPrivilegeEscalation: false
