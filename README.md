@@ -10,6 +10,10 @@ _... managed by FluxCD, Renovate, and Forgejo Actions_ 🤖
 
 _hcloud cluster stats:_
 
+[![Talos](https://kromgo.offene.cloud/badges/talos_version)](https://talos.dev)
+[![Kubernetes](https://kromgo.offene.cloud/badges/kubernetes_version)](https://kubernetes.io)
+[![Flux](https://kromgo.offene.cloud/badges/flux_version)](https://fluxcd.io)
+
 [![Talos](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/talos_version&style=for-the-badge&logo=talos&logoColor=white&color=D14459&label=%20)](https://talos.dev)
 [![Kubernetes](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/kubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=416BDD&label=%20)](https://kubernetes.io)
 [![Flux](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/flux_version&style=for-the-badge&logo=flux&logoColor=white&color=416BDD&label=%20)](https://fluxcd.io)
