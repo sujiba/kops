@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -77,26 +76,6 @@ spec:
           query: alertmanager_alerts{state="active"} - 1 # Ignore Watchdog
           colorExpr: 'colorScale(result, [1.0], ["green", "red"])'
 
-        - title: Home Internet
-          id: buddy_ping
-          query: gatus_results_endpoint_success{key="buddy_ping"}
-          valueExpr: 'result == 1.0 ? "up" : "down"'
-          colorExpr: 'result == 1.0 ? "brightgreen" : "red"'
-          icon: si:ubiquiti
-
-        - title: Status Page
-          id: buddy_status_page
-          query: gatus_results_endpoint_success{key="buddy_status-page"}
-          valueExpr: 'result == 1.0 ? "up" : "down"'
-          colorExpr: 'result == 1.0 ? "brightgreen" : "red"'
-          icon: si:statuspage
-
-        - title: Alertmanager
-          id: buddy_heartbeat
-          query: gatus_results_endpoint_success{key="buddy_heartbeat"}
-          valueExpr: 'result == 1.0 ? "up" : "down"'
-          colorExpr: 'result == 1.0 ? "brightgreen" : "red"'
-          icon: si:prometheus
     httpRoute:
       enabled: true
       parentRefs:

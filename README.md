@@ -18,12 +18,12 @@ _hcloud cluster stats:_
 [![Kubernetes](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/kubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=416BDD&label=%20)](https://kubernetes.io)
 [![Flux](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/flux_version&style=for-the-badge&logo=flux&logoColor=white&color=416BDD&label=%20)](https://fluxcd.io)
 
-![Age-Days](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_age_days&style=flat-square&label=Age)
-![Uptime-Days](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_uptime_days&style=flat-square&label=Uptime)
-![Node-Count](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_node_count&style=flat-square&label=Nodes)
-![Pod-Count](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_pod_count&style=flat-square&label=Pods)
-![CPU-Usage](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_cpu_usage&style=flat-square&label=CPU)
-![Memory-Usage](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/cluster_memory_usage&style=flat-square&label=Memory)
+![Age](https://kromgo.offene.cloud/badges/cluster_birth_age)
+![Uptime](https://kromgo.offene.cloud/badges/cluster_uptime_age)
+![Nodes](https://kromgo.offene.cloud/badges/cluster_node_count)
+![Pods](https://kromgo.offene.cloud/badges/cluster_pod_count)
+![CPU](https://kromgo.offene.cloud/badges/cluster_cpu_usage)
+![Memory](https://kromgo.offene.cloud/badges/cluster_memory_usage)
 
 </div>
 
