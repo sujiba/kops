@@ -15,13 +15,9 @@ _hcloud cluster stats:_
 [![Flux](https://kromgo.offene.cloud/badges/flux_version)](https://fluxcd.io)
 
 
-html<a href="https://talos.dev"><img src="https://kromgo.offene.cloud/badges/talos_version" height="25"></a>
-<a href="https://kubernetes.io"><img src="https://kromgo.offene.cloud/badges/kubernetes_version" height="25"></a>
+<a href="https://talos.dev"><img src="https://kromgo.offene.cloud/badges/talos_version" height="22"></a>
+<a href="https://kubernetes.io"><img src="https://kromgo.offene.cloud/badges/kubernetes_version" height="24"></a>
 <a href="https://fluxcd.io"><img src="https://kromgo.offene.cloud/badges/flux_version" height="25"></a>
-
-[![Talos](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/talos_version&style=for-the-badge&logo=talos&logoColor=white&color=D14459&label=%20)](https://talos.dev)
-[![Kubernetes](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/kubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=416BDD&label=%20)](https://kubernetes.io)
-[![Flux](https://img.shields.io/endpoint?url=https://kromgo.offene.cloud/flux_version&style=for-the-badge&logo=flux&logoColor=white&color=416BDD&label=%20)](https://fluxcd.io)
 
 ![Age](https://kromgo.offene.cloud/badges/cluster_birth_age)
 ![Uptime](https://kromgo.offene.cloud/badges/cluster_uptime_age)
