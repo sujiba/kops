@@ -14,11 +14,6 @@ _hcloud cluster stats:_
 [![Kubernetes](https://kromgo.offene.cloud/badges/kubernetes_version)](https://kubernetes.io)
 [![Flux](https://kromgo.offene.cloud/badges/flux_version)](https://fluxcd.io)
 
-
-<a href="https://talos.dev"><img src="https://kromgo.offene.cloud/badges/talos_version" height="25"></a>
-<a href="https://kubernetes.io"><img src="https://kromgo.offene.cloud/badges/kubernetes_version" height="25"></a>
-<a href="https://fluxcd.io"><img src="https://kromgo.offene.cloud/badges/flux_version" height="25"></a>
-
 ![Age](https://kromgo.offene.cloud/badges/cluster_birth_age)
 ![Uptime](https://kromgo.offene.cloud/badges/cluster_uptime_age)
 ![Nodes](https://kromgo.offene.cloud/badges/cluster_node_count)
