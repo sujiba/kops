@@ -1,0 +1,21 @@
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: kopiur-s3
+spec:
+  allowedNamespaces:
+    all: true
+  backend:
+    s3:
+      bucket: s3_bucket_name
+      endpoint: https://s3_enpoint
+      auth:
+        secretRef:
+          name: kopiur-s3
+  encryption:
+    passwordSecretRef:
+      name: kopiur-s3
+      key: KOPIA_PASSWORD
+  create:
+    enabled: true

@@ -1,0 +1,18 @@
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: BackupConfig
+metadata:
+  name: "${APP}"
+spec:
+  repository:
+    kind: ClusterRepository
+    name: kopiur-s3
+  sources:
+    - pvc:
+        name: "${APP}"
+  copyMethod: Snapshot
+  volumeSnapshotClassName: local-hostpath
+  retention:
+    keepDaily: 7
+    keepWeekly: 4
+    keepMonthly: 12
