@@ -16,7 +16,7 @@ spec:
 
     image:
       repository: nextcloud
-      tag: 33.0.5-fpm-alpine
+      tag: 34.0.0-fpm-alpine
       flavor: fpm-alpine
 
     replicaCount: 1
