@@ -41,6 +41,7 @@ spec:
               EMAIL_LOGIN_NOTIFICATION_ENABLED: true
               EMAIL_VERIFICATION_ENABLED: true
               LOG_JSON: true
+              SIGNUP_DEFAULT_USER_GROUP_IDS: ["fb95bc65-d293-4d92-8ba4-cca3a410e761"]
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_HOST: smtp-relay.network.svc.cluster.local
               SMTP_PORT: 2525
