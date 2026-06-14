@@ -21,13 +21,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-
         containers:
           app:
             image:
@@ -45,19 +38,12 @@ spec:
               limits:
                 memory: 256Mi
 
-    service:
-      app:
-        ports:
-          http:
-            port: 8080
-
-    route:
-      app:
-        hostnames: ["headscale.${EXTERNAL_DOMAIN}"]
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-            sectionName: https
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
 
     persistence:
       config:
@@ -79,3 +65,17 @@ spec:
           - path: /var/run/headscale
             subPath: run
             readOnly: false
+
+    route:
+      app:
+        hostnames: ["headscale.${EXTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+
+    service:
+      app:
+        ports:
+          http:
+            port: 8080

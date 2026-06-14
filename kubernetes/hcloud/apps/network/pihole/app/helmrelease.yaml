@@ -44,6 +44,13 @@ spec:
               limits:
                 memory: 512Mi
 
+    persistence:
+      data:
+        existingClaim: pihole-data
+        globalMounts:
+          - path: "/etc/pihole"
+            subPath: "pihole"
+
     service:
       app:
         forceRename: pihole
@@ -60,10 +67,3 @@ spec:
             primary: true
             port: *port
             protocol: HTTP
-
-    persistence:
-      data:
-        existingClaim: pihole-data
-        globalMounts:
-          - path: "/etc/pihole"
-            subPath: "pihole"
