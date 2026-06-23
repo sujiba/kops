@@ -220,4 +220,3 @@ spec:
           value: "UwU"
         - name: X-Robots-tag
           value: "noindex, nofollow"
-
