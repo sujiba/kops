@@ -16,25 +16,28 @@ spec:
           style: flat-square
 
       badges:
-        - title: Talos
+        - # title: Talos
           colorExpr: '"#D14459"'
           icon: si:talos
           id: talos_version
           query: label_replace(node_os_info{name="Talos"}, "version_id", "$1", "version_id", "v(.+)")
+          style: for-the-badge
           valueExpr: labels["version_id"]
 
-        - title: Kubernetes
+        - # title: Kubernetes
           colorExpr: '"#416BDD"'
           icon: si:kubernetes
           id: kubernetes_version
           query: label_replace(kubernetes_build_info{service="kubernetes"}, "git_version", "$1", "git_version", "v(.+)")
+          style: for-the-badge
           valueExpr: labels["git_version"]
 
-        - title: Flux
+        - # title: Flux
           colorExpr: '"#416BDD"'
           icon: si:flux
           id: flux_version
           query: label_replace(flux_instance_info, "revision", "$1", "revision", "v(.+)@sha256:.+")
+          style: for-the-badge
           valueExpr: labels["revision"]
 
         - title: Nodes
