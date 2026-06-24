@@ -6,9 +6,6 @@ configMapGenerator:
   - name: anubis-bot-policy
     files:
       - ./resources/anubisBotPolicy.yaml
-  - name: envoy-external-extensions
-    files:
-      - ./resources/blockUserAgents.lua
 
 generatorOptions:
   disableNameSuffixHash: true
@@ -16,7 +13,6 @@ generatorOptions:
     kustomize.toolkit.fluxcd.io/substitute: disabled
 
 resources:
-  - ./envoyExtensionPolicy.yaml
   - ./helmrelease.yaml
   - ./monitoring.yaml
   - ./ocirepository.yaml

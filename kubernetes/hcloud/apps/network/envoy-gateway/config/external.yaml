@@ -62,56 +62,6 @@ spec:
         value:
           upgrade_type: tailscale-control-protocol
 
-# ---
-# apiVersion: gateway.envoyproxy.io/v1alpha1
-# kind: EnvoyExtensionPolicy
-# metadata:
-#   name: coraza-waf
-#   namespace: network
-# spec:
-#   targetRefs:
-#     - group: gateway.networking.k8s.io
-#       kind: Gateway
-#       name: envoy-external
-#   dynamicModule:
-#     - name: composer
-#       filterName: coraza-waf
-#       config:
-#         directives:
-#           # Coraza defaults: phase actions, body limits, audit log
-#           - Include @coraza.conf-recommended
-#           # Blocking mode - use "DetectionOnly" for testing
-#           - SecRuleEngine DetectionOnly
-#           # Skip response body inspection - saves RAM, avoids breaking streaming
-#           - SecResponseBodyAccess Off
-#           # Inspect up to 128 MB of request body
-#           - SecRequestBodyLimit 134217728
-#           # Keep up to 128 KB in memory, spill larger bodies to disk
-#           - SecRequestBodyInMemoryLimit 131072
-#           # If body exceeds limit: inspect partially instead of returning 413
-#           - SecRequestBodyLimitAction ProcessPartial
-#           # 2 = warnings only; set to 0 once stable
-#           - SecDebugLogLevel 2
-#           # CRS config: anomaly thresholds, allowed methods, etc.
-#           - Include @crs-setup.conf
-#           # Allow WebDAV methods required by Nextcloud sync clients (otherwise CRS rule 911100 blocks them)
-#           - "SecAction \"id:900200,phase:1,nolog,pass,t:none,setvar:'tx.allowed_methods=GET HEAD POST PUT DELETE OPTIONS PATCH PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK REPORT'\""
-#           # Disable WAF rule engine for all RFC 1918 private IP ranges
-#           - "SecRule REMOTE_ADDR \"@ipMatch 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16\" \"id:1,phase:1,pass,nolog,ctl:ruleEngine=Off\""
-#           # Nextcloud: disable body inspection for upload paths (uploads can be several GB)
-#           - "SecRule REQUEST_URI \"@beginsWith /remote.php/dav/\" \"id:1000,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
-#           - "SecRule REQUEST_URI \"@beginsWith /remote.php/webdav/\" \"id:1001,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
-#           - "SecRule REQUEST_URI \"@beginsWith /public.php/dav/\" \"id:1002,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
-#           - "SecRule REQUEST_URI \"@beginsWith /index.php/apps/files/\" \"id:1003,phase:1,pass,nolog,ctl:requestBodyAccess=Off\""
-#           # Load all OWASP CRS attack rules (SQLi, XSS, RCE, LFI, ...)
-#           - Include @owasp_crs/*.conf
-#           # Multiple URL encoding - Nextcloud/DAV legitimately double-encodes special chars in paths
-#           - SecRuleRemoveById 920230
-#           # Missing Accept header - DAV and CLI clients do not send it
-#           - SecRuleRemoveById 920300
-#           # Disallowed Content-Type - DAV uses application/xml, text/xml, etc.
-#           - SecRuleRemoveById 920420
-
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
@@ -184,8 +134,8 @@ spec:
             - country: "GB" # United Kingdom
 
       # Allow america
-      - name: allow-america
-        action: Allow
-        principal:
-          clientIPGeoLocations:
-            - country: "US" # USA
+      #- name: allow-america
+      #  action: Allow
+      #  principal:
+      #    clientIPGeoLocations:
+      #      - country: "US" # USA
