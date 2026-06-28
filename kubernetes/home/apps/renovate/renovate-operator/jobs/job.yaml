@@ -13,7 +13,7 @@ spec:
     - name: RENOVATE_ALLOWED_COMMANDS
       value: |-
         ["pnpm run bundle"]
-  image: ghcr.io/renovatebot/renovate:43.234.0@sha256:14cc37cf5fcb0e8b18da2c35e8ec764d8809003e325c44a77e569d4ba6986898
+  image: ghcr.io/renovatebot/renovate:43.246.1@sha256:37ff630de3b051dee651cdc9e0f32a62f8c437670106105075979062582c3eb5
   parallelism: 5
   provider:
     name: forgejo
