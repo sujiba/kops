@@ -8,7 +8,7 @@ spec:
     labels:
       app.kubernetes.io/name: drm-exporter
   dependsOn:
-    - name: drm-exporter
+    - name: intel-gpu-resource-driver
   interval: 1h
   path: ./kubernetes/home/apps/kube-system/drm-exporter/app
   prune: true
