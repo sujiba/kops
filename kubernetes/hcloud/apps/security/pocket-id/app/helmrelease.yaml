@@ -35,14 +35,13 @@ spec:
             env:
               ALLOW_USER_SIGNUPS: disabled
               ANALYTICS_DISABLED: true
-              APP_URL: https://id.offene.cloud
+              APP_URL: https://id.${EXTERNAL_DOMAIN}
               DB_CONNECTION_STRING: file:/data/pocket-id.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(2500)&_txlock=immediate
               EMAILS_VERIFIED: false
               EMAIL_LOGIN_NOTIFICATION_ENABLED: true
               EMAIL_VERIFICATION_ENABLED: true
-              EMAIL_ONE_TIME_ACCESS_AS_UNAUTHENTICATED_ENABLED: true
+              EMAIL_ONE_TIME_ACCESS_AS_UNAUTHENTICATED_ENABLED: false
               LOG_JSON: true
-              SIGNUP_DEFAULT_USER_GROUP_IDS: "fb95bc65-d293-4d92-8ba4-cca3a410e761"
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_HOST: smtp-relay.network.svc.cluster.local
               SMTP_PORT: 2525
