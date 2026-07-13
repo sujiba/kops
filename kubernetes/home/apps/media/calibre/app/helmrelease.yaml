@@ -26,7 +26,7 @@ spec:
               tag: v4.0.6
             env:
               TZ: ${TZ}
-              CWA_PORT_OVERRIDE: &port 8083
+              CWA_PORT_OVERRIDE: 8083
               #HARDCOVER_TOKEN:
               #  valueFrom:
               #    secretKeyRef:
@@ -44,7 +44,7 @@ spec:
         controller: calibre
         ports:
           http:
-            port: *port
+            port: 8083
 
     route:
       app:
@@ -56,7 +56,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: *port
+                port: 8083
 
     persistence:
       data:
