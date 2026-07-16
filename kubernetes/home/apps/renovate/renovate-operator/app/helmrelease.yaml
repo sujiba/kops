@@ -10,6 +10,19 @@ spec:
   interval: 1h
   values:
     fullnameOverride: renovate-operator
+    auth:
+      defaultAllowedGroups: "admins"
+      oidc:
+        enabled: true
+        issuerUrl: https://id.${EXTERNAL_DOMAIN}/
+        clientId: "d6a40507-922f-48e0-8365-836381fd4c32"   # oder per substituteFrom, wie besprochen
+        existingSecret: renovate-oidc-secret
+        secretKey: client-secret
+        redirectScheme: "https"
+        groupsClaim: "groups"
+        additionalScopes:
+          - "groups"
+        pkceEnabled: true
     route:
       enabled: true
       hostnames:
