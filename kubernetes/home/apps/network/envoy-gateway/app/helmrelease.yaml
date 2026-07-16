@@ -8,6 +8,7 @@ spec:
     kind: OCIRepository
     name: envoy-gateway
   interval: 1h
+
   values:
     global:
       imageRegistry: mirror.gcr.io

@@ -25,11 +25,39 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: reverseproxy
+  name: envoy-gateway-config
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: envoy-gateway-reverseproxy
+      app.kubernetes.io/name: envoy-gateway
+  dependsOn:
+    - name: envoy-gateway
+  interval: 1h
+  path: ./kubernetes/hcloud/apps/network/envoy-gateway/config
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: network
+  timeout: 5m
+  wait: false
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: envoy-gateway-reverseproxy
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: envoy-gateway
+  dependsOn:
+    - name: envoy-gateway
   interval: 1h
   path: ./kubernetes/home/apps/network/envoy-gateway/reverseproxy
   postBuild:
