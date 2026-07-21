@@ -16,7 +16,7 @@ spec:
       registry: code.forgejo.org
       repository: forgejo/forgejo
       rootless: true
-      tag: 16.0.0-rootless
+      tag: 16.0.1-rootless
 
     httpRoute:
       enabled: true
