@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.12.4" # renovate: datasource=github-releases depName=opentofu/opentofu
+  required_version = "1.12.5" # renovate: datasource=github-releases depName=opentofu/opentofu
 
   encryption {
     key_provider "pbkdf2" "home-lab-key" {
