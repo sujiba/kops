@@ -73,6 +73,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/backend/logs
+          - path: /app/frontend/dist
 
     route:
       endurain:
