@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: selfhosted
 
 resources:
+  - ./database.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./pvc.yaml
