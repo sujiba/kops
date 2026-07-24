@@ -1,0 +1,89 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: endurain
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: endurain
+
+  values:
+    controllers:
+      endurain:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          endurain:
+            image:
+              repository: codeberg.org/endurain-project/endurain
+              tag: v0.19.0@sha256:a43273a30588f344f103e978a2e17aae75de31ffdb21dddd8ac8e71d70a08f3c
+            env:
+              TZ: ${TZ}
+              ENDURAIN_HOST: "https://endurain.${EXTERNAL_DOMAIN}"
+              BEHIND_PROXY: true
+              RATE_LIMIT_STORAGE_URI: "redis://endurain-dragonfly:6379/0"
+              AUTH_SECURITY_STORAGE_URI: "redis://endurain-dragonfly:6379/0"
+              DB_HOST: endurain"-postgres-rw
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: endurain-secret
+                    key: DB_PASSWORD
+              FERNET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: endurain-secret
+                    key: FERNET_KEY
+              SECRET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: endurain-secret
+                    key: SECRET_KEY
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 300Mi
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+
+    persistence:
+      data:
+        type: persistentVolumeClaim
+        existingClaim: endurain-pvc
+        globalMounts:
+          - path: /app/backend/data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /app/backend/logs
+
+    route:
+      endurain:
+        hostnames: ["endurain.${EXTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+
+    service:
+      endurain:
+        ports:
+          http:
+            port: 8080

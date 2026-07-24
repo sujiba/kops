@@ -1,0 +1,28 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: endurain-postgres
+  namespace: selfhosted
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.4
+  primaryUpdateStrategy: unsupervised
+  enableSuperuserAccess: true
+  storage:
+    size: 5Gi
+    storageClass: openebs-hostpath
+  postgresql:
+    parameters:
+      max_connections: "100"
+      work_mem: 128MB
+      shared_buffers: 256MB
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: all
+
+  bootstrap:
+    initdb:
+      database: endurain
+      owner: endurain
+      secret:
+        name: endurain-db-secret
