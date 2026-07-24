@@ -29,7 +29,7 @@ spec:
               BEHIND_PROXY: true
               RATE_LIMIT_STORAGE_URI: "redis://endurain-dragonfly:6379/0"
               AUTH_SECURITY_STORAGE_URI: "redis://endurain-dragonfly:6379/0"
-              DB_HOST: endurain"-postgres-rw
+              DB_HOST: endurain-postgres-rw
               DB_PASSWORD:
                 valueFrom:
                   secretKeyRef:
