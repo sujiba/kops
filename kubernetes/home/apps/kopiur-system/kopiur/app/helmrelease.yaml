@@ -4,16 +4,35 @@ kind: HelmRelease
 metadata:
   name: kopiur
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: kopiur
+  interval: 1h
   values:
     installCRDs: true
     installScope: cluster
     metrics:
       serviceMonitor:
         enabled: true
-    webhook:
-      certManager:
+    monitoring:
+      dashboards:
         enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+      prometheusRule:
+        enabled: true
+      serviceMonitor:
+        enabled: true
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 2Gi
