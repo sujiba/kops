@@ -25,5 +25,10 @@
   },
   "kubernetes": {
     "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
+  },
+  "kustomize": {
+    "managerFilePatterns": [
+      "/^kubernetes/.+/kustomization\\.ya?ml(?:\\.j2)?$/"
+    ]
   }
 }
