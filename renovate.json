@@ -14,6 +14,12 @@
   "flux": {
     "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
   },
+  "helmfile": {
+    "managerFilePatterns": [
+      "/(^|/)helmfile\\.ya?ml(?:\\.gotmpl)?(?:\\.j2)?$/",
+      "/^kubernetes/bootstrap/.+\\.ya?ml(?:\\.gotmpl)?(?:\\.j2)?$/"
+    ]
+  },
   "helm-values": {
     "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
   },
