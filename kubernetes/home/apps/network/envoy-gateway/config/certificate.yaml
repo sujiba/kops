@@ -15,5 +15,5 @@ spec:
     - "*.${INTERNAL_DOMAIN}"
   privateKey:
     algorithm: ECDSA
-    size: 384
+    size: 256
     rotationPolicy: Always
