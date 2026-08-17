@@ -18,7 +18,7 @@ releases:
   - name: openebs
     namespace: storage
     chart: openebs/openebs
-    version: 4.4.0
+    version: 4.5.1
     values:
       - templates/values.yaml.gotmpl
 
