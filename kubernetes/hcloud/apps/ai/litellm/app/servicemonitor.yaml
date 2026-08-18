@@ -4,7 +4,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: litellm
-  labels: &labels
+  labels:
     app.kubernetes.io/instance: litellm
     app.kubernetes.io/name: litellm
 spec:
@@ -24,5 +24,5 @@ spec:
       interval: 30s
       scrapeTimeout: 10s
       bearerTokenSecret:
-        name: litellm
+        name: litellm-secrets
         key: LITELLM_MASTER_KEY
