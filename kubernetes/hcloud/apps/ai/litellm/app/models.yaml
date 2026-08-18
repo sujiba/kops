@@ -1,0 +1,45 @@
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: qwen-3-6-35b
+spec:
+  modelName: Qwen/Qwen3.6-35B-A3B-FP8
+  params:
+    model: openai/Qwen/Qwen3.6-35B-A3B-FP8
+    apiBase: https://inference.hetzner.com/api/v1
+    apiKeyRef:
+      name: litellm
+      key: HETZNER_API_KEY
+    dropParams: true
+  info:
+    maxInputTokens: 262144
+    maxOutputTokens: 131072
+    supportsFunctionCalling: true
+    supportsPromptCaching: true
+    supportsVision: true
+    extra:
+      supports_reasoning: true
+
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: qwen-3-8-27b
+spec:
+  modelName: Qwen3.8-27B
+  params:
+    model: openai/Qwen3.8-27B
+    apiBase: https://inference.hetzner.com/api/v1
+    apiKeyRef:
+      name: litellm
+      key: HETZNER_API_KEY
+    dropParams: true
+  info:
+    maxInputTokens: 262144
+    maxOutputTokens: 131072
+    supportsFunctionCalling: true
+    supportsPromptCaching: true
+    supportsVision: true
+    extra:
+      supports_reasoning: true

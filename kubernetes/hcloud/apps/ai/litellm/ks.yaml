@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: litellm
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: litellm
+  components:
+    - ../../../../components/dragonfly
+  dependsOn:
+    - name: litellm-operator
+      namespace: ai
+  interval: 15m
+  path: ./kubernetes/hcloud/apps/ai/litellm/app
+  postBuild:
+    substitute:
+      APP: litellm
+      DRAGONFLY_REPLICAS: "1"
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: ai
+  wait: false
