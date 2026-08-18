@@ -15,10 +15,7 @@
     "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
   },
   "helmfile": {
-    "managerFilePatterns": [
-      "/(^|/)helmfile\\.ya?ml(?:\\.gotmpl)?(?:\\.j2)?$/",
-      "/^kubernetes/bootstrap/.+\\.ya?ml(?:\\.gotmpl)?(?:\\.j2)?$/"
-    ]
+    "managerFilePatterns": ["/^kubernetes/bootstrap/.+\\.ya?ml(?:\\.gotmpl)?(?:\\.j2)?$/"]
   },
   "helm-values": {
     "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
@@ -27,8 +24,6 @@
     "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
   },
   "kustomize": {
-    "managerFilePatterns": [
-      "/^kubernetes/.+/kustomization\\.ya?ml(?:\\.j2)?$/"
-    ]
+    "managerFilePatterns": ["/^kubernetes/.+/kustomization\\.ya?ml(?:\\.j2)?$/"]
   }
 }
