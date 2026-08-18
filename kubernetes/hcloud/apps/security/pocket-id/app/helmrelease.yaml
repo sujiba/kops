@@ -9,6 +9,11 @@ spec:
     kind: OCIRepository
     name: pocket-id
 
+  upgrade:
+    remediation:
+      retries: 0
+      remediateLastFailure: false
+
   values:
     controllers:
       pocket-id:
