@@ -7,7 +7,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: pocket-id
-  interval: 1h
+  interval: 1m
   path: ./kubernetes/hcloud/apps/security/pocket-id/app
   postBuild:
     substituteFrom:
