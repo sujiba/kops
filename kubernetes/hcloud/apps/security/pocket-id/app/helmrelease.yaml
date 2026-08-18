@@ -9,6 +9,8 @@ spec:
     kind: OCIRepository
     name: pocket-id
 
+  # Rollback disabled: Pocket-ID migrations are forward-only,
+  # a downgrade always fails against the newer DB schema.
   upgrade:
     remediation:
       retries: 0
