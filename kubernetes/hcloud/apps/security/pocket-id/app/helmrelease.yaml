@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: pocket-id
 spec:
-  interval: 1h
+  interval: 1m
   chartRef:
     kind: OCIRepository
     name: pocket-id
@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/pocket-id/pocket-id
-              tag: v2.14.0-distroless
+              tag: v2.13.0-distroless
             env:
               ALLOW_USER_SIGNUPS: disabled
               ANALYTICS_DISABLED: true
