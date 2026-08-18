@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: litellm
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: litellm
   components:
     - ../../../../components/dragonfly
   dependsOn:
