@@ -32,7 +32,7 @@ spec:
     model: openai/Qwen3.8-27B
     apiBase: https://inference.hetzner.com/api/v1
     apiKeyRef:
-      name: litellm
+      name: litellm-secrets
       key: HETZNER_API_KEY
     dropParams: true
   info:
