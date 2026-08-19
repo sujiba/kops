@@ -55,7 +55,7 @@ spec:
                       resources:
                         requests:
                           cpu: 50m
-                          memory: 64Mi
+                          memory: 32Mi
                         limits:
                           memory: 128Mi
                       restartPolicy: Always
@@ -80,7 +80,7 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 500Mi
+              memory: 256Mi
             limits:
               memory: 1Gi
   geoIP:
