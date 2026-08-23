@@ -4,26 +4,12 @@
     "local>homelab/renovate-config",
     "local>homelab/kops//.renovate/groups.json5",
     "local>homelab/kops//.renovate/labels.json5",
+    "local>homelab/kops//.renovate/manager.json5",
     "local>homelab/kops//.renovate/renovateMerge.json5"
   ],
   "baseBranchPatterns": ["main"],
   "assignAutomerge": true,
   "assignees": ["@sujiba-bot"],
   "reviewers": ["@sujiba"],
-  "ignorePaths": ["archive/**"],
-  "flux": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
-  },
-  "helmfile": {
-    "managerFilePatterns": ["/^kubernetes/bootstrap/.+\\.ya?ml(?:\\.gotmpl)?(?:\\.j2)?$/"]
-  },
-  "helm-values": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
-  },
-  "kubernetes": {
-    "managerFilePatterns": ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"]
-  },
-  "kustomize": {
-    "managerFilePatterns": ["/^kubernetes/.+/kustomization\\.ya?ml(?:\\.j2)?$/"]
-  }
+  "ignorePaths": ["archive/**"]
 }

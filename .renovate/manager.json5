@@ -1,0 +1,19 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  description: "File patterns for enabled managers",
+  flux: {
+    managerFilePatterns: ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"],
+  },
+  helmfile: {
+    managerFilePatterns: ["/^kubernetes/bootstrap/.+\\.ya?ml(?:\\.gotmpl)?(?:\\.j2)?$/"],
+  },
+  "helm-values": {
+    managerFilePatterns: ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"],
+  },
+  kubernetes: {
+    managerFilePatterns: ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"],
+  },
+  kustomize: {
+    managerFilePatterns: ["/^kubernetes/.+/kustomization\\.ya?ml(?:\\.j2)?$/"],
+  },
+}
