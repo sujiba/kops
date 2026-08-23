@@ -5,7 +5,6 @@ metadata:
   name: grafana
   labels:
     dashboards: grafana
-
 spec:
   config:
     analytics:
@@ -29,8 +28,6 @@ spec:
       angular_support_enabled: "true"
     server:
       enable_gzip: "true"
-      root_url: https://grafana.${INTERNAL_DOMAIN}
-
   deployment:
     spec:
       strategy:
@@ -65,12 +62,20 @@ spec:
               persistentVolumeClaim:
                 claimName: grafana-pvc
 
+  httpRoute:
+    spec:
+      hostnames:
+        - grafana.offene.cloud
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+
   persistentVolumeClaim:
     spec:
       accessModes:
         - ReadWriteOnce
       resources:
         requests:
-          storage: 10Gi
-      storageClassName: local-hostpath
+          storage: 5Gi
+      storageClassName: openebs-hostpath
   disableDefaultSecurityContext: All
