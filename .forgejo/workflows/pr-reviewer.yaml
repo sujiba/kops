@@ -1,5 +1,5 @@
 ---
-name: AI Review – PR #${{ forgejo.event.pull_request.number }}
+name: AI Review - PR #${{ forgejo.event.pull_request.number }}
 
 on:
   pull_request:
