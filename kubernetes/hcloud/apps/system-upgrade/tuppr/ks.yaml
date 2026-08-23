@@ -41,5 +41,4 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: system-upgrade
-  timeout: 5m
   wait: false
