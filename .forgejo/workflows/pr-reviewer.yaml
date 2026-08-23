@@ -1,0 +1,49 @@
+---
+name: AI Review – PR #${{ forgejo.event.pull_request.number }}
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review, labeled]
+
+enable-openid-connect: true
+
+concurrency:
+  group: ${{ forgejo.workflow }}-${{ forgejo.event.pull_request.number || forgejo.ref }}${{ forgejo.event.action == 'labeled' && format('-label-{0}', forgejo.run_id) || '' }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: AI PR Review
+    if: ${{ !forgejo.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+          ref: ${{ forgejo.event.pull_request.head.sha }}
+
+      - name: AI PR Review
+        uses: https://github.com/misospace/pr-reviewer-action@54dfb1aac20e1e410ad8f71dc3681b888500a1ec # v2.2.1
+        with:
+          platform: forgejo
+          forgejo_api_url: http://forgejo-http.development.svc.cluster.local:3000/
+          forgejo_auth_method: authorized_integration
+          forgejo_authorized_integration_audience: u:2:e4823da3-4090-4978-b31a-0fb5cd007e07
+          allowed_source_hosts: github.com,api.github.com,gitlab.com,registry.terraform.io,artifacthub.io,code.offene.cloud,codeberg.org
+          ai_base_url: http://litellm.ai.svc.cluster.local:4000/v1
+          ai_api_format: openai
+          ai_model: Qwen3.8-27B
+          ai_api_key: ${{ secrets.LITELLM_API_KEY }}
+          ai_max_tokens: "16000"
+          ai_primary_retries: "2"
+          ai_primary_retry_delay_sec: "5"
+          ai_connect_timeout_sec: "10"
+          ai_fallback_base_url: http://litellm.ai.svc.cluster.local:4000/v1
+          ai_fallback_api_format: openai
+          ai_fallback_model: Qwen/Qwen3.6-35B-A3B-FP8
+          ai_fallback_api_key: ${{ secrets.LITELLM_API_KEY }}
+          on_model_failure: notice
+          publish_review_comment: "true"
