@@ -1,13 +1,26 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   packageRules: [
-    // Auto-merge high-cadence packages weekly
     {
+      description: "Auto-merge high-cadence OCI packages weekly",
       matchDatasources: ["docker"],
-      automerge: true,
       matchUpdateTypes: ["minor", "patch"],
-      matchPackageNames: ["ghcr.io/renovatebot/renovate"],
+      matchPackageNames: [
+        "ghcr.io/renovatebot/renovate",
+        "/kube-prometheus-stack/",
+      ],
+      automerge: true,
+      automergeType: "pr",
+      ignoreTests: false,
       schedule: ["before 6am on Monday"],
+    },
+    {
+      description: "Auto-merge Grafana dashboards",
+      matchDatasources: ["custom.grafana-dashboards"],
+      matchUpdateTypes: ["major"],
+      automerge: true,
+      automergeType: "branch",
+      ignoreTests: true,
     },
   ],
 }
