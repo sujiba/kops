@@ -20,7 +20,7 @@ spec:
             command: ["sh", "-c"]
             args:
               - |
-                forgejo-runner register --no-interactive --token $(RUNNER_TOKEN) --name $(RUNNER_NAME) --instance $(FORGEJO_INSTANCE_URL) --labels self-hosted:host,docker:docker://ghcr.io/catthehacker/ubuntu:act-24.04,ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-24.04,ubuntu-24.04:docker://ghcr.io/catthehacker/ubuntu:act-24.04,renovate:docker://ghcr.io/catthehacker/ubuntu:act-24.04 ;
+                forgejo-runner register --no-interactive --token $(RUNNER_TOKEN) --name $(RUNNER_NAME) --instance $(FORGEJO_INSTANCE_URL) --labels self-hosted:host,docker:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04,ubuntu-latest:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04,ubuntu-24.04:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04,renovate:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04;
                 forgejo-runner generate-config > /data/config.yml ;
                 sed -i -e "s|network: .*|network: host|" /data/config.yml ;
                 sed -i -e "s|^  envs:$$|  envs:\n    DOCKER_HOST: tcp://localhost:2376\n    DOCKER_TLS_VERIFY: 1\n    DOCKER_CERT_PATH: /certs/client|" /data/config.yml ;
