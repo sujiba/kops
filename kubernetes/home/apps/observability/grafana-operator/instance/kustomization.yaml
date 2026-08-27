@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - ./grafana.yaml
   - ./grafanadatasource.yaml
+  - ./secrets.sops.yaml
   - ./servicemonitor.yaml
