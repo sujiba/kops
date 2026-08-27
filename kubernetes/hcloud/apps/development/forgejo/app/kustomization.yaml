@@ -4,9 +4,8 @@ kind: Kustomization
 
 configMapGenerator:
   - name: anubis-bot-policy
-    files: ["./resources/anubisBotPolicy.yaml"]
-  - name: forgejo-custom-assets
-    files: ["./resources/pocket-id.svg"]
+    files:
+      - ./resources/anubisBotPolicy.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
