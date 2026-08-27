@@ -46,6 +46,15 @@ spec:
         configMap:
           name: anubis-bot-policy
           defaultMode: 0444
+      - name: forgejo-custom-assets
+        configMap:
+          name: forgejo-custom-assets
+          defaultMode: 0444
+
+    extraContainerVolumeMounts:
+      - name: custom-assets
+        readOnly: true
+        mountPath: /data/gitea/public/assets/img
 
     signing:
       enabled: true
