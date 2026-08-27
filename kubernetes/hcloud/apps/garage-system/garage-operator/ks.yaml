@@ -14,7 +14,7 @@ spec:
   path: ./kubernetes/hcloud/apps/garage-system/garage-operator/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: garage-system
