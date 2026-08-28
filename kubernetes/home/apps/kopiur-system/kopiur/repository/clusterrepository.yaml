@@ -8,15 +8,17 @@ spec:
     all: true
   backend:
     s3:
-      bucket: ${AWS_S3_BUCKET}
-      endpoint: ${AWS_S3_ENDPOINT}
-      region: ${AWS_REGION}
       auth:
         secretRef:
-          name: kopiur-s3
+          name: s3-secret
+      bucket: kopiur-backup
+      endpoint: fsn1.your-objectstorage.com
+      region: eu-central
   encryption:
     passwordSecretRef:
-      name: kopiur-s3
+      name: kopiur-repository-secret
       key: KOPIA_PASSWORD
   create:
     enabled: true
+  scheduleDefaults:
+    timezone: Europe/Berlin
