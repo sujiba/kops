@@ -70,9 +70,14 @@ spec:
                         failureThreshold: 20
         container:
           securityContext:
+            runAsUser: 0
+            runAsNonRoot: false
+            allowPrivilegeEscalation: true
             capabilities:
-              add:
-                - NET_BIND_SERVICE
+              drop: ["ALL"]
+              add: ["NET_BIND_SERVICE"]
+            seccompProfile:
+              type: RuntimeDefault
           imageRepository: mirror.gcr.io/envoyproxy/envoy
           volumeMounts:
             - name: geoip-db
