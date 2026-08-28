@@ -27,7 +27,7 @@ spec:
               repository: ghcr.io/sujiba/pihole-unbound-hyperlocal
               tag: 2026.07.2
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               FTLCONF_dns_listeningMode: all
               FTLCONF_webserver_port: &port 80
               FTLCONF_dns_upstreams: 127.0.0.1#5335

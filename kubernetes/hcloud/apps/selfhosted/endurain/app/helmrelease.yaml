@@ -24,7 +24,7 @@ spec:
               repository: codeberg.org/endurain-project/endurain
               tag: v0.19.0@sha256:a43273a30588f344f103e978a2e17aae75de31ffdb21dddd8ac8e71d70a08f3c
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               ENDURAIN_HOST: "https://endurain.${EXTERNAL_DOMAIN}"
               BEHIND_PROXY: true
               RATE_LIMIT_STORAGE_URI: "redis://endurain-dragonfly:6379/0"

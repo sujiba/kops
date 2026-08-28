@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/tailscale/tailscale
               tag: v1.102.3
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               HOME: /tmp
               TS_STATE_DIR: /tmp
               NO_AUTOUPDATE: true

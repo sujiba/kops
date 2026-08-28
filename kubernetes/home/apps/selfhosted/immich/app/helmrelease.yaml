@@ -30,7 +30,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v3.1.0
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               DB_HOSTNAME: immich-postgresql
               DB_DATABASE_NAME: immich
               DB_USERNAME: immich
@@ -63,7 +63,7 @@ spec:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v3.1.0@sha256:5a0839dc5303cd7215bcd2180a26aed3af41675aefb3e75e5157e9f10ad16e6e
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               DB_HOSTNAME: immich-postgresql
               DB_PORT: "5432"
               IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003

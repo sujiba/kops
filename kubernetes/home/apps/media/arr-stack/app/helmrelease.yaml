@@ -34,7 +34,7 @@ spec:
               tag: v3.41.3
             env:
               # Other options
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               LOG_LEVEL: debug
               VERSION_INFORMATION: off
               # DNS options
@@ -101,7 +101,7 @@ spec:
                 sabnzbd.selfhosted.svc.cluster.local,
                 "sabnzbd.${INTERNAL_DOMAIN}",
               SABNZBD__PORT: &port 80
-              TZ: ${TZ}
+              TZ: Europe/Berlin
             probes:
               liveness: &probe
                 enabled: true
@@ -128,7 +128,7 @@ spec:
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 7878
               RADARR__UPDATE__BRANCH: develop
-              TZ: ${TZ}
+              TZ: Europe/Berlin
             probes:
               liveness: &probes-radarr
                 enabled: true
@@ -159,7 +159,7 @@ spec:
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: 8989
               SONARR__UPDATE__BRANCH: develop
-              TZ: ${TZ}
+              TZ: Europe/Berlin
             probes:
               liveness: &probes-sonarr
                 enabled: true
@@ -190,7 +190,7 @@ spec:
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: &port 8990
               SONARR__UPDATE__BRANCH: develop
-              TZ: ${TZ}
+              TZ: Europe/Berlin
             probes:
               liveness: &probes-sonarr-animes
                 enabled: true
@@ -221,7 +221,7 @@ spec:
               PROWLARR__LOG__LEVEL: info
               PROWLARR__SERVER__PORT: &port 9696
               PROWLARR__UPDATE__BRANCH: develop
-              TZ: ${TZ}
+              TZ: Europe/Berlin
             probes:
               liveness: &probes-prowlarr
                 enabled: true

@@ -24,7 +24,7 @@ spec:
               repository: ghcr.io/twin/gatus
               tag: v5.36.0
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
             probes:

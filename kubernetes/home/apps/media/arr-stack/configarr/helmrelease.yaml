@@ -28,7 +28,7 @@ spec:
 
         cronjob:
           schedule: "0 16 * * *"
-          timeZone: ${TZ}
+          timeZone: Europe/Berlin
           concurrencyPolicy: Forbid
           successfulJobsHistory: 1
           failedJobsHistory: 1
@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/raydak-labs/configarr
               tag: 1.30.2@sha256:ec585b6d2530f6090ee26fdcc9701f279666c24dc96c9087208e88ec867c2416
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
             envFrom:
               - secretRef:
                   name: configarr-secret

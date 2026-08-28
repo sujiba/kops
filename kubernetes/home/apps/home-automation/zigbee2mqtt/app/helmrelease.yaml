@@ -33,7 +33,7 @@ spec:
               repository: ghcr.io/koenkk/zigbee2mqtt
               tag: 2.13.0
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               ZIGBEE2MQTT_DATA: /data
               ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: "true"
               ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT: '["console"]'

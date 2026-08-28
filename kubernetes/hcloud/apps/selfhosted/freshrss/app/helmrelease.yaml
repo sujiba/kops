@@ -25,7 +25,7 @@ spec:
               repository: freshrss/freshrss
               tag: 1.29.1
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               CRON_MIN: "*"
               DOMAIN: rss.${EXTERNAL_DOMAIN}
               LISTEN: &port 8080

@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/tailscale/tailscale
               tag: v1.102.3
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               NO_AUTOUPDATE: true
               TS_ACCEPT_DNS: false
               TS_HOSTNAME: falkenstein-exit

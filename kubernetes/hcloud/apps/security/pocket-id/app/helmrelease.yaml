@@ -54,7 +54,7 @@ spec:
               SMTP_PORT: 2525
               SESSION_DURATION: 28800 # 8h
               TRUST_PROXY: true
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               UI_CONFIG_DISABLED: true
               UPLOAD_PATH: /data/uploads
             envFrom:

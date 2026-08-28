@@ -24,7 +24,7 @@ spec:
             env:
               PAPERLESS_URL: https://docs.${INTERNAL_DOMAIN}
               PAPERLESS_PORT: "8000"
-              PAPERLESS_TIME_ZONE: "${TZ}"
+              PAPERLESS_TIME_ZONE: "Europe/Berlin"
               PAPERLESS_WEBSERVER_WORKERS: "1"
               PAPERLESS_TASK_WORKERS: "1"
               # Configure folder importer

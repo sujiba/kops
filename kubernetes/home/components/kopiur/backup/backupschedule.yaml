@@ -9,7 +9,7 @@ spec:
     name: "${APP}"
   schedule:
     cron: "0 10 * * *"
-    timezone: ${TZ}
+    timezone: Europe/Berlin
     concurrencyPolicy: Forbid
     runOnCreate: false
     suspend: false

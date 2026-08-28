@@ -33,7 +33,7 @@ spec:
               repository: ghcr.io/dani-garcia/vaultwarden
               tag: 1.37.2
             env:
-              TZ: ${TZ}
+              TZ: Europe/Berlin
               DOMAIN: "https://vault.${INTERNAL_DOMAIN}"
               # Disable signups
               SIGNUPS_ALLOWED: false
