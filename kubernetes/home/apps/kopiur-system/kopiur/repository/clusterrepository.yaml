@@ -11,7 +11,7 @@ spec:
       auth:
         secretRef:
           name: s3-secret
-      bucket: kopiur-backup
+      bucket: kopiur-repository-secret
       endpoint: fsn1.your-objectstorage.com
       region: eu-central
   encryption:
