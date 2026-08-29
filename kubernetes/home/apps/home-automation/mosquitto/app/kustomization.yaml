@@ -8,3 +8,4 @@ resources:
   - ./ocirepository.yaml
   - ./pvc.yaml
   - ./volsync.yaml
+  - ./restore.yaml
