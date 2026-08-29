@@ -7,6 +7,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: mosquitto
+  components:
+    - ../../../../components/kopiur/backup
   interval: 1h
   path: ./kubernetes/home/apps/home-automation/mosquitto/app
   postBuild:
@@ -21,6 +23,9 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
+      KOPIUR_CAPACITY: 1Gi
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
   prune: true
   sourceRef:
     kind: GitRepository
