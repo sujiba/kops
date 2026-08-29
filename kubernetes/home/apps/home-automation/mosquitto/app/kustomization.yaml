@@ -6,6 +6,6 @@ namespace: home-automation
 resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
-  - ./pvc.yaml
-  - ./volsync.yaml
-  - ./restore.yaml
+  #- ./pvc.yaml
+  #- ./volsync.yaml
+  #- ./restore.yaml
