@@ -10,7 +10,7 @@ spec:
     s3:
       auth:
         secretRef:
-          name: kopiur-repository
+          name: kopiur-repository-secret
       bucket: kopiur-backup
       endpoint: fsn1.your-objectstorage.com
       region: eu-central
