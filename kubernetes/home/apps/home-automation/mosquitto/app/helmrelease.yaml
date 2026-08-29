@@ -5,7 +5,6 @@ metadata:
   name: mosquitto
 spec:
   interval: 1h
-  timeout: 5m
   chartRef:
     kind: OCIRepository
     name: mosquitto
@@ -13,7 +12,7 @@ spec:
   values:
     controllers:
       mosquitto:
-        replicas: 1
+        replicas: 0
         strategy: RollingUpdate
 
         annotations:
