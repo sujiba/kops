@@ -4,15 +4,15 @@ kind: HelmRelease
 metadata:
   name: zigbee2mqtt
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: zigbee2mqtt
+  interval: 1h
 
   values:
     controllers:
       zigbee2mqtt:
-        replicas: 0
+        replicas: 1
         strategy: RollingUpdate
 
         annotations:
@@ -81,6 +81,6 @@ spec:
 
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: zigbee2mqtt
         globalMounts:
           - path: /data
