@@ -2,7 +2,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${APP}-dst-7"
+  name: "${APP}-dst-8"
 spec:
   trigger:
     manual: restore-once
@@ -21,9 +21,9 @@ spec:
     enableFileDeletion: true
     moverSecurityContext:
       runAsNonRoot: true
-      runAsUser: ${VOLSYNC_PUID:=1000}
-      runAsGroup: ${VOLSYNC_PGID:=1000}
-      fsGroup: ${VOLSYNC_PGID:=1000}
+      runAsUser: ${VOLSYNC_UID:=1000}
+      runAsGroup: ${VOLSYNC_GID:=1000}
+      fsGroup: ${VOLSYNC_GID:=1000}
       fsGroupChangePolicy: OnRootMismatch
       seccompProfile:
         type: RuntimeDefault
