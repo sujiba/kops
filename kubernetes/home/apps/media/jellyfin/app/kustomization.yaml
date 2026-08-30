@@ -8,3 +8,4 @@ resources:
   - ./pvc.yaml
   - ./resourceclaimtemplate.yaml
   - ./volsync.yaml
+  - ./restore.yaml

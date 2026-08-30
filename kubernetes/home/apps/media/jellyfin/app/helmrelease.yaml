@@ -4,15 +4,15 @@ kind: HelmRelease
 metadata:
   name: jellyfin
 spec:
-  interval: 30m
   chartRef:
     kind: OCIRepository
     name: jellyfin
+  interval: 1h
 
   values:
     controllers:
       jellyfin:
-        replicas: 1
+        replicas: 0
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -24,7 +24,7 @@ spec:
               tag: 10.11.11@sha256:45f648c382a0c8b552582fcea40e95cb17c5d475473a891cba0eb7523fb92112
             env:
               TZ: Europe/Berlin
-              JELLYFIN_PublishedServerUrl: https://{{ .Release.Name }}.${INTERNAL_DOMAIN}
+              JELLYFIN_PublishedServerUrl: https://jellyfin.${INTERNAL_DOMAIN}
             probes:
               liveness: &probes
                 enabled: true
@@ -32,7 +32,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: &port 8096
+                    port: 8096
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -64,20 +64,20 @@ spec:
               resourceClaimTemplateName: jellyfin
           securityContext:
             runAsNonRoot: true
-            runAsUser: ${VOLSYNC_UID}
-            runAsGroup: ${VOLSYNC_GID}
-            fsGroup: ${VOLSYNC_GID}
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
         ports:
           http:
-            port: *port
+            port: 8096
 
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${INTERNAL_DOMAIN}"]
+        hostnames: ["jellyfin.${INTERNAL_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
             namespace: network
