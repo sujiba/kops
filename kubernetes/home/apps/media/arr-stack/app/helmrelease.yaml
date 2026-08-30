@@ -344,7 +344,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: arr-stack
         advancedMounts:
           arr-stack:
             sabnzbd:
