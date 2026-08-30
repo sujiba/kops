@@ -5,7 +5,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
-  - ./pvc.yaml
   - ./resourceclaimtemplate.yaml
-  - ./volsync.yaml
-  - ./restore.yaml
