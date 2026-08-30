@@ -24,11 +24,11 @@ spec:
       APP: jellyfin
       VOLSYNC_CLAIM: jellyfin-data
       VOLSYNC_CAPACITY: 50Gi
-      VOLSYNC_GID: "2000"
-      VOLSYNC_UID: "2000"
+      VOLSYNC_PUID: "2000"
+      VOLSYNC_PGID: "2000"
       KOPIUR_CAPACITY: 50Gi
-      KOPIUR_PUID: "1000"
-      KOPIUR_PGID: "1000"
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
   prune: true
   sourceRef:
     kind: GitRepository
