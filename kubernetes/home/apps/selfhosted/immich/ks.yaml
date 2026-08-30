@@ -9,7 +9,7 @@ spec:
       app.kubernetes.io/name: immich
   components:
     - ../../../../components/kopiur/backup
-  interval: 1h
+  interval: 1m
   path: ./kubernetes/home/apps/selfhosted/immich/app
   postBuild:
     substituteFrom:
