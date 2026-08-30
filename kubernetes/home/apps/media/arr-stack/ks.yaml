@@ -7,6 +7,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: arr-stack
+  components:
+    - ../../../../components/kopiur/backup
   interval: 1h
   path: ./kubernetes/home/apps/media/arr-stack/app
   postBuild:
@@ -21,7 +23,8 @@ spec:
       VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
-  prune: true
+      KOPIUR_CAPACITY: 50Gi
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

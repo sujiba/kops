@@ -4,17 +4,18 @@ kind: HelmRelease
 metadata:
   name: arr-stack
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: arr-stack
+  interval: 1h
+
   values:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: ${VOLSYNC_UID}
-        runAsGroup: ${VOLSYNC_GID}
-        fsGroup: ${VOLSYNC_GID}
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
 
     controllers:

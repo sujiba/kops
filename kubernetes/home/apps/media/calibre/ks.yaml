@@ -19,10 +19,6 @@ spec:
         kind: Secret
     substitute:
       APP: calibre
-      VOLSYNC_CLAIM: calibre-data
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_GID: "1000"
-      VOLSYNC_UID: "1000"
       KOPIUR_CAPACITY: 10Gi
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"

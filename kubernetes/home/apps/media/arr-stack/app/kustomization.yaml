@@ -10,3 +10,4 @@ resources:
   - ./secret.sops.yaml
   - ./tcproute.yaml
   - ./volsync.yaml
+  - ./restore.yaml
