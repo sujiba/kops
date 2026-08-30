@@ -15,8 +15,6 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-      - name: volsync-kopia-secret
-        kind: Secret
     substitute:
       APP: calibre
       KOPIUR_CAPACITY: 10Gi
