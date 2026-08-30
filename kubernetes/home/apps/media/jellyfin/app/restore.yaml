@@ -2,14 +2,14 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${APP}-dst-3"
+  name: "${APP}-dst-4"
 spec:
   trigger:
     manual: restore-once
   kopia:
     copyMethod: Direct
     restoreAsOf: "2026-08-30T00:00:00Z"
-    destinationPVC: ${VOLSYNC_CLAIM}
+    destinationPVC: ${APP}
     accessModes:
       - ${VOLSYNC_ACCESSMODES:=ReadWriteOnce}
     cacheAccessModes:
