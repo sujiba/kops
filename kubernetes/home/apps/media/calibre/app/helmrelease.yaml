@@ -13,7 +13,7 @@ spec:
   values:
     controllers:
       calibre:
-        replicas: 0
+        replicas: 1
         strategy: RollingUpdate
 
         annotations:
