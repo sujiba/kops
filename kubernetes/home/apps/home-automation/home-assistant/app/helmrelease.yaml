@@ -5,7 +5,6 @@ metadata:
   name: home-assistant
 spec:
   interval: 1h
-  timeout: 5m
   chartRef:
     kind: OCIRepository
     name: home-assistant
@@ -13,7 +12,7 @@ spec:
   values:
     controllers:
       home-assistant:
-        replicas: 1
+        replicas: 0
         strategy: RollingUpdate
 
         annotations:
@@ -22,9 +21,9 @@ spec:
         pod:
           securityContext:
             runAsNonRoot: true
-            runAsUser: ${VOLSYNC_UID}
-            runAsGroup: ${VOLSYNC_GID}
-            fsGroup: ${VOLSYNC_GID}
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
 
         containers:

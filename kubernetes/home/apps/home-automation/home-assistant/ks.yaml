@@ -7,6 +7,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: home-assistant
+  components:
+    - ../../../../components/kopiur/backup
   interval: 1h
   path: ./kubernetes/home/apps/home-automation/home-assistant/app
   postBuild:
@@ -21,6 +23,9 @@ spec:
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "2000"
+      KOPIUR_CAPACITY: 10Gi
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
   prune: false
   sourceRef:
     kind: GitRepository
