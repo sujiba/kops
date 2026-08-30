@@ -12,7 +12,7 @@ spec:
   values:
     controllers:
       vaultwarden:
-        replicas: 0
+        replicas: 1
         strategy: RollingUpdate
 
         annotations:
@@ -85,6 +85,6 @@ spec:
 
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: vaultwarden
         globalMounts:
           - path: /data
