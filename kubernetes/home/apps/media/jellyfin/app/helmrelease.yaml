@@ -84,7 +84,7 @@ spec:
 
     persistence:
       data:
-        existingClaim: jellyfin-data
+        existingClaim: jellyfin
         globalMounts:
           - path: /config
       media:
