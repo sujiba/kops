@@ -19,10 +19,6 @@ spec:
         kind: Secret
     substitute:
       APP: zigbee2mqtt
-      VOLSYNC_CLAIM: zigbee2mqtt-data
-      VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_GID: "1000"
-      VOLSYNC_UID: "1000"
       KOPIUR_CAPACITY: 1Gi
   prune: false
   sourceRef:
