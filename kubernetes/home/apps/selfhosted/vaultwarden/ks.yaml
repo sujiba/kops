@@ -15,14 +15,8 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-      - name: volsync-kopia-secret
-        kind: Secret
     substitute:
       APP: vaultwarden
-      VOLSYNC_CLAIM: vaultwarden-data
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_GID: "2000"
-      VOLSYNC_UID: "2000"
       KOPIUR_CAPACITY: 10Gi
       KOPIUR_PUID: "2000"
       KOPIUR_PGID: "2000"
