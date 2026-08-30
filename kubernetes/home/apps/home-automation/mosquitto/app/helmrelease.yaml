@@ -62,11 +62,9 @@ spec:
       config:
         type: configMap
         identifier: config
-        advancedMounts:
-          mosquitto:
-            app:
-              - path: /mosquitto/config/mosquitto.conf
-                subPath: mosquitto.conf
+        globalMounts:
+          - path: /mosquitto/config/mosquitto.conf
+            subPath: mosquitto.conf
       data:
         existingClaim: mosquitto
         globalMounts:
