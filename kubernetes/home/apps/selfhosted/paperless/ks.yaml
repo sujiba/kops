@@ -7,8 +7,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: paperless
+  components:
+    - ../../../../components/kopiur/backup
   interval: 1h
-  timeout: 5m
   path: ./kubernetes/home/apps/selfhosted/paperless/app
   postBuild:
     substituteFrom:
@@ -22,6 +23,7 @@ spec:
       VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
+      KOPIUR_CAPACITY: 50Gi
   prune: true
   sourceRef:
     kind: GitRepository

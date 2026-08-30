@@ -9,3 +9,4 @@ resources:
   - ./pvc.yaml
   - ./secret.sops.yaml
   - ./volsync.yaml
+  - ./restore.yaml

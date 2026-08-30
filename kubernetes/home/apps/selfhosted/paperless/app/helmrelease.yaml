@@ -8,7 +8,6 @@ spec:
     kind: OCIRepository
     name: paperless
   interval: 1h
-  timeout: 5m
   values:
     controllers:
       paperless:
