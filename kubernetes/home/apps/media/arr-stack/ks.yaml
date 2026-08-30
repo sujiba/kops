@@ -15,14 +15,8 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-      - name: volsync-kopia-secret
-        kind: Secret
     substitute:
       APP: arr-stack
-      VOLSYNC_CLAIM: arr-stack-config
-      VOLSYNC_CAPACITY: 50Gi
-      VOLSYNC_GID: "1000"
-      VOLSYNC_UID: "1000"
       KOPIUR_CAPACITY: 50Gi
   prune: false
   sourceRef:
