@@ -8,7 +8,7 @@ spec:
     manual: restore-once
   kopia:
     copyMethod: Direct
-    destinationPVC: mosquitto
+    destinationPVC: ${APP}
     accessModes:
       - ${VOLSYNC_ACCESSMODES:=ReadWriteOnce}
     cacheAccessModes:
