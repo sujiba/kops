@@ -5,7 +5,6 @@ metadata:
   name: zigbee2mqtt
 spec:
   interval: 1h
-  timeout: 5m
   chartRef:
     kind: OCIRepository
     name: zigbee2mqtt
@@ -13,7 +12,7 @@ spec:
   values:
     controllers:
       zigbee2mqtt:
-        replicas: 1
+        replicas: 0
         strategy: RollingUpdate
 
         annotations:
