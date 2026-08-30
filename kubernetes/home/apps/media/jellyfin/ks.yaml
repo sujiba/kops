@@ -18,6 +18,8 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+      - name: volsync-kopia-secret
+        kind: Secret
     substitute:
       APP: jellyfin
       VOLSYNC_CLAIM: jellyfin-data

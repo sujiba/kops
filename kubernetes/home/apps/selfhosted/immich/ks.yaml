@@ -15,14 +15,8 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-      - name: volsync-kopia-secret
-        kind: Secret
     substitute:
       APP: immich
-      VOLSYNC_CLAIM: immich-data
-      VOLSYNC_CAPACITY: 300Gi
-      VOLSYNC_GID: "1000"
-      VOLSYNC_UID: "1000"
       KOPIUR_CAPACITY: 300Gi
   prune: false
   sourceRef:
