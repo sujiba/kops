@@ -31,11 +31,12 @@ spec:
               tag: v3.1.0
             env:
               TZ: Europe/Berlin
+              IMMICH_LOG_LEVEL: verbose
+              IMMICH_MEDIA_LOCATION: /data
               DB_HOSTNAME: immich-postgresql
               DB_DATABASE_NAME: immich
               DB_USERNAME: immich
               REDIS_HOSTNAME: immich-valkey
-              IMMICH_LOG_LEVEL: verbose
             envFrom:
               - secretRef:
                   name: immich-secret
