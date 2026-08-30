@@ -7,4 +7,5 @@ spec:
   policyRef:
     name: ${APP}
   schedule:
-    cron: H * * * *
+    cron: H 2 * * *
+    jitter: 30m
