@@ -12,7 +12,7 @@ spec:
   values:
     controllers:
       home-assistant:
-        replicas: 0
+        replicas: 1
         strategy: RollingUpdate
 
         annotations:
@@ -59,7 +59,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: home-assistant
         advancedMounts:
           home-assistant:
             app:
