@@ -84,7 +84,7 @@ spec:
 
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: jellyfin
         globalMounts:
           - path: /config
       media:
