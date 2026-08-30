@@ -9,7 +9,7 @@ spec:
   kopia:
     copyMethod: Direct
     restoreAsOf: "2026-08-30T00:00:00Z"
-    destinationPVC: ${APP}
+    destinationPVC: ${APP}-1
     accessModes:
       - ${VOLSYNC_ACCESSMODES:=ReadWriteOnce}
     cacheAccessModes:
