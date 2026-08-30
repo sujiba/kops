@@ -190,7 +190,7 @@ spec:
 
     persistence:
       immich:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: immich
         advancedMounts:
           immich:
             app:
