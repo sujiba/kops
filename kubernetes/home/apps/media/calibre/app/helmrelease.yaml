@@ -60,7 +60,7 @@ spec:
 
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: calibre
         globalMounts:
           - path: /config
             subPath: config
