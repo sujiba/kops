@@ -21,7 +21,7 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
