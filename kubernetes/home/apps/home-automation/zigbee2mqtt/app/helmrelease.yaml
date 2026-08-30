@@ -22,9 +22,9 @@ spec:
         pod:
           securityContext:
             runAsNonRoot: true
-            runAsUser: ${VOLSYNC_UID}
-            runAsGroup: ${VOLSYNC_GID}
-            fsGroup: ${VOLSYNC_GID}
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
 
         containers:
@@ -50,7 +50,7 @@ spec:
               ZIGBEE2MQTT_CONFIG_ADVANCED_TRANSMIT__POWER: "20"
               # frontend
               ZIGBEE2MQTT_CONFIG_FRONTEND_ENABLED: "true"
-              ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: &port 8080
+              ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: 8080
               ZIGBEE2MQTT_CONFIG_FRONTEND_URL: https://zigbee.${INTERNAL_DOMAIN}
             envFrom:
               - secretRef:
@@ -70,7 +70,7 @@ spec:
       app:
         ports:
           http:
-            port: *port
+            port: 8080
 
     route:
       app:

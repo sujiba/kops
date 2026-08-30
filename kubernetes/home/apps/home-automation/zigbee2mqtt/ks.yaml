@@ -7,6 +7,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: zigbee2mqtt
+  components:
+    - ../../../../components/kopiur/backup
   interval: 1h
   path: ./kubernetes/home/apps/home-automation/zigbee2mqtt/app
   postBuild:
@@ -21,6 +23,7 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
+      KOPIUR_CAPACITY: 1Gi
   prune: false
   sourceRef:
     kind: GitRepository
