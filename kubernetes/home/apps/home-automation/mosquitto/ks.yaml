@@ -18,6 +18,8 @@ spec:
     substitute:
       APP: mosquitto
       KOPIUR_CAPACITY: 1Gi
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
   prune: false
   sourceRef:
     kind: GitRepository
