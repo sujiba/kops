@@ -8,4 +8,3 @@ resources:
   - ./oidc.yaml
   - ./secret.sops.yaml
   - ./tcproute.yaml
-  - ./restore.yaml
