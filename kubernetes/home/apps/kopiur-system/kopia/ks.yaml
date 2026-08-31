@@ -16,6 +16,8 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+      - name: kopiur-repository-secret
+        kind: Secret
     substitute:
       APP: kopia
   prune: true
