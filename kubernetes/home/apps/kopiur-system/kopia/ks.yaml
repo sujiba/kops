@@ -16,8 +16,6 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-      - name: volsync-kopia-secret
-        kind: Secret
     substitute:
       APP: kopia
   prune: true

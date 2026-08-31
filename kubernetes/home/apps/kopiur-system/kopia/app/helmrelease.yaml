@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: kopia
   interval: 1h
+
   values:
     controllers:
       kopia:
@@ -17,9 +18,9 @@ spec:
         pod:
           securityContext:
             runAsNonRoot: true
-            runAsUser: 2000
-            runAsGroup: 2000
-            fsGroup: 2000
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
         containers:
           app:
@@ -27,10 +28,12 @@ spec:
               repository: ghcr.io/home-operations/kopia
               tag: 0.23.1@sha256:27da0a33b44e1b902150a6c963514237217464bb13118a95bb056667be93cda5
             env:
-              KOPIA_PASSWORD: ${KOPIA_PASSWORD}
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 8080
               TZ: Europe/Berlin
+            envFrom:
+              - secretRef:
+                  name: kopiur-repository-secret
             args:
               - --without-password
             probes:
@@ -60,6 +63,7 @@ spec:
         ports:
           http:
             port: *port
+
     route:
       app:
         hostnames:
@@ -67,6 +71,7 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+
     configMaps:
       config:
         data:
@@ -75,11 +80,11 @@ spec:
               "storage": {
                 "type": "s3",
                 "config": {
-                  "bucket": "${AWS_S3_BUCKET}",
-                  "endpoint": "${AWS_S3_ENDPOINT}",
+                  "bucket": "kopiur-backup",
+                  "endpoint": "fsn1.your-objectstorage.com",
                   "accessKeyID": "${AWS_ACCESS_KEY_ID}",
                   "secretAccessKey": "${AWS_SECRET_ACCESS_KEY}",
-                  "region": "${AWS_REGION}"
+                  "region": "eu-central"
                 }
               },
               "caching": {
@@ -90,10 +95,11 @@ spec:
               },
               "hostname": "kopia",
               "username": "nobody",
-              "description": "${AWS_S3_BUCKET}",
+              "description": "kopiur-backup",
               "enableActions": false,
               "formatBlobCacheDuration": 900000000000
             }
+
     persistence:
       config-file:
         type: configMap
