@@ -101,17 +101,17 @@ spec:
                 sabnzbd.selfhosted.svc.cluster,
                 sabnzbd.selfhosted.svc.cluster.local,
                 "sabnzbd.${INTERNAL_DOMAIN}",
-              SABNZBD__PORT: &port 80
+              SABNZBD__PORT: 80
               TZ: Europe/Berlin
             probes:
-              liveness: &probe
+              liveness: &probe-sabnzbd
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /api?mode=version
-                    port: *port
-              readiness: *probe
+                    port: 80
+              readiness: *probe-sabnzbd
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
@@ -127,7 +127,8 @@ spec:
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
               RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
-              RADARR__SERVER__PORT: &port 7878
+              RADARR__SERVER__ALLOWEDHOSTS: "*"
+              RADARR__SERVER__PORT: 7878
               RADARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
             probes:
@@ -137,7 +138,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: *port
+                    port: 7878
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -158,6 +159,7 @@ spec:
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
+              SONARR__SERVER__ALLOWEDHOSTS: "*"
               SONARR__SERVER__PORT: 8989
               SONARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
@@ -189,7 +191,8 @@ spec:
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
-              SONARR__SERVER__PORT: &port 8990
+              SONARR__SERVER__ALLOWEDHOSTS: "*"
+              SONARR__SERVER__PORT: 8990
               SONARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
             probes:
@@ -199,7 +202,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: *port
+                    port: 8990
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -220,7 +223,8 @@ spec:
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
               PROWLARR__LOG__DBENABLED: "False"
               PROWLARR__LOG__LEVEL: info
-              PROWLARR__SERVER__PORT: &port 9696
+              PROWLARR__SERVER__ALLOWEDHOSTS: "*"
+              PROWLARR__SERVER__PORT: 9696
               PROWLARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
             probes:
@@ -230,7 +234,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: *port
+                    port: 9696
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
