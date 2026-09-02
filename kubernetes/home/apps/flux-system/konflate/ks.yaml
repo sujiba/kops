@@ -9,6 +9,10 @@ spec:
       app.kubernetes.io/name: konflate
   interval: 1h
   path: ./kubernetes/home/apps/flux-system/konflate/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository
