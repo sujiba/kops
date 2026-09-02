@@ -7,9 +7,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: democratic-csi
-  dependsOn:
-    - name: volsync
-      namespace: volsync-system
   interval: 1h
   values:
     controller:
