@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: paperless
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: paperless
   components:
     - ../../../../components/kopiur/backup
   interval: 1h

@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: endurain
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: endurain
   components:
     - ../../../../components/dragonfly
   interval: 1h

@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: arr-stack
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: arr-stack
   components:
     - ../../../../components/kopiur/backup
   interval: 1h
@@ -32,9 +29,6 @@ kind: Kustomization
 metadata:
   name: configarr
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: arr-stack-configarr
   dependsOn:
     - name: arr-stack
   interval: 1h

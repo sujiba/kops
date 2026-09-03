@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: calibre
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: calibre
   components:
     - ../../../../components/kopiur/backup
   interval: 1h

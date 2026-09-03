@@ -5,9 +5,6 @@ kind: Kustomization
 metadata:
   name: kopia
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: kopia
   dependsOn:
     - name: kopiur
   interval: 1h

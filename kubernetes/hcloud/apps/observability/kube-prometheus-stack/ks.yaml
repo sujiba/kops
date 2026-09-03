@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: kube-prometheus-stack
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: kube-prometheus-stack
   interval: 1h
   path: ./kubernetes/hcloud/apps/observability/kube-prometheus-stack/app
   postBuild:

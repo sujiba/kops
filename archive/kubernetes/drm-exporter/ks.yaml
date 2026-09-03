@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: drm-exporter
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: drm-exporter
   dependsOn:
     - name: intel-gpu-resource-driver
   interval: 1h

@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: kromgo
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: kromgo
   interval: 1h
   path: ./kubernetes/hcloud/apps/observability/kromgo/app
   postBuild:

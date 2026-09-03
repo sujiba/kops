@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: vaultwarden
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: vaultwarden
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/vaultwarden/app
   postBuild:

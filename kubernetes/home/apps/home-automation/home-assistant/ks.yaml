@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: home-assistant
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: home-assistant
   components:
     - ../../../../components/kopiur/backup
   interval: 1h

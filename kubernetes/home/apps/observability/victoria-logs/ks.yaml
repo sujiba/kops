@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: victoria-logs
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: victoria-logs
   dependsOn:
     - name: democratic-csi
       namespace: storage
@@ -30,9 +27,6 @@ kind: Kustomization
 metadata:
   name: victoria-logs-collector
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: victoria-logs-collector
   dependsOn:
     - name: victoria-logs
   interval: 1h

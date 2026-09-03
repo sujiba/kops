@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: nextcloud
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: nextcloud
   components:
     - ../../../../components/dragonfly
   interval: 1h
@@ -32,9 +29,6 @@ kind: Kustomization
 metadata:
   name: nextcloud-collabora
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: nextcloud-collabora
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/collabora
   postBuild:
@@ -55,9 +49,6 @@ kind: Kustomization
 metadata:
   name: nextcloud-drawio
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: nextcloud-drawio
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/nextcloud/drawio
   postBuild:

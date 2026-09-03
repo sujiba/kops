@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: garage-operator
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: garage-operator
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
