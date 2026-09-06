@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ${APP}-postgres-data
+  name: immich-postgres-data
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:
@@ -14,14 +14,14 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ${APP}
+  name: immich
 spec:
   accessModes: ["ReadWriteOnce"]
   dataSourceRef:
     apiGroup: kopiur.home-operations.com
     kind: Restore
-    name: ${APP}
+    name: immich
   resources:
     requests:
-      storage: ${KOPIUR_CAPACITY:=5Gi}
-  storageClassName: ${KOPIUR_STORAGECLASS:=local-hostpath}
+      storage: 300Gi
+  storageClassName: local-hostpath
