@@ -1,0 +1,9 @@
+---
+# Label this node as control-plane and remove the default control-plane taint so workloads can schedule here (single-node cluster).
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  node-role.kubernetes.io/control-plane: ""
+taints:
+  node-role.kubernetes.io/control-plane:
+    $patch: delete

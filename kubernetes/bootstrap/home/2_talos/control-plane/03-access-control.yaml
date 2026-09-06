@@ -1,0 +1,45 @@
+---
+# Enable kube-apiserver audit logging at Metadata level (who/what/when, no request or response bodies).
+apiVersion: v1alpha1
+kind: KubeAuditPolicyConfig
+configuration:
+  apiVersion: audit.k8s.io/v1
+  kind: Policy
+  rules:
+    - level: Metadata
+
+---
+# Restrict anonymous access to just the health/readiness endpoints; no JWT issuers configured.
+apiVersion: v1alpha1
+kind: KubeAuthenticationConfig
+configuration:
+  anonymous:
+    conditions:
+      - path: /livez
+      - path: /readyz
+      - path: /healthz
+    enabled: true
+  jwt: []
+
+---
+# Node authorizer: lets kubelets read only the objects tied to their own node.
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: node
+type: Node
+
+---
+# RBAC authorizer: standard role-based access control for everything else.
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: rbac
+type: RBAC
+
+---
+# Let pods in the system-upgrade namespace call the Talos API as os:admin (for system-upgrade-controller / Talos upgrades).
+apiVersion: v1alpha1
+kind: KubeTalosAPIAccessConfig
+allowedRoles:
+  - os:admin
+allowedKubernetesNamespaces:
+  - system-upgrade

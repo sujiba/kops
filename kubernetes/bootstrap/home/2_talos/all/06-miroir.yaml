@@ -1,0 +1,36 @@
+---
+# Load dm_thin_pool for thin-provisioned LVM volumes (LINSTOR/OpenEBS backing store).
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: dm_thin_pool
+
+---
+# Load DRBD for replicated block storage; usermode helper disabled since Talos has no userspace helpers.
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: drbd
+parameters:
+  - usermode_helper=disabled
+
+---
+# Load the DRBD TCP transport used for replication traffic between nodes.
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: drbd_transport_tcp
+
+---
+# Load nbd (network block device), required by some CSI provisioners.
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: nbd
+
+---
+# Carve an unformatted 1TB+ partition on the non-system WD SN770 for a CSI provisioner to consume.
+apiVersion: v1alpha1
+kind: RawVolumeConfig
+name: miroir
+provisioning:
+  diskSelector:
+    match: disk.model == 'WD_BLACK SN770 2TB' && !system_disk
+  grow: true
+  minSize: 1TB
