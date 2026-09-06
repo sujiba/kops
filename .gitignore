@@ -4,7 +4,6 @@ Thumbs.db
 .ansible
 .vscode
 
-
 # Sops
 .decrypted~*
 
