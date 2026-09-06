@@ -13,9 +13,6 @@ secureboot: true
 
 data:
   gateway: 10.10.10.1
-  dnsIPv4:
-    - 10.10.10.2
-    - 10.10.10.3
   privateClusterIP: 10.10.10.4
 
 nodes:
