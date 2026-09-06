@@ -1,21 +1,22 @@
 ---
-# Use the local host DNS cache with an upstream resolver; keep KubeDNS traffic off the host resolver.
+# Host DNS cache resolving upstream to Quad9 over DoT (encrypted); 9.9.9.10 is the no-threat-blocking endpoint.
 apiVersion: v1alpha1
 kind: ResolverConfig
+hostDNS:
+  enabled: true
 nameservers:
-{{- range .Data.dnsIPv4 }}
-  - address: {{ . }}
-{{- end }}
-searchDomains:
-  disableDefault: true
+  - address: 9.9.9.10
+    protocol: DoT
+    tlsServerName: dns10.quad9.net
 
 ---
-# Sync time from the local gateway/router instead of the default time.cloudflare.com; keeps NTP traffic on-LAN.
+# Sync time from PTB (German national metrology institute) and the European pool; avoids Cloudflare.
 apiVersion: v1alpha1
 kind: TimeSyncConfig
 ntp:
   servers:
-    - 10.10.10.1
+    - ptbtime1.ptb.de
+    - europe.pool.ntp.org
 
 ---
 # Define the cluster's pod/service CIDRs and internal DNS domain.
