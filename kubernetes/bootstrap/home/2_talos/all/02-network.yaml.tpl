@@ -8,15 +8,19 @@ nameservers:
   - address: 9.9.9.10
     protocol: DoT
     tlsServerName: dns10.quad9.net
+  - address: 9.9.9.10   # plaintext fallback for boot
 
 ---
-# Sync time from PTB (German national metrology institute) and the European pool; avoids Cloudflare.
+# NTS-authenticated time from the Trifecta Tech NTS pool (community-run; avoids cloudflare)
 apiVersion: v1alpha1
 kind: TimeSyncConfig
 ntp:
   servers:
-    - ptbtime1.ptb.de
-    - europe.pool.ntp.org
+    - 0.ke.sectime.org
+    - 1.ke.sectime.org
+    - 2.ke.sectime.org
+    - 3.ke.sectime.org
+  useNTS: true
 
 ---
 # Define the cluster's pod/service CIDRs and internal DNS domain.
