@@ -3,6 +3,12 @@
 apiVersion: v1alpha1
 kind: KubeletConfig
 config:
+  crashLoopBackOff:
+    maxContainerRestartPeriod: 60s
+  imageMaximumGCAge: 168h
+  maxParallelImagePulls: 3
+  maxPods: 200
+  serializeImagePulls: false
   shutdownGracePeriod: 90s
   shutdownGracePeriodCriticalPods: 60s
 defaultRuntimeSeccompProfileEnabled: true
