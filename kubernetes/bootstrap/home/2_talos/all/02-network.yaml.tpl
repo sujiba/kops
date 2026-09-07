@@ -1,4 +1,26 @@
 ---
+# Gives the onboard NIC a stable name, independent of PCI enumeration.
+# Background: a second NVMe in slot 2 shifts the PCI addresses, which renamed
+# the interface from enp86s0 to enp87s0. The LinkConfig then matched nothing and
+# the node dropped off the network. permanent_addr is the MAC burned into the
+# NIC and is unaffected by that renumbering.
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: mac(link.permanent_addr).startsWith("{{ .Node.Data.macAddress }}")
+
+---
+# net0 is the alias defined in LinkAliasConfig, not the kernel name.
+apiVersion: v1alpha1
+kind: LinkConfig
+name: net0
+addresses:
+  - address: {{ .Node.IP }}/24
+routes:
+  - gateway: {{ .Data.gateway }}
+
+---
 # Host DNS cache resolving upstream to Quad9 over DoT (encrypted); 9.9.9.10 is the no-threat-blocking endpoint.
 apiVersion: v1alpha1
 kind: ResolverConfig

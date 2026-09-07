@@ -8,5 +8,3 @@ extraArgs:
   feature-gates: HPAScaleToZero=true
 certExtraSANs:
   - 127.0.0.1 # KubePrism
-  - {{ .Data.privateClusterIP }}
-  - {{ .Node.IP }}

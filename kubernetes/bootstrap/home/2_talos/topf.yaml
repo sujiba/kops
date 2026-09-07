@@ -13,9 +13,12 @@ secureboot: true
 
 data:
   gateway: 10.10.10.1
-  privateClusterIP: 10.10.10.4
 
 nodes:
   - host: home-01
     ip: 10.10.10.4
     role: control-plane
+    data:
+      installDisk: S65CNX1T325816
+      miroirDisk: WD_BLACK SN770 2TB
+      macAddress: "88:ae:dd:68:"

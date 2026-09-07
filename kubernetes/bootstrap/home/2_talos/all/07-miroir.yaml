@@ -31,6 +31,6 @@ kind: RawVolumeConfig
 name: miroir
 provisioning:
   diskSelector:
-    match: disk.model == 'WD_BLACK SN770 2TB' && !system_disk
+    match: disk.model == '{{ .Node.Data.miroirDisk }}' && !system_disk
   grow: true
   minSize: 1TB

@@ -13,4 +13,4 @@ config:
   shutdownGracePeriod: 90s
   shutdownGracePeriodCriticalPods: 60s
 defaultRuntimeSeccompProfileEnabled: true
-image: ghcr.io/siderolabs/kubelet:{{ .kubernetesVersion }}
+image: ghcr.io/siderolabs/kubelet:{{ .KubernetesVersion }}
