@@ -8,4 +8,5 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./label.yaml
   #- ./miroir/ks.yaml
