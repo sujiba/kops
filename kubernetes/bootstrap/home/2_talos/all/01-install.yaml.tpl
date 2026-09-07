@@ -10,7 +10,7 @@ hostname: {{ .Node.Host }}
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/metal-installer/{{ .SchematicId }}:{{ .TalosVersion }}
+  image: factory.talos.dev/metal-installer/{{ .SchematicID }}:{{ .TalosVersion }}
 provisioning:
   diskSelector:
     match: disk.serial == '{{ .Node.Data.installDisk }}' && disk.size < 1TB
