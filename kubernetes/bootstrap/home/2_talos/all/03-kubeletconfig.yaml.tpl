@@ -1,5 +1,6 @@
 ---
-# Kubelet: graceful node shutdown windows, seccomp by default, pinned kubelet image.
+# Kubelet: image GC and pull tuning, 200-pod cap, graceful shutdown windows, seccomp by default.
+# maxContainerRestartPeriod caps the CrashLoopBackOff delay at 60s instead of the default 5m.
 apiVersion: v1alpha1
 kind: KubeletConfig
 config:
