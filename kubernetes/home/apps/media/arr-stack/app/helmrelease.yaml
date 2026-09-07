@@ -124,10 +124,9 @@ spec:
             env:
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__AUTH__METHOD: External
-              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__AUTH__REQUIRED: ENABLED
               RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
-              RADARR__SERVER__ALLOWEDHOSTS: "*"
               RADARR__SERVER__PORT: 7878
               RADARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
@@ -156,10 +155,9 @@ spec:
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__AUTH__METHOD: External
-              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__AUTH__REQUIRED: ENABLED
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
-              SONARR__SERVER__ALLOWEDHOSTS: "*"
               SONARR__SERVER__PORT: 8989
               SONARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
@@ -188,10 +186,9 @@ spec:
             env:
               SONARR__APP__INSTANCENAME: Sonarr-Animes
               SONARR__AUTH__METHOD: External
-              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__AUTH__REQUIRED: ENABLED
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
-              SONARR__SERVER__ALLOWEDHOSTS: "*"
               SONARR__SERVER__PORT: 8990
               SONARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
@@ -220,10 +217,9 @@ spec:
             env:
               PROWLARR__APP__INSTANCENAME: Prowlarr
               PROWLARR__AUTH__METHOD: External
-              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              PROWLARR__AUTH__REQUIRED: ENABLED
               PROWLARR__LOG__DBENABLED: "False"
               PROWLARR__LOG__LEVEL: info
-              PROWLARR__SERVER__ALLOWEDHOSTS: "*"
               PROWLARR__SERVER__PORT: 9696
               PROWLARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
