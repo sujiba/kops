@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: miroir
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: miroir
+  interval: 1h
+  values:
+    autoEvictAfter: 1h
+    drbd:
+      alExtents: 6007
+    gateway:
+      enabled: true # needed for rwx
+    groupSnapshots:
+      enabled: true
+    monitoring:
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+      podMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+    replicaCount: 3
