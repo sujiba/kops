@@ -4,4 +4,3 @@ kind: Component
 
 resources:
   - ./cluster-secrets.sops.yaml
-  - ./volsync-kopia-secret.sops.yaml
