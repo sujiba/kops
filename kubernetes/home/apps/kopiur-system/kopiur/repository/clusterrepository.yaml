@@ -14,11 +14,22 @@ spec:
       bucket: kopiur-backup
       endpoint: fsn1.your-objectstorage.com
       region: eu-central
+  create:
+    enabled: true
   encryption:
     passwordSecretRef:
       name: kopiur-repository-secret
       key: KOPIA_PASSWORD
-  create:
-    enabled: true
+  maintenance:
+    schedule:
+      quick:
+        cron: 0 * * * *
+        jitter: 10m
+      full:
+        cron: 0 3 * * *
+        jitter: 1h
+  parameters:
+    epoch:
+      minDuration: 1h
   scheduleDefaults:
     timezone: Europe/Berlin
