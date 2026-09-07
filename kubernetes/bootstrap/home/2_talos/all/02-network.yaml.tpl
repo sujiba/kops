@@ -43,3 +43,9 @@ $patch: delete
 apiVersion: v1alpha1
 kind: KubeProxyConfig
 enabled: false
+
+---
+# KubePrism local API server proxy on 127.0.0.1:7445 (default); Cilium connects here since kube-proxy is disabled.
+apiVersion: v1alpha1
+kind: KubePrismConfig
+port: 7445
