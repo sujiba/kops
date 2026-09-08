@@ -8,4 +8,3 @@ spec:
     name: ${APP}
   schedule:
     cron: H * * * *
-    #jitter: 30m
