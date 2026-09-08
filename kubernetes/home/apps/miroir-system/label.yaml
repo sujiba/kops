@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: Node
-metadata:
-  name: home-01
-  labels:
-    storage.miroir.home-operations.com/class: "std"

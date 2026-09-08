@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./miroirnodegroup.yaml
   - ./storageclass.yaml
-  - ./volumegroupsnapshotclass.yaml
   - ./volumesnapshotclass.yaml

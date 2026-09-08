@@ -7,8 +7,8 @@ spec:
   dependsOn:
     - name: snapshot-controller
       namespace: kube-system
-  interval: 1m
-  path: ./kubernetes/he-c01/apps/miroir-system/miroir/app
+  interval: 1h
+  path: ./kubernetes/home/apps/miroir-system/miroir/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ spec:
   dependsOn:
     - name: miroir
   interval: 1h
-  path: ./kubernetes/he-c01/apps/miroir-system/miroir/config
+  path: ./kubernetes/home/apps/miroir-system/miroir/config
   prune: true
   sourceRef:
     kind: GitRepository

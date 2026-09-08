@@ -3,25 +3,24 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: miroir-local
-provisioner: miroir.home-operations.com
-volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
 parameters:
-  miroir.home-operations.com/pool: default
-  miroir.home-operations.com/replicas: "1"
-  miroir.home-operations.com/quorum: freeze
   csi.storage.k8s.io/fstype: ext4
+  miroir.home-operations.com/replicas: "1"
+provisioner: miroir.home-operations.com
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
 
-# ---
-# apiVersion: storage.k8s.io/v1
-# kind: StorageClass
-# metadata:
-#   name: miroir
-# provisioner: miroir.home-operations.com
-# volumeBindingMode: WaitForFirstConsumer
-# allowVolumeExpansion: true
-# parameters:
-#   miroir.home-operations.com/pool: default
-#   miroir.home-operations.com/replicas: "3"
-#   miroir.home-operations.com/quorum: freeze
-#   csi.storage.k8s.io/fstype: ext4
+#---
+#apiVersion: storage.k8s.io/v1
+#kind: StorageClass
+#metadata:
+#  name: miroir-replicated
+#allowVolumeExpansion: true
+#parameters:
+#  csi.storage.k8s.io/fstype: ext4
+#  miroir.home-operations.com/quorum: last-man-standing
+#  miroir.home-operations.com/replicas: "2"
+#provisioner: miroir.home-operations.com
+#reclaimPolicy: Delete
+#volumeBindingMode: WaitForFirstConsumer

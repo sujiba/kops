@@ -1,14 +1,10 @@
 ---
 apiVersion: miroir.home-operations.com/v1alpha1
-kind: MiroirNodeGroup
+kind: MiroirNode
 metadata:
-  name: std
+  name: home-01
 spec:
-  nodeSelector:
-    matchLabels:
-      storage.miroir.home-operations.com/class: std
-  template:
-    pools:
-      - name: default
-        lvmthin:
-          device: /dev/disk/by-partlabel/r-miroir
+  pools:
+    - name: default
+      lvmthin:
+        device: /dev/disk/by-partlabel/r-miroir

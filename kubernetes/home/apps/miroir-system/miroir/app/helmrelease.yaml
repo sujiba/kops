@@ -8,14 +8,16 @@ spec:
     kind: OCIRepository
     name: miroir
   interval: 1h
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
-    autoEvictAfter: 1h
-    drbd:
-      alExtents: 6007
-    gateway:
-      enabled: true # needed for rwx
-    groupSnapshots:
-      enabled: true
+    agent:
+      resources:
+        limits:
+          memory: 192Mi
+    autoTieBreaker: false
     monitoring:
       dashboards:
         enabled: true
@@ -27,4 +29,3 @@ spec:
         enabled: true
       prometheusRule:
         enabled: true
-    replicaCount: 3
