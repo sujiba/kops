@@ -2,26 +2,26 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich-postgres-data
+  name: immich-postgres
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 5Gi
-  storageClassName: local-hostpath
+  storageClassName: miroir-local
 
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: immich
-spec:
-  accessModes: ["ReadWriteOnce"]
-  dataSourceRef:
-    apiGroup: kopiur.home-operations.com
-    kind: Restore
-    name: immich
-  resources:
-    requests:
-      storage: 300Gi
-  storageClassName: local-hostpath
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: immich
+#spec:
+#  accessModes: ["ReadWriteOnce"]
+#  dataSourceRef:
+#    apiGroup: kopiur.home-operations.com
+#    kind: Restore
+#    name: immich
+#  resources:
+#    requests:
+#      storage: 300Gi
+#  storageClassName: miroir-local
