@@ -4,6 +4,8 @@ kind: Kustomization
 metadata:
   name: pihole
 spec:
+  components:
+    - ../../../../components/kopiur/backup
   interval: 1h
   path: ./kubernetes/home/apps/network/pihole/app
   postBuild:
@@ -12,10 +14,7 @@ spec:
         kind: Secret
     substitute:
       APP: pihole
-      VOLSYNC_CLAIM: pihole-data
-      VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_GID: "1000"
-      VOLSYNC_UID: "1000"
+      KOPIUR_CAPACITY: 1Gi
   prune: true
   sourceRef:
     kind: GitRepository

@@ -8,7 +8,6 @@ spec:
     kind: OCIRepository
     name: pihole
   interval: 1h
-  timeout: 5m
   values:
     defaultPodOptions:
       hostUsers: false
@@ -29,7 +28,7 @@ spec:
             env:
               TZ: Europe/Berlin
               FTLCONF_dns_listeningMode: all
-              FTLCONF_webserver_port: &port 80
+              FTLCONF_webserver_port: 80
               FTLCONF_dns_upstreams: 127.0.0.1#5335
               FTLCONF_dns_dnssec: true
               FTLCONF_webserver_interface_theme: default-dark
@@ -60,7 +59,7 @@ spec:
             protocol: TCP
           http:
             primary: true
-            port: *port
+            port: 80
             protocol: HTTP
           https:
             port: 443
@@ -69,7 +68,7 @@ spec:
     route:
       app:
         hostnames:
-          - '{{ .Release.Name }}.${INTERNAL_DOMAIN}'
+          - pihole.${INTERNAL_DOMAIN}
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -81,7 +80,7 @@ spec:
 
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: pihole
         globalMounts:
           - path: "/etc/pihole"
             subPath: "pihole"
