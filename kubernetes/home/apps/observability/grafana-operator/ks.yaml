@@ -27,8 +27,6 @@ metadata:
 spec:
   dependsOn:
     - name: grafana-operator
-    - name: democratic-csi
-      namespace: storage
   interval: 1h
   path: ./kubernetes/home/apps/observability/grafana-operator/instance
   postBuild:
