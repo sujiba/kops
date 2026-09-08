@@ -10,8 +10,6 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-      - name: volsync-kopia-secret
-        kind: Secret
     substitute:
       APP: pihole
       VOLSYNC_CLAIM: pihole-data
