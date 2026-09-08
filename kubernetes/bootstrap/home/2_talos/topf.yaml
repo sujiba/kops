@@ -3,10 +3,10 @@ clusterName: home
 clusterEndpoint: https://10.10.10.4:6443
 
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: 1.37.0
+kubernetesVersion: v1.37.0
 
 # renovate: datasource=custom.talos-factory depName=siderolabs/talos
-talosVersion: 1.14.0
+talosVersion: v1.14.0
 schematicId: "@schematic.yaml" # f52993c6db857e043f2573226a0d30889d1eb8dd10bdcda76ffbd631efd2ee3e
 platform: metal
 secureboot: true
@@ -19,6 +19,6 @@ nodes:
     ip: 10.10.10.4
     role: control-plane
     data:
-      installDisk: S65CNX1T325816
+      installDisk: SAMSUNG MZALQ512HBLU-00BL1
       miroirDisk: WD_BLACK SN770 2TB
       macAddress: "88:ae:dd:68:"

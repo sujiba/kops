@@ -13,5 +13,5 @@ installer:
   image: factory.talos.dev/metal-installer/{{ .SchematicID }}:{{ .TalosVersion }}
 provisioning:
   diskSelector:
-    match: disk.serial == '{{ .Node.Data.installDisk }}' && disk.size < 1TB
+    match: disk.model == '{{ .Node.Data.installDisk }}' && disk.size < 1u * TiB
   wipe: false
