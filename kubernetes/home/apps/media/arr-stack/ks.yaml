@@ -15,7 +15,7 @@ spec:
     substitute:
       APP: arr-stack
       KOPIUR_CAPACITY: 50Gi
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
