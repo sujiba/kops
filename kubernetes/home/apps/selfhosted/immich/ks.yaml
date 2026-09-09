@@ -15,7 +15,6 @@ spec:
     substitute:
       APP: immich
       KOPIUR_CAPACITY: 300Gi
-      KOPIUR_OFFSET: "3"
   prune: true
   sourceRef:
     kind: GitRepository
