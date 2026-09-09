@@ -6,12 +6,13 @@ customization:
     - initcall_blacklist=algif_aead_init                  # CVE-2026-31431 (Copy Fail) mitigation
     - nvme_core.default_ps_max_latency_us=0               # Disables APST, drive stays in PS0. Classic fix for Samsung PM drives that never wake from deep power states
     - sysctl.kernel.kexec_load_disabled=1                 # block runtime kexec (hardening, no downside)
-    - xe.force_probe=7dd1                               # MTL-P iGPU not in xe's supported list on 6.18
-    - i915.force_probe=!7dd1                            # keep i915 off the same PCI ID
+    - xe.force_probe=7dd1                                 # MTL-P iGPU not in xe's supported list on 6.18
+    - i915.force_probe=!7dd1                              # keep i915 off the same PCI ID
   systemExtensions:
     officialExtensions:
       - siderolabs/binfmt-misc      # QEMU emulation for building arm64 containers on this amd64 node
       - siderolabs/drbd             # replicated block storage — only needed if you're using DRBD
+      - siderolabs/i915             # firmware: i915/mtl_dmc.bin, i915/mtl_guc_70.bin
       - siderolabs/intel-ucode      # Intel CPU microcode updates
       - siderolabs/mei              # exposes /dev/mei0 — only needed if something queries the ME directly (e.g. AMT-aware tooling on-node)
       - siderolabs/util-linux-tools # extra CLI utils (fstrim, wipefs, etc.) — only needed if a specific task requires them

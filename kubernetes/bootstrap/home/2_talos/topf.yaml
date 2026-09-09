@@ -7,7 +7,7 @@ kubernetesVersion: v1.37.0
 
 # renovate: datasource=custom.talos-factory depName=siderolabs/talos
 talosVersion: v1.14.0
-schematicId: "@schematic.yaml" # f52993c6db857e043f2573226a0d30889d1eb8dd10bdcda76ffbd631efd2ee3e
+schematicId: "@schematic.yaml" # 739fedd246f710e5d8edc606520d490bab15453058b8be7e28ef012e3340359c
 platform: metal
 secureboot: true
 
