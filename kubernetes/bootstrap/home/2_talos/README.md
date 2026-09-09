@@ -98,12 +98,13 @@ Single node, Intel Core Ultra 5 225H (Arrow Lake-H), Arc 130T iGPU.
 
 ```bash
 # render the final machine config offline, without touching any node - good for reviewing changes
-topf render --nodes-filter home-01
+topf render
 
 # apply config to the node(s) in maintenance mode and bootstrap etcd
 topf apply --auto-bootstrap
 
 # generate credentials
 topf talosconfig >  ~/.talos/home
-topf kubeconfig > ~/.kube/home
+# create kubeconfig with 1 year validity
+topf kubeconfig --validity 8760h > ~/.kube/home
 ```

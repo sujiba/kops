@@ -1,11 +1,12 @@
 customization:
   extraKernelArgs:
-    - xe.enable_guc=3                                          # Arrow Lake iGPU — GuC/HuC submission
-    - intel_iommu=on                                           # PCI passthrough
-    - iommu=pt                                                 # PCI passthrough
-    - initcall_blacklist=algif_aead_init                       # CVE-2026-31431 (Copy Fail) mitigation
-    - lsm=lockdown,capability,yama,safesetid,bpf,landlock      # disable permissive-only SELinux; keep minor LSMs
-    - sysctl.kernel.kexec_load_disabled=1                      # block runtime kexec (hardening, no downside)
+    - lsm=lockdown,capability,yama,safesetid,bpf,landlock # disable permissive-only SELinux; keep minor LSMs
+    - intel_iommu=on                                      # PCI passthrough
+    - iommu=pt                                            # PCI passthrough
+    - initcall_blacklist=algif_aead_init                  # CVE-2026-31431 (Copy Fail) mitigation
+    - nvme_core.default_ps_max_latency_us=0               # Disables APST, drive stays in PS0. Classic fix for Samsung PM drives that never wake from deep power states
+    - sysctl.kernel.kexec_load_disabled=1                 # block runtime kexec (hardening, no downside)
+    - xe.enable_guc=3                                     # Arrow Lake iGPU — GuC/HuC submission
   systemExtensions:
     officialExtensions:
       - siderolabs/binfmt-misc      # QEMU emulation for building arm64 containers on this amd64 node

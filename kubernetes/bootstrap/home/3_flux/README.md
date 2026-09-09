@@ -19,7 +19,7 @@ Change into the directory `kubernetes/home/bootstrap`
 ### Create Namespaces
 ```bash
 # create namespace upfront to apply secrets
-kubectl create ns flux-system
+kubectl --kubeconfig ~/.kube/home create ns flux-system
 ```
 
 ### Add sops private key
@@ -36,10 +36,10 @@ cat $HOME/Library/Application\ Support/sops/age/keys.txt | \
 helmfile init
 
 # render all necessary crds
-helmfile -f 0-crds.yaml template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl --kubeconfig ~/.kube/home apply --server-side --field-manager bootstrap --force-conflicts -f -
+helmfile --kubeconfig ~/.kube/home -f 0-crds.yaml template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl --kubeconfig ~/.kube/home apply --server-side --field-manager bootstrap --force-conflicts -f -
 
 # sync helm
-helmfile -f 1-apps.yaml sync
+helmfile --kubeconfig ~/.kube/home -f 1-apps.yaml sync
 ```
 
 ## flux reconcile
