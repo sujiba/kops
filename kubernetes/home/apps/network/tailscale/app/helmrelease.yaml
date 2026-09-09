@@ -8,7 +8,6 @@ spec:
     kind: OCIRepository
     name: tailscale
   interval: 1h
-  timeout: 5m
 
   values:
     controllers:
