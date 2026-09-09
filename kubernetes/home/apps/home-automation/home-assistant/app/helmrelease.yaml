@@ -66,9 +66,7 @@ spec:
               - path: /config
                 subPath: config
       hass-cache:
-        storageClass: miroir-local
-        accessMode: ReadWriteOnce
-        size: 1Gi
+        existingClaim: home-assistant-cache
         advancedMounts:
           home-assistant:
             app:
