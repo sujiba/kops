@@ -17,7 +17,7 @@ spec:
       KOPIUR_CAPACITY: 10Gi
       KOPIUR_PUID: "2000"
       KOPIUR_PGID: "2000"
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
