@@ -65,7 +65,7 @@ spec:
             app:
               - path: /config
                 subPath: config
-      cache:
+      hass-cache:
         storageClass: miroir-local
         accessMode: ReadWriteOnce
         size: 1Gi
