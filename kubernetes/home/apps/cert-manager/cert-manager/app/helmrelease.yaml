@@ -13,7 +13,7 @@ spec:
       enabled: true
     cainjector:
       replicaCount: 1
-    dns01RecursiveNameservers: https://dns.quad9.net/dns-query,https://dns11.quad9.net/dns-query
+    dns01RecursiveNameservers: https://dns.quad9.net/dns-query
     dns01RecursiveNameserversOnly: true
     prometheus:
       enabled: true
