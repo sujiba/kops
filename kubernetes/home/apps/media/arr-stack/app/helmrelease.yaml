@@ -83,10 +83,8 @@ spec:
             restartPolicy: Always
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities: { add: ["NET_ADMIN", "NET_RAW"] }
+              capabilities: { add: ["NET_ADMIN"] }
               readOnlyRootFilesystem: false
-              runAsNonRoot: false
-              runAsUser: 0
 
         containers:
           sabnzbd:
@@ -271,19 +269,19 @@ spec:
       sonarr-animes:
         controller: arr-stack
         ports:
-          sonarr:
+          sonarr-animes:
             port: 8990
 
       prowlarr:
         controller: arr-stack
         ports:
-          sonarr:
+          prowlarr:
             port: 9696
 
       socks5:
         controller: arr-stack
         ports:
-          sonarr:
+          socks5:
             port: 1080
 
     route:
