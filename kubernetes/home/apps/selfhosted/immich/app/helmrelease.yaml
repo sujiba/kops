@@ -207,9 +207,7 @@ spec:
               - path: /cache
 
       postgresql:
-        storageClass: miroir-local
-        accessMode: ReadWriteOnce
-        size: 5Gi
+        existingClaim: ${APP}-postgres
         advancedMounts:
           postgresql:
             app:

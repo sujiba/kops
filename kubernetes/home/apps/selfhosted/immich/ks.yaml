@@ -15,7 +15,7 @@ spec:
     substitute:
       APP: immich
       KOPIUR_CAPACITY: 300Gi
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
