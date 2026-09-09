@@ -27,10 +27,19 @@ kind: ResolverConfig
 hostDNS:
   enabled: true
 nameservers:
-  - address: 9.9.9.10
+  - address: 9.9.9.9
     protocol: DoT
-    tlsServerName: dns10.quad9.net
-  - address: 9.9.9.10   # plaintext fallback for boot
+    tlsServerName: dns.quad9.net
+  - address: 149.112.112.112
+    protocol: DoT
+    tlsServerName: dns.quad9.net
+  - address: 2620:fe::fe
+    protocol: DoT
+    tlsServerName: dns.quad9.net
+  - address: 2620:fe::9
+    protocol: DoT
+    tlsServerName: dns.quad9.net
+  - address: 9.9.9.9   # plaintext fallback for boot
 
 ---
 # NTS-authenticated time from the Trifecta Tech NTS pool (community-run; avoids cloudflare)
