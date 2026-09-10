@@ -8,6 +8,7 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./drm-exporter/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana-operator/ks.yaml
   #- ./kromgo/ks.yaml
