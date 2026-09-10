@@ -1,0 +1,46 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: arr-stack
+spec:
+  components:
+    - ../../../../components/kopiur/backup
+  interval: 1h
+  path: ./kubernetes/home/apps/downloads/arr-stack/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+    substitute:
+      APP: arr-stack
+      KOPIUR_CAPACITY: 50Gi
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: downloads
+  wait: false
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: configarr
+spec:
+  dependsOn:
+    - name: arr-stack
+  interval: 1h
+  path: ./kubernetes/home/apps/downloads/arr-stack/configarr
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: downloads
+  wait: false
