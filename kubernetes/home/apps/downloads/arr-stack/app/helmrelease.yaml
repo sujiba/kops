@@ -390,7 +390,7 @@ spec:
 
       media:
         type: nfs
-        server: storage.${INTERNAL_DOMAIN}
+        server: ${STORAGE_IP}
         path: /volume2/media
         advancedMounts:
           arr-stack:
