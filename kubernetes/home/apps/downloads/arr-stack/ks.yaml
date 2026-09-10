@@ -14,7 +14,7 @@ spec:
         kind: Secret
     substitute:
       APP: arr-stack
-      KOPIUR_CAPACITY: 50Gi
+      KOPIUR_CAPACITY: 20Gi
   prune: true
   sourceRef:
     kind: GitRepository
