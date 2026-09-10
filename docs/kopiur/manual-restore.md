@@ -1,5 +1,8 @@
 # Manual Kopiur restore into an existing PVC <!-- omit in toc -->
 
+This guide restores a kopia snapshot directly into an existing PVC using a `Restore`. Use it when the automatic deploy-or-restore (populator) finds no snapshot, typically after moving an app to a different namespace.
+
+## Overview <!-- omit in toc -->
 - [Background](#background)
 - [Identify the snapshot](#identify-the-snapshot)
 - [Manifest](#manifest)
@@ -12,9 +15,6 @@
 - [Cautious variant: restore into a new PVC first](#cautious-variant-restore-into-a-new-pvc-first)
 - [Troubleshooting](#troubleshooting)
 - [After the restore: future backups](#after-the-restore-future-backups)
-
-
-This guide restores a kopia snapshot directly into an existing PVC using a `Restore`. Use it when the automatic deploy-or-restore (populator) finds no snapshot, typically after moving an app to a different namespace.
 
 ## Background
 
