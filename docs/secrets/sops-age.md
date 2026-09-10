@@ -1,8 +1,8 @@
-# SOPS – Rotating a post-quantum age key <!-- omit in toc -->
+# SOPS - Rotating a post-quantum age key <!-- omit in toc -->
 
 This guide describes how to replace an **old post-quantum (PQ) age key** with a **new PQ age key** and re-encrypt all SOPS secrets for the new key.
 
-> Public keys in this document are shortened (`age1pq1nfmv…2afe`) for readability. PQ recipients are very long – always copy the full key.
+> Public keys in this document are shortened (`age1pq1nfmv…2afe`) for readability. PQ recipients are very long - always copy the full key.
 
 Reference: <https://getsops.io/docs/usage/identities/age/>
 
@@ -21,7 +21,7 @@ Reference: <https://getsops.io/docs/usage/identities/age/>
 
 - `age` / `age-keygen` with post-quantum support (`-pq` flag)
 - `sops` with support for PQ age recipients (`age1pq1…`)
-- The **old private key** must still be available – SOPS needs it to decrypt the files before re-encrypting them for the new key.
+- The **old private key** must still be available - SOPS needs it to decrypt the files before re-encrypting them for the new key.
 
 ## Key location (macOS)
 
@@ -50,7 +50,7 @@ AGE-SECRET-KEY-PQ-1…
 
 ## 2. Add the new key to `keys.txt`
 
-Copy the content of `keys.neu.txt` into `keys.txt`. **Append it – do not replace the old key yet**, otherwise the existing secrets can no longer be decrypted.
+Copy the content of `keys.neu.txt` into `keys.txt`. **Append it - do not replace the old key yet**, otherwise the existing secrets can no longer be decrypted.
 
 ```sh
 cd $HOME/Library/Application\ Support/sops/age
@@ -59,7 +59,7 @@ cat keys.neu.txt >> keys.txt
 
 ## 3. Update `.sops.yaml` (creation rules)
 
-Remove the old public key and add the new one. Replace **every** occurrence – the same key may be used in several rules.
+Remove the old public key and add the new one. Replace **every** occurrence - the same key may be used in several rules.
 
 Before:
 
@@ -146,7 +146,7 @@ Once all files have been updated and verified:
 
 ## Note: `updatekeys` vs. `rotate`
 
-`sops updatekeys` only changes **who** can decrypt the file – the underlying data key stays the same. Anyone who still has the old private key and an old version of the file (e.g. from Git history) can still read it.
+`sops updatekeys` only changes **who** can decrypt the file - the underlying data key stays the same. Anyone who still has the old private key and an old version of the file (e.g. from Git history) can still read it.
 
 If the old key may be compromised, additionally rotate the data key and change the actual secret values:
 

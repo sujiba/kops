@@ -1,10 +1,10 @@
-# Jellyfin Transcoding – Intel Core Ultra 5 225H (QSV) <!-- omit in toc -->
+# Jellyfin Transcoding - Intel Core Ultra 5 225H (QSV) <!-- omit in toc -->
 
 Hardware transcoding configuration for Jellyfin on an Intel Core Ultra 5 225H (Arrow Lake-H) with integrated Intel graphics. Jellyfin runs on Kubernetes using the official image, which already ships `jellyfin-ffmpeg`, all Intel drivers and the OpenCL runtime.
 
 The media engine can decode **and** encode H.264, HEVC (8/10-bit), VP9 and AV1 in hardware. Multiple simultaneous 4K HDR transcodes are no problem.
 
-Reference: [Jellyfin Docs – Intel GPU](https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/intel) · [Jellyfin Docs – Stereo Downmix](https://jellyfin.org/docs/general/post-install/transcoding/downmix)
+Reference: [Jellyfin Docs - Intel GPU](https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/intel) · [Jellyfin Docs - Stereo Downmix](https://jellyfin.org/docs/general/post-install/transcoding/downmix)
 
 
 ## Overview <!-- omit in toc -->
@@ -164,7 +164,7 @@ Max muxing queue size:       2048
 
 - **VBR audio encoding:** Disabled, since variable bitrate can occasionally cause buffering or compatibility issues.
 - **Stereo Downmix Algorithm AC-4:** An industry standard that preserves both volume level and spatial impression well. The most balanced algorithm for movies.
-- **Audio boost 1.5:** The default of 2 is tuned for ffmpeg's built-in downmix (`None`). With AC-4, 1.5 is a good middle ground. If loud scenes sound distorted, lower it to 1.2–1.3. If everything is too quiet, raise it towards 2.
+- **Audio boost 1.5:** The default of 2 is tuned for ffmpeg's built-in downmix (`None`). With AC-4, 1.5 is a good middle ground. If loud scenes sound distorted, lower it to 1.2-1.3. If everything is too quiet, raise it towards 2.
 - **Seek strategy and muxing queue:** Defaults. Only increase the queue if `Too many packets buffered for output stream` appears in the FFmpeg log.
 
 > **When does the downmix apply?** Only when the **server** transcodes the audio to stereo, i.e. when the client reports that it only supports stereo (typically browsers and some TV apps). With Direct Play or Direct Stream of multichannel audio, the playback device downmixes on its own and this setting has no effect. The playback info shows whether the server is downmixing: the audio stream is then listed as "Transcoding" with 2 channels.
