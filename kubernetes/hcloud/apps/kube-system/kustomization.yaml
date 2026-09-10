@@ -8,6 +8,6 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./k8tz/ks.yaml
+  #- ./k8tz/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
