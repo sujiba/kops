@@ -82,9 +82,12 @@ spec:
                   timeoutSeconds: 10
             restartPolicy: Always
             securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              runAsNonRoot: false
               allowPrivilegeEscalation: false
-              capabilities: { add: ["NET_ADMIN"] }
               readOnlyRootFilesystem: false
+              capabilities: { add: ["NET_ADMIN"] }
 
         containers:
           sabnzbd:
