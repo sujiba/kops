@@ -1,8 +1,6 @@
 # SOPS - Rotating a post-quantum age key <!-- omit in toc -->
 
-This guide describes how to replace an **old post-quantum (PQ) age key** with a **new PQ age key** and re-encrypt all SOPS secrets for the new key.
-
-> Public keys in this document are shortened (`age1pq1nfmv…2afe`) for readability. PQ recipients are very long - always copy the full key.
+This guide describes how to replace an old age key with a **new post-quantum (PQ) age key** and re-encrypt all SOPS secrets for the new key.
 
 Reference: <https://getsops.io/docs/usage/identities/age/>
 
