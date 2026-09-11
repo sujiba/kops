@@ -38,7 +38,7 @@ The file can contain multiple identities, one per line. Lines starting with `#` 
 ## 1. Generate a new key
 
 ```sh
-age-keygen -pq -o $HOME/Library/Application\ Support/sops/age/keys.neu.txt
+age-keygen -pq -o $HOME/Library/Application\ Support/sops/age/keys.new.txt
 ```
 
 The public key (recipient) is printed to the terminal and is also contained as a comment in the file:
@@ -50,11 +50,11 @@ AGE-SECRET-KEY-PQ-1…
 
 ## 2. Add the new key to `keys.txt`
 
-Copy the content of `keys.neu.txt` into `keys.txt`. **Append it - do not replace the old key yet**, otherwise the existing secrets can no longer be decrypted.
+Copy the content of `keys.new.txt` into `keys.txt`. **Append it - do not replace the old key yet**, otherwise the existing secrets can no longer be decrypted.
 
 ```sh
 cd $HOME/Library/Application\ Support/sops/age
-cat keys.neu.txt >> keys.txt
+cat keys.new.txt >> keys.txt
 ```
 
 ## 3. Update `.sops.yaml` (creation rules)
@@ -131,7 +131,7 @@ find kubernetes/bootstrap -name '*secrets.yaml' -exec sops updatekeys -y {} \;
 Make sure the files can be decrypted using only the new key:
 
 ```sh
-SOPS_AGE_KEY_FILE=$HOME/Library/Application\ Support/sops/age/keys.neu.txt \
+SOPS_AGE_KEY_FILE=$HOME/Library/Application\ Support/sops/age/keys.new.txt \
   sops decrypt secrets.sops.yaml > /dev/null && echo OK
 ```
 
@@ -140,7 +140,7 @@ SOPS_AGE_KEY_FILE=$HOME/Library/Application\ Support/sops/age/keys.neu.txt \
 Once all files have been updated and verified:
 
 - Remove the old identity from `keys.txt`.
-- Delete `keys.neu.txt` (its content is now in `keys.txt`).
+- Delete `keys.new.txt` (its content is now in `keys.txt`).
 - Update the key anywhere else it is used (e.g. the `sops-age` secret in the cluster for Flux/ArgoCD, CI secrets, password manager backup).
 - Commit `.sops.yaml` and the updated secret files.
 
