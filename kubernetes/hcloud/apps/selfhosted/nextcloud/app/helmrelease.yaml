@@ -60,7 +60,7 @@ spec:
         domain: ${MAIL_DOMAIN}
         smtp:
           port: 2525
-          secure: ''
+          secure: ""
 
       phpConfigs:
         uploadLimit.ini: |

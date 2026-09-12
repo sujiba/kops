@@ -50,10 +50,10 @@ spec:
               # Healthcheck options
               HEALTH_SERVER_ADDRESS: ":9999"
               # Socks5 proxy settings
-              #SOCKS5_ENABLED: off
-              #SOCKS5_LISTENING_ADDRESS: ":1080"
-              #SOCKS5_USER: ""
-              #SOCKS5_PASSWORD: ""
+              # SOCKS5_ENABLED: off
+              # SOCKS5_LISTENING_ADDRESS: ":1080"
+              # SOCKS5_USER: ""
+              # SOCKS5_PASSWORD: ""
               # Storage options
               STORAGE_FILEPATH: "" # prevent memory spike and avoid I/O
               # Updater options
@@ -87,7 +87,7 @@ spec:
               runAsNonRoot: false
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
-              capabilities: { add: ["NET_ADMIN"] }
+              capabilities: {add: ["NET_ADMIN"]}
 
         containers:
           sabnzbd:
@@ -116,7 +116,7 @@ spec:
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
 
           radarr:
             image:

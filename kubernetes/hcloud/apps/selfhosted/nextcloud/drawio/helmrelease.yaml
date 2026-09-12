@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -23,12 +24,12 @@ spec:
               tag: 31.4.5
             env:
               DRAWIO_SERVER_URL: https://draw.${EXTERNAL_DOMAIN}/
-              #EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
+              # EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
 
-          #exporter:
-          #  image:
-          #    repository: docker.io/jgraph/export-server
-          #    tag: latest@sha256:9667a71912e5605197aff73b645116649dcbf25f87b5398364037ef412831005
+          # exporter:
+          #   image:
+          #     repository: docker.io/jgraph/export-server
+          #     tag: latest@sha256:9667a71912e5605197aff73b645116649dcbf25f87b5398364037ef412831005
 
     service:
       app:
@@ -36,11 +37,11 @@ spec:
         ports:
           http:
             port: &port 8080
-      #exporter:
-      #  controller: drawio
-      #  ports:
-      #    http:
-      #      port: 8000
+      # exporter:
+      #   controller: drawio
+      #   ports:
+      #     http:
+      #       port: 8000
 
     route:
       app:
@@ -55,5 +56,5 @@ spec:
                   type: PathPrefix
                   value: /
             backendRefs:
-                - name: *app
-                  port: *port
+              - name: *app
+                port: *port

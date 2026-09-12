@@ -10,7 +10,7 @@ spec:
     name: forgejo
   values:
     strategy:
-      type: 'Recreate'
+      type: "Recreate"
 
     image:
       registry: code.forgejo.org
@@ -50,7 +50,7 @@ spec:
     signing:
       enabled: true
       ssh:
-        existingSecret: 'forgejo-ssh-signing-secret'
+        existingSecret: "forgejo-ssh-signing-secret"
 
     gitea:
       admin:
@@ -61,7 +61,7 @@ spec:
       config:
         admin:
           SEND_NOTIFICATION_EMAIL_ON_NEW_USER: true
-        APP_NAME: 'Git Invaders'
+        APP_NAME: "Git Invaders"
         cache:
           ENABLED: true
           ADAPTER: redis
@@ -69,8 +69,8 @@ spec:
         cron:
           ENABLED: true
         cron.archive_cleanup:
-          SCHEDULE: '@hourly'
-          OLDER_THAN: '2h'
+          SCHEDULE: "@hourly"
+          OLDER_THAN: "2h"
         database:
           PATH: /data/gitea.db
           DB_TYPE: sqlite3
@@ -82,7 +82,7 @@ spec:
           PATH: /data/git/lfs
         log:
           MODE: console, file
-          LEVEL: 'info'
+          LEVEL: "info"
           LOGGER_ACCESS_MODE: file
         log.file:
           LEVEL: Info
@@ -91,7 +91,7 @@ spec:
         oauth2_client:
           UPDATE_AVATAR: true
         packages:
-          LIMIT_SIZE_CONTAINER: '2 GiB'
+          LIMIT_SIZE_CONTAINER: "2 GiB"
         queue:
           TYPE: redis
           CONN_STR: redis://forgejo-dragonfly:6379?pool_size=100&idle_timeout=180s
@@ -99,9 +99,9 @@ spec:
           ROOT: /data/git/repositories
           ENABLE_PUSH_CREATE_USER: true
           DEFAULT_PUSH_CREATE_PRIVATE: false
-          DEFAULT_REPO_UNITS: 'repo.code,repo.releases,repo.issues,repo.pulls,repo.actions'
+          DEFAULT_REPO_UNITS: "repo.code,repo.releases,repo.issues,repo.pulls,repo.actions"
         repository.pull-request:
-          WORK_IN_PROGRESS_PREFIXES: 'WIP:,[WIP]:'
+          WORK_IN_PROGRESS_PREFIXES: "WIP:,[WIP]:"
         repository.signing:
           FORMAT: ssh
           SIGNING_KEY: /data/git/.ssh-signing/key.pub
@@ -154,21 +154,21 @@ spec:
         image: ghcr.io/techarohq/anubis:v1.27.0@sha256:8828275668b7bc675679f100970f9714f731388fbbf66ae94de8aca952e3fc4a
         imagePullPolicy: Always
         env:
-          - name: 'BIND'
-            value: ':8080'
-          - name: 'METRICS_BIND'
-            value: ':9090'
-          - name: 'DIFFICULTY'
-            value: '4'
+          - name: "BIND"
+            value: ":8080"
+          - name: "METRICS_BIND"
+            value: ":9090"
+          - name: "DIFFICULTY"
+            value: "4"
           - name: ED25519_PRIVATE_KEY_HEX
             valueFrom:
               secretKeyRef:
                 name: forgejo-anubis-key-secret
                 key: ED25519_PRIVATE_KEY_HEX
-          - name: 'TARGET'
-            value: 'http://localhost:3000'
-          - name: 'POLICY_FNAME'
-            value: '/etc/anubisBotPolicy.yaml'
+          - name: "TARGET"
+            value: "http://localhost:3000"
+          - name: "POLICY_FNAME"
+            value: "/etc/anubisBotPolicy.yaml"
         volumeMounts:
           - name: anubis-bot-policy
             mountPath: /etc/anubisBotPolicy.yaml
