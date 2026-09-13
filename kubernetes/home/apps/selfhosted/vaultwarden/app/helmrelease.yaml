@@ -46,8 +46,8 @@ spec:
               SMTP_HOST: smtp-relay.network.svc.cluster.local
               SMTP_PORT: 2525
               SMTP_SECURITY: off
-              SMTP_USERNAME: ''
-              SMTP_PASSWORD: ''
+              SMTP_USERNAME: ""
+              SMTP_PASSWORD: ""
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_FROM_NAME: vaultwarden
               SSO_ENABLED: false
