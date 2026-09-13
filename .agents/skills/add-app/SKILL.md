@@ -281,6 +281,10 @@ yamllint --config-file .yamllint.yaml kubernetes/apps/<namespace>/<app>
 
 Show the user the created files and get confirmation before committing. Commit style: `feat(<app>): Deploy`.
 
+## Step 5: Document the app
+
+After the app has been added, run the `add-docs` skill (`.agents/skills/add-docs/SKILL.md`) for it so `docs/content/apps/` stays in sync with the manifests.
+
 ## Common mistakes
 
 - **Copying a chart version or image tag from this skill or memory** — always read the current version from the repo (Step 2 command) and upstream.
@@ -290,4 +294,3 @@ Show the user the created files and get confirmation before committing. Commit s
 - **Skipping the sorting conventions** — HelmRelease values follow `.agents/instructions/sorting.instructions.md`.
 - **Adding a CiliumNetworkPolicy by default** — only some apps lock down ingress; copy `searxng`'s if the user asks for one.
 - **Adding `wait`, `commonMetadata`, or `timeout` to `ks.yaml`** — all three are boilerplate now. Leave `wait` unset unless another Kustomization depends on this one and it has no `healthChecks` (then, and only then, `wait: true`).
-

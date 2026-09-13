@@ -11,3 +11,8 @@ Thumbs.db
 *.secrets.yaml
 kubeconfig
 talosconfig
+
+# Docs build output
+docs/site/
+docs/.venv/
+docs
