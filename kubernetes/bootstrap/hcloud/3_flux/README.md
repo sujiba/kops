@@ -4,24 +4,22 @@
 - [Prerequisites](#prerequisites)
   - [Create Namespaces](#create-namespaces)
   - [Add sops private key](#add-sops-private-key)
-  - [Create secrets](#create-secrets)
 - [Prepare k8s and bootstrap fluxcd](#prepare-k8s-and-bootstrap-fluxcd)
 - [flux reconcile](#flux-reconcile)
 - [flux cheat-sheet](#flux-cheat-sheet)
 
 ## Required packages
 ```bash
-brew install helm helmfile kubectl fluxcd/tap/flux
+brew install helm helmfile kubectl fluxcd/tap/flux yq
 ```
 
 ## Prerequisites
-Change into the directory `kubernetes/hcloud/bootstrap`
+Change into the directory `kubernetes/hlcoud/bootstrap`
 
 ### Create Namespaces
 ```bash
 # create namespace upfront to apply secrets
-kubectl create ns flux-system
-kubectl create ns development
+kubectl --kubeconfig ~/.kube/hlcoud create ns flux-system
 ```
 
 ### Add sops private key
@@ -29,19 +27,7 @@ kubectl create ns development
 cat $HOME/Library/Application\ Support/sops/age/keys.txt | \
   kubectl create secret generic sops-age \
   --from-file=age.agekey=/dev/stdin \
-  -n flux-system --kubeconfig ~/.kube/hcloud
-```
-
-### Create secrets
-```bash
-# Do not forget to encrypt all your *.sops.yaml files
-mv bootstrap.secrets.sops.yaml_example bootstrap.secrets.sops.yaml
-
-# in-place encrypt secrets file, so we can store them in our git repo
-sops encrypt -i bootstrap.secrets.sops.yaml
-
-# Apply secrets to cluster
-sops --decrypt bootstrap.secrets.sops.yaml | kubectl apply -f -
+  -n flux-system --kubeconfig ~/.kube/hlcoud
 ```
 
 ## Prepare k8s and bootstrap fluxcd 
@@ -50,10 +36,10 @@ sops --decrypt bootstrap.secrets.sops.yaml | kubectl apply -f -
 helmfile init
 
 # render all necessary crds
-helmfile -f 0-crds.yaml template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl --kubeconfig ~/.kube/hcloud apply --server-side --field-manager bootstrap --force-conflicts -f -
+helmfile --kubeconfig ~/.kube/hlcoud -f 0-crds.yaml template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl --kubeconfig ~/.kube/hlcoud apply --server-side --field-manager bootstrap --force-conflicts -f -
 
 # sync helm
-helmfile -f 1-apps.yaml sync
+helmfile --kubeconfig ~/.kube/hlcoud -f 1-apps.yaml sync
 ```
 
 ## flux reconcile
@@ -64,16 +50,16 @@ helmfile -f 1-apps.yaml sync
 
 ```bash
 # reconcile source git repo and all kustomizations
-flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/hcloud && \
-flux reconcile -n flux-system kustomization flux-system --kubeconfig ~/.kube/hcloud
+flux reconcile -n flux-system source git flux-system --kubeconfig ~/.kube/hlcoud && \
+flux reconcile -n flux-system kustomization flux-system --kubeconfig ~/.kube/hlcoud
 ```
 
 ## flux cheat-sheet
 Helpful commands:
 ```bash
-flux get all -A --status-selector ready=false --kubeconfig ~/.kube/home
+flux get all -A --status-selector ready=false --kubeconfig ~/.kube/hlcoud
 
-flux get helmreleases --all-namespaces --watch --kubeconfig ~/.kube/home
+flux get helmreleases --all-namespaces --watch --kubeconfig ~/.kube/hlcoud
 
 flux logs --all-namespaces --follow --level=error
 ```
