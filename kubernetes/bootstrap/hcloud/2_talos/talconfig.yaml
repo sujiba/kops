@@ -2,7 +2,7 @@
 clusterName: hcloud
 
 # renovate: datasource=custom.talos-factory depName=siderolabs/talos
-talosVersion: 1.14.0
+talosVersion: 1.14.1
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: 1.37.0
 
