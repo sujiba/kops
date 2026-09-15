@@ -2,17 +2,11 @@
 
 # K(ubernetes) Op(eration)s <!-- omit in toc -->
 
-_... managed by FluxCD, Renovate, and Forgejo Actions_ 🤖
+### 🏠 A GitOps-managed Homelab <!-- omit in toc -->
 
-[![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=5A65EA)](https://discord.gg/k8s-at-home)
-[![Renovate](https://img.shields.io/badge/Renovate-193B87?style=for-the-badge&logo=renovate&logoColor=white)](https://www.mend.io/renovate/)
-[![Forgejo](https://img.shields.io/badge/Forgejo-EC622A?style=for-the-badge&logo=forgejo&logoColor=white)](https://forgejo.org)
+_... powered by [Talos](https://www.siderolabs.com/talos-linux), [Flux](https://fluxcd.io/) and [Kubernetes](https://kubernetes.io/)_
 
 _hcloud cluster stats:_
-
-[![Talos](https://kromgo.offene.cloud/badges/talos_version)](https://talos.dev)
-[![Kubernetes](https://kromgo.offene.cloud/badges/kubernetes_version)](https://kubernetes.io)
-[![Flux](https://kromgo.offene.cloud/badges/flux_version)](https://fluxcd.io)
 
 ![Age](https://kromgo.offene.cloud/badges/cluster_birth_age)
 ![Uptime](https://kromgo.offene.cloud/badges/cluster_uptime_age)

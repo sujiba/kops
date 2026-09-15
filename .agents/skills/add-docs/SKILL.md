@@ -29,7 +29,6 @@ Ask the user (AskUserQuestion) for anything not already given:
 5. Fill all sections from the manifests (including the `Namespace:` line). Mark anything you cannot derive with `<!-- TODO: ... -->`.
 6. Add or update the app (with its namespace and cluster(s)) in the group's `index.md` table, and remove it from the group index TODO comment if listed there.
 7. If the change reflects a design choice, add an H3 entry at the top of the page's `## Decisions` section (`git log --follow` on the app directory often reveals the date and context).
-8. Update the manual table of contents of every page you changed.
 
 **Changed app:** update only the affected sections, in the same change as the manifests.
 
@@ -54,7 +53,7 @@ Fix all warnings, then go through the "Before finishing" checklist in `docs/AGEN
 - **Documenting only one cluster's instance** — ~15 apps run in both `home` and `hcloud`; always check both trees (Step 2.2).
 - **Copying volatile manifest values** — image tags, chart versions, resource limits and replica counts go stale; link the manifest instead.
 - **Writing secret values or resolved domains** — only secret names, SOPS file paths and key names; hostnames always use `${EXTERNAL_DOMAIN}` / `${INTERNAL_DOMAIN}` style variables.
-- **Forgetting the group index or the manual TOC** — every app change touches the group `index.md`, and every heading change must be mirrored in the page's `## Overview` list.
+- **Forgetting the group index** — every app change touches the group `index.md` table.
 - **Grouping by namespace** — docs are grouped by function (`platform` / `observability` / `services`), not by namespace; the namespace is recorded on the app's `index.md` and in the group table.
 - **Inventing page types or skipping templates** — `app.md`, `group-index.md` and `page.md` are the only page types; start every new page from `docs/templates/`.
 - **Creating sub-pages for an app** — each app is exactly one page; configuration, troubleshooting and decisions are H2 sections, not separate files.
