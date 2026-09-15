@@ -10,7 +10,6 @@ _... powered by [Talos](https://www.siderolabs.com/talos-linux), [Flux](https://
 [![Kubernetes](https://kromgo.offene.cloud/badges/kubernetes_version)](https://kubernetes.io)
 [![Flux](https://kromgo.offene.cloud/badges/flux_version)](https://fluxcd.io)
 
-_hcloud cluster stats:_
 
 ![Age](https://kromgo.offene.cloud/badges/cluster_birth_age)
 ![Uptime](https://kromgo.offene.cloud/badges/cluster_uptime_age)
