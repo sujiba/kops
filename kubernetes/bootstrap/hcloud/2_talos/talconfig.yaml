@@ -1,4 +1,5 @@
-clusterName: &clusterName "${clusterName}"
+---
+clusterName: hcloud
 
 # renovate: datasource=custom.talos-factory depName=siderolabs/talos
 talosVersion: 1.14.0
@@ -6,7 +7,7 @@ talosVersion: 1.14.0
 kubernetesVersion: 1.37.0
 
 endpoint: https://${publicClusterIP}:6443
-#domain: ${myDomainName}
+# domain: ${myDomainName}
 
 additionalMachineCertSans: &sans
   - 127.0.0.1 # KubePrism
@@ -38,14 +39,14 @@ nodes:
       mode: metal
       arch: ${serverArch}
     nodeAnnotations:
-      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+      installerImage: "{{ .MachineConfig.MachineInstall.InstallImage }}"
 
 controlPlane:
   schematic:
     customization:
-        systemExtensions:
-            officialExtensions:
-                - siderolabs/qemu-guest-agent
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/qemu-guest-agent
   nodeLabels:
     topology.kubernetes.io/region: germany
     topology.kubernetes.io/zone: falkenstein
