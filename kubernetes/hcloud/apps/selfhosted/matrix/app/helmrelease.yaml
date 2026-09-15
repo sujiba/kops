@@ -38,6 +38,7 @@ spec:
             federation_domain_whitelist:
               - matrix.org
               - matrix.albdev.cloud
+              - erwanleboucher.dev
             admin_contact: "mailto:hostmaster@${MAIL_DOMAIN}"
             enable_search: true
             url_preview_enabled: true
