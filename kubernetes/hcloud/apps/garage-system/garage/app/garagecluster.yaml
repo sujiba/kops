@@ -33,3 +33,21 @@ spec:
     data:
       storageClassName: openebs-hostpath
       size: 10Gi
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/garage.rajsingh.info/garagenode_v1beta1.json
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageNode
+metadata:
+  name: garage-node0
+  annotations:
+    garage.rajsingh.info/drain: true
+spec:
+  clusterRef:
+    name: garage
+  zone: us-east-1
+  capacity: 10Gi
+  storage:
+    metadata:
+      existingClaim: garage-meta
+    data:
+      existingClaim: garage-data
