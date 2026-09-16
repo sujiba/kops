@@ -32,7 +32,7 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: latest@sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793
+              tag: v3.41.3
             env:
               # Other options
               TZ: Europe/Berlin
@@ -50,8 +50,8 @@ spec:
               # Healthcheck options
               HEALTH_SERVER_ADDRESS: ":9999"
               # Socks5 proxy settings
-              SOCKS5_ENABLED: on
-              SOCKS5_LISTENING_ADDRESS: ":1080"
+              # SOCKS5_ENABLED: on
+              # SOCKS5_LISTENING_ADDRESS: ":1080"
               # Storage options
               STORAGE_FILEPATH: "" # prevent memory spike and avoid I/O
               # Updater options
@@ -239,6 +239,14 @@ spec:
             resources:
               requests:
                 cpu: 100m
+
+          socks5:
+            image:
+              repository: serjs/go-socks5-proxy
+              tag: v0.0.4
+            env:
+              REQUIRE_AUTH: false
+              ALLOWED_NETS: 10.10.10.0/27
 
     service:
       sabnzbd:
