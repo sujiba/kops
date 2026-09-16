@@ -41,7 +41,7 @@ spec:
               # DNS options
               DNS_SERVER: on
               DNS_UPSTREAM_RESOLVER_TYPE: dot
-              DNS_UPSTREAM_RESOLVERS: quad9
+              DNS_UPSTREAM_RESOLVERS: cloudflare
               DNS_CACHING: off
               DNS_UPSTREAM_IPV6: off
               # Firewall options
