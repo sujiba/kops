@@ -8,6 +8,6 @@ components:
 
 resources:
   - ./namespace.yaml
-  #- ./garage/ks.yaml
+  - ./garage/ks.yaml
   - ./garage-operator/ks.yaml
   #- ./garage-ui/ks.yaml
