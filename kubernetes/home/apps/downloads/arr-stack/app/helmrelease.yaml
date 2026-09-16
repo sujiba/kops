@@ -32,7 +32,7 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.41.3
+              tag: latest
             env:
               # Other options
               TZ: Europe/Berlin
