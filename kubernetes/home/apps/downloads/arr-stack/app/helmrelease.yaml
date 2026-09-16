@@ -50,10 +50,10 @@ spec:
               # Healthcheck options
               HEALTH_SERVER_ADDRESS: ":9999"
               # Socks5 proxy settings
-              # SOCKS5_ENABLED: off
-              # SOCKS5_LISTENING_ADDRESS: ":1080"
-              # SOCKS5_USER: ""
-              # SOCKS5_PASSWORD: ""
+              SOCKS5_ENABLED: off
+              SOCKS5_LISTENING_ADDRESS: ":1080"
+              SOCKS5_USER: ""
+              SOCKS5_PASSWORD: ""
               # Storage options
               STORAGE_FILEPATH: "" # prevent memory spike and avoid I/O
               # Updater options
@@ -242,13 +242,13 @@ spec:
               requests:
                 cpu: 100m
 
-          socks5:
-            image:
-              repository: serjs/go-socks5-proxy
-              tag: v0.0.4
-            env:
-              REQUIRE_AUTH: false
-              ALLOWED_NETS: 10.0.0.0/8
+          # socks5:
+          #   image:
+          #     repository: serjs/go-socks5-proxy
+          #     tag: v0.0.4
+          #   env:
+          #     REQUIRE_AUTH: false
+          #     ALLOWED_NETS: 10.0.0.0/8
 
     service:
       sabnzbd:
