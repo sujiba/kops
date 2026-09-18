@@ -27,6 +27,14 @@ spec:
           securityContext:
             seccompProfile:
               type: RuntimeDefault
+          dnsPolicy: None
+          dnsConfig:
+            nameservers:
+              - ${PRIVATE_DNS_IPv4}
+              - ${PRIVATE_DNS_IPv6}
+            options:
+              - name: ndots
+                value: "2"
 
         containers:
           app:
@@ -54,7 +62,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
 
             resources:
               requests:
