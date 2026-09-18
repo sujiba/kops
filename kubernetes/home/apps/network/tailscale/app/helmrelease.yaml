@@ -27,7 +27,7 @@ spec:
           securityContext:
             seccompProfile:
               type: RuntimeDefault
-          dnsPolicy: None
+          dnsPolicy: ClusterFirst
           dnsConfig:
             nameservers:
               - ${PRIVATE_DNS_IPv4}
