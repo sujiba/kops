@@ -194,7 +194,7 @@ spec:
       immich:
         type: nfs
         server: ${STORAGE_IP}
-        path: /volume2/media
+        path: /volume2/photos
         advancedMounts:
           immich:
             app:
