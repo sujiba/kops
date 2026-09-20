@@ -192,7 +192,9 @@ spec:
 
     persistence:
       immich:
-        existingClaim: immich
+        type: nfs
+        server: ${STORAGE_IP}
+        path: /volume2/media
         advancedMounts:
           immich:
             app:
@@ -207,7 +209,7 @@ spec:
               - path: /cache
 
       postgresql:
-        existingClaim: ${APP}-postgres
+        existingClaim: immich-postgres
         advancedMounts:
           postgresql:
             app:
