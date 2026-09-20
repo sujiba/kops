@@ -12,7 +12,7 @@ spec:
   values:
     controllers:
       immich:
-        replicas: 0
+        replicas: 1
         forceRename: immich
         annotations:
           reloader.stakater.com/auto: "true"
@@ -126,7 +126,7 @@ spec:
                   failureThreshold: 30
 
       postgresql:
-        replicas: 0
+        replicas: 1
         type: statefulset
         containers:
           app:
