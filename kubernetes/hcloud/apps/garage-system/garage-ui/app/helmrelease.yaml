@@ -35,7 +35,7 @@ spec:
               GARAGE_UI_SERVER_HOST: 0.0.0.0
               GARAGE_UI_SERVER_PORT: 8080
               GARAGE_UI_SERVER_ENVIRONMENT: production
-              GARAGE_UI_SERVER_ROOT_URL: https://garage.${CLUSTER_DOMAIN}
+              GARAGE_UI_SERVER_ROOT_URL: https://garage.${EXTERNAL_DOMAIN}
               GARAGE_UI_GARAGE_ENDPOINT: http://garage-cluster:3900
               GARAGE_UI_GARAGE_ADMIN_ENDPOINT: http://garage-cluster:3903
               GARAGE_UI_GARAGE_REGION: hcloud
