@@ -5,7 +5,7 @@ metadata:
   name: cdn-key
 spec:
   clusterRef:
-    name: garage
+    name: garage-cluster
   bucketPermissions:
     - bucketRef:
         name: cdn

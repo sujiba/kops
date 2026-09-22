@@ -4,7 +4,7 @@ metadata:
   name: cdn
 spec:
   clusterRef:
-    name: garage
+    name: garage-cluster
   globalAlias: cdn.${EXTERNAL_DOMAIN}
   quotas:
     maxSize: 1Gi
