@@ -283,7 +283,7 @@ Show the user the created files and get confirmation before committing. Commit s
 
 ## Step 5: Document the app
 
-After the app has been added, run the `add-docs` skill (`.agents/skills/add-docs/SKILL.md`) for it so `docs/content/apps/` stays in sync with the manifests.
+If the app needs an operational procedure (runbook) or reflects a design decision (ADR), document it with the `add-docs` skill (`.agents/skills/add-docs/SKILL.md`).
 
 ## Common mistakes
 
