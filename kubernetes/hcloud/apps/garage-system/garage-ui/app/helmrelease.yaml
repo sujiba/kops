@@ -1,0 +1,92 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: garage-webui
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: garage-webui
+  interval: 1h
+  values:
+    controllers:
+      garage-webui:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+
+        containers:
+          app:
+            image:
+              repository: docker.io/noooste/garage-ui
+              tag: v0.13.0
+            env:
+              TZ: Europe/Berlin
+              GARAGE_UI_SERVER_HOST: 0.0.0.0
+              GARAGE_UI_SERVER_PORT: 8080
+              GARAGE_UI_SERVER_ENVIRONMENT: production
+              GARAGE_UI_SERVER_ROOT_URL: https://garage.${CLUSTER_DOMAIN}
+              GARAGE_UI_GARAGE_ENDPOINT: http://garage-cluster:3900
+              GARAGE_UI_GARAGE_ADMIN_ENDPOINT: http://garage-cluster:3903
+              GARAGE_UI_GARAGE_REGION: hcloud
+              GARAGE_UI_GARAGE_ADMIN_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: garage-operator-secret
+                    key: admin-token
+              GARAGE_UI_AUTH_OIDC_ENABLED: true
+              GARAGE_UI_AUTH_OIDC_PROVIDER_NAME: Pocket ID
+              GARAGE_UI_AUTH_OIDC_ADMIN_ROLE: admins
+              GARAGE_UI_AUTH_OIDC_ROLE_ATTRIBUTE_PATH: groups
+              GARAGE_UI_AUTH_OIDC_SCOPES: 'openid email profile groups'
+              GARAGE_UI_AUTH_OIDC_ISSUER_URL: https://id.${EXTERNAL_DOMAIN}
+              GARAGE_UI_AUTH_OIDC_COOKIE_SECURE: true
+            envFrom:
+              - secretRef:
+                  name: garage-webui-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+
+    persistence:
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+
+    route:
+      app:
+        hostnames: ["garage.${EXTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+
+    service:
+      app:
+        ports:
+          http:
+            port: 8080
