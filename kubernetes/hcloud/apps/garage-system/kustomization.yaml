@@ -6,8 +6,8 @@ namespace: garage-system
 components:
   - ../../components/common
 
-# resources:
-#   - ./namespace.yaml
-#   - ./garage/ks.yaml
-#   - ./garage-operator/ks.yaml
-#   - ./garage-ui/ks.yaml
+resources:
+  - ./namespace.yaml
+  - ./garage/ks.yaml
+  - ./garage-operator/ks.yaml
+  - ./garage-ui/ks.yaml
