@@ -5,7 +5,7 @@ description: Use when creating or updating the German operations handbook in doc
 
 # Add or Update Documentation
 
-The handbook is a Zensical project rooted at `docs/`: config `docs/zensical.toml`, pages `docs/content/`. Language is German. Rules are in the Documentation section of `AGENTS.md` — read it first.
+The handbook is a Zensical project rooted at `docs/`: config `docs/zensical.toml`, pages `docs/content/`. Language is German. Rules are in `.agents/instructions/docs.instructions.md` — read it first.
 
 | Section | Path | Template / overview |
 | --- | --- | --- |
