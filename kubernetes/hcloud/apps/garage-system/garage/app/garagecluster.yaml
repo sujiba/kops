@@ -3,29 +3,36 @@
 apiVersion: garage.rajsingh.info/v1beta2
 kind: GarageCluster
 metadata:
-  name: garage
+  name: garage-cluster
 spec:
   image: dxflrs/garage:v2.4.1
-  layoutPolicy: Manual
-  replication:
-    factor: 1
-  database:
-    engine: lmdb
-  s3Api:
-    region: us-east-1
-    rootDomain: .s3.${EXTERNAL_DOMAIN}
-  network:
-    rpcSecretRef:
-      name: garage-operator-secret
-      key: rpc-secret
+  zone: hcloud
+
   admin:
     adminTokenSecretRef:
       name: garage-operator-secret
       key: admin-token
-    metricsTokenSecretRef:
+
+  database:
+    engine: lmdb
+
+  network:
+    rpcSecretRef:
       name: garage-operator-secret
-      key: metrics-token
+      key: rpc-secret
+
+  replication:
+    factor: 1
+    consistencyMode: consistent
+
+  s3Api:
+    region: hcloud
+    rootDomain: .s3.${EXTERNAL_DOMAIN}
+
   storage:
+    env:
+      - name: GARAGE_ALLOW_WORLD_READABLE_SECRETS
+        value: "true"
     replicas: 1
     metadata:
       storageClassName: openebs-hostpath
@@ -33,21 +40,6 @@ spec:
     data:
       storageClassName: openebs-hostpath
       size: 10Gi
----
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/garage.rajsingh.info/garagenode_v1beta1.json
-apiVersion: garage.rajsingh.info/v1beta1
-kind: GarageNode
-metadata:
-  name: garage-node0
-  annotations:
-    garage.rajsingh.info/drain: true
-spec:
-  clusterRef:
-    name: garage
-  zone: us-east-1
-  capacity: 10Gi
-  storage:
-    metadata:
-      existingClaim: garage-meta
-    data:
-      existingClaim: garage-data
+    pvcRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
