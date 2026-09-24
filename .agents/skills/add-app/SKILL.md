@@ -297,7 +297,7 @@ kustomize build kubernetes/<cluster>/apps/<namespace>/<app>/app   # must render;
 yamllint --config-file .yamllint.yaml kubernetes/<cluster>/apps/<namespace>/<app>
 ```
 
-Show the user the created files and get confirmation before committing. Commit style: `feat(<namespace>): added <app>`.
+Show the user the created files and get confirmation before committing. Commit style: `feat(<app>): Deploy`.
 
 ## Step 5: Document the app
 
