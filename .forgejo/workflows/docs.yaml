@@ -23,7 +23,8 @@ jobs:
       BUCKET: docs.offene.cloud
       # The runner shares the network of its pod in the cluster hcloud
       AWS_ENDPOINT_URL: http://garage-cluster.garage-system.svc.cluster.local:3900
-      AWS_REGION: hcloud
+      # awscli v1 ignores AWS_REGION
+      AWS_DEFAULT_REGION: hcloud
       AWS_ACCESS_KEY_ID: ${{ secrets.GARAGE_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.GARAGE_SECRET_ACCESS_KEY }}
       # Garage does not need the newer default checksums of the AWS SDKs
