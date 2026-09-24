@@ -5,50 +5,50 @@ hide:
 
 # Home-Ops
 
-Betriebshandbuch für die Kubernetes-Cluster `hcloud` und `home`. Wähle nach Situation:
+Operations handbook for the Kubernetes clusters `hcloud` and `home`. Pick by situation:
 
 <div class="grid cards" markdown>
 
--   :lucide-siren:{ .lg .middle } **Etwas ist kaputt**
+-   :lucide-siren:{ .lg .middle } **Something is broken**
 
     ---
 
-    Schritt-für-Schritt-Anleitungen für wiederkehrende Eingriffe.
+    Step-by-step guides for recurring tasks.
 
     [:lucide-arrow-right: Runbooks](runbooks/index.md)
 
--   :lucide-history:{ .lg .middle } **Hatten wir das schon mal?**
+-   :lucide-history:{ .lg .middle } **Have we seen this before?**
 
     ---
 
-    Datierte Störungsprotokolle mit Ursache und Lösung.
+    Dated incident logs with cause and fix.
 
     [:lucide-arrow-right: Troubleshooting](troubleshooting/index.md)
 
--   :lucide-network:{ .lg .middle } **Wie hängt das zusammen?**
+-   :lucide-network:{ .lg .middle } **How does it fit together?**
 
     ---
 
-    Diagramme zu GitOps-Fluss und Doku-Pipeline.
+    Diagrams of the GitOps flow and the docs pipeline.
 
-    [:lucide-arrow-right: Architektur](architecture/index.md)
+    [:lucide-arrow-right: Architecture](architecture/index.md)
 
--   :lucide-scale:{ .lg .middle } **Warum ist das so?**
+-   :lucide-scale:{ .lg .middle } **Why is it built this way?**
 
     ---
 
-    Architekturentscheidungen (ADRs) mit Kontext und Alternativen.
+    Architecture decision records (ADRs) with context and alternatives.
 
-    [:lucide-arrow-right: Entscheidungen](decisions/index.md)
+    [:lucide-arrow-right: Decisions](decisions/index.md)
 
 </div>
 
-## Auf einen Blick
+## At a glance
 
 | | |
 |---|---|
 | OS | [Talos Linux](https://www.talos.dev/) |
-| GitOps-Tool | [Flux](https://fluxcd.io/) über flux-operator |
-| Nodes | `talos` (Cluster `hcloud`, Hetzner Cloud) · `home-01` (Cluster `home`, ASUS NUC) |
-| Object Storage | [Garage](https://garagehq.deuxfleurs.fr/) über garage-operator (Cluster `hcloud`) |
+| GitOps tool | [Flux](https://fluxcd.io/) via flux-operator |
+| Nodes | `talos` (cluster `hcloud`, Hetzner Cloud) · `home-01` (cluster `home`, ASUS NUC) |
+| Object storage | [Garage](https://garagehq.deuxfleurs.fr/) via garage-operator (cluster `hcloud`) |
 | Repo | [homelab/kops](https://code.offene.cloud/homelab/kops) |

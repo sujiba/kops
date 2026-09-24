@@ -1,26 +1,29 @@
 [project]
 site_name = "Home-Ops"
-site_description = "Betriebshandbuch für den Home-Kubernetes-Cluster"
+site_description = "Operations handbook for the home Kubernetes clusters"
 site_url = "https://docs.offene.cloud/"
 repo_url = "https://code.offene.cloud/homelab/kops"
 repo_name = "homelab/kops"
 edit_uri = "_edit/main/docs/content/"
 docs_dir = "content"
 site_dir = "site"
+extra_css = ["stylesheets/extra.css"]
 
 nav = [
-  { "Start" = "index.md" },
+  { "Home" = "index.md" },
   { "Runbooks" = [
     "runbooks/index.md",
-    { "Talos-Upgrade" = "runbooks/talos-upgrade.md" },
-    { "Doku-Bucket" = "runbooks/docs-bucket.md" },
+    { "Talos bootstrap" = "runbooks/talos-bootstrap.md" },
+    { "Flux bootstrap" = "runbooks/flux-bootstrap.md" },
+    { "Talos upgrade" = "runbooks/talos-upgrade.md" },
+    { "Docs bucket" = "runbooks/docs-bucket.md" },
   ] },
-  { "Architektur" = [
+  { "Architecture" = [
     "architecture/index.md",
   ] },
-  { "Entscheidungen" = [
+  { "Decisions" = [
     "decisions/index.md",
-    { "0001 Doku mit Zensical und Garage" = "decisions/0001-docs-zensical-garage.md" },
+    { "0001 Docs with Zensical and Garage" = "decisions/0001-docs-zensical-garage.md" },
   ] },
   { "Troubleshooting" = [
     "troubleshooting/index.md",
@@ -28,7 +31,7 @@ nav = [
 ]
 
 [project.theme]
-language = "de"
+language = "en"
 features = [
   "content.action.edit",
   "content.code.annotate",
@@ -53,19 +56,19 @@ logo = "lucide/server"
 [[project.theme.palette]]
 media = "(prefers-color-scheme)"
 toggle.icon = "lucide/sun-moon"
-toggle.name = "Helles Design"
+toggle.name = "Switch to light mode"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: light)"
 scheme = "default"
 toggle.icon = "lucide/sun"
-toggle.name = "Dunkles Design"
+toggle.name = "Switch to dark mode"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: dark)"
 scheme = "slate"
 toggle.icon = "lucide/moon"
-toggle.name = "Systemeinstellung"
+toggle.name = "Switch to system preference"
 
 [project.markdown_extensions.abbr]
 [project.markdown_extensions.admonition]

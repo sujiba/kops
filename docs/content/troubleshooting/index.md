@@ -1,37 +1,37 @@
 # Troubleshooting
 
-Datierte Störungsprotokolle. Ein Protokoll wird nach dem Schreiben nicht mehr geändert, neue Erkenntnisse kommen in ein neues Protokoll mit Verweis auf das alte.
+Dated incident logs. A log is not changed after it is written; new findings go into a new log that references the old one.
 
-Dateiname: `JJJJ-MM-TT-kurzbeschreibung.md`, danach in `docs/zensical.toml` unter `nav` eintragen.
+File name: `YYYY-MM-DD-short-description.md`, then add it to `nav` in `docs/zensical.toml`.
 
-| Datum | Thema | Ergebnis |
+| Date | Topic | Outcome |
 |---|---|---|
 | | | |
 
-## Vorlage
+## Template
 
 ```markdown
-# JJJJ-MM-TT Kurzbeschreibung
+# YYYY-MM-DD Short description
 
 ## Symptom
 
-Was war kaputt, wer hat es bemerkt?
+What was broken, who noticed?
 
-## Ursache
+## Cause
 
-Was war der eigentliche Grund?
+What was the actual reason?
 
-## Lösung
+## Fix
 
-Was hat es behoben?
+What resolved it?
 
-## Verlauf
+## Timeline
 
-| Zeit | Ereignis |
+| Time | Event |
 |---|---|
 | HH:MM | … |
 
-## Gelernt
+## Lessons learned
 
-Was ändern wir, damit es nicht wieder passiert?
+What do we change so it does not happen again?
 ```

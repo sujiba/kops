@@ -1,56 +1,48 @@
-# Talos-Upgrade
+# Talos upgrade
 
 | | |
 |---|---|
-| **Wann** | Neue Talos-Version verfügbar, Renovate hat einen PR für `siderolabs/talos` geöffnet |
-| **Dauer** | ca. 10–15 Minuten pro Node |
-| **Risiko** | Mittel: beide Cluster sind Single-Node, der Cluster ist während des Reboots nicht erreichbar |
+| **When** | New Talos version available, Renovate opened a PR for `siderolabs/talos` |
+| **Duration** | about 10–15 minutes per node |
+| **Risk** | Medium: both clusters are single-node, the cluster is unreachable during the reboot |
 
-## Voraussetzungen
+## Prerequisites
 
-- [ ] Changelog der Zielversion gelesen (Breaking Changes, Kubernetes-Kompatibilität)
-- [ ] `talosctl` lokal auf Zielversion oder neuer
-- [ ] `talosconfig` und `kubeconfig` für den Cluster vorhanden
-- [ ] Aktuelle Backups (kopiur) erfolgreich gelaufen
-- [ ] Kein anderer Eingriff am Cluster läuft
+- [ ] Changelog of the target version read (breaking changes, Kubernetes compatibility)
+- [ ] Local `talosctl` at the target version or newer
+- [ ] `talosconfig` and `kubeconfig` for the cluster available
+- [ ] Recent backups (kopiur) completed successfully
+- [ ] No other work on the cluster in progress
 
-!!! warning "Immer nur ein Node gleichzeitig"
+!!! warning "Only one node at a time"
 
-    Nie mehrere Nodes parallel upgraden. Bei unseren Single-Node-Clustern heißt das außerdem: Jedes Upgrade bedeutet Downtime für alle Dienste des Clusters.
+    Never upgrade several nodes in parallel. With our single-node clusters this also means: every upgrade is downtime for all services of that cluster.
 
-## Schritte
+## Steps
 
-Die Version steht an mehreren Stellen und wird von Renovate gemeinsam aktualisiert. Standardweg ist tuppr, die manuellen Wege sind der Fallback.
+The version appears in several places, and Renovate updates them together. tuppr is the default path, topf is the manual fallback.
 
-=== "tuppr (Standard)"
+=== "tuppr (default)"
 
-    1. Renovate-PR prüfen. Er ändert die Version in
+    1. Review the Renovate PR. It changes the version in
         - `kubernetes/<cluster>/apps/system-upgrade/tuppr/upgrades/talos.yaml`
-        - `kubernetes/bootstrap/hcloud/2_talos/talconfig.yaml` bzw. `kubernetes/bootstrap/home/2_talos/topf.yaml`
-    2. PR mergen. Flux wendet das `TalosUpgrade` an, tuppr führt das Upgrade aus.
-    3. Fortschritt verfolgen:
+        - `kubernetes/bootstrap/<cluster>/2_talos/topf.yaml`
+    2. Merge the PR. Flux applies the `TalosUpgrade`, tuppr runs the upgrade.
+    3. Follow the progress:
 
         ```bash
         kubectl get talosupgrade -A -w
         ```
 
-=== "hcloud (talhelper)"
+=== "topf (manual)"
 
     ```bash
-    cd kubernetes/bootstrap/hcloud/2_talos
-    talhelper genconfig
-    talhelper gencommand upgrade --extra-flags "--preserve" | sh
-    ```
-
-=== "home (topf)"
-
-    ```bash
-    cd kubernetes/bootstrap/home/2_talos
-    topf render   # Änderungen offline prüfen
+    cd kubernetes/bootstrap/<cluster>/2_talos
+    topf render   # review changes offline
     topf upgrade
     ```
 
-## Prüfen
+## Verify
 
 ```bash
 talosctl version -n <node-ip>
@@ -58,7 +50,7 @@ talosctl etcd status -n <node-ip>
 kubectl get nodes -o wide
 ```
 
-Die Node muss `Ready` sein, Server-Version muss der Zielversion entsprechen.
+The node must be `Ready`, and the server version must match the target version.
 
 ## Rollback
 
@@ -66,10 +58,10 @@ Die Node muss `Ready` sein, Server-Version muss der Zielversion entsprechen.
 talosctl rollback -n <node-ip>
 ```
 
-Danach die Version in den oben genannten Dateien zurücksetzen, sonst startet tuppr das Upgrade erneut.
+Then revert the version in the files listed above, otherwise tuppr starts the upgrade again.
 
-??? note "Hintergrund: Wie Talos upgradet"
+??? note "Background: how Talos upgrades"
 
-    Talos hat zwei Boot-Partitionen (A/B). Ein Upgrade schreibt das neue Image in die inaktive Partition und bootet daraus. `talosctl rollback` schaltet einfach wieder auf die vorherige Partition um. Deshalb ist ein Rollback schnell, funktioniert aber nur einmal zurück.
+    Talos has two boot partitions (A/B). An upgrade writes the new image to the inactive partition and boots from it. `talosctl rollback` simply switches back to the previous partition. That is why a rollback is fast, but it only goes back one step.
 
-    tuppr ist ein Controller, der `TalosUpgrade`- und `KubernetesUpgrade`-Ressourcen ausführt. So bleibt das Upgrade GitOps-gesteuert und läuft nicht von einem Laptop aus.
+    tuppr is a controller that runs `TalosUpgrade` and `KubernetesUpgrade` resources. This keeps upgrades GitOps-driven instead of running from a laptop.

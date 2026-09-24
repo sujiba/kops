@@ -1,38 +1,38 @@
-# Entscheidungen
+# Decisions
 
-Architecture Decision Records (ADRs) halten fest, **warum** etwas so gebaut ist. Ein ADR wird nach der Annahme nicht umgeschrieben: Ändert sich die Entscheidung, ersetzt ein neuer ADR den alten, und der alte bekommt den Status „ersetzt durch NNNN“.
+Architecture decision records (ADRs) capture **why** something is built the way it is. An ADR is not rewritten once accepted: if the decision changes, a new ADR replaces the old one, and the old one gets the status "superseded by NNNN".
 
-| Nr. | Titel | Status |
+| No. | Title | Status |
 |---|---|---|
-| [0001](0001-docs-zensical-garage.md) | Doku mit Zensical und Garage | angenommen |
+| [0001](0001-docs-zensical-garage.md) | Docs with Zensical and Garage | accepted |
 
-## Vorlage
+## Template
 
-Dateiname: `NNNN-kurztitel.md`, fortlaufend nummeriert. Danach in `docs/zensical.toml` unter `nav` eintragen.
+File name: `NNNN-short-title.md`, numbered sequentially. Then add it to `nav` in `docs/zensical.toml`.
 
 ```markdown
-# NNNN Titel
+# NNNN Title
 
 | | |
 |---|---|
-| **Status** | vorgeschlagen / angenommen / ersetzt durch NNNN |
-| **Datum** | JJJJ-MM-TT |
+| **Status** | proposed / accepted / superseded by NNNN |
+| **Date** | YYYY-MM-DD |
 
-## Kontext
+## Context
 
-Welches Problem, welche Randbedingungen?
+Which problem, which constraints?
 
-## Entscheidung
+## Decision
 
-Was wir machen.
+What we do.
 
-## Alternativen
+## Alternatives
 
-| Option | Warum nicht |
+| Option | Why not |
 |---|---|
 | … | … |
 
-## Konsequenzen
+## Consequences
 
-Was dadurch leichter, schwerer oder riskanter wird.
+What becomes easier, harder or riskier as a result.
 ```

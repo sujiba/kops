@@ -1,6 +1,6 @@
-# Architektur
+# Architecture
 
-## GitOps-Fluss
+## GitOps flow
 
 ```mermaid
 flowchart LR
@@ -11,9 +11,9 @@ flowchart LR
   flux --> home[Cluster home]
 ```
 
-Jeder Cluster hat eine eigene Flux-Instanz, die ihren Pfad `kubernetes/<cluster>/flux` synchronisiert.
+Each cluster has its own Flux instance that syncs its path `kubernetes/<cluster>/flux`.
 
-## Doku-Pipeline
+## Docs pipeline
 
 ```mermaid
 flowchart LR
@@ -25,4 +25,4 @@ flowchart LR
   gw --> browser[Browser]
 ```
 
-Warum diese Kombination: [ADR 0001](../decisions/0001-docs-zensical-garage.md).
+Why this combination: [ADR 0001](../decisions/0001-docs-zensical-garage.md).

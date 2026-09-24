@@ -1,23 +1,23 @@
-# Doku-Bucket
+# Docs bucket
 
 | | |
 |---|---|
-| **Wann** | Einmalig: Bucket und Deploy-Key für diese Doku einrichten, oder nach Verlust des Buckets |
-| **Dauer** | ca. 10 Minuten |
-| **Risiko** | Gering: betrifft nur die Doku |
+| **When** | Once: set up the bucket and deploy key for these docs, or after losing the bucket |
+| **Duration** | about 10 minutes |
+| **Risk** | Low: only affects the docs |
 
-## Voraussetzungen
+## Prerequisites
 
-- [ ] `kubectl`-Zugriff auf den Cluster `hcloud`
-- [ ] Admin-Rechte im Forgejo-Repo [homelab/kops](https://code.offene.cloud/homelab/kops) (für Secrets)
+- [ ] `kubectl` access to the cluster `hcloud`
+- [ ] Admin rights in the Forgejo repo [homelab/kops](https://code.offene.cloud/homelab/kops) (for secrets)
 
-!!! warning "Bucket-Name = Domain"
+!!! warning "Bucket name = domain"
 
-    Garage wählt den Website-Bucket anhand des `Host`-Headers. Der globale Alias des Buckets muss daher exakt `docs.offene.cloud` heißen.
+    Garage picks the website bucket by the `Host` header. The bucket's global alias must therefore be exactly `docs.offene.cloud`.
 
-## Schritte
+## Steps
 
-1. Bucket und Key deklarativ in `kubernetes/hcloud/apps/garage-system/garage/app/` anlegen:
+1. Declare bucket and key in `kubernetes/hcloud/apps/garage-system/garage/app/`:
 
     ```yaml title="buckets.yaml"
     ---
@@ -51,24 +51,24 @@
           write: true
     ```
 
-2. Commit, Push, warten bis Flux die Kustomization `garage` angewendet hat.
-3. Zugangsdaten aus dem vom Operator erzeugten Secret lesen:
+2. Commit, push, and wait until Flux has applied the Kustomization `garage`.
+3. Read the credentials from the secret created by the operator:
 
     ```bash
     kubectl -n garage-system get secret docs-deploy \
       -o go-template='{{index .data "access-key-id" | base64decode}}{{"\n"}}{{index .data "secret-access-key" | base64decode}}{{"\n"}}'
     ```
 
-4. In Forgejo unter *Einstellungen → Actions → Secrets* hinterlegen:
+4. Store them in Forgejo under *Settings → Actions → Secrets*:
 
-    | Secret | Wert |
+    | Secret | Value |
     |---|---|
     | `GARAGE_ACCESS_KEY_ID` | `access-key-id` |
     | `GARAGE_SECRET_ACCESS_KEY` | `secret-access-key` |
 
-??? note "Alternative: manuell per Garage-CLI"
+??? note "Alternative: manually via the Garage CLI"
 
-    Nur falls der Operator nicht verfügbar ist. Die Befehle laufen im Garage-Pod (`kubectl -n garage-system exec -it <garage-pod> -- /garage …`):
+    Only if the operator is not available. The commands run in the Garage pod (`kubectl -n garage-system exec -it <garage-pod> -- /garage …`):
 
     ```bash
     garage bucket create docs.offene.cloud
@@ -77,22 +77,22 @@
     garage bucket allow --read --write docs.offene.cloud --key docs-deploy
     ```
 
-## Prüfen
+## Verify
 
 ```bash
 kubectl -n garage-system get garagebucket docs
 kubectl -n garage-system get garagekey docs-deploy
 ```
 
-Beide müssen `Ready` sein. Nach dem ersten Deploy liefert der Web-Endpoint die Startseite aus:
+Both must be `Ready`. After the first deploy, the web endpoint serves the start page:
 
 ```bash
 kubectl -n garage-system run curl --rm -it --image=curlimages/curl --restart=Never -- \
   curl -sI -H "Host: docs.offene.cloud" http://garage-cluster:3902/
 ```
 
-Erwartet: `HTTP/1.1 200 OK`.
+Expected: `HTTP/1.1 200 OK`.
 
 ## Rollback
 
-`GarageBucket` und `GarageKey` aus den YAML-Dateien entfernen und die Forgejo-Secrets löschen. Die Doku lässt sich jederzeit neu bauen und hochladen, es gehen keine Daten verloren.
+Remove `GarageBucket` and `GarageKey` from the YAML files and delete the Forgejo secrets. The docs can be rebuilt and uploaded at any time, no data is lost.

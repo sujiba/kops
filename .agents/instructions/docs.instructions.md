@@ -1,6 +1,6 @@
 # Documentation instructions
 
-German operations handbook built with Zensical. `docs/` is the docs project root: config in `docs/zensical.toml`, pages in `docs/content/`, build output in `docs/site/` (ignored). Published to the Garage bucket `docs.offene.cloud`.
+English operations handbook built with Zensical. `docs/` is the docs project root: config in `docs/zensical.toml`, pages in `docs/content/`, build output in `docs/site/` (ignored). Published to the Garage bucket `docs.offene.cloud`.
 
 - Page types: runbooks (`runbooks/`), architecture (`architecture/`), ADRs (`decisions/`), incident logs (`troubleshooting/`). Each section's `index.md` holds the template and the overview table.
 - No wall of text: overview pages are short tables with links, background goes into `??? note` boxes, warnings into admonitions.
