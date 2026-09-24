@@ -18,12 +18,16 @@ nav = [
     { "Talos upgrade" = "runbooks/talos-upgrade.md" },
     { "Docs bucket" = "runbooks/docs-bucket.md" },
   ] },
+  { "Reference" = [
+    "reference/index.md",
+  ] },
   { "Architecture" = [
     "architecture/index.md",
   ] },
   { "Decisions" = [
     "decisions/index.md",
     { "0001 Docs with Zensical and Garage" = "decisions/0001-docs-zensical-garage.md" },
+    { "0002 Structure docs along Diátaxis" = "decisions/0002-diataxis.md" },
   ] },
   { "Troubleshooting" = [
     "troubleshooting/index.md",

@@ -17,6 +17,14 @@ Operations handbook for the Kubernetes clusters `hcloud` and `home`. Pick by sit
 
     [:lucide-arrow-right: Runbooks](runbooks/index.md)
 
+-   :lucide-book-open:{ .lg .middle } **How is X set up?**
+
+    ---
+
+    Building blocks like databases and backups: where they are configured and which knobs matter.
+
+    [:lucide-arrow-right: Reference](reference/index.md)
+
 -   :lucide-history:{ .lg .middle } **Have we seen this before?**
 
     ---

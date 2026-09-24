@@ -2,7 +2,7 @@
 
 English operations handbook built with Zensical. `docs/` is the docs project root: config in `docs/zensical.toml`, pages in `docs/content/`, build output in `docs/site/` (ignored). Published to the Garage bucket `docs.offene.cloud`.
 
-- Page types: runbooks (`runbooks/`), architecture (`architecture/`), ADRs (`decisions/`), incident logs (`troubleshooting/`). Each section's `index.md` holds the template and the overview table.
+- Page types follow Diátaxis (ADR 0002): runbooks (`runbooks/`) are how-to guides, reference pages (`reference/`) describe shared building blocks such as CNPG clusters or kopiur backups (not single apps) and link to the manifests under `kubernetes/`, architecture (`architecture/`) and ADRs (`decisions/`) are explanation, incident logs (`troubleshooting/`) are records. One primary type per page; link to the other types instead of mixing, short asides go into collapsed `??? note` boxes. Each section's `index.md` holds the template and the overview table.
 - No wall of text: overview pages are short tables with links, background goes into `??? note` boxes, warnings into admonitions.
 - Garage cannot redirect: link to other pages with relative `.md` links, never rename published pages without need.
 - ADRs and incident logs are not rewritten after the fact; supersede them with a new entry.

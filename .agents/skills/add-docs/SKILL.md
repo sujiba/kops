@@ -1,6 +1,6 @@
 ---
 name: add-docs
-description: Use when creating or updating the English operations handbook in docs/ — runbooks, architecture diagrams, design decisions (ADRs) or incident logs, including turning an existing README into a runbook ("document X", "write a runbook for X", "make this README a runbook", "record decision X")
+description: Use when creating or updating the English operations handbook in docs/ — runbooks, reference pages for building blocks (CNPG, kopiur, ...), architecture diagrams, design decisions (ADRs) or incident logs, including turning an existing README into a runbook ("document X", "write a runbook for X", "make this README a runbook", "record decision X")
 ---
 
 # Add or Update Documentation
@@ -10,6 +10,7 @@ Rules (language, layout, links, what not to write) are in `.agents/instructions/
 | Section | New page | Template | Overview table |
 | --- | --- | --- | --- |
 | Runbook | `docs/content/runbooks/<name>.md` | `runbooks/index.md` | `runbooks/index.md` |
+| Reference | `docs/content/reference/<name>.md` | `reference/index.md` | `reference/index.md` |
 | Architecture | extend `docs/content/architecture/index.md` | Mermaid `flowchart LR` | none |
 | Decision (ADR) | `docs/content/decisions/NNNN-<title>.md` | `decisions/index.md` | `decisions/index.md` |
 | Incident log | `docs/content/troubleshooting/YYYY-MM-DD-<topic>.md` | `troubleshooting/index.md` | `troubleshooting/index.md` |
@@ -22,8 +23,9 @@ Rules (language, layout, links, what not to write) are in `.agents/instructions/
    - Check **both** clusters (`hcloud`, `home`). If a procedure differs per cluster, use content tabs (`=== "hcloud"` / `=== "home"`) or `<cluster>` placeholders; if it only applies to one, say so in the **When** row.
    - Mark anything you cannot derive with `<!-- TODO: ... -->` and tell the user.
 3. **Write** the page from the section's template.
-   - Runbooks: the property table (When / Duration / Risk), then `## Prerequisites` (task list), `## Steps` (numbered, commands in fenced `bash` blocks with all flags such as `--kubeconfig ~/.kube/<cluster>`), `## Verify`, `## Rollback`. Reference material (config layout, hardware, cheat sheets) goes below Rollback, long parts in `??? note` boxes.
-   - Link related runbooks to each other (e.g. Talos bootstrap → Flux bootstrap).
+   - Runbooks: the property table (When / Duration / Risk), then `## Prerequisites` (task list), `## Steps` (numbered, commands in fenced `bash` blocks with all flags such as `--kubeconfig ~/.kube/<cluster>`), `## Verify`, `## Rollback`. Lookup material (knobs, config layout, cheat sheets) belongs on a reference page; link it from the runbook.
+   - Reference: describe structure and knobs, link the manifests with full repo URLs (`https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/...`), never copy versions or tags.
+   - Link related pages to each other (e.g. Talos bootstrap → Flux bootstrap, runbook → reference page).
 4. **Register** the page in `nav` in `docs/zensical.toml` and add a row to the section's overview table.
 5. **Build**: from `docs/`, `uv run --no-project --with-requirements requirements.txt zensical build --clean` must print `No issues found`.
 6. **Report** to the user what is new, what you derived yourself (Verify/Rollback, durations) and what differs from the source.
@@ -31,7 +33,7 @@ Rules (language, layout, links, what not to write) are in `.agents/instructions/
 ## Turning a README into a runbook
 
 - The README is the source, not the spec: check every path, file name and flag against the repo and fix what is wrong (wrong directory, wrong cluster in `--kubeconfig`, outdated commands). List each correction in the report.
-- Restructure it into the runbook sections; tables of options or extensions stay tables, hardware and background go into `??? note` boxes.
+- Restructure it into the runbook sections; lookup tables (options, extensions, config layout) go onto a reference page, background into `??? note` boxes or an ADR.
 - Do not change or delete the README unless the user asks; `kubernetes/**` may be off-limits for the current task.
 
 ## Common mistakes

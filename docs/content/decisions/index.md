@@ -5,6 +5,7 @@ Architecture decision records (ADRs) capture **why** something is built the way 
 | No. | Title | Status |
 |---|---|---|
 | [0001](0001-docs-zensical-garage.md) | Docs with Zensical and Garage | accepted |
+| [0002](0002-diataxis.md) | Structure docs along Diátaxis | accepted |
 
 ## Template
 
