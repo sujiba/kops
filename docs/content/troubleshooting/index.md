@@ -1,3 +1,7 @@
+---
+icon: lucide/history
+---
+
 # Troubleshooting
 
 Dated incident logs. A log is not changed after it is written; new findings go into a new log that references the old one.

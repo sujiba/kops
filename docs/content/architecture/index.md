@@ -1,3 +1,7 @@
+---
+icon: lucide/network
+---
+
 # Architecture
 
 ## GitOps flow

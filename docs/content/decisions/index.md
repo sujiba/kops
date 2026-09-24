@@ -1,3 +1,7 @@
+---
+icon: lucide/scale
+---
+
 # Decisions
 
 Architecture decision records (ADRs) capture **why** something is built the way it is. An ADR is not rewritten once accepted: if the decision changes, a new ADR replaces the old one, and the old one gets the status "superseded by NNNN".

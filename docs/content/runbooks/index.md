@@ -1,3 +1,7 @@
+---
+icon: lucide/siren
+---
+
 # Runbooks
 
 Every runbook has the same structure: **When** (trigger), **Prerequisites**, **Steps**, **Verify** and **Rollback**. That way you find the right section immediately, even under pressure.

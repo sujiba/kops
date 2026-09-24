@@ -1,3 +1,7 @@
+---
+icon: lucide/circle-arrow-up
+---
+
 # Talos upgrade
 
 | | |

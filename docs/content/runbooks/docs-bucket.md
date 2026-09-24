@@ -1,3 +1,7 @@
+---
+icon: lucide/archive
+---
+
 # Docs bucket
 
 | | |

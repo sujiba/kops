@@ -1,3 +1,7 @@
+---
+icon: lucide/book-open
+---
+
 # Reference
 
 Reference pages describe the building blocks of the clusters: what exists, where it is configured, which knobs matter and what it creates. The manifests under [`kubernetes/`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes) stay the source of truth; these pages explain their structure and link to them. Only shared building blocks get a page; a single app's `helmrelease.yaml` is its own reference. Why this section exists: [ADR 0002](../decisions/0002-diataxis.md).
