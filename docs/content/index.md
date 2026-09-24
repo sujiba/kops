@@ -10,21 +10,21 @@ Operations handbook for the Kubernetes clusters `hcloud` and `home`. Pick by sit
 
 <div class="grid cards" markdown>
 
--   :lucide-siren:{ .lg .middle } **Something is broken**
+-   :lucide-user-cog:{ .lg .middle } **Hands-on work**
 
     ---
 
-    Step-by-step guides for recurring tasks.
+    Step-by-step guides for bootstraps, upgrades and one-time setups.
 
-    [:lucide-arrow-right: Runbooks](runbooks/index.md)
+    [:lucide-arrow-right: How-Tos](how-to/index.md)
 
--   :lucide-history:{ .lg .middle } **Have we seen this before?**
+-   :lucide-notebook-pen:{ .lg .middle } **Have we seen this before?**
 
     ---
 
     Dated incident logs with cause and fix.
 
-    [:lucide-arrow-right: Troubleshooting](troubleshooting/index.md)
+    [:lucide-arrow-right: Incidents](incidents/index.md)
 
 -   :lucide-book-open:{ .lg .middle } **How is X set up?**
 

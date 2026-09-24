@@ -301,7 +301,7 @@ Show the user the created files and get confirmation before committing. Commit s
 
 ## Step 5: Document the app
 
-If the app needs an operational procedure (runbook) or reflects a design decision (ADR), document it with the `add-docs` skill (`.agents/skills/add-docs/SKILL.md`).
+If the app needs an operational procedure (how-to) or reflects a design decision (ADR), document it with the `add-docs` skill (`.agents/skills/add-docs/SKILL.md`).
 
 ## Common mistakes
 

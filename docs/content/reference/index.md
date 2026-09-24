@@ -37,7 +37,7 @@ File name: `short-title.md`. Then add it to `nav` → `Reference` in `docs/zensi
 
 ## Related
 
-- Runbooks, ADRs and other reference pages that use it.
+- How-tos, ADRs and other reference pages that use it.
 ```
 
 !!! warning "No volatile values"

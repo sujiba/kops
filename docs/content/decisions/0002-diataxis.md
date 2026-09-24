@@ -7,7 +7,7 @@
 
 ## Context
 
-The handbook grows page by page (runbooks, architecture, ADRs, incident logs). Without a shared model, pages drift into mixed content: steps next to long background, reference tables in the middle of a procedure. Under pressure, the reader then has to search inside a page instead of finding the right page.
+The handbook grows page by page (how-tos, architecture, ADRs, incident logs). Without a shared model, pages drift into mixed content: steps next to long background, reference tables in the middle of a procedure. Under pressure, the reader then has to search inside a page instead of finding the right page.
 
 [Diátaxis](https://diataxis.fr/) splits documentation by the reader's need into four types, using two questions: does the content inform **action** or **cognition**, and does it serve **acquisition** (study) or **application** (work) of a skill?
 
@@ -22,20 +22,20 @@ We use Diátaxis as the model for every page, adapted to a single-operator homel
 
 | Section | Diátaxis type | Content |
 |---|---|---|
-| Runbooks | How-to guide | Goal-oriented steps for a competent operator: When, Prerequisites, Steps, Verify, Rollback |
+| How-Tos | How-to guide | Goal-oriented steps for a competent operator: When, Prerequisites, Steps, Verify, Rollback |
 | Reference | Reference | Building blocks and their setup (e.g. CNPG clusters, kopiur backups): what exists, where it is configured, which knobs, what it creates |
 | Architecture | Explanation | How the parts fit together, diagrams |
 | Decisions | Explanation | Why something is built this way, with alternatives |
-| Troubleshooting | none (record) | Dated incident logs, kept outside the four types on purpose |
+| Incidents | none (record) | Dated incident logs, kept outside the four types on purpose |
 | Tutorials | none | No section: there are no learners to onboard |
 
 Rules for writing:
 
 - **One primary type per page.** The page's section decides the type.
 - **Reference pages only for shared building blocks.** Components and platform services whose behavior is spread over several files or used by many apps (kopiur, CNPG, Garage). A single app's `helmrelease.yaml` is its own reference and gets no page.
-- **Split by need, not by topic.** One topic can have a reference page (knobs), a runbook (restore) and an ADR (why); each links to the others.
+- **Split by need, not by topic.** One topic can have a reference page (knobs), a how-to (restore) and an ADR (why); each links to the others.
 - **The manifests under `kubernetes/` are the source of truth.** Reference pages describe the structure and link to the manifests; they never copy volatile values (versions, tags, limits).
-- **Link instead of mixing.** A runbook links to a reference page for the knobs and to the architecture page or an ADR for the *why*.
+- **Link instead of mixing.** A how-to links to a reference page for the knobs and to the architecture page or an ADR for the *why*.
 - **Secondary content is collapsed.** Where a short aside is unavoidable, it goes into a `??? note` box.
 
 ## Alternatives
@@ -51,5 +51,5 @@ Rules for writing:
 
 - New pages need a clear type; if a page does not fit any section, that is a signal to split it.
 - Reference pages can go stale when manifests change. Keeping them to structure and knobs, and linking the files, limits that.
-- Existing runbooks still contain lookup tables (Talos config layout, extensions and kernel args, Flux cheat sheet). They move to reference pages when those runbooks are next touched.
+- Existing how-tos still contain lookup tables (Talos config layout, extensions and kernel args, Flux cheat sheet). They move to reference pages when those how-tos are next touched.
 - Incident logs do not follow Diátaxis. They are history, not documentation, and are never rewritten.

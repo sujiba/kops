@@ -1,8 +1,8 @@
 ---
-icon: lucide/history
+icon: lucide/notebook-pen
 ---
 
-# Troubleshooting
+# Incidents
 
 Dated incident logs. A log is not changed after it is written; new findings go into a new log that references the old one.
 

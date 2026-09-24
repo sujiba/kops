@@ -7,7 +7,7 @@
 
 ## Context
 
-Operational knowledge (runbooks, incidents, decisions) was scattered across READMEs. We need searchable docs right in the infra repo, without an extra toolchain and self-hosted.
+Operational knowledge (how-tos, incidents, decisions) was scattered across READMEs. We need searchable docs right in the infra repo, without an extra toolchain and self-hosted.
 
 ## Decision
 

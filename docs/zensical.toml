@@ -11,15 +11,15 @@ extra_css = ["stylesheets/extra.css"]
 
 nav = [
   { "Home" = "index.md" },
-  { "Runbooks" = [
-    "runbooks/index.md",
-    { "Talos bootstrap" = "runbooks/talos-bootstrap.md" },
-    { "Flux bootstrap" = "runbooks/flux-bootstrap.md" },
-    { "Talos upgrade" = "runbooks/talos-upgrade.md" },
-    { "Docs bucket" = "runbooks/docs-bucket.md" },
+  { "How-Tos" = [
+    "how-to/index.md",
+    { "Talos bootstrap" = "how-to/talos-bootstrap.md" },
+    { "Flux bootstrap" = "how-to/flux-bootstrap.md" },
+    { "Talos upgrade" = "how-to/talos-upgrade.md" },
+    { "Garage bucket" = "how-to/garage-bucket.md" },
   ] },
-  { "Troubleshooting" = [
-    "troubleshooting/index.md",
+  { "Incidents" = [
+    "incidents/index.md",
   ] },
   { "Reference" = [
     "reference/index.md",
