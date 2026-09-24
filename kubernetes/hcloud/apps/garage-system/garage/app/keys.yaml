@@ -15,7 +15,7 @@ spec:
 apiVersion: garage.rajsingh.info/v1beta1
 kind: GarageKey
 metadata:
-  name: docs-deploy
+  name: docs-key
 spec:
   clusterRef:
     name: garage-cluster
