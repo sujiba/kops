@@ -85,7 +85,7 @@ All manifests live in `kubernetes/hcloud/apps/garage-system/garage/app/`.
     apiVersion: garage.rajsingh.info/v1beta1
     kind: GarageKey
     metadata:
-      name: docs-deploy
+      name: docs-key
     spec:
       clusterRef:
         name: garage-cluster
@@ -123,7 +123,7 @@ All manifests live in `kubernetes/hcloud/apps/garage-system/garage/app/`.
 5. Read the credentials from the secret the operator creates with the key's name:
 
     ```bash
-    kubectl -n garage-system get secret docs-deploy \
+    kubectl -n garage-system get secret docs-key \
       -o go-template='{{index .data "access-key-id" | base64decode}}{{"\n"}}{{index .data "secret-access-key" | base64decode}}{{"\n"}}'
     ```
 
@@ -157,8 +157,8 @@ All manifests live in `kubernetes/hcloud/apps/garage-system/garage/app/`.
     ```bash
     garage bucket create docs.offene.cloud
     garage bucket website --allow --index-document index.html --error-document 404.html docs.offene.cloud
-    garage key create docs-deploy
-    garage bucket allow --read --write docs.offene.cloud --key docs-deploy
+    garage key create docs-key
+    garage bucket allow --read --write docs.offene.cloud --key docs-key
     ```
 
     Leave out `garage bucket website` for a private bucket.
