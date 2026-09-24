@@ -1,0 +1,54 @@
+---
+name: Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/**
+      - .forgejo/workflows/docs.yaml
+
+concurrency:
+  group: ${{ forgejo.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BUCKET: docs.offene.cloud
+      # The runner shares the network of its pod in the cluster hcloud
+      AWS_ENDPOINT_URL: http://garage-cluster.garage-system.svc.cluster.local:3900
+      AWS_REGION: hcloud
+      AWS_ACCESS_KEY_ID: ${{ secrets.GARAGE_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.GARAGE_SECRET_ACCESS_KEY }}
+      # Garage does not need the newer default checksums of the AWS SDKs
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: https://github.com/astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+
+      - name: Build site
+        working-directory: docs
+        shell: bash
+        run: |
+          uv run --no-project --with-requirements requirements.txt zensical build --clean
+
+      - name: Upload to Garage
+        working-directory: docs
+        shell: bash
+        run: |-
+          # Bucket name contains dots: force path-style addressing
+          export AWS_CONFIG_FILE="$(mktemp)"
+          printf '[default]\ns3 =\n    addressing_style = path\n' > "$AWS_CONFIG_FILE"
+          uvx --from awscli aws s3 sync site/ "s3://${BUCKET}/" --delete --no-progress
