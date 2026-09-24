@@ -36,6 +36,9 @@ nav = [
 
 [project.theme]
 language = "en"
+custom_dir = "overrides"
+# No Google Fonts: use the system font stack
+font = false
 features = [
   "content.action.edit",
   "content.code.annotate",
@@ -56,6 +59,7 @@ features = [
 
 [project.theme.icon]
 logo = "lucide/server"
+repo = "simple/forgejo"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme)"

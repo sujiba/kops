@@ -8,6 +8,8 @@ English operations handbook built with Zensical. `docs/` is the docs project roo
 - ADRs and incident logs are not rewritten after the fact; supersede them with a new entry.
 - No volatile values (image tags, chart versions, resource limits); link the manifest instead. No secret values, only secret and key names.
 - Every new page must be added to `nav` in `docs/zensical.toml` and to its section's overview table.
+- Privacy: no third-party requests. Fonts are off (`font = false`, system fonts); `docs/overrides/main.html` sets `referrer: no-referrer`. Never add CDN links, web fonts, analytics or embeds. Known exception: Mermaid diagrams load mermaid.js from unpkg.com on the pages that use them.
+- `docs/overrides/partials/tabs-item.html` overrides the theme template to show page icons in the tabs; when bumping zensical, re-sync it with the upstream template.
 - Version pinned in `docs/requirements.txt`. From `docs/`: live preview with `uv run --no-project --with-requirements requirements.txt zensical serve`, verify with `uv run --no-project --with-requirements requirements.txt zensical build --clean`; fix all warnings.
 
 Use the add-docs skill (.agents/skills/add-docs/SKILL.md) for the workflow.

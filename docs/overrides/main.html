@@ -1,0 +1,8 @@
+{#-
+  Privacy: external links do not learn which page they were clicked on.
+-#}
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <meta name="referrer" content="no-referrer">
+{% endblock %}

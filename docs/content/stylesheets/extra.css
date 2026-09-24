@@ -8,3 +8,10 @@
 .md-typeset table:not([class]) td:first-child {
   white-space: nowrap;
 }
+
+/* Page icons in the navigation tabs (overrides/partials/tabs-item.html):
+   the theme fills tab icons, but Lucide icons are outline-only */
+.md-tabs__link svg.lucide {
+  fill: transparent;
+  stroke: currentcolor;
+}
