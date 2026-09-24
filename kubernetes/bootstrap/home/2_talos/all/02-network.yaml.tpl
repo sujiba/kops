@@ -27,6 +27,7 @@ kind: ResolverConfig
 hostDNS:
   enabled: true
 nameservers:
+  - address: 10.10.10.2 
   - address: 9.9.9.9
     protocol: DoT
     tlsServerName: dns.quad9.net
