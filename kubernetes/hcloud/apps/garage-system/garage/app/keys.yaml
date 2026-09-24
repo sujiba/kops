@@ -11,3 +11,16 @@ spec:
         name: cdn
       read: true
       write: true
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageKey
+metadata:
+  name: docs-key
+spec:
+  clusterRef:
+    name: garage-cluster
+  bucketPermissions:
+    - bucketRef:
+        name: docs
+      read: true
+      write: true

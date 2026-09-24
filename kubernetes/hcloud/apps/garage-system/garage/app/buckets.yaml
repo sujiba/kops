@@ -12,3 +12,17 @@ spec:
     enabled: true
     indexDocument: index.html
     errorDocument: error.html
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageBucket
+metadata:
+  name: docs
+spec:
+  clusterRef:
+    name: garage-cluster
+  # Garage picks the website bucket by the Host header
+  globalAlias: docs.${EXTERNAL_DOMAIN}
+  website:
+    enabled: true
+    indexDocument: index.html
+    errorDocument: 404.html

@@ -1,0 +1,17 @@
+/* Code in tables: no breaks inside a token (e.g. "schematic.yaml") */
+.md-typeset table:not([class]) td code {
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* First column holds short keys (file names, labels): never wrap */
+.md-typeset table:not([class]) td:first-child {
+  white-space: nowrap;
+}
+
+/* Page icons in the navigation tabs (overrides/partials/tabs-item.html):
+   the theme fills tab icons, but Lucide icons are outline-only */
+.md-tabs__link svg.lucide {
+  fill: transparent;
+  stroke: currentcolor;
+}

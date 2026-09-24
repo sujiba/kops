@@ -1,0 +1,113 @@
+[project]
+site_name = "Home-Ops"
+site_description = "Operations handbook for the home Kubernetes clusters"
+site_url = "https://docs.offene.cloud/"
+repo_url = "https://code.offene.cloud/homelab/kops"
+repo_name = "homelab/kops"
+edit_uri = "_edit/main/docs/content/"
+docs_dir = "content"
+site_dir = "site"
+extra_css = ["stylesheets/extra.css"]
+
+nav = [
+  { "Home" = "index.md" },
+  { "How-Tos" = [
+    "how-to/index.md",
+    { "Talos bootstrap" = "how-to/talos-bootstrap.md" },
+    { "Flux bootstrap" = "how-to/flux-bootstrap.md" },
+    { "Talos upgrade" = "how-to/talos-upgrade.md" },
+    { "Garage bucket" = "how-to/garage-bucket.md" },
+  ] },
+  { "Incidents" = [
+    "incidents/index.md",
+  ] },
+  { "Reference" = [
+    "reference/index.md",
+  ] },
+  { "Architecture" = [
+    "architecture/index.md",
+  ] },
+  { "Decisions" = [
+    "decisions/index.md",
+    { "0001 Docs with Zensical and Garage" = "decisions/0001-docs-zensical-garage.md" },
+    { "0002 Structure docs along Diátaxis" = "decisions/0002-diataxis.md" },
+  ] },
+]
+
+[project.theme]
+language = "en"
+custom_dir = "overrides"
+# No Google Fonts: use the system font stack
+font = false
+features = [
+  "content.action.edit",
+  "content.code.annotate",
+  "content.code.copy",
+  "content.tabs.link",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.path",
+  "navigation.sections",
+  "navigation.tabs",
+  "navigation.tabs.sticky",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "toc.follow",
+]
+
+[project.theme.icon]
+logo = "lucide/server"
+repo = "simple/forgejo"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to system preference"
+
+[project.markdown_extensions.abbr]
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.def_list]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.tables]
+
+[project.markdown_extensions.toc]
+permalink = true
+
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.keys]
+
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+line_spans = "__span"
+pygments_lang_class = true
+
+[project.markdown_extensions.pymdownx.superfences]
+custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true
+
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
+
+[project.markdown_extensions.pymdownx.emoji]
+emoji_index = "zensical.extensions.emoji.twemoji"
+emoji_generator = "zensical.extensions.emoji.to_svg"

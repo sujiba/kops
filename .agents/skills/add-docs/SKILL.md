@@ -1,59 +1,44 @@
 ---
 name: add-docs
-description: Use when creating or updating the cluster documentation in docs/ — app docs mirroring kubernetes/<cluster>/apps, bootstrap or infrastructure pages, or recording a design decision ("document X", "update the docs for X")
+description: Use when creating or updating the English operations handbook in docs/ — how-tos (runbooks), reference pages for building blocks (CNPG, kopiur, ...), architecture diagrams, design decisions (ADRs) or incident logs, including turning an existing README into a how-to ("document X", "write a how-to for X", "write a runbook for X", "make this README a how-to", "record decision X")
 ---
 
 # Add or Update Documentation
 
-Creates and updates the Zensical documentation in `docs/content/`. All rules for structure, page format and content live in `docs/AGENTS.md` — read it completely before starting; this skill only describes the workflow. When in doubt, mirror the reference app instead of inventing structure:
+Rules (language, layout, links, what not to write) are in `.agents/instructions/docs.instructions.md`, so read them first. This skill is the workflow.
 
-| Reference                                    | Shows                                                             |
-| -------------------------------------------- | ----------------------------------------------------------------- |
-| `docs/content/apps/services/vaultwarden.md`  | Complete single-page app doc, incl. an app in **both** clusters   |
-| `docs/content/apps/services/index.md`        | Group index with the Namespace and Cluster(s) columns             |
-| `docs/templates/`                            | Skeletons for every page type — always start from these           |
+| Section | New page | Template | Overview table |
+| --- | --- | --- | --- |
+| How-to | `docs/content/how-to/<name>.md` | `how-to/index.md` | `how-to/index.md` |
+| Reference | `docs/content/reference/<name>.md` | `reference/index.md` | `reference/index.md` |
+| Architecture | extend `docs/content/architecture/index.md` | Mermaid `flowchart LR` | none |
+| Decision (ADR) | `docs/content/decisions/NNNN-<title>.md` | `decisions/index.md` | `decisions/index.md` |
+| Incident log | `docs/content/incidents/YYYY-MM-DD-<topic>.md` | `incidents/index.md` | `incidents/index.md` |
 
-## Step 1: Gather details
+## Steps
 
-Ask the user (AskUserQuestion) for anything not already given:
+1. **Scope.** Ask the user (AskUserQuestion) for section and topic if not given.
+2. **Facts.** Derive everything from the repo:
+   - Manifests: `kubernetes/<cluster>/apps/`, bootstrap: `kubernetes/bootstrap/<cluster>/` (`2_talos` = topf, `3_flux` = helmfile).
+   - Check **both** clusters (`hcloud`, `home`). If a procedure differs per cluster, use content tabs (`=== "hcloud"` / `=== "home"`) or `<cluster>` placeholders; if it only applies to one, say so in the **When** row.
+   - Mark anything you cannot derive with `<!-- TODO: ... -->` and tell the user.
+3. **Write** the page from the section's template.
+   - How-tos: the property table (When / Duration / Risk), then `## Prerequisites` (task list), `## Steps` (numbered, commands in fenced `bash` blocks with all flags such as `--kubeconfig ~/.kube/<cluster>`), `## Verify`, `## Rollback`. Lookup material (knobs, config layout, cheat sheets) belongs on a reference page; link it from the how-to.
+   - Reference: describe structure and knobs, link the manifests with full repo URLs (`https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/...`), never copy versions or tags.
+   - Link related pages to each other (e.g. Talos bootstrap → Flux bootstrap, how-to → reference page).
+4. **Register** the page in `nav` in `docs/zensical.toml` and add a row to the section's overview table.
+5. **Build**: from `docs/`, `uv run --no-project --with-requirements requirements.txt zensical build --clean` must print `No issues found`.
+6. **Report** to the user what is new, what you derived yourself (Verify/Rollback, durations) and what differs from the source.
 
-1. **Target** — an app (`<namespace>/<app>`), a namespace, a bootstrap topic or an infrastructure topic
-2. **Scope** — new docs, update after a manifest change, removal, or a design decision to record
+## Turning a README into a how-to
 
-## Step 2: Document an app
-
-1. Read `docs/AGENTS.md`.
-2. Check **both** clusters: `ls kubernetes/home/apps/<namespace>/<app> kubernetes/hcloud/apps/<namespace>/<app>`. One doc set covers every instance.
-3. Read all manifests of every instance (`ks.yaml`, HelmRelease, SOPS secrets — key names only, PVCs, database, routes, components). Consult upstream documentation only when the manifests do not explain a setting.
-4. Pick the app's group (`platform`, `observability` or `services`) via the membership rule in `docs/AGENTS.md`. If `docs/content/apps/<group>/<app>.md` does not exist, create it from `docs/templates/app.md` — one single page per app, never a folder with sub-pages.
-5. Fill all sections from the manifests (including the `Namespace:` line). Mark anything you cannot derive with `<!-- TODO: ... -->`.
-6. Add or update the app (with its namespace and cluster(s)) in the group's `index.md` table, and remove it from the group index TODO comment if listed there.
-7. If the change reflects a design choice, add an H3 entry at the top of the page's `## Decisions` section (`git log --follow` on the app directory often reveals the date and context).
-
-**Changed app:** update only the affected sections, in the same change as the manifests.
-
-**Removed app:** if removed from all clusters, delete the app page and its row in the group `index.md`; if removed from one cluster, update the `Clusters:` line and the group table.
-
-## Step 3: Document bootstrap or infrastructure
-
-1. Start from `docs/templates/page.md`.
-2. Place the page in `docs/content/bootstrap/` or `docs/content/infrastructure/`.
-3. Link it from the section `index.md`.
-
-## Step 4: Verify
-
-```bash
-cd docs && python3 -m venv .venv 2>/dev/null; .venv/bin/pip install -q -r requirements.txt && .venv/bin/zensical build --clean
-```
-
-Fix all warnings, then go through the "Before finishing" checklist in `docs/AGENTS.md`. Commit style: `feat(docs): ...` for new pages, `chore(docs): ...` for updates.
+- The README is the source, not the spec: check every path, file name and flag against the repo and fix what is wrong (wrong directory, wrong cluster in `--kubeconfig`, outdated commands). List each correction in the report.
+- Restructure it into the how-to sections; lookup tables (options, extensions, config layout) go onto a reference page, background into `??? note` boxes or an ADR.
+- Do not change or delete the README unless the user asks; `kubernetes/**` may be off-limits for the current task.
 
 ## Common mistakes
 
-- **Documenting only one cluster's instance** — ~15 apps run in both `home` and `hcloud`; always check both trees (Step 2.2).
-- **Copying volatile manifest values** — image tags, chart versions, resource limits and replica counts go stale; link the manifest instead.
-- **Writing secret values or resolved domains** — only secret names, SOPS file paths and key names; hostnames always use `${EXTERNAL_DOMAIN}` / `${INTERNAL_DOMAIN}` style variables.
-- **Forgetting the group index** — every app change touches the group `index.md` table.
-- **Grouping by namespace** — docs are grouped by function (`platform` / `observability` / `services`), not by namespace; the namespace is recorded on the app's `index.md` and in the group table.
-- **Inventing page types or skipping templates** — `app.md`, `group-index.md` and `page.md` are the only page types; start every new page from `docs/templates/`.
-- **Creating sub-pages for an app** — each app is exactly one page; configuration, troubleshooting and decisions are H2 sections, not separate files.
+- **Inventing Verify/Rollback steps**: only add what follows from the repo or official docs, and flag it as your own addition.
+- **Guessing tool behavior**: check the tool's docs (e.g. `topf secrets` writes and encrypts `secrets.yaml` itself, no `>` redirect).
+- **Forgetting the overview table**: `nav` alone is not enough.
+- **Mid-word breaks in tables**: already handled by `docs/content/stylesheets/extra.css`; do not add inline HTML or `<br>` to work around table layout.
