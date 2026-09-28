@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/crocodilestick/calibre-web-automated
-              tag: v4.0.7
+              tag: v4.0.8
             env:
               TZ: Europe/Berlin
               CWA_PORT_OVERRIDE: 8083
