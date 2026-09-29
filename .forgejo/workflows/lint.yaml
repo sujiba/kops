@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Lint
 
 on:
@@ -11,33 +12,34 @@ concurrency:
   group: ${{ forgejo.ref }}-${{ forgejo.workflow }}
   cancel-in-progress: true
 
-#permissions:
-#  contents: read
+permissions:
+  contents: read
 
 jobs:
-  #actionlint:
-  #  name: actionlint
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Checkout
-  #      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  #      with:
-  #        persist-credentials: false
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-  #    - name: Get changed files
-  #      id: changed-files
-  #      uses: https://github.com/bjw-s-labs/action-changed-files@a9a36fb08ce06db9b02fbd8026cc2c0945eb9841 # v0.6.0
-  #      with:
-  #        patterns: |-
-  #          .forgejo/workflows/*.yaml
-  #          .forgejo/workflows/*.yml
+      - name: Get changed files
+        id: changed-files
+        uses: https://github.com/tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+        with:
+          files: |-
+            .forgejo/workflows/*.yaml
+            .forgejo/workflows/*.yml
+          json: true
 
-  #    - name: Run actionlint
-  #      if: steps.changed-files.outputs.changed_files != '[]'
-  #      uses: https://github.com/bjw-s-labs/action-actionlint@b346813e82708106544f48a93a5b3fbeeb8e37eb # v0.1.1
-  #      with:
-  #        actionlint_config: .forgejo/actionlint.yaml
-  #        file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.changed_files), ' ') }}
+      - name: Run actionlint
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: https://github.com/bjw-s-labs/action-actionlint@b346813e82708106544f48a93a5b3fbeeb8e37eb # v0.1.1
+        with:
+          actionlint_config: .forgejo/actionlint.yaml
+          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files || '[]'), ' ') }}
 
   yamllint:
     name: yamllint
@@ -50,21 +52,25 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: https://github.com/bjw-s-labs/action-changed-files@147be9638332cf68fd60714a610509d7a9360d60 # v0.7.0
+        uses: https://github.com/tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
-          patterns: |-
+          files: |-
             **/*.yaml
             **/*.yml
+          json: true
 
       - name: Install yamllint
-        if: steps.changed-files.outputs.changed_files != '[]'
+        if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
         run: |
           pipx install yamllint
           yamllint --version
 
       - name: Run yamllint
-        if: steps.changed-files.outputs.changed_files != '[]'
+        if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
-        run: |-
-          yamllint --config-file .yamllint.yaml --format github ${{ join(fromJSON(steps.changed-files.outputs.changed_files), ' ') }}
+        run: >-
+          yamllint
+          --config-file .yamllint.yaml
+          --format github
+          ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files || '[]'), ' ') }}
