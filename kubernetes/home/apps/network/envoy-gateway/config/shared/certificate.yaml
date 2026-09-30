@@ -1,0 +1,39 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: internal-wildcard
+  namespace: network
+spec:
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  secretName: internal-wildcard-tls
+  commonName: ${INTERNAL_DOMAIN}
+  dnsNames:
+    - ${INTERNAL_DOMAIN}
+    - "*.${INTERNAL_DOMAIN}"
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: den-wildcard
+  namespace: network
+spec:
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  secretName: den-wildcard-tls
+  commonName: den.${EXTERNAL_DOMAIN}
+  dnsNames:
+    - den.${EXTERNAL_DOMAIN}
+    - "*.den.${EXTERNAL_DOMAIN}"
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always

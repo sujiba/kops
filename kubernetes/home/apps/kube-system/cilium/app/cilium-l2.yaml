@@ -24,5 +24,5 @@ spec:
     - cidr: "${PRIVATE_DNS_IPv6}/128"
     - cidr: "${ENVOY_INTERNAL_IPv4}/32"
     - cidr: "${ENVOY_INTERNAL_IPv6}/128"
-    - cidr: "${ENVOY_VPN_IPv4}/32"
-    - cidr: "${ENVOY_VPN_IPv6}/128"
+    - cidr: "${ENVOY_DEN_IPv4}/32"
+    - cidr: "${ENVOY_DEN_IPv6}/128"
