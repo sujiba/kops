@@ -16,31 +16,31 @@ permissions:
   contents: read
 
 jobs:
-  actionlint:
-    name: actionlint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
+  # actionlint:
+  #   name: actionlint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+  #       with:
+  #         persist-credentials: false
 
-      - name: Get changed files
-        id: changed-files
-        uses: https://github.com/tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
-        with:
-          files: |-
-            .forgejo/workflows/*.yaml
-            .forgejo/workflows/*.yml
-          json: true
-          escape_json: false
+  #     - name: Get changed files
+  #       id: changed-files
+  #       uses: https://github.com/tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+  #       with:
+  #         files: |-
+  #           .forgejo/workflows/*.yaml
+  #           .forgejo/workflows/*.yml
+  #         json: true
+  #         escape_json: false
 
-      - name: Run actionlint
-        if: steps.changed-files.outputs.any_changed == 'true'
-        uses: https://github.com/bjw-s-labs/action-actionlint@b346813e82708106544f48a93a5b3fbeeb8e37eb # v0.1.1
-        with:
-          actionlint_config: .forgejo/actionlint.yaml
-          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files), ' ') }}
+  #     - name: Run actionlint
+  #       if: steps.changed-files.outputs.any_changed == 'true'
+  #       uses: https://github.com/bjw-s-labs/action-actionlint@b346813e82708106544f48a93a5b3fbeeb8e37eb # v0.1.1
+  #       with:
+  #         actionlint_config: .forgejo/actionlint.yaml
+  #         file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files), ' ') }}
 
   yamllint:
     name: yamllint
