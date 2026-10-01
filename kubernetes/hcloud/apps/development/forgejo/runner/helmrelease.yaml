@@ -2,90 +2,66 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app forgejo-runner
+  name: forgejo-runner
 spec:
-  interval: 30m
   chartRef:
     kind: OCIRepository
-    name: *app
+    name: forgejo-runner
+  interval: 30m
+
   values:
     controllers:
       forgejo-runner:
-        replicas: 2
+        annotations:
+          reloader.stakater.com/auto: "true"
+        replicas: 1
+        strategy: Recreate
+
         initContainers:
-          runner-register:
-            image:
-              repository: code.forgejo.org/forgejo/runner
-              tag: 13.2.0@sha256:ca3d5eea46004789a175d1369eec6829d3ea9bfbe2011a06625b4bdaa55f7552
-            command: ["sh", "-c"]
-            args:
-              - |
-                forgejo-runner register --no-interactive --token $(RUNNER_TOKEN) --name $(RUNNER_NAME) --instance $(FORGEJO_INSTANCE_URL) --labels self-hosted:host,docker:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04,ubuntu-latest:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04,ubuntu-24.04:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04,renovate:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-24.04;
-                forgejo-runner generate-config > /data/config.yml ;
-                sed -i -e "s|network: .*|network: host|" /data/config.yml ;
-                sed -i -e "s|^  envs:$$|  envs:\n    DOCKER_HOST: tcp://localhost:2376\n    DOCKER_TLS_VERIFY: 1\n    DOCKER_CERT_PATH: /certs/client|" /data/config.yml ;
-                sed -i -e "s|^  options:|  options: -v /certs/client:/certs/client|" /data/config.yml ;
-                sed -i -e "s|  valid_volumes: \[\]$$|  valid_volumes:\n    - /certs/client|" /data/config.yml ;
-            env:
-              - name: RUNNER_NAME
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
-              - name: RUNNER_TOKEN
-                valueFrom:
-                  secretKeyRef:
-                    name: forgejo-runner-secret
-                    key: RUNNER_TOKEN
-              - name: FORGEJO_INSTANCE_URL
-                valueFrom:
-                  secretKeyRef:
-                    name: forgejo-runner-secret
-                    key: FORGEJO_INSTANCE_URL
-        containers:
           daemon:
             image:
               repository: docker
               tag: 29.8.2-dind@sha256:7dcdfc4a20246236f558175182ccace1eb15a41bd3eb119dd2284f393498b7c1
-            securityContext:
-              privileged: true
             env:
               - name: DOCKER_TLS_CERTDIR
                 value: /certs
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 2
+                  tcpSocket:
+                    port: 2376
+            restartPolicy: Always
+            securityContext:
+              privileged: true
+
+        containers:
           app:
             image:
               repository: code.forgejo.org/forgejo/runner
               tag: 13.2.0@sha256:ca3d5eea46004789a175d1369eec6829d3ea9bfbe2011a06625b4bdaa55f7552
-            command:
-              [
-                "sh",
-                "-c",
-                "while ! nc -z localhost 2376 </dev/null; do echo 'waiting for docker daemon...'; sleep 5; done; forgejo-runner --config /data/config.yml daemon",
-              ]
+            command: ["forgejo-runner", "daemon", "--config", "/config/config.yml"]
             env:
               - name: DOCKER_HOST
                 value: tcp://localhost:2376
               - name: DOCKER_CERT_PATH
                 value: /certs/client
               - name: DOCKER_TLS_VERIFY
-                value: "0"
-            securityContext:
-              privileged: true
-        annotations:
-          reloader.stakater.com/auto: "true"
-
-    service:
-      app:
-        controller: forgejo-runner
-        ports:
-          http:
-            port: 45315
+                value: "1"
 
     persistence:
       docker-certs:
         type: emptyDir
         globalMounts:
           - path: /certs
-      runner-data:
-        type: emptyDir
-        globalMounts:
-          - path: /data
+      config:
+        type: secret
+        name: forgejo-runner-secret
+        advancedMounts:
+          forgejo-runner:
+            app:
+              - path: /config
+                readOnly: true
