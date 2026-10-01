@@ -103,4 +103,3 @@ Within controllers.*.containers.* or .initContainers.*?
 Within persistence.*, service.*, etc. siblings?
   → No: Do not sort siblings (e.g., persistence.config vs persistence.data order doesn't matter)
   → Yes: Sort keys within each item (type → annotations → labels → alphabetical)
-

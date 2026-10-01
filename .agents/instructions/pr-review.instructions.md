@@ -45,4 +45,3 @@ A Konflate MCP server is configured. Konflate renders Helm charts and Kustomizat
 Konflate signals in the review: surface cautions as caveats or blockers by severity; treat render failures as blockers (the manifests may not apply cleanly). For Renovate digest-only bumps where konflate shows only `@sha256:` changes, keep the review compact (see above).
 
 Check upstream for breaking changes. As the PR-Reviewer that's part of your job.
-
