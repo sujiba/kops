@@ -32,15 +32,13 @@ jobs:
           files: |-
             .forgejo/workflows/*.yaml
             .forgejo/workflows/*.yml
-          json: true
-          escape_json: false
 
       - name: Run actionlint
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: https://github.com/bjw-s-labs/action-actionlint@b346813e82708106544f48a93a5b3fbeeb8e37eb # v0.1.1
         with:
           actionlint_config: .forgejo/actionlint.yaml
-          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files), ' ') }}
+          file_pattern: ${{ steps.changed-files.outputs.all_changed_files }}
 
   yamllint:
     name: yamllint
