@@ -6,6 +6,15 @@ metadata:
   labels:
     dashboards: grafana
 spec:
+  auth.generic_oauth:
+    enabled: "true"
+    name: Pocket ID
+    scopes: openid profile email groups
+    auth_url: https://id.offene.cloud/authorize
+    token_url: https://id.offene.cloud/api/oidc/token
+    api_url: https://id.offene.cloud/api/oidc/userinfo
+    use_pkce: "true"
+    role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
   config:
     analytics:
       check_for_updates: "false"
@@ -26,6 +35,7 @@ spec:
       enabled: "false"
     server:
       enable_gzip: "true"
+      root_url: https://grafana.offene.cloud
     snapshots:
       external_enabled: "false"
   deployment:
@@ -47,6 +57,9 @@ spec:
                     secretKeyRef:
                       name: grafana-secret
                       key: GF_SECURITY_ADMIN_PASSWORD
+              envFrom:
+                - secretRef:
+                    name: grafana-secret
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
