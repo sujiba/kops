@@ -48,6 +48,7 @@ spec:
               EMAIL_LOGIN_NOTIFICATION_ENABLED: true
               EMAIL_VERIFICATION_ENABLED: true
               EMAIL_ONE_TIME_ACCESS_AS_UNAUTHENTICATED_ENABLED: false
+              ICON_LIBRARY_URL: disabled
               LOG_JSON: true
               SMTP_FROM: no-reply@${MAIL_DOMAIN}
               SMTP_HOST: smtp-relay.network.svc.cluster.local
