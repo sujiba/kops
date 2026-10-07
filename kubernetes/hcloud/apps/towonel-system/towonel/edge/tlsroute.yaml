@@ -1,0 +1,47 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: TLSRoute
+metadata:
+  name: towonel-edge
+spec:
+  # Tenant domains served through the edge (SNI); add new tenants here
+  hostnames:
+    - "*.example.invalid" # FIXME: replace with real tenant domains
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+      sectionName: tls-passthrough
+  rules:
+    - backendRefs:
+        - name: towonel-edge
+          port: 4443
+
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: towonel-edge
+spec:
+  proxyProtocol:
+    version: V2
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: TLSRoute
+      name: towonel-edge
+
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: towonel-edge-http
+  annotations:
+    external-dns.alpha.kubernetes.io/controller: none
+spec:
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+      sectionName: http
+  rules:
+    - backendRefs:
+        - name: towonel-edge
+          port: 8081

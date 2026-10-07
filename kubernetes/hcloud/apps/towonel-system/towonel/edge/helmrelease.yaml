@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: towonel-edge
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: towonel-edge
+  interval: 1h
+  values:
+    controllers:
+      towonel-edge:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          # iroh QUIC (51820/udp) must be reachable on the node's public IP;
+          # TCP listeners use high ports that the hcloud firewall keeps closed
+          dnsPolicy: ClusterFirstWithHostNet
+          hostNetwork: true
+          securityContext:
+            fsGroup: 10001
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 10001
+            runAsNonRoot: true
+            runAsUser: 10001
+        replicas: 1
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              repository: codeberg.org/towonel/towonel-node
+              tag: 1.9.0@sha256:343b9bef2f47839f6d3d375539e81f9e2e8634db21cc7ca29d37343e10ecc633
+            env:
+              RUST_LOG: info
+              TOWONEL_DATA_DIR: /data
+              TOWONEL_EDGE_ADVERTISED_ADDRESSES: tunnel.${EXTERNAL_DOMAIN}:443
+              TOWONEL_EDGE_ENABLED: "true"
+              TOWONEL_EDGE_HEALTH_LISTEN_ADDR: 0.0.0.0:9092
+              TOWONEL_EDGE_HTTP_LISTEN_ADDR: 0.0.0.0:8081
+              TOWONEL_EDGE_HUB_LINK_ADDR: towonel-hub.towonel-system.svc.cluster.local:51444
+              TOWONEL_EDGE_LISTEN_ADDR: 0.0.0.0:4443
+              TOWONEL_EDGE_PROXY_PROTOCOL: "true"
+              TOWONEL_EDGE_TLS_CERT_DIR: /data/certs
+              TOWONEL_HUB_ENABLED: "false"
+            envFrom:
+              - secretRef:
+                  name: towonel-edge-secret
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 9092
+              readiness: *probe
+            resources:
+              requests:
+                cpu: 50m
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+
+    persistence:
+      # Edges are stateless: the hub link reconnects and replays the route table
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+
+    service:
+      app:
+        controller: towonel-edge
+        ports:
+          http:
+            port: 8081
+          https:
+            port: 4443
