@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: docker.io/jgraph/drawio
-              tag: 32.3.0
+              tag: 32.4.1
             env:
               DRAWIO_SERVER_URL: https://draw.${EXTERNAL_DOMAIN}/
               # EXPORT_URL: http://drawio-exporter.selfhosted.svc.cluster.local:8000/
