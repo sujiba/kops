@@ -9,4 +9,6 @@ components:
 resources:
   - ./namespace.yaml
   - ./continuwuity/ks.yaml
+  # - ./mautrix-discord/ks.yaml
+  # - ./mautrix-whatsapp/ks.yaml
   - ./sable/ks.yaml
