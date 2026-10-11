@@ -123,17 +123,17 @@ spec:
           http:
             port: 8008
 
-    # route:
-    #   app:
-    #     hostnames: ["matrix.${EXTERNAL_DOMAIN}"]
-    #     parentRefs:
-    #       - name: envoy-external
-    #         namespace: network
-    #         sectionName: https
-    #     rules:
-    #       - backendRefs:
-    #           - identifier: app
-    #             port: 8008
+    route:
+      app:
+        hostnames: ["matrix.${EXTERNAL_DOMAIN}"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8008
 
     persistence:
       data:
