@@ -15,5 +15,6 @@ namespaces:
   rooms: []
 de.sorunome.msc2409.push_ephemeral: true
 push_ephemeral: true
+io.element.msc4190: true
 org.matrix.msc3202: true
 receive_ephemeral: true
