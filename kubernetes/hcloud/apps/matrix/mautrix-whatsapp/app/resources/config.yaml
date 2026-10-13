@@ -68,7 +68,7 @@ database:
   max_idle_conns: 1
 
 homeserver:
-  address: http://continuwuity.matrix.svc:8080
+  address: http://continuwuity.matrix.svc:8008
   domain: ${EXTERNAL_DOMAIN}
   software: standard
   async_media: false
