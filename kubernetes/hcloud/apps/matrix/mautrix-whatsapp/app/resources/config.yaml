@@ -2,7 +2,7 @@
 network:
   os_name: Mautrix-WhatsApp bridge
   browser_name: unknown
-  displayname_template: '{{`{{or .BusinessName .PushName .Phone .RedactedPhone "Unknown user"}}`}} (WA)'
+  displayname_template: '{{or .BusinessName .PushName .Phone .RedactedPhone "Unknown user"}} (WA)'
   call_start_notices: true
   identity_change_notices: false
   send_presence_on_typing: false
@@ -86,7 +86,7 @@ appservice:
   async_transactions: false
   as_token: placeholder
   hs_token: placeholder
-  username_template: whatsapp_{{`{{.}}`}}
+  username_template: whatsapp_{{.}}
 
 matrix:
   message_status_events: false

@@ -25,10 +25,10 @@ appservice:
   hs_token: placeholder
 
 bridge:
-  username_template: discord_{{`{{.}}`}}
-  displayname_template: "{{`{{if .Webhook}}Webhook{{else}}{{or .GlobalName .Username}}{{if .Bot}} (bot){{end}}{{end}}`}}"
-  channel_name_template: "{{`{{if or (eq .Type 3) (eq .Type 4)}}{{.Name}}{{else}}#{{.Name}}{{end}}`}}"
-  guild_name_template: "{{`{{.Name}}`}}"
+  username_template: discord_{{.}}
+  displayname_template: "{{if .Webhook}}Webhook{{else}}{{or .GlobalName .Username}}{{if .Bot}} (bot){{end}}{{end}}"
+  channel_name_template: "{{if or (eq .Type 3) (eq .Type 4)}}{{.Name}}{{else}}#{{.Name}}{{end}}"
+  guild_name_template: "{{.Name}}"
   private_chat_portal_meta: default
   public_address: null
   avatar_proxy_key: placeholder
