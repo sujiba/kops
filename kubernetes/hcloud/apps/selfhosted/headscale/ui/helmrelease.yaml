@@ -60,6 +60,23 @@ spec:
             namespace: network
             sectionName: https
         rules:
+          # TLS ends at Envoy, so headplane sees http:// and its CSRF check
+          # rejects the browser's https:// Origin. Rewrite only our own origin.
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /admin
+                headers:
+                  - name: Origin
+                    value: https://headscale.${EXTERNAL_DOMAIN}
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  set:
+                    - name: Origin
+                      value: http://headscale.${EXTERNAL_DOMAIN}
+            backendRefs:
+              - identifier: app
           - matches:
               - path:
                   type: PathPrefix
