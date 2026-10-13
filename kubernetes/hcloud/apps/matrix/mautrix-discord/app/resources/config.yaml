@@ -11,7 +11,7 @@ appservice:
   port: 29334
   database:
     type: postgres
-    uri: postgres://placeholder
+    uri: set-from-secret
     max_open_conns: 5
     max_idle_conns: 1
   id: discord
@@ -21,8 +21,8 @@ appservice:
     avatar: mxc://maunium.net/nIdEykemnwdisvHbpxflpDlC
   ephemeral_events: true
   async_transactions: false
-  as_token: placeholder
-  hs_token: placeholder
+  as_token: set-from-secret
+  hs_token: set-from-secret
 
 bridge:
   username_template: discord_{{.}}
@@ -31,7 +31,7 @@ bridge:
   guild_name_template: "{{.Name}}"
   private_chat_portal_meta: default
   public_address: null
-  avatar_proxy_key: placeholder
+  avatar_proxy_key: set-from-secret
   startup_private_channel_create_limit: 5
   delivery_receipts: false
   message_status_events: false
@@ -85,7 +85,7 @@ bridge:
       share: cross-signed-tofu
   provisioning:
     prefix: /_matrix/provision
-    shared_secret: placeholder
+    shared_secret: set-from-secret
   permissions:
     "matrix.${EXTERNAL_DOMAIN}": user
 

@@ -63,7 +63,7 @@ bridge:
 
 database:
   type: postgres
-  uri: postgres://placeholder
+  uri: set-from-secret
   max_open_conns: 5
   max_idle_conns: 1
 
@@ -84,8 +84,8 @@ appservice:
     avatar: mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr
   ephemeral_events: true
   async_transactions: false
-  as_token: placeholder
-  hs_token: placeholder
+  as_token: set-from-secret
+  hs_token: set-from-secret
   username_template: whatsapp_{{.}}
 
 matrix:
@@ -97,7 +97,7 @@ matrix:
   upload_file_threshold: 5242880
 
 provisioning:
-  shared_secret: placeholder
+  shared_secret: set-from-secret
   allow_matrix_auth: true
 
 public_media:
@@ -121,7 +121,7 @@ encryption:
   appservice: false
   msc4190: true
   allow_key_sharing: true
-  pickle_key: placeholder
+  pickle_key: set-from-secret
   verification_levels:
     receive: unverified
     send: unverified
