@@ -59,7 +59,7 @@ bridge:
   relay:
     enabled: false
   permissions:
-    "${EXTERNAL_DOMAIN}": user
+    "matrix.${EXTERNAL_DOMAIN}": user
 
 database:
   type: postgres
@@ -69,7 +69,7 @@ database:
 
 homeserver:
   address: http://continuwuity.matrix.svc:8008
-  domain: ${EXTERNAL_DOMAIN}
+  domain: matrix.${EXTERNAL_DOMAIN}
   software: standard
   async_media: false
 

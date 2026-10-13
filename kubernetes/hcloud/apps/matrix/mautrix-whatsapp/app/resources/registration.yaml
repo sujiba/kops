@@ -7,9 +7,9 @@ sender_localpart: whatsappbot
 rate_limited: false
 namespaces:
   users:
-    - regex: "@whatsappbot:${EXTERNAL_DOMAIN}"
+    - regex: "@whatsappbot:matrix.${EXTERNAL_DOMAIN}"
       exclusive: true
-    - regex: "@whatsapp_.*:${EXTERNAL_DOMAIN}"
+    - regex: "@whatsapp_.*:matrix.${EXTERNAL_DOMAIN}"
       exclusive: true
   aliases: []
   rooms: []

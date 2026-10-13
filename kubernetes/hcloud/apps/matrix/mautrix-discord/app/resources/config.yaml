@@ -1,7 +1,7 @@
 ---
 homeserver:
   address: http://continuwuity.matrix.svc:8008
-  domain: ${EXTERNAL_DOMAIN}
+  domain: matrix.${EXTERNAL_DOMAIN}
   software: standard
   async_media: false
 
@@ -87,7 +87,7 @@ bridge:
     prefix: /_matrix/provision
     shared_secret: "{{ .PROVISIONING_SHARED_SECRET }}"
   permissions:
-    "${EXTERNAL_DOMAIN}": user
+    "matrix.${EXTERNAL_DOMAIN}": user
 
 logging:
   min_level: info

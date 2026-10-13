@@ -7,9 +7,9 @@ sender_localpart: discordbot
 rate_limited: false
 namespaces:
   users:
-    - regex: "@discordbot:${EXTERNAL_DOMAIN}"
+    - regex: "@discordbot:matrix.${EXTERNAL_DOMAIN}"
       exclusive: true
-    - regex: "@discord_.*:${EXTERNAL_DOMAIN}"
+    - regex: "@discord_.*:matrix.${EXTERNAL_DOMAIN}"
       exclusive: true
   aliases: []
   rooms: []
