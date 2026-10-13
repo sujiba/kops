@@ -21,8 +21,8 @@ appservice:
     avatar: mxc://maunium.net/nIdEykemnwdisvHbpxflpDlC
   ephemeral_events: true
   async_transactions: false
-  as_token: "{{ .AS_TOKEN }}"
-  hs_token: "{{ .HS_TOKEN }}"
+  as_token: placeholder
+  hs_token: placeholder
 
 bridge:
   username_template: discord_{{`{{.}}`}}
@@ -31,7 +31,7 @@ bridge:
   guild_name_template: "{{`{{.Name}}`}}"
   private_chat_portal_meta: default
   public_address: null
-  avatar_proxy_key: "{{ .AVATAR_PROXY_KEY }}"
+  avatar_proxy_key: placeholder
   startup_private_channel_create_limit: 5
   delivery_receipts: false
   message_status_events: false
@@ -85,7 +85,7 @@ bridge:
       share: cross-signed-tofu
   provisioning:
     prefix: /_matrix/provision
-    shared_secret: "{{ .PROVISIONING_SHARED_SECRET }}"
+    shared_secret: placeholder
   permissions:
     "matrix.${EXTERNAL_DOMAIN}": user
 

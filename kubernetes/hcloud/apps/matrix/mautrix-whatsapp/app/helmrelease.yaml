@@ -41,6 +41,9 @@ spec:
                   secretKeyRef:
                     name: mautrix-whatsapp-postgres
                     key: url
+            envFrom:
+              - secretRef:
+                  name: mautrix-whatsapp-secret
             probes:
               liveness:
                 enabled: true
@@ -71,8 +74,8 @@ spec:
 
     persistence:
       config:
-        type: secret
-        name: mautrix-whatsapp
+        type: configMap
+        name: mautrix-whatsapp-configmap
         globalMounts:
           - path: /data/config.yaml
             subPath: config.yaml

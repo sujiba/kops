@@ -30,7 +30,14 @@ spec:
               tag: v0.7.7@sha256:065405ca2f961b2687ca577c4eb65592c139d641342a9611d98b5394f30cf84a
             args:
               - -c
-              - yq '.appservice.database.uri = strenv(DATABASE_URI)' /config/config.yaml > /data/config.yaml
+              - >-
+                yq '
+                .appservice.database.uri = strenv(DATABASE_URI) |
+                .appservice.as_token = strenv(AS_TOKEN) |
+                .appservice.hs_token = strenv(HS_TOKEN) |
+                .bridge.avatar_proxy_key = strenv(AVATAR_PROXY_KEY) |
+                .bridge.provisioning.shared_secret = strenv(PROVISIONING_SHARED_SECRET)
+                ' /config/config.yaml > /data/config.yaml
             command:
               - /bin/sh
             env:
@@ -39,6 +46,9 @@ spec:
                   secretKeyRef:
                     name: mautrix-discord-postgres
                     key: url
+            envFrom:
+              - secretRef:
+                  name: mautrix-discord-secret
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -78,8 +88,8 @@ spec:
 
     persistence:
       config:
-        type: secret
-        name: mautrix-discord
+        type: configMap
+        name: mautrix-discord-configmap
         globalMounts:
           - path: /config
             readOnly: true

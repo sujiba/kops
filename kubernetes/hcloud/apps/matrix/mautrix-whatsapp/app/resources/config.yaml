@@ -84,8 +84,8 @@ appservice:
     avatar: mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr
   ephemeral_events: true
   async_transactions: false
-  as_token: "{{ .AS_TOKEN }}"
-  hs_token: "{{ .HS_TOKEN }}"
+  as_token: placeholder
+  hs_token: placeholder
   username_template: whatsapp_{{`{{.}}`}}
 
 matrix:
@@ -97,7 +97,7 @@ matrix:
   upload_file_threshold: 5242880
 
 provisioning:
-  shared_secret: "{{ .PROVISIONING_SHARED_SECRET }}"
+  shared_secret: placeholder
   allow_matrix_auth: true
 
 public_media:
@@ -121,7 +121,7 @@ encryption:
   appservice: false
   msc4190: true
   allow_key_sharing: true
-  pickle_key: "{{ .PICKLE_KEY }}"
+  pickle_key: placeholder
   verification_levels:
     receive: unverified
     send: unverified
