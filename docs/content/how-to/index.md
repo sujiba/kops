@@ -12,6 +12,7 @@ Every how-to has the same structure: **When** (trigger), **Prerequisites**, **St
 | [Flux bootstrap](flux-bootstrap.md) | Right after the Talos bootstrap: install CNI, cert-manager and Flux |
 | [Talos upgrade](talos-upgrade.md) | New Talos version, Renovate PR for `siderolabs/talos` |
 | [Garage bucket](garage-bucket.md) | New S3 bucket in Garage: public for static sites and CDN, private for backups |
+| [Matrix bridge](matrix-bridge.md) | Register a mautrix bridge (WhatsApp, Discord) with Continuwuity and log in |
 
 ## Template
 

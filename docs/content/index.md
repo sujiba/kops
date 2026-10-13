@@ -87,7 +87,7 @@ Two single-node clusters: one in the Hetzner Cloud, one at home. Both nodes are 
 | **Downloads** | [Sonarr](https://sonarr.tv/), [Radarr](https://radarr.video/), [Prowlarr](https://prowlarr.com/), [SABnzbd](https://sabnzbd.org/) |
 | **Home automation** | [Home Assistant](https://www.home-assistant.io/), [Zigbee2MQTT](https://www.zigbee2mqtt.io/), [Mosquitto](https://mosquitto.org/) |
 | **Documents & tools** | [Nextcloud](https://nextcloud.com/), [Tandoor](https://tandoor.dev/), [FreshRSS](https://freshrss.org/), [Endurain](https://codeberg.org/endurain-project/endurain), [BentoPDF](https://github.com/alam00000/bentopdf), [IT-Tools](https://it-tools.tech/), [Paperless-ngx](https://docs.paperless-ngx.com/), [Vaultwarden](https://github.com/dani-garcia/vaultwarden) |
-| **Communication** | [Matrix](https://matrix.org/) (Element Server Suite), [ntfy](https://ntfy.sh/), [MollySocket](https://github.com/mollyim/mollysocket) |
+| **Communication** | [Matrix](https://matrix.org/) ([Continuwuity](https://continuwuity.org/), [Sable](https://github.com/SableClient/Sable), [mautrix](https://docs.mau.fi/bridges/) bridges), [ntfy](https://ntfy.sh/), [MollySocket](https://github.com/mollyim/mollysocket) |
 | **Development & AI** | [Forgejo](https://forgejo.org/), [LiteLLM](https://www.litellm.ai/) |
 | **Network** | [Headscale](https://headscale.net/), [Tailscale](https://tailscale.com/), [Pi-hole](https://pi-hole.net/), SMTP relay |
 | **Observability** | [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/), [Kromgo](https://github.com/kashalls/kromgo), [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/), [Gatus](https://gatus.io/) |

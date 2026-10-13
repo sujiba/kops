@@ -17,6 +17,7 @@ nav = [
     { "Flux bootstrap" = "how-to/flux-bootstrap.md" },
     { "Talos upgrade" = "how-to/talos-upgrade.md" },
     { "Garage bucket" = "how-to/garage-bucket.md" },
+    { "Matrix bridge" = "how-to/matrix-bridge.md" },
   ] },
   { "Incidents" = [
     "incidents/index.md",
