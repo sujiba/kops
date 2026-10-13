@@ -44,8 +44,8 @@ spec:
               DATABASE_URI:
                 valueFrom:
                   secretKeyRef:
-                    name: mautrix-discord-postgres
-                    key: url
+                    name: mautrix-discord-postgres-app
+                    key: uri
             envFrom:
               - secretRef:
                   name: mautrix-discord-secret

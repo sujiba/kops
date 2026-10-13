@@ -39,8 +39,8 @@ spec:
               MAUTRIX_WHATSAPP_DATABASE__URI:
                 valueFrom:
                   secretKeyRef:
-                    name: mautrix-whatsapp-postgres
-                    key: url
+                    name: mautrix-whatsapp-postgres-app
+                    key: uri
             envFrom:
               - secretRef:
                   name: mautrix-whatsapp-secret

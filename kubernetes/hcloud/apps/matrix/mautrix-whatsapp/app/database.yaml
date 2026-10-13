@@ -1,0 +1,27 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: mautrix-whatsapp-postgres
+  namespace: matrix
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6
+  primaryUpdateStrategy: unsupervised
+  enableSuperuserAccess: true
+  storage:
+    size: 5Gi
+    storageClass: openebs-hostpath
+  postgresql:
+    parameters:
+      max_connections: "100"
+      work_mem: 128MB
+      shared_buffers: 256MB
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: all
+
+  # No initdb secret: CNPG generates mautrix-whatsapp-postgres-app with a ready-made "uri" key
+  bootstrap:
+    initdb:
+      database: mautrix_whatsapp
+      owner: mautrix_whatsapp
