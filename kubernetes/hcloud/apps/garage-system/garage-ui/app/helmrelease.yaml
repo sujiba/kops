@@ -48,7 +48,7 @@ spec:
               GARAGE_UI_AUTH_OIDC_PROVIDER_NAME: Pocket ID
               GARAGE_UI_AUTH_OIDC_ADMIN_ROLE: admins
               GARAGE_UI_AUTH_OIDC_ROLE_ATTRIBUTE_PATH: groups
-              GARAGE_UI_AUTH_OIDC_SCOPES: 'openid email profile groups'
+              GARAGE_UI_AUTH_OIDC_SCOPES: "openid email profile groups"
               GARAGE_UI_AUTH_OIDC_ISSUER_URL: https://id.${EXTERNAL_DOMAIN}
               GARAGE_UI_AUTH_OIDC_COOKIE_SECURE: true
             envFrom:
