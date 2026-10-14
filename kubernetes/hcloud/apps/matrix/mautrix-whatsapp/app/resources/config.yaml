@@ -12,7 +12,7 @@ appservice:
   id: whatsapp
   bot:
     username: whatsappbot
-    displayname: whatsappbot
+    displayname: WhatsAppBot
     avatar: mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr
   ephemeral_events: true
   async_transactions: false
