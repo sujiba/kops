@@ -31,7 +31,6 @@ spec:
               tag: v0.2609.0@sha256:e92b5217929622aabfea3cf72b279d1b73790a035a293d7149bcce7ae220b86f
             args:
               - -c=/data/config.yaml
-              - -r=/data/registration.yaml
               - -n
             command:
               - /usr/bin/mautrix-whatsapp
@@ -79,9 +78,6 @@ spec:
         globalMounts:
           - path: /data/config.yaml
             subPath: config.yaml
-            readOnly: true
-          - path: /data/registration.yaml
-            subPath: registration.yaml
             readOnly: true
       data:
         type: emptyDir

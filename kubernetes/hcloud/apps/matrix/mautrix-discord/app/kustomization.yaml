@@ -12,6 +12,5 @@ configMapGenerator:
   - name: mautrix-discord-configmap
     files:
       - ./resources/config.yaml
-      - ./resources/registration.yaml
 generatorOptions:
   disableNameSuffixHash: true
