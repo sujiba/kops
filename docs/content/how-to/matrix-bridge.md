@@ -16,10 +16,10 @@ icon: lucide/cable
 - [ ] `sops` with the age key for `kubernetes/hcloud`, and `yq`
 - [ ] Your Matrix account is a server admin and can write in the Continuwuity admin room
 
-| Bridge | Manifests | Appservice ID | Bot |
-|---|---|---|---|
-| WhatsApp | [`mautrix-whatsapp/app`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/matrix/mautrix-whatsapp/app) | `whatsapp2` | `@whatsappbot` |
-| Discord | [`mautrix-discord/app`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/matrix/mautrix-discord/app) | `discord` | `@discordbot` |
+| Bridge | Manifests | Appservice ID | Bot | Prefix |
+|---|---|---|---|---|
+| WhatsApp | [`mautrix-whatsapp/app`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/matrix/mautrix-whatsapp/app) | `whatsapp2` | `@whatsappbot` | `!wa` |
+| Discord | [`mautrix-discord/app`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/matrix/mautrix-discord/app) | `discord` | `@discordbot` | `!discord` |
 
 ??? note "Why the registration is done by hand"
 
@@ -54,7 +54,7 @@ icon: lucide/cable
     ~~~~markdown
     !admin appservices register
     ```yaml
-    id: whatsapp2
+    id: whatsapp
     url: http://mautrix-whatsapp.matrix.svc:29318
     as_token: …
     hs_token: …
@@ -62,17 +62,29 @@ icon: lucide/cable
     ```
     ~~~~
 
-4. Open a direct chat with the bot (e.g. `@whatsappbot:matrix.<domain>`). It accepts the invite on its own. Send `help`, then log in:
+4. Create a normal room, not a direct chat, optionally inside a space (e.g. *WhatsApp*), and invite the bot (e.g. `@whatsappbot:matrix.<domain>`). It accepts the invite on its own. Send `help` with the bridge's prefix, then log in:
 
     === "WhatsApp"
 
-        Send `login qr` and scan the code in WhatsApp under *Settings → Linked devices → Link a device*.
+        Send `!wa help`, then `!wa login qr` and scan the code in WhatsApp under *Settings → Linked devices → Link a device*.
+
+        If the bot answers *This is not your management room*, another room (e.g. an earlier direct chat with the bot) is still your management room. Make this room the management room, then you can leave the old one:
+
+        ```text
+        !wa set-management-room
+        ```
 
     === "Discord"
 
-        Send `login` and follow the bot's instructions.
+        Send `!discord help`, then `!discord login` and follow the bot's instructions.
 
     The bridge then creates a room for each chat. The first sync can take a few minutes.
+
+    ??? note "Why not a direct chat"
+
+        A direct chat is listed in your `m.direct` account data, so Sable and Cinny show it under Direct Messages even when it is also part of a space. A normal room only shows up in its space.
+
+        The bridge has one management room per user, where commands work without the prefix. In any other room the bot is in, commands work with the prefix, including input in the middle of a login.
 
 ## Verify
 
@@ -84,7 +96,7 @@ In the admin room:
 
 Expected: the appservice ID is listed. `!admin appservices show-appservice-config <id>` shows the registration as stored; check `url` and the user regexes.
 
-The bot is a member of the direct chat (not just invited) and answers `help`. The bridge logs show no `ERR` lines:
+The bot is a member of the management room (not just invited) and answers `!wa help` or `!discord help`. The bridge logs show no `ERR` lines:
 
 ```bash
 kubectl --kubeconfig ~/.kube/hcloud -n matrix logs deploy/mautrix-whatsapp --since=10m | grep -v '/sync'
@@ -92,7 +104,7 @@ kubectl --kubeconfig ~/.kube/hcloud -n matrix logs deploy/mautrix-whatsapp --sin
 
 ## Rollback
 
-1. Log out in the direct chat with the bot (`help` lists the command), so the bridge unlinks its device.
+1. Log out in the management room (`!wa help` or `!discord help` lists the command), so the bridge unlinks its device.
 2. In the admin room:
 
     ```text
