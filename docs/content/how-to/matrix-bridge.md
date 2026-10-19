@@ -18,7 +18,7 @@ icon: lucide/cable
 
 | Bridge | Manifests | Appservice ID | Bot | Prefix |
 |---|---|---|---|---|
-| WhatsApp | [`mautrix-whatsapp/app`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/matrix/mautrix-whatsapp/app) | `whatsapp2` | `@whatsappbot` | `!wa` |
+| WhatsApp | [`mautrix-whatsapp/app`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/matrix/mautrix-whatsapp/app) | `whatsapp` | `@whatsappbot` | `!wa` |
 | Discord | [`mautrix-discord/app`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/matrix/mautrix-discord/app) | `discord` | `@discordbot` | `!discord` |
 
 ??? note "Why the registration is done by hand"
