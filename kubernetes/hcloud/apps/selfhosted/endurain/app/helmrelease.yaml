@@ -21,8 +21,8 @@ spec:
         containers:
           endurain:
             image:
-              repository: codeberg.org/endurain-project/endurain
-              tag: v0.19.2@sha256:092c26904028237b7da3bc205e15ede0c70b07084d86e582c3644f66b1cfb140
+              repository: ghcr.io/endurain-project/endurain
+              tag: v0.19.4
             env:
               TZ: Europe/Berlin
               ENDURAIN_HOST: "https://endurain.${EXTERNAL_DOMAIN}"
