@@ -27,8 +27,8 @@ spec:
               TZ: Europe/Berlin
               ENDURAIN_HOST: "https://endurain.${EXTERNAL_DOMAIN}"
               BEHIND_PROXY: true
-              RATE_LIMIT_STORAGE_URI: "redis://endurain-dragonfly:6379/0"
-              AUTH_SECURITY_STORAGE_URI: "redis://endurain-dragonfly:6379/0"
+              TRUSTED_PROXIES: "10.244.0.0/16"
+              REDIS_URL: "redis://endurain-dragonfly:6379/0"
               DB_HOST: endurain-postgres-rw
               DB_PASSWORD:
                 valueFrom:
