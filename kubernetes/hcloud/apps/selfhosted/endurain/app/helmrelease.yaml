@@ -28,6 +28,10 @@ spec:
               ENDURAIN_HOST: "https://endurain.${EXTERNAL_DOMAIN}"
               BEHIND_PROXY: true
               TRUSTED_PROXIES: "10.244.0.0/16"
+              SMTP_HOST: smtp-relay.network.svc.cluster.local
+              SMTP_PORT: "2525"
+              SMTP_FROM: "Endurain <no-reply@${MAIL_DOMAIN}>"
+              SMTP_SECURE: "false"
               DB_HOST: endurain-postgres-rw
               DB_PASSWORD:
                 valueFrom:
