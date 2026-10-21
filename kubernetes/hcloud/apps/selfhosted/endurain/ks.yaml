@@ -4,14 +4,9 @@ kind: Kustomization
 metadata:
   name: endurain
 spec:
-  components:
-    - ../../../../components/dragonfly
   interval: 1h
   path: ./kubernetes/hcloud/apps/selfhosted/endurain/app
   postBuild:
-    substitute:
-      APP: endurain
-      DRAGONFLY_REPLICAS: "1"
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
