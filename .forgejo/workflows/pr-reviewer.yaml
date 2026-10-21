@@ -28,7 +28,7 @@ jobs:
           ref: ${{ forgejo.event.pull_request.head.sha }}
 
       - name: AI PR Review
-        uses: https://github.com/misospace/pr-reviewer-action@593f1b7b41bb05aa18d1f9278205e7204b1505ab # v3.5.0
+        uses: https://github.com/misospace/pr-reviewer-action@e207a7d11d2ee41f77493b2314e30e7ca694da50 # v3.6.0
         with:
           platform: forgejo
           forgejo_api_url: http://forgejo-http.development.svc.cluster.local:3000/
