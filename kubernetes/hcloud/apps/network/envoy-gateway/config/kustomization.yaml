@@ -8,4 +8,4 @@ resources:
   - ./gateway.yaml
   - ./grafanadashboard.yaml
   - ./observability.yaml
-  - ./secret.sops.yaml
+  - ./secrets.sops.yaml
