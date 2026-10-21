@@ -33,21 +33,9 @@ spec:
               SMTP_FROM: "Endurain <no-reply@${MAIL_DOMAIN}>"
               SMTP_SECURE: "false"
               DB_HOST: endurain-postgres-rw
-              DB_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: endurain-secret
-                    key: DB_PASSWORD
-              FERNET_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: endurain-secret
-                    key: FERNET_KEY
-              SECRET_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: endurain-secret
-                    key: SECRET_KEY
+            envFrom:
+              - secretRef:
+                  name: endurain-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
