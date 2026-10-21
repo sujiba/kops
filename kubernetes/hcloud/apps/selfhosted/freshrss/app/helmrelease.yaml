@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: freshrss/freshrss
-              tag: 1.30.3
+              tag: 1.30.4
             env:
               TZ: Europe/Berlin
               CRON_MIN: "*"
