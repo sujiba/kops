@@ -23,6 +23,7 @@ _... powered by [Talos](https://www.siderolabs.com/talos-linux), [Flux](https://
 
 ## 📖 Overview
 - [📖 Overview](#-overview)
+- [📚 Docs](#-docs)
 - [⛵ Kubernetes](#-kubernetes)
   - [Installation](#installation)
   - [Directories](#directories)
@@ -31,55 +32,73 @@ _... powered by [Talos](https://www.siderolabs.com/talos-linux), [Flux](https://
 - [🔧 Hardware](#-hardware)
 - [🤝 Special thanks](#-special-thanks)
 
-## ⛵ Kubernetes 
+## 📚 Docs
+The operations handbook lives in [`docs/`](docs/content/index.md) and is published at [docs.offene.cloud](https://docs.offene.cloud/): how-tos, reference pages, architecture diagrams, decision records (ADRs) and incident logs.
+
+## ⛵ Kubernetes
+Two single-node clusters, each with its own Flux instance syncing `kubernetes/<cluster>/flux`:
+
+- `hcloud`: Hetzner Cloud
+- `home`: at home
+
 ### Installation
-1. `git clone https://code.offene.cloud/homelab/k8s.git`
-2. [Create talos node on hcloud](bootstrap/hcloud/1_tofu/opentofu/README.md)
-3. [Bootstrap talos node](bootstrap/hcloud/2_talos/README.md)
-4. [Bootstrap k8s](bootstrap/hcloud/3_flux/README.md)
+1. `git clone https://code.offene.cloud/homelab/kops.git`
+2. `hcloud`
+   1. [Create talos node on hcloud](kubernetes/bootstrap/hcloud/1_tofu/README.md)
+   2. [Bootstrap talos node (topf)](kubernetes/bootstrap/hcloud/2_talos/README.md)
+   3. [Bootstrap k8s](kubernetes/bootstrap/hcloud/3_flux/README.md)
+3. `home`
+   1. [Bootstrap talos node (topf)](kubernetes/bootstrap/home/2_talos/README.md)
+   2. [Bootstrap k8s](kubernetes/bootstrap/home/3_flux/README.md)
+
+See also the how-tos [Talos bootstrap](docs/content/how-to/talos-bootstrap.md) and [Flux bootstrap](docs/content/how-to/flux-bootstrap.md).
 
 ### Directories
 ```bash
 📁 kops
-├─📁 archive
-├─📁 bootstrap
-│  ├─📁 hcloud
-│  │ ├─📁 1_tofu
-│  │ ├─📁 2_talos
-│  │ └─📁 3_flux
-│  └─📁 home
-│    ├─📁 2_talos
-│    └─📁 3_flux
-├─📁 kubernetes         # k8s clusters
-│  ├─📁 hcloud          # single node cluster
-│  │ ├─📁 apps          # apps sorted by namespaces
-│  │ ├─📁 components    # cluster components
-│  │ └─📁 flux
-│  └─📁 home            # single node cluster
-│    ├─📁 apps          # apps sorted by namespaces
-│    ├─📁 components    # cluster components
-│    └─📁 flux
+├─📁 .agents              # AI agent instructions and skills
+├─📁 archive              # retired apps
+├─📁 docs                 # Zensical operations handbook
+└─📁 kubernetes
+   ├─📁 bootstrap
+   │  ├─📁 hcloud         # 1_tofu, 2_talos (topf), 3_flux
+   │  └─📁 home           # 2_talos (topf), 3_flux
+   ├─📁 hcloud            # single node cluster (Hetzner Cloud)
+   │  ├─📁 apps           # applications
+   │  ├─📁 components     # reusable kustomize components
+   │  └─📁 flux
+   └─📁 home              # single node cluster (at home)
+      ├─📁 apps           # applications
+      ├─📁 components     # reusable kustomize components
+      └─📁 flux
 ```
 
 ### Networking
 
+| Component                                           | Use                                                       |
+|-----------------------------------------------------|-----------------------------------------------------------|
+| [Cilium](https://cilium.io/)                        | CNI with kube-proxy replacement                           |
+| [Envoy Gateway](https://gateway.envoyproxy.io/)     | Gateway API ingress (`envoy-internal`, `envoy-external`)  |
+| [cert-manager](https://cert-manager.io/)            | Let's Encrypt certificates                                |
+| [Headscale](https://headscale.net/) / [Tailscale](https://tailscale.com/) | Mesh VPN                            |
+| [Pi-hole](https://pi-hole.net/)                     | DNS                                                       |
+
+All components and apps are listed in the [handbook](docs/content/index.md).
+
 ## ☁ Cloud Dependencies
 
-| Service | Use             | Cost    |
-|---------|-----------------|---------|
-| Netcup  | DNS             | ~80€/yr |
-| Hetzner | Server / Backup | ~25€/mo |
+| Service | Use                                     | Cost    |
+|---------|-----------------------------------------|---------|
+| Netcup  | DNS                                     | ~80€/yr |
+| Hetzner | Cloud Server CX43 (`hcloud`) / Backup   | ~35€/mo |
 
 ## 🔧 Hardware
 
-| Device                      | Num | OS Disk Size | Data Disk Size                  | Ram  | OS            | Function                |
-|-----------------------------|-----|--------------|---------------------------------|------|---------------|-------------------------|
-| ASUS NUC 15 Pro CU 5 225H   | 1   | 2TB SSD      | -                               | 96GB | Talos         | Kubernetes              |
-| Synology RS1221+            | 1   | -            | 7x12TB btrfs (SHR-2)            | 4GB  | DSM           | NFS                     |
+| Device                    | Cluster  | Specs             | Storage                                               | OS    | Function        |
+|---------------------------|----------|-------------------|-------------------------------------------------------|-------|-----------------|
+| Hetzner Cloud CX43        | `hcloud` | 8 vCPU / 16 GB    | 160 GB SSD                                            | Talos | Kubernetes      |
+| ASUS NUC 15 Pro CU 5 225H | `home`   | 14C / 14T / 96 GB | 512 GB NVMe (system) + 2 TB WD_BLACK SN770 (miroir)   | Talos | Kubernetes      |
+| Synology RS1221+          | –        | 4 GB              | 7x12TB btrfs (SHR-2)                                  | DSM   | NFS (media)     |
 
 ## 🤝 Special thanks
-- [Home Operations discord community](https://discord.gg/home-operations)
-- [kubesearch.dev](https://kubesearch.dev/)
-- [bjw-s](https://github.com/bjw-s-labs)
-- [onedr0p](https://github.com/onedr0p)
-- [naoalb](https://code.offene.cloud/lab/k8s)
+Huge thanks to [@onedr0p](https://github.com/onedr0p), [@bjw-s](https://github.com/bjw-s-labs), [@eleboucher](https://github.com/eleboucher) and the [Home Operations Discord community](https://discord.gg/home-operations) for their knowledge and support. If you're looking for inspiration, check out [kubesearch.dev](https://kubesearch.dev/) to discover how others are deploying applications in their homelabs. Thanks also to [naoalb](https://code.offene.cloud/lab/k8s) for sharing their setup.
