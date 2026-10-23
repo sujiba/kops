@@ -48,19 +48,19 @@ spec:
               ENABLE_SIGNUP: 0
               EMAIL_HOST: smtp-relay.network.svc.cluster.local
               EMAIL_PORT: 2525
-              EMAIL_HOST_USER: ''
-              EMAIL_HOST_PASSWORD: ''
+              EMAIL_HOST_USER: ""
+              EMAIL_HOST_PASSWORD: ""
               EMAIL_USE_TLS: 0
               EMAIL_USE_SSL: 0
-              # email sender address (default 'webmaster@localhost')
+              # email sender address (default "webmaster@localhost")
               DEFAULT_FROM_EMAIL: no-reply@${MAIL_DOMAIN}
             envFrom:
               - secretRef:
                   name: tandoor-secret
-            #securityContext:
-            #  allowPrivilegeEscalation: true
-            #  readOnlyRootFilesystem: false
-            #  capabilities: { drop: ["ALL"] }
+            # securityContext:
+            #   allowPrivilegeEscalation: true
+            #   readOnlyRootFilesystem: false
+            #   capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -68,13 +68,13 @@ spec:
               limits:
                 memory: 2Gi
 
-    #defaultPodOptions:
-    #  securityContext:
-    #    runAsNonRoot: false
-    #    runAsUser: 0
-    #    runAsGroup: 0
-    #    fsGroup: 0
-    #    fsGroupChangePolicy: OnRootMismatch
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: false
+    #     runAsUser: 0
+    #     runAsGroup: 0
+    #     fsGroup: 0
+    #     fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
