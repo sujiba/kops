@@ -16,7 +16,7 @@ spec:
 
     image:
       repository: nextcloud
-      tag: 35.0.2-fpm-alpine@sha256:850e53384c892cc865483d63de0d0eae9a9f16c4e0af3ef4e8f634bbcded4641
+      tag: 35.0.2-fpm-alpine@sha256:60f8db867b22a9324bc3dd73eef8b110e422ee3c2a74b35df82ce609f17544a6
       flavor: fpm-alpine
 
     replicaCount: 1
