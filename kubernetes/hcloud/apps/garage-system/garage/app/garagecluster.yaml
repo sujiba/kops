@@ -5,7 +5,7 @@ kind: GarageCluster
 metadata:
   name: garage-cluster
 spec:
-  image: dxflrs/garage:v2.4.1
+  image: dxflrs/garage:v2.5.0
   zone: hcloud
 
   admin:
