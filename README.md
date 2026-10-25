@@ -98,7 +98,7 @@ All components and apps are listed in the [handbook](docs/content/index.md).
 |---------------------------|----------|-------------------|-------------------------------------------------------|-------|-----------------|
 | Hetzner Cloud CX43        | `hcloud` | 8 vCPU / 16 GB    | 160 GB SSD                                            | Talos | Kubernetes      |
 | ASUS NUC 15 Pro CU 5 225H | `home`   | 14C / 14T / 96 GB | 512 GB NVMe (system) + 2 TB WD_BLACK SN770 (miroir)   | Talos | Kubernetes      |
-| Synology RS1221+          | –        | 4 GB              | 7x12TB btrfs (SHR-2)                                  | DSM   | NFS (media)     |
+| Synology RS1221+          | -        | 4 GB              | 7x12TB btrfs (SHR-2)                                  | DSM   | NFS (media)     |
 
 ## 🤝 Special thanks
 Huge thanks to [@onedr0p](https://github.com/onedr0p), [@bjw-s](https://github.com/bjw-s-labs), [@eleboucher](https://github.com/eleboucher) and the [Home Operations Discord community](https://discord.gg/home-operations) for their knowledge and support. If you're looking for inspiration, check out [kubesearch.dev](https://kubesearch.dev/) to discover how others are deploying applications in their homelabs. Thanks also to [naoalb](https://code.offene.cloud/lab/k8s) for sharing their setup.
