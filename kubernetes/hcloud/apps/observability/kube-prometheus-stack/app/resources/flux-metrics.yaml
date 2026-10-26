@@ -312,7 +312,7 @@ kube-state-metrics:
                     - suspend
           - groupVersionKind:
               group: notification.toolkit.fluxcd.io
-              version: v1beta3
+              version: v1
               kind: Provider
             metricNamePrefix: gotk
             metrics:
