@@ -6,9 +6,13 @@ metadata:
 
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: nextcloud
+    spec:
+      interval: 15m
+      ref:
+        tag: 9.4.1
+      url: oci://ghcr.io/nextcloud/helm/nextcloud
 
   values:
     deploymentAnnotations:

@@ -5,9 +5,13 @@ metadata:
   name: cert-manager-webhook-netcup
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: cert-manager-webhook-netcup
+    spec:
+      interval: 15m
+      ref:
+        tag: 1.1.1
+      url: oci://ghcr.io/aellwein/cert-manager-webhook-netcup/cert-manager-webhook-netcup
   values:
     groupName: com.netcup.webhook
     certManager:

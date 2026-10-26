@@ -5,9 +5,13 @@ metadata:
   name: pocket-id
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: pocket-id
+    spec:
+      interval: 10m
+      ref:
+        tag: 5.3.0
+      url: oci://ghcr.io/bjw-s-labs/helm/app-template
 
   # Rollback disabled: Pocket-ID migrations are forward-only,
   # a downgrade always fails against the newer DB schema.

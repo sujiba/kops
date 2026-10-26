@@ -41,7 +41,6 @@ kubernetes/<cluster>/apps/<namespace>/<app>/
 ├── ks.yaml
 └── app/
     ├── kustomization.yaml
-    ├── ocirepository.yaml
     ├── helmrelease.yaml
     ├── pvc.yaml                 # hcloud only, if persistence
     ├── secrets.sops.yaml        # only if secrets
@@ -113,7 +112,6 @@ namespace: <namespace>
 
 resources:
   - ./helmrelease.yaml
-  - ./ocirepository.yaml
   - ./pvc.yaml           # hcloud only, if persistence
   - ./secrets.sops.yaml  # only if secrets
 ```
@@ -131,28 +129,14 @@ generatorOptions:
     kustomize.toolkit.fluxcd.io/substitute: disabled
 ```
 
-### app/ocirepository.yaml
+### Chart version
 
-```yaml
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: <app>
-spec:
-  interval: 15m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: <version>
-  url: oci://ghcr.io/bjw-s-labs/helm/app-template
-```
+The chart is defined inline in the HelmRelease (`spec.chart.kind: OCIRepository`); helm-controller creates the OCIRepository `<namespace>-<app>` from it. There is no separate `ocirepository.yaml`.
 
-**Never hardcode `<version>` from memory**. Use the version the rest of the repo is on:
+**Never hardcode `<version>` from memory**. Use the app-template version the rest of the repo is on:
 
 ```bash
-grep -h -A1 "ref:" $(grep -l app-template kubernetes/*/apps/*/*/app/ocirepository.yaml) | grep tag: | sort | uniq -c | sort -rn | head -1
+grep -h -B2 "url: oci://ghcr.io/bjw-s-labs/helm/app-template" kubernetes/*/apps/*/*/app/helmrelease.yaml | grep tag: | sort | uniq -c | sort -rn | head -1
 ```
 
 ### app/helmrelease.yaml
@@ -164,9 +148,13 @@ kind: HelmRelease
 metadata:
   name: <app>
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: <app>
+    spec:
+      interval: 15m
+      ref:
+        tag: <version>
+      url: oci://ghcr.io/bjw-s-labs/helm/app-template
   interval: 1h
   values:
     controllers:

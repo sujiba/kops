@@ -5,4 +5,3 @@ namespace: system-upgrade
 
 resources:
   - ./helmrelease.yaml
-  - ./ocirepository.yaml

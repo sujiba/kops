@@ -15,5 +15,4 @@ generatorOptions:
 resources:
   - ./helmrelease.yaml
   - ./monitoring.yaml
-  - ./ocirepository.yaml
   - ./secrets.sops.yaml

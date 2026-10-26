@@ -20,7 +20,7 @@ Whenever asked to sort these files, follow these instructions:
 
 ## HelmReleases based on app-template
 
-This section gives instructions specifically for HelmReleases that are based on the `app-template` chart. These can be identified by the presence of a sidecar `ocirepository.yaml` file that references `oci://ghcr.io/bjw-s-labs/helm/app-template` in the `url` field.
+This section gives instructions specifically for HelmReleases that are based on the `app-template` chart. These can be identified by `spec.chart.spec.url` referencing `oci://ghcr.io/bjw-s-labs/helm/app-template`.
 
 ### Sorting rules
 Whenever asked to sort these files, follow these instructions:
@@ -28,12 +28,16 @@ Whenever asked to sort these files, follow these instructions:
 - Whenever there is an `enabled` field, it should be the first field within its section, unless a more specific rule below dictates otherwise.
 
 - The items within the `spec` section should be sorted as follows:
-  - `chartRef`
+  - `chart`
   - `interval`
   - `dependsOn`
   - `install`
   - `upgrade`
   - `values`
+
+- Items within the `spec.chart` section should be sorted as follows:
+  - `kind`
+  - `spec` (its keys sorted alphabetically: `interval`, `ref`, `url`)
 
 - Items within the `spec.values` section should be sorted as follows:
   - `defaultPodOptions` (if present)
@@ -87,8 +91,8 @@ Unless a more specific rule applies, keys within any section should be ordered a
 ### Quick reference
 
 **Before sorting, verify the chart is app-template based:**
-1. Check for a sidecar `ocirepository.yaml` file
-2. Confirm the `url` field contains `oci://ghcr.io/bjw-s-labs/helm/app-template`
+1. Check that the HelmRelease has `spec.chart.kind: OCIRepository`
+2. Confirm `spec.chart.spec.url` contains `oci://ghcr.io/bjw-s-labs/helm/app-template`
 3. If not app-template, do not apply these sorting rules
 
 **Decision tree for sorting HelmRelease fields:**

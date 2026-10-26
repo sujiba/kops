@@ -4,9 +4,13 @@ kind: HelmRelease
 metadata:
   name: snapshot-controller
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: snapshot-controller
+    spec:
+      interval: 15m
+      ref:
+        tag: 5.4.0
+      url: oci://ghcr.io/piraeusdatastore/helm-charts/snapshot-controller
   interval: 1h
   values:
     installCRDs: true

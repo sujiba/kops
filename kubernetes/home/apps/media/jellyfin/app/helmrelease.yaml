@@ -4,9 +4,13 @@ kind: HelmRelease
 metadata:
   name: jellyfin
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: jellyfin
+    spec:
+      interval: 10m
+      ref:
+        tag: 5.3.0
+      url: oci://ghcr.io/bjw-s-labs/helm/app-template
   interval: 1h
 
   values:

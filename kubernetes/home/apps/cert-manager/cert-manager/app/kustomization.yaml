@@ -6,4 +6,3 @@ resources:
   - ./cluster-issuers.yaml
   - ./grafanadashboard.yaml
   - ./helmrelease.yaml
-  - ./ocirepository.yaml

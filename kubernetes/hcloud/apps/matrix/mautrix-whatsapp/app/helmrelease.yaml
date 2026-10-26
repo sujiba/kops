@@ -4,9 +4,13 @@ kind: HelmRelease
 metadata:
   name: mautrix-whatsapp
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: mautrix-whatsapp
+    spec:
+      interval: 1h
+      ref:
+        tag: 5.3.0
+      url: oci://ghcr.io/bjw-s-labs/helm/app-template
   interval: 1h
 
   values:

@@ -4,9 +4,13 @@ kind: HelmRelease
 metadata:
   name: garage-operator
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: garage-operator
+    spec:
+      interval: 1h
+      ref:
+        tag: 0.8.2
+      url: oci://ghcr.io/rajsinghtech/charts/garage-operator
   interval: 1h
   values:
     crds:

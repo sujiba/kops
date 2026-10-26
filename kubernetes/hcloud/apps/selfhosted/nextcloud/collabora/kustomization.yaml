@@ -6,4 +6,3 @@ namespace: selfhosted
 resources:
   - ./backendtrafficpolicy.yaml
   - ./helmrelease.yaml
-  - ./ocirepository.yaml

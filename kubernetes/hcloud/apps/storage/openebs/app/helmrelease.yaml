@@ -4,9 +4,13 @@ kind: HelmRelease
 metadata:
   name: openebs
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: openebs
+    spec:
+      interval: 15m
+      ref:
+        tag: 4.6.2
+      url: oci://ghcr.io/openebs/charts/openebs
   interval: 1h
   values:
     # This runs only for upgrades from openebs v3 to v4. Uses the localpv-provisioner deployment to decide if it's v3 or v4.

@@ -5,9 +5,13 @@ metadata:
   name: forgejo
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: forgejo
+    spec:
+      interval: 15m
+      ref:
+        tag: 17.3.2
+      url: oci://code.forgejo.org/forgejo-helm/forgejo
   values:
     strategy:
       type: "Recreate"

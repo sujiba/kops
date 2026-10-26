@@ -4,9 +4,13 @@ kind: HelmRelease
 metadata:
   name: dragonfly-operator
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: dragonfly-operator
+    spec:
+      interval: 15m
+      ref:
+        tag: v1.7.1
+      url: oci://ghcr.io/dragonflydb/dragonfly-operator/helm/dragonfly-operator
   install:
     crds: CreateReplace
   interval: 1h

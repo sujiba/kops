@@ -5,5 +5,4 @@ namespace: selfhosted
 
 resources:
   - ./helmrelease.yaml
-  - ./ocirepository.yaml
   - ./secrets.sops.yaml

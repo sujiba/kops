@@ -7,4 +7,3 @@ resources:
   - ./cilium-l2.yaml
   - ./grafanadashboard.yaml
   - ./helmrelease.yaml
-  - ./ocirepository.yaml
