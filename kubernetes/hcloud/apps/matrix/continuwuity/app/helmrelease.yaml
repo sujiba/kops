@@ -37,56 +37,8 @@ spec:
               repository: forgejo.ellis.link/continuwuation/continuwuity
               tag: v26.9.1@sha256:c9c62bc5c0a641f3f713945c701b069c7bc30d2612b54d4a5de80a5be19d5420
             env:
-              # Server
               TZ: Europe/Berlin
-              CONTINUWUITY_SERVER_NAME: matrix.${EXTERNAL_DOMAIN}
-              CONTINUWUITY_ADDRESS: '["0.0.0.0"]'
-              CONTINUWUITY_PORT: "8008"
-              CONTINUWUITY_DATABASE_PATH: /data/db
-
-              # Accounts & privacy (accounts are created via Pocket-ID, not open registration)
-              CONTINUWUITY_ALLOW_ANNOUNCEMENTS_CHECK: "false"
-              CONTINUWUITY_ALLOW_REGISTRATION: "false"
-              CONTINUWUITY_LOCKDOWN_PUBLIC_ROOM_DIRECTORY: "true"
-              CONTINUWUITY_NEW_USER_DISPLAYNAME_SUFFIX: '""'
-              CONTINUWUITY_REQUIRE_AUTH_FOR_PROFILE_REQUESTS: "true"
-
-              # Presence
-              CONTINUWUITY_ALLOW_LOCAL_PRESENCE: "true"
-              CONTINUWUITY_ALLOW_INCOMING_PRESENCE: "true"
-
-              # Media & URL previews
-              CONTINUWUITY_MAX_REQUEST_SIZE: "104857600" # 100 MiB
-              CONTINUWUITY_URL_PREVIEW_DOMAIN_CONTAINS_ALLOWLIST: '["*"]'
-
-              # Calls (MatrixRTC via LiveKit)
-              # CONTINUWUITY_MATRIX_RTC__FOCI: '[{type="livekit",livekit_service_url="https://rtc.${EXTERNAL_DOMAIN}"}]'
-
-              # Federation: allowlist only ([.] instead of \. avoids escaping issues in env values)
-              CONTINUWUITY_TRUSTED_SERVERS: '["matrix.org"]'
-              CONTINUWUITY_FORBIDDEN_REMOTE_SERVER_NAMES: '[".*"]'
-              CONTINUWUITY_ALLOWED_REMOTE_SERVER_NAMES: >-
-                ["^matrix[.]org$", "^matrix[.]albdev[.]cloud$", "^erwanleboucher[.]dev$", "^gifs[.]sable[.]moe$"]
-
-              # Public signing key of the previous Synapse deployment, so events it signed stay valid
-              CONTINUWUITY_OLD_VERIFY_KEYS: '{"ed25519:1"={expired_ts=1791756000000,key="ePiQ1SbY3Tqds7gbC193Y1DaulAYum09Dkjf3pkuS8s"}}'
-
-              # Discovery (.well-known/matrix/*)
-              CONTINUWUITY_WELL_KNOWN__CLIENT: https://matrix.${EXTERNAL_DOMAIN}
-              CONTINUWUITY_WELL_KNOWN__SERVER: matrix.${EXTERNAL_DOMAIN}:443
-              CONTINUWUITY_WELL_KNOWN__SUPPORT_EMAIL: hostmaster@${MAIL_DOMAIN}
-
-              # Email
-              CONTINUWUITY_SMTP__CONNECTION_URI: smtp://smtp-relay.network.svc.cluster.local:2525
-              CONTINUWUITY_SMTP__SENDER: Matrix <no-reply@${MAIL_DOMAIN}>
-
-              # OIDC login via Pocket-ID (client id and secret comes from continuwuity-secret)
-              CONTINUWUITY_OAUTH__OIDC__DISCOVERY_URL: https://id.${EXTERNAL_DOMAIN}
-              CONTINUWUITY_OAUTH__OIDC__PROVIDER_NAME: Pocket-ID
-              CONTINUWUITY_OAUTH__OIDC__ADDITIONAL_SCOPES: '["profile", "email"]'
-              CONTINUWUITY_OAUTH__OIDC__PROMPT_FOR_LOCALPART: "false"
-              CONTINUWUITY_OAUTH__OIDC__PREFERRED_USERNAME_CLAIM: preferred_username
-              CONTINUWUITY_OAUTH__OIDC__PROFILE_KEY_MAP: '{displayname="name"}'
+              CONDUWUIT_CONFIG: /etc/conduwuit/conduwuit.toml
             envFrom:
               - secretRef:
                   name: continuwuity-secret
@@ -136,6 +88,12 @@ spec:
                 port: 8008
 
     persistence:
+      config:
+        type: configMap
+        name: continuwuity-config
+        globalMounts:
+          - path: /etc/conduwuit
+            readOnly: true
       data:
         existingClaim: continuwuity
         globalMounts:

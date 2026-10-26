@@ -7,3 +7,10 @@ resources:
   - ./ocirepository.yaml
   - ./pvc.yaml
   - ./secrets.sops.yaml
+
+configMapGenerator:
+  - name: continuwuity-config
+    files:
+      - ./resources/conduwuit.toml
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,0 +1,58 @@
+[global]
+# Server
+server_name = "matrix.${EXTERNAL_DOMAIN}"
+address = ["0.0.0.0"]
+port = 8008
+database_path = "/data/db"
+
+# Accounts & privacy (accounts are created via Pocket-ID, not open registration)
+allow_announcements_check = false
+allow_registration = false
+lockdown_public_room_directory = true
+new_user_displayname_suffix = ""
+require_auth_for_profile_requests = true
+
+# Presence
+allow_local_presence = true
+allow_incoming_presence = true
+
+# Media & URL previews
+max_request_size = 104857600 # 100 MiB
+url_preview_domain_contains_allowlist = ["*"]
+
+# Federation: allowlist only
+trusted_servers = ["matrix.org"]
+forbidden_remote_server_names = [".*"]
+allowed_remote_server_names = [
+  "^matrix[.]org$",
+  "^matrix[.]albdev[.]cloud$",
+  "^erwanleboucher[.]dev$",
+  "^gifs[.]sable[.]moe$",
+]
+
+# Public signing key of the previous Synapse deployment, so events it signed stay valid
+old_verify_keys = { "ed25519:1" = { expired_ts = 1791756000000, key = "ePiQ1SbY3Tqds7gbC193Y1DaulAYum09Dkjf3pkuS8s" } }
+
+# Calls (MatrixRTC via LiveKit)
+# [global.matrix_rtc]
+# foci = [{ type = "livekit", livekit_service_url = "https://rtc.${EXTERNAL_DOMAIN}" }]
+
+# Discovery (.well-known/matrix/*)
+[global.well_known]
+client = "https://matrix.${EXTERNAL_DOMAIN}"
+server = "matrix.${EXTERNAL_DOMAIN}:443"
+support_email = "hostmaster@${MAIL_DOMAIN}"
+
+# Email
+[global.smtp]
+connection_uri = "smtp://smtp-relay.network.svc.cluster.local:2525"
+sender = "Matrix <no-reply@${MAIL_DOMAIN}>"
+
+# OIDC login via Pocket-ID (client id and secret come from continuwuity-secret as env vars)
+[global.oauth.oidc]
+discovery_url = "https://id.${EXTERNAL_DOMAIN}"
+provider_name = "Pocket-ID"
+additional_scopes = ["profile", "email"]
+prompt_for_localpart = false
+preferred_username_claim = "preferred_username"
+profile_key_map = { displayname = "name" }
