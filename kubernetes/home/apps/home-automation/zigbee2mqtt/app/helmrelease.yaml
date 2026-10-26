@@ -39,7 +39,7 @@ spec:
               TZ: Europe/Berlin
               ZIGBEE2MQTT_DATA: /data
               ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: "true"
-              ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT: '["console"]'
+              ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT: "[\"console\"]"
               ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_RETAIN: "true"
               # mqtt
               ZIGBEE2MQTT_CONFIG_MQTT_SERVER: mqtt://mosquitto.home-automation.svc.cluster.local:1883

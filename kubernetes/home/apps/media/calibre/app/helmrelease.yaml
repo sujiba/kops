@@ -34,7 +34,7 @@ spec:
               PUID: 1000
               PGID: 1000
               UMASK: "002"
-              #HARDCOVER_TOKEN:
+              # HARDCOVER_TOKEN:
               #  valueFrom:
               #    secretKeyRef:
               #      name: ${APP}-secret
@@ -78,7 +78,7 @@ spec:
     route:
       app:
         hostnames:
-        - "books.${INTERNAL_DOMAIN}"
+          - "books.${INTERNAL_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
