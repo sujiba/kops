@@ -22,7 +22,7 @@ spec:
           endurain:
             image:
               repository: ghcr.io/endurain-project/endurain
-              tag: v0.20.1
+              tag: v0.20.2
             env:
               TZ: Europe/Berlin
               ENDURAIN_HOST: "https://endurain.${EXTERNAL_DOMAIN}"
