@@ -62,7 +62,7 @@ resource "hcloud_server" "controlplane" {
   name        = var.controlplane_node
   image       = "debian-13"
   server_type = var.server_type
-  datacenter  = var.server_location
+  location    = var.server_location
   ssh_keys    = data.hcloud_ssh_keys.all.ssh_keys.*.name
   public_net {
     ipv4_enabled = true

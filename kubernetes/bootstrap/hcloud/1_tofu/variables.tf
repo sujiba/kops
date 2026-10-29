@@ -36,7 +36,7 @@ variable "server_type" {
 }
 
 variable "server_location" {
-  description = "hetzner datecenter location"
+  description = "hetzner location"
   type        = string
-  default     = "fsn1-dc14"
+  default     = "fsn1"
 }
