@@ -1,6 +1,15 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   description: "File patterns for enabled managers",
+  customManagers: [
+    {
+      customType: "regex",
+      description: "Forgejo runner job images in runner labels",
+      managerFilePatterns: ["/^kubernetes/.+/forgejo/runner/resources/config\\.yml$/"],
+      matchStrings: [":docker://(?<depName>[^:\\s]+):(?<currentValue>[^@\\s]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?"],
+      datasourceTemplate: "docker",
+    },
+  ],
   flux: {
     managerFilePatterns: ["/^kubernetes/.+\\.yaml(?:\\.j2)?$/"],
   },

@@ -1,0 +1,24 @@
+log:
+  level: info
+runner:
+  capacity: 2
+  envs:
+    DOCKER_CERT_PATH: /certs/client
+    DOCKER_HOST: tcp://localhost:2376
+    DOCKER_TLS_VERIFY: "1"
+container:
+  network: host
+  options: -v /certs/client:/certs/client
+  valid_volumes:
+    - /certs/client
+server:
+  connections:
+    forgejo:
+      url: https://code.offene.cloud/
+      uuid: 244f66c8-7f79-4828-9420-0ef4cab33018
+      token_url: file:/secrets/token
+      labels:
+        - docker:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54
+        - ubuntu-latest:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54
+        - ubuntu-26.04:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54
+        - renovate:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54

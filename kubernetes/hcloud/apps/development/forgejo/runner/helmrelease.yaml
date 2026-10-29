@@ -58,10 +58,18 @@ spec:
         globalMounts:
           - path: /certs
       config:
+        type: configMap
+        name: forgejo-runner-config
+        advancedMounts:
+          forgejo-runner:
+            app:
+              - path: /config
+                readOnly: true
+      secrets:
         type: secret
         name: forgejo-runner-secret
         advancedMounts:
           forgejo-runner:
             app:
-              - path: /config
+              - path: /secrets
                 readOnly: true
