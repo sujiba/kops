@@ -43,7 +43,7 @@ spec:
             image:
               repository: code.forgejo.org/forgejo/runner
               tag: 13.2.0@sha256:ca3d5eea46004789a175d1369eec6829d3ea9bfbe2011a06625b4bdaa55f7552
-            command: ["forgejo-runner", "daemon", "--config", "/config/config.yml"]
+            command: ["forgejo-runner", "daemon", "--config", "/config/config.yaml"]
             env:
               - name: DOCKER_HOST
                 value: tcp://localhost:2376

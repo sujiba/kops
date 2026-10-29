@@ -5,7 +5,7 @@
     {
       customType: "regex",
       description: "Forgejo runner job images in runner labels",
-      managerFilePatterns: ["/^kubernetes/.+/forgejo/runner/resources/config\\.yml$/"],
+      managerFilePatterns: ["/^kubernetes/.+/forgejo/runner/resources/config\\.yaml$/"],
       matchStrings: [":docker://(?<depName>[^:\\s]+):(?<currentValue>[^@\\s]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?"],
       datasourceTemplate: "docker",
     },
