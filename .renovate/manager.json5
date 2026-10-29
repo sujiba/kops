@@ -8,6 +8,7 @@
       managerFilePatterns: ["/^kubernetes/.+/forgejo/runner/resources/config\\.yaml$/"],
       matchStrings: [":docker://(?<depName>[^:\\s]+):(?<currentValue>[^@\\s]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?"],
       datasourceTemplate: "docker",
+      versioningTemplate: "regex:^ubuntu-(?<major>\\d+)\\.(?<minor>\\d+)$",
     },
   ],
   flux: {
