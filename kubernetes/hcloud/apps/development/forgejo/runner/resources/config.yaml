@@ -18,7 +18,7 @@ server:
       uuid: 244f66c8-7f79-4828-9420-0ef4cab33018
       token_url: file:/secrets/token
       labels:
-        - docker:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54
-        - ubuntu-latest:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54
-        - ubuntu-26.04:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54
-        - renovate:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04@sha256:c0818b6443cccc02f1f1825cc15f5345ddc353379677d3735dcbdc87a824bf54
+        - docker:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04
+        - ubuntu-latest:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04
+        - ubuntu-26.04:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04
+        - renovate:docker://ghcr.io/sujiba/forgejo-runner:ubuntu-26.04
