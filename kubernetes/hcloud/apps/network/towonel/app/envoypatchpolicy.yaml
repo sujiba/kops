@@ -1,0 +1,26 @@
+---
+# QUIC from the agent arrives coalesced (several packets per read); with the
+# default 1500-byte buffer Envoy drops them as truncated
+# (listener.*.udp.downstream_rx_datagram_dropped) and the tunnel stalls once a
+# certificate chain comes back. With GRO the kernel hands over the segment size
+# and Envoy splits the read into the original datagrams.
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyPatchPolicy
+metadata:
+  name: towonel-quic-gro
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-external
+  type: JSONPatch
+  jsonPatches:
+    - type: type.googleapis.com/envoy.config.listener.v3.Listener
+      name: network/envoy-external/towonel-quic
+      operation:
+        op: add
+        path: /udp_listener_config
+        value:
+          downstream_socket_config:
+            max_rx_datagram_size: 65535
+            prefer_gro: true

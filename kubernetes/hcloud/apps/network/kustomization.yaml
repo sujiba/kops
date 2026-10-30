@@ -12,3 +12,4 @@ resources:
   - ./pihole/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./tailscale/ks.yaml
+  - ./towonel/ks.yaml

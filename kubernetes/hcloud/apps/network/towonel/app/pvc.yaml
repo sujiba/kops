@@ -1,0 +1,14 @@
+---
+# Hub database and the keys the node generates on first boot (node, operator).
+# hostpath without backup: losing it means a new invite for the agent.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: towonel-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: openebs-hostpath

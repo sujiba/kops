@@ -22,6 +22,26 @@ spec:
         certificateRefs:
           - kind: Secret
             name: offene-cloud-tls
+    # Hostnames served from the homelab through towonel (network/towonel): the TLS
+    # stream is passed through by SNI, Envoy never decrypts it. The wildcard lives
+    # one level below offene-cloud-tls, so neither certificate covers the other's
+    # hostnames and browsers never pool connections across the two clusters.
+    - name: external
+      protocol: TLS
+      port: 443
+      hostname: "*.extern.${EXTERNAL_DOMAIN}"
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Passthrough
+    # QUIC from the towonel agent
+    - name: towonel-quic
+      protocol: UDP
+      port: 51820
+      allowedRoutes:
+        namespaces:
+          from: Same
 
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -69,10 +89,19 @@ metadata:
   name: geoip-policy
   namespace: network
 spec:
+  # HTTP listeners only: the country comes from a header, which passthrough TLS
+  # and UDP listeners (towonel) do not have. On those the rules translate to an
+  # empty RBAC matcher and Envoy rejects the whole Gateway's config. Tunnelled
+  # hostnames get the same allowlist on envoy-external at home.
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: envoy-external
+      sectionName: http
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-external
+      sectionName: https
   authorization:
     # Block everything that doesn't match an Allow rule below
     defaultAction: Deny

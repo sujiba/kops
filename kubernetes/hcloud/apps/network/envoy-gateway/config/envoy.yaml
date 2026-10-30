@@ -163,7 +163,7 @@ spec:
     earlyRequestHeaders:
       set:
         - name: X-Real-IP
-          value: '%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%'
+          value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
         - name: X-Forwarded-Proto
           value: https
         - name: X-Forwarded-Host
@@ -191,7 +191,8 @@ spec:
     initialStreamWindowSize: 2Mi
     initialConnectionWindowSize: 32Mi
     onInvalidMessage: TerminateStream
-  http3: {}
+  # No HTTP/3: tunnelled hostnames (towonel) are passed through by SNI, which QUIC
+  # cannot do. UDP 443 was never open in the hcloud firewall anyway.
   #  Required for Collabora WebSocket paths with encoded URLs
   path:
     escapedSlashesAction: KeepUnchanged
