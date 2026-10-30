@@ -1,0 +1,75 @@
+---
+# Example app for the towonel tunnel: answers with a fixed text and reveals
+# nothing about the request or the cluster.
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: hello
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: hello
+  interval: 1h
+  values:
+    defaultPodOptions:
+      # envoy-tunnel may only reach pods with this label (network/towonel)
+      labels:
+        offene.cloud/expose: tunnel
+
+    controllers:
+      hello:
+        pod:
+          securityContext:
+            runAsGroup: 65532
+            runAsNonRoot: true
+            runAsUser: 65532
+        containers:
+          app:
+            image:
+              repository: hashicorp/http-echo
+              tag: 1.0.0@sha256:fcb75f691c8b0414d670ae570240cbf95502cc18a9ba57e982ecac589760a186
+            env:
+              ECHO_TEXT: Hello from home, served through towonel
+            resources:
+              requests:
+                cpu: 5m
+                memory: 16Mi
+              limits:
+                memory: 32Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+
+    networkpolicies:
+      hello:
+        type: cilium
+        description: >-
+          Public through the towonel tunnel: reachable from envoy-tunnel only,
+          not from the LAN or other pods.
+        ingress:
+          - fromEntities:
+              - host # kubelet probes
+          - fromEndpoints:
+              - matchLabels:
+                  k8s:io.kubernetes.pod.namespace: network
+                  gateway.envoyproxy.io/owning-gateway-name: envoy-tunnel
+            toPorts:
+              - ports:
+                  - port: "5678"
+                    protocol: TCP
+
+    route:
+      app:
+        hostnames:
+          - hello.extern.${EXTERNAL_DOMAIN}
+        parentRefs:
+          - name: envoy-tunnel
+            namespace: network
+            sectionName: https
+
+    service:
+      app:
+        ports:
+          http:
+            port: 5678

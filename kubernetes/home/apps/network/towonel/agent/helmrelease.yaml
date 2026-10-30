@@ -38,7 +38,7 @@ spec:
               # address as PROXY v2. One entry per hostname served from home.
               TOWONEL_AGENT_SERVICES: >-
                 [
-                {"hostname": "whoami.extern.${EXTERNAL_DOMAIN}", "origin": "envoy-tunnel.network.svc.cluster.local:443", "tls_mode": {"mode": "passthrough"}, "proxy_protocol": "v2"}
+                {"hostname": "hello.extern.${EXTERNAL_DOMAIN}", "origin": "envoy-tunnel.network.svc.cluster.local:443", "tls_mode": {"mode": "passthrough"}, "proxy_protocol": "v2"}
                 ]
               # Throughput collapses with UDP GSO on Cilium
               TOWONEL_DISABLE_UDP_GSO: "true"

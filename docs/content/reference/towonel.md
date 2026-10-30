@@ -66,4 +66,4 @@ The hub state (SQLite, node and operator key) sits on `openebs-hostpath` without
 
 ## Related
 
-- [Expose a home app through the tunnel](../how-to/towonel-hostname.md)
+- [Expose a home app through the tunnel](../how-to/towonel.md)
