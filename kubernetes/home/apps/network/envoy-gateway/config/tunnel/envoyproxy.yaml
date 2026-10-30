@@ -1,0 +1,98 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: envoy-tunnel
+spec:
+  geoIP:
+    provider:
+      type: MaxMind
+      maxMind:
+        countryDbSource:
+          local:
+            path: /etc/envoy/geoip/GeoLite2-Country.mmdb
+        asnDbSource:
+          local:
+            path: /etc/envoy/geoip/GeoLite2-ASN.mmdb
+  logging:
+    level:
+      default: info
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        replicas: 1
+        # MaxMind databases for the geo block, as on hcloud: geoipupdate runs as a
+        # native sidecar and refreshes them weekly; its startup probe holds Envoy
+        # back until both files exist.
+        patch:
+          value:
+            spec:
+              template:
+                spec:
+                  volumes:
+                    - name: geoip-db
+                      emptyDir: {}
+                  initContainers:
+                    - name: geoipupdate
+                      image: ghcr.io/maxmind/geoipupdate:v8
+                      env:
+                        - name: GEOIPUPDATE_ACCOUNT_ID
+                          valueFrom:
+                            secretKeyRef:
+                              name: maxmind-secret
+                              key: account_id
+                        - name: GEOIPUPDATE_LICENSE_KEY
+                          valueFrom:
+                            secretKeyRef:
+                              name: maxmind-secret
+                              key: license_key
+                        - name: GEOIPUPDATE_EDITION_IDS
+                          value: GeoLite2-Country GeoLite2-ASN
+                        - name: GEOIPUPDATE_DB_DIR
+                          value: /etc/envoy/geoip
+                        - name: GEOIPUPDATE_FREQUENCY
+                          value: "168"
+                        - name: GEOIPUPDATE_VERBOSE
+                          value: "1"
+                      volumeMounts:
+                        - name: geoip-db
+                          mountPath: /etc/envoy/geoip
+                      resources:
+                        requests:
+                          cpu: 10m
+                          memory: 32Mi
+                        limits:
+                          memory: 128Mi
+                      restartPolicy: Always
+                      startupProbe:
+                        exec:
+                          command:
+                            - sh
+                            - -c
+                            - "test -f /etc/envoy/geoip/GeoLite2-Country.mmdb && test -f /etc/envoy/geoip/GeoLite2-ASN.mmdb"
+                        initialDelaySeconds: 2
+                        periodSeconds: 3
+                        failureThreshold: 20
+        container:
+          imageRepository: mirror.gcr.io/envoyproxy/envoy
+          volumeMounts:
+            - name: geoip-db
+              mountPath: /etc/envoy/geoip
+              readOnly: true
+          resources:
+            requests:
+              cpu: 50m
+            limits:
+              memory: 1Gi
+      envoyService:
+        # Fixed name, the agent dials it; ClusterIP so it gets no LAN address
+        name: envoy-tunnel
+        type: ClusterIP
+  shutdown:
+    drainTimeout: 180s
+  telemetry:
+    metrics:
+      prometheus:
+        compression:
+          type: Zstd

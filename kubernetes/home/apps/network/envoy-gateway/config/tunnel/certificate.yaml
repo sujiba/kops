@@ -1,0 +1,21 @@
+---
+# Only *.extern, never *.${EXTERNAL_DOMAIN}: every public name resolves to hcloud,
+# and browsers pool HTTP/2 connections across all names a certificate covers.
+# A wider certificate here would send hcloud's apps through the tunnel.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tunnel-wildcard
+spec:
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  secretName: tunnel-wildcard-tls
+  commonName: extern.${EXTERNAL_DOMAIN}
+  dnsNames:
+    - extern.${EXTERNAL_DOMAIN}
+    - "*.extern.${EXTERNAL_DOMAIN}"
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always

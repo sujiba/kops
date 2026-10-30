@@ -1,0 +1,34 @@
+---
+# Same allowlist as geoip-policy on hcloud (kubernetes/hcloud/apps/network/
+# envoy-gateway/config/gateway.yaml): tunnelled hostnames bypass the geo block
+# there (passthrough TLS has no country header), so it happens here. Keep both
+# lists in step. The client address comes from the PROXY header (CTP envoy-tunnel).
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: geoip-policy-tunnel
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-tunnel
+  authorization:
+    # Block everything that doesn't match an Allow rule below
+    defaultAction: Deny
+    rules:
+      # No private ranges, unlike hcloud: every request here comes through the
+      # tunnel, so a private client address means the PROXY chain is broken and
+      # must not open the geo block.
+      - name: allow-internal
+        action: Allow
+        principal:
+          clientCIDRs:
+            - 46.224.13.115/32 # albdev
+            - 91.98.37.31/32 # sujiba
+
+      # Allow Germany
+      - name: allow-de
+        action: Allow
+        principal:
+          clientIPGeoLocations:
+            - country: "DE"  # Germany

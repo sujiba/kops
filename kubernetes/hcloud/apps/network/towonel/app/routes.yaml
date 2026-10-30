@@ -11,7 +11,7 @@ spec:
     - "*.extern.${EXTERNAL_DOMAIN}"
   parentRefs:
     - name: envoy-external
-      sectionName: external
+      sectionName: tunnel
   rules:
     - backendRefs:
         - name: towonel
@@ -19,7 +19,7 @@ spec:
 
 ---
 # The edge reads the client address from this header and hands it on to the
-# agent, which passes it to envoy-external at home the same way.
+# agent, which passes it to envoy-tunnel at home the same way.
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:

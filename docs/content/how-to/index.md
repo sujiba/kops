@@ -11,6 +11,7 @@ Every how-to has the same structure: **When** (trigger), **Prerequisites**, **St
 | [Talos bootstrap](talos-bootstrap.md) | Set up `home-01` from scratch (fresh install, total loss) |
 | [Flux bootstrap](flux-bootstrap.md) | Right after the Talos bootstrap: install CNI, cert-manager and Flux |
 | [Talos upgrade](talos-upgrade.md) | New Talos version, Renovate PR for `siderolabs/talos` |
+| [Tunnel hostname](towonel-hostname.md) | Make a home app public as `<name>.extern.${EXTERNAL_DOMAIN}` through towonel |
 | [Garage bucket](garage-bucket.md) | New S3 bucket in Garage: public for static sites and CDN, private for backups |
 | [Matrix bridge](matrix-bridge.md) | Register a mautrix bridge (WhatsApp, Discord) with Continuwuity and log in |
 

@@ -16,6 +16,7 @@ nav = [
     { "Talos bootstrap" = "how-to/talos-bootstrap.md" },
     { "Flux bootstrap" = "how-to/flux-bootstrap.md" },
     { "Talos upgrade" = "how-to/talos-upgrade.md" },
+    { "Tunnel hostname" = "how-to/towonel-hostname.md" },
     { "Garage bucket" = "how-to/garage-bucket.md" },
     { "Matrix bridge" = "how-to/matrix-bridge.md" },
   ] },
@@ -24,6 +25,7 @@ nav = [
   ] },
   { "Reference" = [
     "reference/index.md",
+    { "towonel" = "reference/towonel.md" },
   ] },
   { "Architecture" = [
     "architecture/index.md",

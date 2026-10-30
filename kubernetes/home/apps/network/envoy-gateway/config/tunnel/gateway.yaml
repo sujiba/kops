@@ -1,0 +1,27 @@
+---
+# Public traffic from the internet, delivered by the towonel agent (network/towonel)
+# over the tunnel from hcloud. Reachable only inside the cluster: no LAN address,
+# no HTTP listener. A route opts in by naming this Gateway as its parent.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-tunnel
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: envoy-tunnel
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.extern.${EXTERNAL_DOMAIN}"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: tunnel-wildcard-tls

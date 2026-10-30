@@ -12,3 +12,4 @@ resources:
   - ./immich/ks.yaml
   - ./paperless/ks.yaml
   - ./vaultwarden/ks.yaml
+  - ./whoami/ks.yaml

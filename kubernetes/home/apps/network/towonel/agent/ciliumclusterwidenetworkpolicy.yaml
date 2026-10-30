@@ -1,0 +1,32 @@
+---
+# Workloads behind envoy-tunnel are reachable from the internet. If one is taken
+# over, it must not become a way into the LAN or to other workloads: out it may
+# reach cluster DNS and the public internet, nothing else. Applies to every pod
+# with offene.cloud/expose: tunnel, in any namespace; their ingress policies stay
+# with the apps.
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: tunnel-workloads-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      offene.cloud/expose: tunnel
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+    # Public IPv4 only: the LAN, tailscale and cluster ranges stay out
+    - toCIDRSet:
+        - cidr: 0.0.0.0/0
+          except:
+            - 10.0.0.0/8
+            - 100.64.0.0/10
+            - 169.254.0.0/16
+            - 172.16.0.0/12
+            - 192.168.0.0/16

@@ -4,10 +4,6 @@ kind: Kustomization
 
 resources:
   - ./backendtrafficpolicy.yaml
-  - ./certificates.yaml
-  - ./clienttrafficpolicy.yaml
-  - ./envoyproxy.yaml
   - ./gatewayclass.yaml
   - ./grafanadashboard.yaml
-  - ./https-redirect.yaml
   - ./observability.yaml

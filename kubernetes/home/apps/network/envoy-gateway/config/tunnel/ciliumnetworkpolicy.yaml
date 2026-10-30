@@ -1,0 +1,45 @@
+---
+# envoy-tunnel carries traffic from the internet. It may reach only workloads that
+# opted in with the pod label offene.cloud/expose: tunnel, plus what Envoy itself
+# needs: cluster DNS, its xDS config from the envoy-gateway controller, and the
+# public internet for the geoipupdate sidecar (MaxMind). No LAN, no other workloads.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: envoy-tunnel-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      gateway.envoyproxy.io/owning-gateway-name: envoy-tunnel
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: network
+            control-plane: envoy-gateway
+      toPorts:
+        - ports:
+            - port: "18000"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            offene.cloud/expose: tunnel
+          matchExpressions:
+            - key: k8s:io.kubernetes.pod.namespace
+              operator: Exists
+    # Public IPv4 only: the LAN, tailscale and cluster ranges stay out
+    - toCIDRSet:
+        - cidr: 0.0.0.0/0
+          except:
+            - 10.0.0.0/8
+            - 100.64.0.0/10
+            - 169.254.0.0/16
+            - 172.16.0.0/12
+            - 192.168.0.0/16
