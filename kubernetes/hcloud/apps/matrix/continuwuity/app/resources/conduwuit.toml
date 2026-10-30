@@ -5,12 +5,24 @@ address = ["0.0.0.0"]
 port = 8008
 database_path = "/data/db"
 
+# DNS: the hcloud pod network is IPv4-only, so skip AAAA lookups; fail fast on dead servers
+ip_lookup_strategy = 1
+dns_attempts = 3
+
 # Accounts & privacy (accounts are created via Pocket-ID, not open registration)
 allow_announcements_check = false
 allow_registration = false
 lockdown_public_room_directory = true
 new_user_displayname_suffix = ""
 require_auth_for_profile_requests = true
+
+# Admins
+# admins_list = ["@<user>:matrix.${EXTERNAL_DOMAIN}"]
+# Emergency login if Pocket-ID is down: set CONDUWUIT_EMERGENCY_PASSWORD in continuwuity-secret
+
+# Cached remote media has no built-in retention; purge it on every startup
+admin_execute = ["media delete-past-remote-media -b 30d"]
+admin_execute_errors_ignore = true
 
 # Presence
 allow_local_presence = true
@@ -42,6 +54,7 @@ old_verify_keys = { "ed25519:1" = { expired_ts = 1791756000000, key = "ePiQ1SbY3
 client = "https://matrix.${EXTERNAL_DOMAIN}"
 server = "matrix.${EXTERNAL_DOMAIN}:443"
 support_email = "hostmaster@${MAIL_DOMAIN}"
+# support_mxid = "@<user>:matrix.${EXTERNAL_DOMAIN}"
 
 # Email
 [global.smtp]
