@@ -50,6 +50,7 @@ jobs:
         shell: bash
         run: |-
           # Bucket name contains dots: force path-style addressing
-          export AWS_CONFIG_FILE="$(mktemp)"
+          AWS_CONFIG_FILE="$(mktemp)"
+          export AWS_CONFIG_FILE
           printf '[default]\ns3 =\n    addressing_style = path\n' > "$AWS_CONFIG_FILE"
           uvx --from awscli aws s3 sync site/ "s3://${BUCKET}/" --delete --no-progress
