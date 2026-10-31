@@ -7,7 +7,7 @@ spec:
   dependsOn:
     - name: envoy-gateway-config
   interval: 1h
-  path: ./kubernetes/home/apps/network/towonel/agent
+  path: ./kubernetes/home/apps/network/towonel-agent/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
