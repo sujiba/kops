@@ -30,17 +30,13 @@ icon: lucide/cable
 
     Replace `${EXTERNAL_DOMAIN}` with the real domain.
 
-2. Put the token into `kubernetes/home/apps/network/towonel/agent/secrets.sops.yaml` (`TOWONEL_INVITE_TOKEN`) and encrypt the file in place.
+2. Put the token into `kubernetes/home/apps/network/towonel-agent/app/secrets.sops.yaml` (`TOWONEL_INVITE_TOKEN`) and encrypt the file in place.
 
 ### Per hostname
 
-1. `kubernetes/home/apps/network/towonel/agent/helmrelease.yaml`: add an entry to `TOWONEL_AGENT_SERVICES`:
+The agent forwards all of `*.extern.${EXTERNAL_DOMAIN}` to `envoy-tunnel`, so a new hostname needs no change to the agent; only the app's route decides who answers.
 
-    ```json
-    {"hostname": "<name>.extern.${EXTERNAL_DOMAIN}", "origin": "envoy-tunnel.network.svc.cluster.local:443", "tls_mode": {"mode": "passthrough"}, "proxy_protocol": "v2"}
-    ```
-
-2. The app's HelmRelease: pod label, route on `envoy-tunnel` and a Cilium network policy that admits only `envoy-tunnel` and the host (replace `<name>` and the port). The example app [`hello`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/selfhosted/hello/app/helmrelease.yaml) has all three:
+1. The app's HelmRelease: pod label, route on `envoy-tunnel` and a Cilium network policy that admits only `envoy-tunnel` and the host (replace `<name>` and the port). The example app [`hello`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/selfhosted/hello/app/helmrelease.yaml) has all three:
 
     ```yaml
     defaultPodOptions:
@@ -73,7 +69,7 @@ icon: lucide/cable
 
     Exposed pods may reach cluster DNS only. If the app must call out (webhooks, federation, OIDC), add the label `offene.cloud/egress: internet` next to `offene.cloud/expose: tunnel`; egress to its own backends (database, cache) goes into its own network policy. `hello` needs neither.
 
-3. Nothing changes on hcloud: the TLSRoute already covers `*.extern.${EXTERNAL_DOMAIN}`.
+2. Nothing changes on hcloud or in the agent: the TLSRoute already covers `*.extern.${EXTERNAL_DOMAIN}`.
 
 ## Verify
 
@@ -87,4 +83,4 @@ kubectl --kubeconfig ~/.kube/home -n network logs deploy/envoy-tunnel -c envoy -
 
 ## Rollback
 
-Remove the entry from `TOWONEL_AGENT_SERVICES` and the route from the app. The edge drops connections for hostnames no agent serves.
+Remove the route from the app. `envoy-tunnel` then answers the hostname with 404.

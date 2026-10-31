@@ -1,0 +1,51 @@
+---
+# Out to hcloud only (hub API and QUIC to the edge) and to envoy-tunnel, nothing
+# else. Internet traffic enters the homelab through this pod, so it must not
+# reach the LAN, other workloads or the rest of the internet. The chart has no
+# Cilium policy of its own; the name differs from the old app-template policy
+# so the Helm upgrade that removes that one cannot take this one along.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: towonel-agent-isolation
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: towonel-agent
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: network
+            gateway.envoyproxy.io/owning-gateway-name: envoy-tunnel
+      toPorts:
+        - ports:
+            - port: "10443"
+              protocol: TCP
+    # hcloud (tunnel.${EXTERNAL_DOMAIN}): hub API over HTTPS, QUIC to the edge
+    - toCIDR:
+        - 91.98.37.31/32
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "51820"
+              protocol: UDP
+  ingress:
+    - fromEntities:
+        - host # kubelet probes
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+            app.kubernetes.io/name: prometheus
+      toPorts:
+        - ports:
+            - port: "9090"
+              protocol: TCP

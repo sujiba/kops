@@ -8,7 +8,7 @@ icon: lucide/cable
 |---|---|
 | **What** | Tunnel from hcloud to home: public hostnames below `extern.${EXTERNAL_DOMAIN}` are served from the homelab without opening ports there. TLS is passed through and ends at home |
 | **Cluster** | both: hub and edge on hcloud, agent on home |
-| **Manifests** | [hcloud/apps/network/towonel](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/network/towonel), [home/apps/network/towonel](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/network/towonel), [home envoy-tunnel](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/network/envoy-gateway/config/tunnel) |
+| **Manifests** | [hcloud/apps/network/towonel](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/hcloud/apps/network/towonel), [home/apps/network/towonel-agent](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/network/towonel-agent), [home envoy-tunnel](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/network/envoy-gateway/config/tunnel) |
 
 ## The path of a request
 
@@ -27,7 +27,7 @@ hcloud never decrypts the stream. The visitor's address survives every hop: Envo
 | Listener `towonel-quic` | same | UDP 51820 for the agent's QUIC, routed to the pod by the UDPRoute |
 | Firewall rule `towonel quic` | `kubernetes/bootstrap/hcloud/1_tofu/main.tf` | UDP 51820 open on the Hetzner cloud firewall |
 | `TOWONEL_HUB_PUBLIC_URL`, `TOWONEL_EDGE_ADVERTISED_ADDRESSES` | hcloud `towonel/app/helmrelease.yaml` | `tunnel.${EXTERNAL_DOMAIN}`: hub API and the edge address the agent dials |
-| `TOWONEL_AGENT_SERVICES` | home `towonel/agent/helmrelease.yaml` | One entry per hostname served from home, all with origin `envoy-tunnel` |
+| `agent.services` | home `towonel-agent/app/helmrelease.yaml` (upstream chart `towonel-agent`) | One wildcard entry `*.extern.${EXTERNAL_DOMAIN}` with origin `envoy-tunnel`; the routes on `envoy-tunnel` pick the app. The chart turns the list into `TOWONEL_AGENT_SERVICES` |
 | Pod label `offene.cloud/expose: tunnel` | the app's HelmRelease | Lets `envoy-tunnel` reach the pod; also puts the pod under the egress policy `tunnel-workloads-egress` (cluster DNS only) |
 | Pod label `offene.cloud/egress: internet` | the app's HelmRelease | Opt-in for exposed pods that must call out: adds the public IPv4 internet (`tunnel-workloads-internet`) |
 | `geoip-policy-tunnel` | home `envoy-gateway/config/tunnel/securitypolicy.yaml` | Same country allowlist as `geoip-policy` on hcloud. Keep both in step |
@@ -39,9 +39,9 @@ hcloud never decrypts the stream. The visitor's address survives every hop: Envo
 | HelmRelease (hcloud) | `towonel` | Hub and edge in one pod; state on the PVC `towonel-data-pvc` |
 | TLSRoute, UDPRoute (hcloud) | `towonel`, `towonel-quic` | Hand the passthrough TLS and the QUIC traffic to the pod |
 | EnvoyPatchPolicy (hcloud) | `towonel-quic-gro` | Lets Envoy read coalesced UDP; without it the tunnel stalls on large packets |
-| HelmRelease (home) | `towonel-agent` | Dials the edge and forwards each connection to `envoy-tunnel` |
+| HelmRelease (home) | `towonel-agent` | Upstream chart; dials the edge and forwards each connection to `envoy-tunnel`. Also renders a ServiceMonitor, a PrometheusRule and a GrafanaDashboard |
 | Gateway (home) | `envoy-tunnel` | ClusterIP only, no LAN address; certificate `tunnel-wildcard-tls` |
-| CiliumNetworkPolicy, CiliumClusterwideNetworkPolicy (home) | `envoy-tunnel`, `tunnel-workloads-egress`, `tunnel-workloads-internet` | Only the agent reaches `envoy-tunnel`, which reaches only opted-in pods; those reach neither the LAN, other workloads nor, without opt-in, the internet. The agent itself may reach only hcloud |
+| CiliumNetworkPolicy, CiliumClusterwideNetworkPolicy (home) | `envoy-tunnel`, `towonel-agent-isolation`, `tunnel-workloads-egress`, `tunnel-workloads-internet` | Only the agent reaches `envoy-tunnel`, which reaches only opted-in pods; those reach neither the LAN, other workloads nor, without opt-in, the internet. The agent itself may reach only hcloud |
 
 ## Secrets
 
