@@ -1,0 +1,12 @@
+---
+# Apps that are public through the towonel tunnel, and nothing else. Only routes
+# from here may attach to envoy-tunnel, and envoy-tunnel only reaches pods here.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tunnel
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest

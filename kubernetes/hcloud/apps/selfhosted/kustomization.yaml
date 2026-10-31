@@ -17,4 +17,3 @@ resources:
   - ./nextcloud/ks.yaml
   - ./ntfy/ks.yaml
   - ./tandoor/ks.yaml
-  # - ./vaultwarden/ks.yaml

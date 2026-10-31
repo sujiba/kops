@@ -1,0 +1,12 @@
+---
+# A public app under load must not starve the rest of the home cluster
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: tunnel
+spec:
+  hard:
+    pods: "20"
+    requests.cpu: "2"
+    requests.memory: 4Gi
+    limits.memory: 8Gi

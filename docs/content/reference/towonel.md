@@ -29,9 +29,11 @@ hcloud never decrypts the stream. The visitor's address survives every hop: Envo
 | `TOWONEL_HUB_PUBLIC_URL`, `TOWONEL_EDGE_ADVERTISED_ADDRESSES` | hcloud `towonel/app/helmrelease.yaml` | `tunnel.${EXTERNAL_DOMAIN}`: hub API and the edge address the agent dials |
 | `TOWONEL_EDGE_PROXY_PROTOCOL_TRUSTED`, `TOWONEL_HUB_TRUSTED_PROXIES` | same | The node's cni0 address, the source of every connection from the host-network Envoy. Only it may send a PROXY header or `X-Forwarded-For`, so no pod can fake a client address. Follows the node's podCIDR |
 | `agent.services` | home `towonel-agent/app/helmrelease.yaml` (upstream chart `towonel-agent`) | One wildcard entry `*.extern.${EXTERNAL_DOMAIN}` with origin `envoy-tunnel`; the routes on `envoy-tunnel` pick the app. The chart turns the list into `TOWONEL_AGENT_SERVICES` |
+| Namespace `tunnel` | home `apps/tunnel/` | Home of every public app. `envoy-tunnel` accepts routes only from here (`allowedRoutes`) and reaches only pods here. Pod Security `restricted` is enforced; a LimitRange and a ResourceQuota cap what the namespace may take from the cluster |
 | Pod label `offene.cloud/expose: tunnel` | the app's HelmRelease | Lets `envoy-tunnel` reach the pod; also puts the pod under the egress policy `tunnel-workloads-egress` (cluster DNS only) |
 | Pod label `offene.cloud/egress: internet` | the app's HelmRelease | Opt-in for exposed pods that must call out: adds the public IPv4 internet (`tunnel-workloads-internet`) |
 | `geoip-policy-tunnel` | home `envoy-gateway/config/tunnel/securitypolicy.yaml` | Same country allowlist as `geoip-policy` on hcloud. Keep both in step |
+| Rate limit | home `envoy-gateway/config/tunnel/backendtrafficpolicy.yaml`, hcloud `envoy-gateway/config/envoy.yaml` | Per client IP and route, same limit on both sides. The tunnel policy replaces the shared `envoy` policy on that listener, so it repeats its settings |
 
 ## Creates
 

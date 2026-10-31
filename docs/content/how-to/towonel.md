@@ -36,7 +36,9 @@ icon: lucide/cable
 
 The agent forwards all of `*.extern.${EXTERNAL_DOMAIN}` to `envoy-tunnel`, so a new hostname needs no change to the agent; only the app's route decides who answers.
 
-1. The app's HelmRelease: pod label, route on `envoy-tunnel` and a Cilium network policy that admits only `envoy-tunnel` and the host (replace `<name>` and the port). The example app [`hello`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/selfhosted/hello/app/helmrelease.yaml) has all three:
+1. Put the app under `kubernetes/home/apps/tunnel/` and list its `ks.yaml` in that directory's `kustomization.yaml`. `envoy-tunnel` accepts routes from the namespace `tunnel` only and reaches pods there only. The namespace enforces the Pod Security Standard `restricted` and has a quota, so the pods must run as non-root with `seccompProfile: RuntimeDefault`, `allowPrivilegeEscalation: false` and all capabilities dropped.
+
+2. The app's HelmRelease: pod label, route on `envoy-tunnel` and a Cilium network policy that admits only `envoy-tunnel` and the host (replace `<name>` and the port). The example app [`hello`](https://code.offene.cloud/homelab/kops/src/branch/main/kubernetes/home/apps/tunnel/hello/app/helmrelease.yaml) has all three:
 
     ```yaml
     defaultPodOptions:
@@ -69,7 +71,7 @@ The agent forwards all of `*.extern.${EXTERNAL_DOMAIN}` to `envoy-tunnel`, so a 
 
     Exposed pods may reach cluster DNS only. If the app must call out (webhooks, federation, OIDC), add the label `offene.cloud/egress: internet` next to `offene.cloud/expose: tunnel`; egress to its own backends (database, cache) goes into its own network policy. `hello` needs neither.
 
-2. Nothing changes on hcloud or in the agent: the TLSRoute already covers `*.extern.${EXTERNAL_DOMAIN}`.
+3. Nothing changes on hcloud or in the agent: the TLSRoute already covers `*.extern.${EXTERNAL_DOMAIN}`.
 
 ## Verify
 

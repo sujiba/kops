@@ -2,10 +2,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: vaultwarden
+  name: hello
 spec:
+  dependsOn:
+    - name: towonel-agent
+      namespace: network
   interval: 1h
-  path: ./kubernetes/hcloud/apps/selfhosted/vaultwarden/app
+  path: ./kubernetes/home/apps/tunnel/hello/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
@@ -15,5 +18,5 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: selfhosted
+  targetNamespace: tunnel
   wait: false

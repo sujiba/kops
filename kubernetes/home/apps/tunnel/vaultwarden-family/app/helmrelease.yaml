@@ -1,0 +1,150 @@
+---
+# Family password manager, public through the towonel tunnel. Separate from
+# the personal instance (vaultwarden, LAN only). The vaults are end-to-end
+# encrypted by the clients; the server only stores ciphertext.
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vaultwarden-family
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: vaultwarden-family
+
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      # envoy-tunnel may only reach pods with this label (network/towonel). It
+      # also limits egress to cluster DNS; the network policy below adds the
+      # SMTP relay. No internet: icon downloads are off, push is not set up.
+      labels:
+        offene.cloud/expose: tunnel
+
+    controllers:
+      vaultwarden-family:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile:
+              type: RuntimeDefault
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/dani-garcia/vaultwarden
+              tag: 1.37.4
+            env:
+              TZ: Europe/Berlin
+              # One origin for every client: passkeys and WebAuthn are bound to it
+              DOMAIN: "https://vault.extern.${EXTERNAL_DOMAIN}"
+              # Accounts only by invitation from the admin page
+              SIGNUPS_ALLOWED: false
+              INVITATIONS_ALLOWED: false
+              PASSWORD_HINTS_ALLOWED: false
+              SHOW_PASSWORD_HINT: false
+              # Client address as set by envoy-tunnel from the PROXY header; the
+              # login and admin rate limits key on it
+              IP_HEADER: X-Real-IP
+              LOGIN_RATELIMIT_SECONDS: 60
+              LOGIN_RATELIMIT_MAX_BURST: 5
+              # Cache time-to-live for successfully obtained icons, in seconds (0 is "forever")
+              ICON_CACHE_TTL: 0
+              ICON_SERVICE: internal
+              DISABLE_ICON_DOWNLOAD: true
+              SENDS_ALLOWED: true
+              SMTP_HOST: smtp-relay.network.svc.cluster.local
+              SMTP_PORT: 2525
+              SMTP_SECURITY: off
+              SMTP_USERNAME: ""
+              SMTP_PASSWORD: ""
+              SMTP_FROM: no-reply@${MAIL_DOMAIN}
+              SMTP_FROM_NAME: vaultwarden
+            envFrom:
+              - secretRef:
+                  name: vaultwarden-family-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+
+    networkpolicies:
+      vaultwarden-family:
+        type: cilium
+        description: >-
+          Public through the towonel tunnel: reachable from envoy-tunnel only,
+          not from the LAN or other pods. Out only to the SMTP relay.
+        ingress:
+          - fromEntities:
+              - host # kubelet probes
+          - fromEndpoints:
+              - matchLabels:
+                  k8s:io.kubernetes.pod.namespace: network
+                  gateway.envoyproxy.io/owning-gateway-name: envoy-tunnel
+            toPorts:
+              - ports:
+                  - port: "80"
+                    protocol: TCP
+        egress:
+          - toEndpoints:
+              - matchLabels:
+                  k8s:io.kubernetes.pod.namespace: network
+                  app.kubernetes.io/name: smtp-relay
+            toPorts:
+              - ports:
+                  - port: "2525"
+                    protocol: TCP
+
+    route:
+      app:
+        hostnames:
+          - vault.extern.${EXTERNAL_DOMAIN}
+        parentRefs:
+          - name: envoy-tunnel
+            namespace: network
+            sectionName: https
+        rules:
+          # The admin page is not public; reach it with
+          # kubectl -n tunnel port-forward svc/vaultwarden-family 8080:80
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /admin
+            filters:
+              - type: ExtensionRef
+                extensionRef:
+                  group: gateway.envoyproxy.io
+                  kind: HTTPRouteFilter
+                  name: vaultwarden-family-admin-blocked
+          - backendRefs:
+              - identifier: app
+                port: 80
+
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+
+    persistence:
+      data:
+        existingClaim: vaultwarden-family
+        globalMounts:
+          - path: /data

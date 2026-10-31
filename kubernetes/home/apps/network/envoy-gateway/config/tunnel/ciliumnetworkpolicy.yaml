@@ -1,8 +1,9 @@
 ---
-# envoy-tunnel carries traffic from the internet. It may reach only workloads that
-# opted in with the pod label offene.cloud/expose: tunnel, plus what Envoy itself
-# needs: cluster DNS, its xDS config from the envoy-gateway controller, and the
-# public internet for the geoipupdate sidecar (MaxMind). No LAN, no other workloads.
+# envoy-tunnel carries traffic from the internet. It may reach only workloads in
+# the namespace tunnel that opted in with the pod label offene.cloud/expose: tunnel,
+# plus what Envoy itself needs: cluster DNS, its xDS config from the envoy-gateway
+# controller, and the public internet for the geoipupdate sidecar (MaxMind). No
+# LAN, no other workloads.
 # In, only the towonel agent may connect: envoy-tunnel trusts the PROXY header, so
 # any other pod could claim an arbitrary client address and skip the geo block.
 apiVersion: cilium.io/v2
@@ -51,10 +52,8 @@ spec:
               protocol: TCP
     - toEndpoints:
         - matchLabels:
+            k8s:io.kubernetes.pod.namespace: tunnel
             offene.cloud/expose: tunnel
-          matchExpressions:
-            - key: k8s:io.kubernetes.pod.namespace
-              operator: Exists
     # Public IPv4 only: the LAN, tailscale and cluster ranges stay out
     - toCIDRSet:
         - cidr: 0.0.0.0/0

@@ -1,0 +1,15 @@
+---
+# Defaults for containers without resources (e.g. the kopiur movers), so the
+# quota below can be enforced
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: tunnel
+spec:
+  limits:
+    - type: Container
+      defaultRequest:
+        cpu: 10m
+        memory: 64Mi
+      default:
+        memory: 1Gi

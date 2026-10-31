@@ -4,6 +4,9 @@ kind: BackendTrafficPolicy
 metadata:
   name: collabora-websocket
 spec:
+  # Keep the gateway's policy (rate limit, compression, retries) and override
+  # only what is set here
+  mergeType: StrategicMerge
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute

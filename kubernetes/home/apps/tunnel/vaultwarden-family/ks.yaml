@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: vaultwarden-family
+spec:
+  components:
+    - ../../../../components/kopiur/backup
+  dependsOn:
+    - name: towonel-agent
+      namespace: network
+  interval: 1h
+  path: ./kubernetes/home/apps/tunnel/vaultwarden-family/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+    substitute:
+      APP: vaultwarden-family
+      KOPIUR_CAPACITY: 5Gi
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
+  # Keep the data PVC if the app is ever removed from Git
+  prune: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: tunnel
+  wait: false

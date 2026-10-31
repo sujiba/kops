@@ -1,0 +1,50 @@
+---
+# Own policy for the tunnel listener: more specific than the shared policy
+# "envoy" (all gateways), which it replaces here, so its settings are repeated.
+# envoy-internal stays without a rate limit.
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: envoy-tunnel
+spec:
+  compressor:
+    - type: Zstd
+      zstd: {}
+    - type: Brotli
+      brotli: {}
+    - type: Gzip
+      gzip: {}
+  # Per client IP (from the PROXY header) and per route. Same limit as
+  # envoy-external on hcloud; login brute force is left to the apps' own limits.
+  rateLimit:
+    local:
+      rules:
+        - clientSelectors:
+            - sourceCIDR:
+                type: Distinct
+                value: 0.0.0.0/0
+          limit:
+            requests: 3000
+            unit: Minute
+        - clientSelectors:
+            - sourceCIDR:
+                type: Distinct
+                value: ::/0
+          limit:
+            requests: 3000
+            unit: Minute
+  retry:
+    numRetries: 2
+    retryOn:
+      triggers:
+        - reset
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-tunnel
+      sectionName: https
+  tcpKeepalive: {}
+  timeout:
+    http:
+      connectionIdleTimeout: 15s
+      requestTimeout: 0s

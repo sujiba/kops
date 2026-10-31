@@ -1,0 +1,13 @@
+---
+# Answers /admin on the public route without reaching vaultwarden
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: vaultwarden-family-admin-blocked
+spec:
+  directResponse:
+    contentType: text/plain
+    body:
+      type: Inline
+      inline: Not Found
+    statusCode: 404
