@@ -8,10 +8,6 @@ spec:
     kind: OCIRepository
     name: towonel-agent
   interval: 1h
-  upgrade:
-    # The switch from app-template changed the Deployment selector, which is
-    # immutable: replace instead of patch. Drop once the chart is rolled out.
-    force: true
 
   values:
     # Stateless: dials the edge on hcloud over QUIC and forwards each
