@@ -12,7 +12,9 @@ spec:
   interval: 1h
   values:
     defaultPodOptions:
-      # envoy-tunnel may only reach pods with this label (network/towonel)
+      # envoy-tunnel may only reach pods with this label (network/towonel). It
+      # also limits egress to cluster DNS; hello calls out nowhere, so it does
+      # not opt in to offene.cloud/egress: internet.
       labels:
         offene.cloud/expose: tunnel
 

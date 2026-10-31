@@ -3,14 +3,35 @@
 # opted in with the pod label offene.cloud/expose: tunnel, plus what Envoy itself
 # needs: cluster DNS, its xDS config from the envoy-gateway controller, and the
 # public internet for the geoipupdate sidecar (MaxMind). No LAN, no other workloads.
+# In, only the towonel agent may connect: envoy-tunnel trusts the PROXY header, so
+# any other pod could claim an arbitrary client address and skip the geo block.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: envoy-tunnel-egress
+  name: envoy-tunnel
 spec:
   endpointSelector:
     matchLabels:
       gateway.envoyproxy.io/owning-gateway-name: envoy-tunnel
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: network
+            app.kubernetes.io/name: towonel-agent
+      toPorts:
+        - ports:
+            - port: "10443"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+            app.kubernetes.io/name: prometheus
+      toPorts:
+        - ports:
+            - port: "19001"
+              protocol: TCP
+    - fromEntities:
+        - host # kubelet probes
   egress:
     - toEndpoints:
         - matchLabels:

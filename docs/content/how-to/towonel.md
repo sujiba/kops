@@ -71,6 +71,8 @@ icon: lucide/cable
             sectionName: https
     ```
 
+    Exposed pods may reach cluster DNS only. If the app must call out (webhooks, federation, OIDC), add the label `offene.cloud/egress: internet` next to `offene.cloud/expose: tunnel`; egress to its own backends (database, cache) goes into its own network policy. `hello` needs neither.
+
 3. Nothing changes on hcloud: the TLSRoute already covers `*.extern.${EXTERNAL_DOMAIN}`.
 
 ## Verify

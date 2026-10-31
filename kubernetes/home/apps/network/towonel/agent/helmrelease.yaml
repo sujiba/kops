@@ -77,10 +77,10 @@ spec:
       towonel-agent:
         type: cilium
         description: >-
-          Out to the internet (hub API and QUIC to the edge on hcloud) and to
-          envoy-tunnel, nothing else at home. Internet traffic enters the
-          homelab through this pod, so it must not reach the LAN or other
-          workloads directly.
+          Out to hcloud only (hub API and QUIC to the edge) and to
+          envoy-tunnel, nothing else. Internet traffic enters the homelab
+          through this pod, so it must not reach the LAN, other workloads or
+          the rest of the internet.
         egress:
           - toEndpoints:
               - matchLabels:
@@ -98,15 +98,15 @@ spec:
               - ports:
                   - port: "10443"
                     protocol: TCP
-          # Public IPv4 only: the LAN, tailscale and cluster ranges stay out
-          - toCIDRSet:
-              - cidr: 0.0.0.0/0
-                except:
-                  - 10.0.0.0/8
-                  - 100.64.0.0/10
-                  - 169.254.0.0/16
-                  - 172.16.0.0/12
-                  - 192.168.0.0/16
+          # hcloud (tunnel.${EXTERNAL_DOMAIN}): hub API over HTTPS, QUIC to the edge
+          - toCIDR:
+              - 91.98.37.31/32
+            toPorts:
+              - ports:
+                  - port: "443"
+                    protocol: TCP
+                  - port: "51820"
+                    protocol: UDP
         ingress:
           - fromEntities:
               - host # kubelet probes

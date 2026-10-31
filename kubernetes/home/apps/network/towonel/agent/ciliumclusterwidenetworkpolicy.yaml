@@ -1,9 +1,9 @@
 ---
 # Workloads behind envoy-tunnel are reachable from the internet. If one is taken
-# over, it must not become a way into the LAN or to other workloads: out it may
-# reach cluster DNS and the public internet, nothing else. Applies to every pod
-# with offene.cloud/expose: tunnel, in any namespace; their ingress policies stay
-# with the apps.
+# over, it must not become a way into the LAN, to other workloads or out to the
+# internet: by default it may reach cluster DNS only. Applies to every pod with
+# offene.cloud/expose: tunnel, in any namespace; their ingress policies, and
+# egress to their own backends (database, cache), stay with the apps.
 apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
 metadata:
@@ -21,7 +21,21 @@ spec:
         - ports:
             - port: "53"
               protocol: ANY
-    # Public IPv4 only: the LAN, tailscale and cluster ranges stay out
+
+---
+# Opt-in for exposed workloads that must call out (webhooks, federation, OIDC):
+# pod label offene.cloud/egress: internet adds the public IPv4 internet. The LAN,
+# tailscale and cluster ranges stay out.
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: tunnel-workloads-internet
+spec:
+  endpointSelector:
+    matchLabels:
+      offene.cloud/expose: tunnel
+      offene.cloud/egress: internet
+  egress:
     - toCIDRSet:
         - cidr: 0.0.0.0/0
           except:

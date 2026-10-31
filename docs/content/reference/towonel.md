@@ -28,7 +28,8 @@ hcloud never decrypts the stream. The visitor's address survives every hop: Envo
 | Firewall rule `towonel quic` | `kubernetes/bootstrap/hcloud/1_tofu/main.tf` | UDP 51820 open on the Hetzner cloud firewall |
 | `TOWONEL_HUB_PUBLIC_URL`, `TOWONEL_EDGE_ADVERTISED_ADDRESSES` | hcloud `towonel/app/helmrelease.yaml` | `tunnel.${EXTERNAL_DOMAIN}`: hub API and the edge address the agent dials |
 | `TOWONEL_AGENT_SERVICES` | home `towonel/agent/helmrelease.yaml` | One entry per hostname served from home, all with origin `envoy-tunnel` |
-| Pod label `offene.cloud/expose: tunnel` | the app's HelmRelease | Lets `envoy-tunnel` reach the pod; also puts the pod under the egress policy `tunnel-workloads-egress` |
+| Pod label `offene.cloud/expose: tunnel` | the app's HelmRelease | Lets `envoy-tunnel` reach the pod; also puts the pod under the egress policy `tunnel-workloads-egress` (cluster DNS only) |
+| Pod label `offene.cloud/egress: internet` | the app's HelmRelease | Opt-in for exposed pods that must call out: adds the public IPv4 internet (`tunnel-workloads-internet`) |
 | `geoip-policy-tunnel` | home `envoy-gateway/config/tunnel/securitypolicy.yaml` | Same country allowlist as `geoip-policy` on hcloud. Keep both in step |
 
 ## Creates
@@ -40,7 +41,7 @@ hcloud never decrypts the stream. The visitor's address survives every hop: Envo
 | EnvoyPatchPolicy (hcloud) | `towonel-quic-gro` | Lets Envoy read coalesced UDP; without it the tunnel stalls on large packets |
 | HelmRelease (home) | `towonel-agent` | Dials the edge and forwards each connection to `envoy-tunnel` |
 | Gateway (home) | `envoy-tunnel` | ClusterIP only, no LAN address; certificate `tunnel-wildcard-tls` |
-| CiliumNetworkPolicy, CiliumClusterwideNetworkPolicy (home) | `envoy-tunnel-egress`, `tunnel-workloads-egress` | Internet traffic reaches only opted-in pods, and those reach neither the LAN nor other workloads |
+| CiliumNetworkPolicy, CiliumClusterwideNetworkPolicy (home) | `envoy-tunnel`, `tunnel-workloads-egress`, `tunnel-workloads-internet` | Only the agent reaches `envoy-tunnel`, which reaches only opted-in pods; those reach neither the LAN, other workloads nor, without opt-in, the internet. The agent itself may reach only hcloud |
 
 ## Secrets
 
