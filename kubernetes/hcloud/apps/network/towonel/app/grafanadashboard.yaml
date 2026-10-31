@@ -1,0 +1,14 @@
+---
+# Hub and edge dashboard from the upstream towonel-node chart. Its variables pick
+# the jobs towonel-hub and towonel-edge and the label cluster, which the
+# ServiceMonitor in the HelmRelease sets.
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: towonel
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  url: https://codeberg.org/towonel/towonel/raw/branch/main/charts/towonel-node/dashboards/towonel-node.json

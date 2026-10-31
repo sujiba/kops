@@ -1,0 +1,55 @@
+---
+# Hub alerts from the upstream towonel-node chart (charts/towonel-node/templates/prometheusrule.yaml.tpl)
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: towonel
+spec:
+  groups:
+    - name: towonel-hub.rules
+      rules:
+        - alert: TowonelHubMetricsAbsent
+          annotations:
+            summary: >-
+              No towonel hub metrics received for 10 minutes: the hub is down
+              or its scrape is broken
+          expr: absent(towonel_hub_is_leader)
+          for: 10m
+          labels:
+            severity: critical
+        - alert: TowonelHubNoLeader
+          annotations:
+            summary: >-
+              No towonel hub replica is the active leader: route rebuilds and
+              leader-gated work are stalled
+          expr: max(towonel_hub_is_leader) == 0
+          for: 5m
+          labels:
+            severity: critical
+        - alert: TowonelHubHigh5xx
+          annotations:
+            summary: >-
+              Towonel hub is returning {{ $value | humanize }} 5xx/s on
+              {{ $labels.endpoint }}
+          expr: sum by (endpoint) (rate(towonel_hub_requests_total{status=~"5.."}[5m])) > 0.1
+          for: 10m
+          labels:
+            severity: critical
+        - alert: TowonelHubRateLimiting
+          annotations:
+            summary: >-
+              Towonel hub is rate-limiting {{ $value | humanize }} req/s (429) on
+              {{ $labels.endpoint }}: agents or users are being throttled
+          expr: sum by (endpoint) (rate(towonel_hub_requests_total{status="429"}[5m])) > 0.2
+          for: 15m
+          labels:
+            severity: warning
+        - alert: TowonelHubEntriesRejected
+          annotations:
+            summary: >-
+              Towonel hub is rejecting {{ $value | humanize }} signed config entries/s
+              with reason {{ $labels.reason }}
+          expr: sum by (reason) (rate(towonel_hub_entries_rejected_total[5m])) > 0.2
+          for: 15m
+          labels:
+            severity: warning

@@ -44,13 +44,18 @@ spec:
               TOWONEL_EDGE_HEALTH_LISTEN_ADDR: 0.0.0.0:9090
               TOWONEL_EDGE_IROH_PORT: "51820"
               TOWONEL_EDGE_LISTEN_ADDR: 0.0.0.0:8444
-              # Read the client address from Envoy's PROXY v2 header. Only peers in
-              # private ranges (the default trust list) may send one.
+              # Read the client address from Envoy's PROXY v2 header. Envoy runs on
+              # the host network and reaches the pod from the node's cni0 address
+              # (first address of the node's podCIDR); no other peer may send one,
+              # since Flannel enforces no NetworkPolicy against other pods.
               TOWONEL_EDGE_PROXY_PROTOCOL: "true"
+              TOWONEL_EDGE_PROXY_PROTOCOL_TRUSTED: 10.244.0.1/32
               TOWONEL_HUB_ENABLED: "true"
               TOWONEL_HUB_HEALTH_LISTEN_ADDR: 0.0.0.0:9091
               TOWONEL_HUB_LISTEN_ADDR: 0.0.0.0:8443
               TOWONEL_HUB_PUBLIC_URL: https://tunnel.${EXTERNAL_DOMAIN}
+              # Same peer for the hub API: key the rate limit on X-Forwarded-For
+              TOWONEL_HUB_TRUSTED_PROXIES: 10.244.0.1/32
             envFrom:
               - secretRef:
                   name: towonel-hub-secret
@@ -126,8 +131,38 @@ spec:
         ports:
           edge:
             port: 8444
+          edge-metrics:
+            port: 9090
           hub:
             port: 8443
+          hub-metrics:
+            port: 9091
           quic:
             port: 51820
             protocol: UDP
+
+    serviceMonitor:
+      app:
+        endpoints:
+          # Job and cluster labels as the upstream dashboard expects them
+          - port: edge-metrics
+            interval: 1m
+            path: /metrics
+            relabelings:
+              - action: replace
+                replacement: towonel-edge
+                targetLabel: job
+              - action: replace
+                replacement: hcloud
+                targetLabel: cluster
+          - port: hub-metrics
+            interval: 1m
+            path: /metrics
+            relabelings:
+              - action: replace
+                replacement: towonel-hub
+                targetLabel: job
+              - action: replace
+                replacement: hcloud
+                targetLabel: cluster
+        serviceName: towonel

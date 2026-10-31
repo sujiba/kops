@@ -27,6 +27,7 @@ hcloud never decrypts the stream. The visitor's address survives every hop: Envo
 | Listener `towonel-quic` | same | UDP 51820 for the agent's QUIC, routed to the pod by the UDPRoute |
 | Firewall rule `towonel quic` | `kubernetes/bootstrap/hcloud/1_tofu/main.tf` | UDP 51820 open on the Hetzner cloud firewall |
 | `TOWONEL_HUB_PUBLIC_URL`, `TOWONEL_EDGE_ADVERTISED_ADDRESSES` | hcloud `towonel/app/helmrelease.yaml` | `tunnel.${EXTERNAL_DOMAIN}`: hub API and the edge address the agent dials |
+| `TOWONEL_EDGE_PROXY_PROTOCOL_TRUSTED`, `TOWONEL_HUB_TRUSTED_PROXIES` | same | The node's cni0 address, the source of every connection from the host-network Envoy. Only it may send a PROXY header or `X-Forwarded-For`, so no pod can fake a client address. Follows the node's podCIDR |
 | `agent.services` | home `towonel-agent/app/helmrelease.yaml` (upstream chart `towonel-agent`) | One wildcard entry `*.extern.${EXTERNAL_DOMAIN}` with origin `envoy-tunnel`; the routes on `envoy-tunnel` pick the app. The chart turns the list into `TOWONEL_AGENT_SERVICES` |
 | Pod label `offene.cloud/expose: tunnel` | the app's HelmRelease | Lets `envoy-tunnel` reach the pod; also puts the pod under the egress policy `tunnel-workloads-egress` (cluster DNS only) |
 | Pod label `offene.cloud/egress: internet` | the app's HelmRelease | Opt-in for exposed pods that must call out: adds the public IPv4 internet (`tunnel-workloads-internet`) |
@@ -36,7 +37,8 @@ hcloud never decrypts the stream. The visitor's address survives every hop: Envo
 
 | Resource | Name | Purpose |
 |---|---|---|
-| HelmRelease (hcloud) | `towonel` | Hub and edge in one pod; state on the PVC `towonel-data-pvc` |
+| HelmRelease (hcloud) | `towonel` | Hub and edge in one pod (app-template, not the upstream chart, see [#2425](https://code.offene.cloud/homelab/kops/issues/2425)); state on the PVC `towonel-data-pvc`. Also renders a ServiceMonitor |
+| PrometheusRule, GrafanaDashboard (hcloud) | `towonel` | Hub alerts and the hub/edge dashboard, both taken from the upstream chart `towonel-node` |
 | TLSRoute, UDPRoute (hcloud) | `towonel`, `towonel-quic` | Hand the passthrough TLS and the QUIC traffic to the pod |
 | EnvoyPatchPolicy (hcloud) | `towonel-quic-gro` | Lets Envoy read coalesced UDP; without it the tunnel stalls on large packets |
 | HelmRelease (home) | `towonel-agent` | Upstream chart; dials the edge and forwards each connection to `envoy-tunnel`. Also renders a ServiceMonitor, a PrometheusRule and a GrafanaDashboard |
